@@ -483,7 +483,7 @@
 
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../guidance_dashboard/guidance_dashboard.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>

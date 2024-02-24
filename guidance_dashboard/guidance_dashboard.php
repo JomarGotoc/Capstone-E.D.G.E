@@ -524,7 +524,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -539,11 +539,8 @@
     </header>
 
     <div class="top-container">
-        <div class="back-button">
-            <a href="../login/Login.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
-        </div>
         <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3> LASIP GRANDE ELEMENTARY SCHOOL</h3>
         </div>
     </div>   
     <div class="main-container">
@@ -663,21 +660,21 @@
         <h2>SELECT RECORD TO VIEW / UPDATE</h2>
       
         <div class="row">
-        <a href="../intervention/adviser_intervention_firstperiod.php"> <div class="containerss" id="container1" >
+        <a href="../intervention/counselor_intervention_firstperiod.php"> <div class="containerss" id="container1" >
           <p>Q1</p> 
           </div> </a>
       
-        <a href="../intervention/adviser_intervention_secondperiod.php">  <div class="containerss" id="container2">
+        <a href="../intervention/counselor_intervention_secondperiod.php">  <div class="containerss" id="container2">
             <p>Q2</p>
           </div> </a>
         </div>
       
         <div class="row">
-        <a href="../intervention/adviser_intervention_thirdperiod.php">  <div class="containerss" id="container3">
+        <a href="../intervention/counselor_intervention_thirdperiod.php">  <div class="containerss" id="container3">
             <p>Q3</p> 
           </div></a>
       
-        <a href="../intervention/adviser_intervention_fourthperiod.php"> <div class="containerss" id="container4">
+        <a href="../intervention/counselor_intervention_fourthperiod.php"> <div class="containerss" id="container4">
          <p>Q4</p>
           </div></a>
         </div>

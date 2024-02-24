@@ -391,7 +391,7 @@
     <div class="navbar">
         <nav>
             <a href="Principal_tracking_reports.php">Quarterly Reports</a>
-            <a href="Principal_monitoring_reports.php">Report Summary</a>
+            <a href="Principal_monitoring_reports.php" style="background:#F3F3F3; color:#130550">Report Summary</a>
         </nav>
     </div>
 

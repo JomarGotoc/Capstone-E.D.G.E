@@ -100,8 +100,8 @@ if(isset($_POST['submit2'])){
                     VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification')";
             break;
 
-        case 'Behavioral':
-            $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification)
+        case 'Behavior':
+            $sql = "INSERT INTO behavior (lrn, fullname, grade, section, date, quarter, classification)
                     VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification')";
             break;
 

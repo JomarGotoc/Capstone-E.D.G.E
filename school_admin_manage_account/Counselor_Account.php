@@ -668,7 +668,7 @@ if (isset($_GET['id'])) {
         <nav>
             <a href="../school_admin_manage_account/Principal_Account.php" id="school-admin">Principal</a>
             <a href="../school_admin_manage_account/Adviser_Account.php" id="school2-admin">Advisers</a>
-            <a href="../school_admin_manage_account/Counselor_Account.php" id="school3-admin">Guidance Counselor</a>
+            <a href="../school_admin_manage_account/Counselor_Account.php" style="background:#F3F3F3; color:#130550" id="school3-admin">Guidance Counselor</a>
         </nav>
     </div>
 
