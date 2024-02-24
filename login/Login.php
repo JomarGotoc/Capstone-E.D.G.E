@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section . ".php");
                             break;
                         case 'counselor':
-                            header("Location: counselor.php");
+                            header("Location: ../guidance_dashboard/guidance_dashboard.php");
                             break;
                         case 'principal':
                             header("Location: ../monitoring_tracking/Principal_tracking_reports.php");

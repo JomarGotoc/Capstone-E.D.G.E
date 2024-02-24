@@ -1,5 +1,5 @@
 <?php
-include "database2.php";
+include "../database.php";
 
 // Code 1
 $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
@@ -13,7 +13,7 @@ if (count($words) >= 4) {
     $tableName = "grade_" . $secondWord . "_section_" . $fourthWord;
 
     $sql = "SELECT * FROM $tableName";
-    $result = $conn1->query($sql);
+    $result = $conn->query($sql);
     
     // Rest of your code...
 } else {
@@ -28,11 +28,11 @@ $tableName = $phpFileName ;
 $lrnCount = 0;
 
 $sql = "SHOW TABLES LIKE '$tableName'";
-$result3 = $conn1->query($sql);
+$result3 = $conn->query($sql);
 
 if ($result3->num_rows > 0) {
     $countQuery = "SELECT COUNT(lrn) AS lrnCount FROM $tableName";
-    $countResult = $conn1->query($countQuery);
+    $countResult = $conn->query($countQuery);
 
     if ($countResult) {
         $row = $countResult->fetch_assoc();
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
 
     // Fetch data from the database based on LRN
     $sql = "SELECT fullname, lrn, grade, section FROM $tableName WHERE lrn = ?";
-    $stmt = $conn1->prepare($sql);
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $lrn);
     $stmt->execute();
     $stmt->bind_result($fullname1, $fetchedLRN, $grade, $section);
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
     $stmt->close();
 }
 
-$conn1->close();
+$conn->close();
 ?>
 <?php
 $errorMsg ="";
@@ -83,7 +83,7 @@ if(isset($_POST['submit2'])){
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
 
-    include('database4.php');
+    include('../database.php');
     switch ($classification) {
         case 'Academic - Literacy in English':
             $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification)
@@ -110,13 +110,13 @@ if(isset($_POST['submit2'])){
             break;
     }
 
-    if ($conn3->query($sql) === TRUE) {
+    if ($conn->query($sql) === TRUE) {
         $errorMsg =" Recorded Successfully";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn3->error;
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
-    $conn3->close();
+    $conn->close();
 }
 ?>
 <!DOCTYPE html>

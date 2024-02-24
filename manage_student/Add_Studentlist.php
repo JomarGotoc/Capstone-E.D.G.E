@@ -12,10 +12,10 @@
             $tableName = strtolower("grade_".$grade."_section_" . $section);
 
             // Check if the table already exists
-            include("../database2.php");
+            include("../database.php");
 
             $checkTableQuery = "SHOW TABLES LIKE '$tableName'";
-            $result = $conn1->query($checkTableQuery);
+            $result = $conn->query($checkTableQuery);
 
             if ($result->num_rows > 0) {
                 $errorMsg1 = "Record already exists.";
@@ -29,8 +29,8 @@
                                         grade VARCHAR(255) NOT NULL
                                     )";
 
-                if ($conn1->query($createTableQuery) === FALSE) {
-                    $errorMessage = "Error creating table: " . $conn1->error;
+                if ($conn->query($createTableQuery) === FALSE) {
+                    $errorMessage = "Error creating table: " . $conn->error;
                 } else {
                     // Process CSV file and skip the first row (headers)
                     $file = $_FILES["file"]["tmp_name"];
@@ -50,8 +50,8 @@
                         $insertQuery = "INSERT INTO $tableName (lrn, fullname, section, grade)
                                         VALUES ('$lrn', '$fullname', '$section', '$grade')";
 
-                        if ($conn1->query($insertQuery) === FALSE) {
-                            $errorMsg1 = "Error inserting data: " . $conn1->error;
+                        if ($conn->query($insertQuery) === FALSE) {
+                            $errorMsg1 = "Error inserting data: " . $conn->error;
                             break; // Exit the loop if an error occurs
                         }
                     }
@@ -60,7 +60,7 @@
                 }
             }
 
-            $conn1->close();
+            $conn->close();
         } else {
             $errorMsg1 = "Error uploading file.";
         }

@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif ($tableName === 'counselor') {
             // Redirect to counselor.php
-            header("Location: counselor.php");
+            header("Location: ../guidance_dashboard/guidance_dashboard.php");
             exit();
         } elseif ($tableName === 'executive_committee') {
             // Redirect to executive_committee.php
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($tableName === 'principal') {
             // Redirect to principal.php
-            header("Location: ../school_admin_manage_account/Principal_Account.php");
+            header("Location: ../monitoring_tracking/principal_tracking_reports.php");
             exit();
         } elseif ($tableName === 'school_admin') {
             // Redirect to school_admin.php
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($tableName === 'sdo_admin') {
             // Redirect to sdo_admin.php
-            header("Location: sdo_admin.php");
+            header("Location: ../button_options/SDO_button.php");
             exit();
         } 
     }

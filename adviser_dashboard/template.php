@@ -13,7 +13,7 @@ if (count($words) >= 4) {
 } 
 ?>
 <?php
-include('../database2.php');
+include('../database.php');
 $phpFileName = pathinfo($_SERVER['PHP_SELF'], PATHINFO_FILENAME);
 $tableName = $phpFileName ;
 $lrnCount = 0;
@@ -31,7 +31,7 @@ if ($result3->num_rows > 0) {
 } 
 ?>
 <?php
-    include('../database3.php');
+    include('../database.php');
 
     // Get the current PHP filename without the extension
     $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);

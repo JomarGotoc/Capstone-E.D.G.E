@@ -12,15 +12,15 @@ if ($result->num_rows > 0) {
         // Concatenate "grade_" and "section_" to the values and store in $newvalue
         $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
 
-        include('../database2.php');
+        include('../database.php');
         $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
-        $tableExists = $conn1->query($checkTableSql);
+        $tableExists = $conn->query($checkTableSql);
 
         // Display the number of LRN data found in the 3rd <th>
         $lrnCount = 0; // Initialize the count
         if ($tableExists->num_rows > 0) {
             $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue";
-            $lrnResult = $conn1->query($countQuery);
+            $lrnResult = $conn->query($countQuery);
 
             if ($lrnResult->num_rows > 0) {
                 $lrnCountRow = $lrnResult->fetch_assoc();
@@ -29,17 +29,17 @@ if ($result->num_rows > 0) {
         }
 
         // Check matches in classifications table (in the 'classification' database)
-        include('../database4.php'); // Include the connection to the 'classification' database
+        include('../database.php'); // Include the connection to the 'classification' database
 
         $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
         $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
         $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
         $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
 
-        $academicEnglishResult = $conn3->query($academicEnglishQuery);
-        $academicFilipinoResult = $conn3->query($academicFilipinoQuery);
-        $academicNumeracyResult = $conn3->query($academicNumeracyQuery);
-        $behavioralResult = $conn3->query($behavioralQuery);
+        $academicEnglishResult = $conn->query($academicEnglishQuery);
+        $academicFilipinoResult = $conn->query($academicFilipinoQuery);
+        $academicNumeracyResult = $conn->query($academicNumeracyQuery);
+        $behavioralResult = $conn->query($behavioralQuery);
 
         $academicEnglishCount = ($academicEnglishResult->num_rows > 0) ? $academicEnglishResult->fetch_assoc()['academic_english_count'] : 0;
         $academicFilipinoCount = ($academicFilipinoResult->num_rows > 0) ? $academicFilipinoResult->fetch_assoc()['academic_filipino_count'] : 0;
