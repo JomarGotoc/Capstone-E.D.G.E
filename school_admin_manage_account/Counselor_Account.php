@@ -1,27 +1,28 @@
-<?php 
-include "../database.php";
+<?php
+include('../database.php');
 $sql = "SELECT * FROM counselor";
-$result = $conn->query($sql);
+$result1 = $conn->query($sql);
 
-if (isset($_GET['id'])) {
+if(isset($_POST['reset_password'])) {
+    // Get user ID from the form
+    $user_id = $_POST['user_id'];
+    $query = "SELECT * FROM counselor  WHERE id = $user_id";
+    $result = $conn->query($query);
 
-    $user_id = $_GET['id'];
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $employment_number = $row['employment_number'];
+        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+        $update_query = "UPDATE counselor  SET password = '$hashed_password' WHERE id = $user_id";
 
-    $sql = "DELETE FROM `counselor` WHERE `id`='$user_id'";
-
-     $result = $conn->query($sql);
-
-     if ($result == TRUE) {
-
-        header("Location: ".$_SERVER['PHP_SELF']);
-
-    }else{
-
-        echo "Error:" . $sql . "<br>" . $conn->error;
-
+        if ($conn->query($update_query) === TRUE) {
+        } else {
+        }
+    } else {
+        echo "User not found";
     }
-
-} 
+    $conn->close();
+}
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -691,33 +692,31 @@ if (isset($_GET['id'])) {
             </ul>
         </div>
 
-            <table class="table">
-            <?php
-
-            if ($result->num_rows > 0) {
-
-                while ($row = $result->fetch_assoc()) {
-
-            ?>
-                <tr class="sheshable">
+        <table class="table">
+    <?php
+    if ($result1->num_rows > 0) {
+        while ($row = $result1->fetch_assoc()) {
+    ?>
+            <tr class="sheshable">
                 <td class="rows"><?php echo $row['fullname']; ?></td>
                 <td class="rows"><?php echo $row['employment_number']; ?></td>
+                <td class="rows"><?php echo $row['email']; ?></td>
                 <td class="rows"><?php echo $row['date']; ?></td>
-                <td class="rows"><?php echo $row['date']; ?></td>
-                    <td class="rows">
-                        <div class="button-container">
+                <td class="rows">
+                    <div class="button-container">
                         <a href="counselor_account_edit.php?id=<?php echo $row['id']; ?>"><button class="edit-button">Edit</button></a>
-                        <a href=" "><button class="delete-button">Reset Password</button></a>
-                        </div>
-                    </td>
-                    
-                </tr>
-                <?php       }
-
-                                        }
-
-                                    ?> 
-            </table>
+                        <form method="post" action="counselor_Account.php">
+                            <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+    <?php
+        }
+    }
+    ?>
+</table>
             <div class="straight-line"></div>
             
         </div>

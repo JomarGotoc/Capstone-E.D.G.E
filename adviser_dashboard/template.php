@@ -986,7 +986,7 @@ foreach ($results as $tableResult) {
         foreach ($tableData as $row) {
             echo "<tr class='sheshable'>
                     <th style='width:15%'>{$row['lrn']}</th>
-                    <th style='width:15%'>{$row['fullname']}</th>
+                    <th style='width:35%'>{$row['fullname']}</th>
                     <th style='width:15%'>{$row['classification']}</th>
                     <th style='width:15%'>NA</th>
                     <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
