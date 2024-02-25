@@ -1,29 +1,26 @@
-function toggleBold(inputId) {
-    var input = document.getElementById(inputId);
-    input.value += "**bold text**";
-}
+document.addEventListener("DOMContentLoaded", function() {
+        const editableIcons = document.querySelectorAll('.editable-icon');
+        editableIcons.forEach(icon => {
+            icon.addEventListener('click', () => {
+                const container = icon.parentElement;
+                const content = container.querySelector('h3');
+                content.contentEditable = !content.isContentEditable;
+                content.focus();
+                icon.className = content.isContentEditable ? 'bx bx-check editable-icon' : 'bx bx-edit editable-icon';
+            });
+        });
 
-function toggleItalic(inputId) {
-    var input = document.getElementById(inputId);
-    input.value += "*italic text*";
-}
-
-function toggleBullet(inputId) {
-    var input = document.getElementById(inputId);
-    input.value += "\n• ";
-}
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    var editableTexts = document.querySelectorAll('.editable-text');
-
-    editableTexts.forEach(function (textArea) {
-        textArea.addEventListener('input', function () {
-            if (textArea.textContent.trim() !== '') {
-                textArea.classList.add('content-entered');
-            } else {
-                textArea.classList.remove('content-entered');
-            }
+        const editableTexts = document.querySelectorAll('.editable-text');
+        editableTexts.forEach(text => {
+            text.addEventListener('input', () => {
+                const icon = text.parentElement.querySelector('.editable-icon');
+                if (text.value.trim() === '') {
+                    icon.className = 'bx bx-edit editable-icon';
+                } else {
+                    icon.className = 'bx bx-check editable-icon';
+                }
+            });
         });
     });
-});
+
+

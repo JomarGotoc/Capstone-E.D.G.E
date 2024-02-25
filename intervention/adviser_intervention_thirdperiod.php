@@ -395,7 +395,7 @@
             margin-left: 20px;
         }
 
-        .editable-text {
+        .text-container textarea {
             width: calc(100% - 20px);
             height: 200px;
             padding: 10px;
@@ -406,28 +406,21 @@
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
             margin-bottom: 10px;
             margin: 0 auto;
+            line-height: 1.5; 
+            resize: none;
         }
 
-        .editable-text::before {
-            content: attr(placeholder);
-            position: absolute;
-            top: 15px;
-            left: 15px;
+        .text-container textarea::placeholder {
             color: #190572;
-            font-weight: bold;
+            font-weight: 900;
             letter-spacing: 2px;
-            pointer-events: none;
-            z-index: 1;
-            border-radius: 7px;
-            background: rgba(255, 255, 255, 0.90);
+            font-family: 'Darker Grotesque', sans-serif;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.90); 
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-            width: fit-content;
             padding: 5px;
-
-        }
-
-        .editable-text.content-entered::before {
-            display: none;
+            width: fit-content;
+            border-radius: 7px;
         }
 
         .text-container div {
@@ -442,31 +435,24 @@
             width: 530px; 
             margin-left: auto;
         }
-    
-        .formatting-buttons {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
+
+        .editable-container {
+            position: relative; 
             display: flex;
+            align-items: center;
         }
-    
-        .formatting-buttons button {
-            background-color: #b3adcb;
-            color:#190572;
-            font-weight: bold;
-            border: 1px solid #190572;
-            padding: 5px 10px;
-            margin-left: 2px;
-            border-radius: 3px;
+
+        .editable-container h3 {
+            margin: 0;
+        }
+
+        .editable-icon {
+            position: absolute; 
+            right: 0; 
+            margin: 0; 
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
         }
-    
-        .formatting-buttons button:hover {
-            background-color: #190572;
-            color: #ddd;
-        }
+
         
     </style>
 </head>
@@ -565,27 +551,41 @@
             </div>
         </div>
 
+        
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Guardian Name</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <h3 style="margin-left:10px; ">Jenny A. Junio - Mother</h3>
+                    <i class='bx bx-edit editable-icon' style=" cursor: pointer"></i>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Contact Number</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <h3 style="margin-left:10px">0923583892</h3>
+                    <i class='bx bx-edit editable-icon' style=" cursor: pointer"></i>
+                </div>
+            </div>
+        </div>
+
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <div contenteditable="true" placeholder="Adviser's Notes" class="editable-text" id="counselorNotes">
-                    </div>
-                    <div class="formatting-buttons">
-                        <button onclick="document.execCommand('bold', false, null)">B</button>
-                        <button onclick="document.execCommand('italic', false, null)">I</button>
-                        <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                    </div>
+                    <textarea class="editable-text" id="notes" placeholder="Adviser's Notes"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <div contenteditable="true" placeholder="Topic/Matter" class="editable-text" id="counselorTopic">
-                    </div>
-                    <div class="formatting-buttons">
-                        <button onclick="document.execCommand('bold', false, null)">B</button>
-                        <button onclick="document.execCommand('italic', false, null)">I</button>
-                        <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                    </div>
+                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter"></textarea>                
                 </div>
             </div>
         </div>
@@ -593,31 +593,18 @@
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <div contenteditable="true" placeholder="Intervention" class="editable-text" id="intervention">
-                    </div>
-                    <div class="formatting-buttons">
-                        <button onclick="document.execCommand('bold', false, null)">B</button>
-                        <button onclick="document.execCommand('italic', false, null)">I</button>
-                        <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                    </div>
+                    <textarea class="editable-text" id="intervention" placeholder="Intervention"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <div contenteditable="true" placeholder="Advice" class="editable-text" id="advice">
-                    </div>
-                    <div class="formatting-buttons">
-                        <button onclick="document.execCommand('bold', false, null)">B</button>
-                        <button onclick="document.execCommand('italic', false, null)">I</button>
-                        <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                    </div>
+                    <textarea class="editable-text" id="advice" placeholder="Advice"></textarea>                
                 </div>
             </div>
         </div>
     </div>
 
     <script src="adviser_intervention.js"></script>
-
  
 </body>
 </html>
