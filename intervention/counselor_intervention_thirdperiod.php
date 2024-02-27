@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Guidance Counselor</title>
+    <title>Counselor</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -257,8 +257,14 @@
             color: #fff;
         }
 
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .main-container {
-            width: 100%;
+            width: 97.4%;
             height: calc(90vh - 140px);
             margin: 130px 20px 20px; 
             bottom: 0;
@@ -378,10 +384,30 @@
             letter-spacing: 3px;
         }
 
-        h3 {
+        h3{
             color: #FFFFFFE5;
             margin-left: 10px;
             margin: 0;
+        }
+
+        input{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 400px;
+            margin-left: 10px;
+            border: none;
+            background: none;
+        }
+
+        .right{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 180px;
+            border: none;
+            background: none;
+            margin-left: 10px;
         }
 
         .column-right h3, 
@@ -453,12 +479,14 @@
             cursor: pointer;
         }
 
+
+
         
     </style>
 </head>
 <body>
 
-<header>
+    <header>
         <div class="container">
             <div class="header-content">
                 <img src="../img/logo.png" class="logs">
@@ -467,6 +495,8 @@
         </div>
     </header>
 
+
+    <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
             <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
@@ -490,7 +520,7 @@
             </div>
             <div class="column column-left">
                 <div class="containers third" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Q3 P.A.R. Status</h3>
+                    <h3 style="margin-left:10px">Q1 P.A.R. Status</h3>
                 </div>
             </div>
             <div class="column half-width">
@@ -512,7 +542,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">09-8765-43211</h3>
+                    <input type="text" name="lrn" id="lrn" value="" placeholder=" ">
                 </div>
             </div>
             <div class="column column-left">
@@ -522,7 +552,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                    <h3 style="margin-left:10px">3 <span>- Larang</span></h3>
+                    <input type="text" name="grade&section" id="grade&section" value="" placeholder=" " class="right">
                 </div>
             </div>
         </div>
@@ -536,7 +566,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">Vanessa Junio</h3>
+                    <input type="text" name="name" id="name" value="" placeholder=" ">
                 </div>
             </div>
             <div class="column column-left">
@@ -546,11 +576,12 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">Literacy</span></h3>
+                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
                 </div>
             </div>
         </div>
 
+        
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
@@ -559,7 +590,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px; ">Jenny A. Junio - Mother</h3>
+                    <input type="text" name="identification" id="identification" value="" placeholder=" ">
                 </div>
             </div>
             <div class="column column-left">
@@ -569,11 +600,10 @@
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">0923583892</h3>
+                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
                 </div>
             </div>
-    </div>
-
+        </div>
 
         <div class="row ints">
             <div class="column">
@@ -601,7 +631,9 @@
             </div>
         </div>
     </div>
+    </form>
 
+    <script src="counselor_intervention.js"></script>
  
 </body>
 </html>

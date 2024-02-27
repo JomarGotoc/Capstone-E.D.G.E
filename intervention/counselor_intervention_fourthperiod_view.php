@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Guidance Counselor</title>
+    <title>Counselor</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -51,7 +51,6 @@
             text-decoration: none;
         }
         
-
         header {
             position: fixed;
             top: 0;
@@ -109,6 +108,7 @@
             display: flex;
             align-items: center;
         }
+
 
         .navbar {
             background-color: #190572;;
@@ -250,8 +250,30 @@
             box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
         }
 
+        .update {
+            padding: 5px;
+            border-radius: 10px;
+            border: 2px solid #94FD99;
+            background: #008705;
+            color: #fff;
+            margin-right: 15px;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .update:hover {
+            background-color: #045c07;
+            border: 2px solid #94FD99;
+            color: #fff;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .main-container {
-            width: 100%;
+            width: 97.4%;
             height: calc(90vh - 140px);
             margin: 130px 20px 20px; 
             bottom: 0;
@@ -288,7 +310,6 @@
         .wide-column {
             flex: 0 0 calc(12% - 10px);
             margin-bottom: 20px;
-            margin-top: 10px;
         }
 
         .column-right {
@@ -372,10 +393,30 @@
             letter-spacing: 3px;
         }
 
-        h3 {
+        h3{
             color: #FFFFFFE5;
             margin-left: 10px;
             margin: 0;
+        }
+
+        input{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 400px;
+            margin-left: 10px;
+            border: none;
+            background: none;
+        }
+
+        .right{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 180px;
+            border: none;
+            background: none;
+            margin-left: 10px;
         }
 
         .column-right h3, 
@@ -430,12 +471,6 @@
             margin-left: auto;
         }
 
-        .text-container h4{
-            font-size: 15px;
-            color: #190572;
-            margin-top: 40px;
-        }
-
         .editable-container {
             position: relative; 
             display: flex;
@@ -452,7 +487,9 @@
             margin: 0; 
             cursor: pointer;
         }
-    
+
+
+
         
     </style>
 </head>
@@ -467,6 +504,8 @@
         </div>
     </header>
 
+
+    <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
             <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
@@ -495,7 +534,10 @@
             </div>
             <div class="column half-width">
                     <select id="topdown" name="school-year" class="containers first" disabled>
+                        <option value="school-year">Pending</option>
                         <option value="school-year">On-going</option>
+                        <option value="school-year">Resolved</option>
+                        <option value="school-year">Unresolved</option>
                     </select>
             </div>
         </div>
@@ -509,7 +551,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">09-8765-43211</h3>
+                    <input type="text" name="lrn" id="lrn" value="" placeholder=" ">
                 </div>
             </div>
             <div class="column column-left">
@@ -519,11 +561,10 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                    <h3 style="margin-left:10px">3 <span>- Larang</span></h3>
+                    <input type="text" name="grade&section" id="grade&section" value="" placeholder=" " class="right">
                 </div>
             </div>
         </div>
-
 
 
         <div class="row">
@@ -534,7 +575,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">Vanessa Junio</h3>
+                    <input type="text" name="name" id="name" value="" placeholder=" ">
                 </div>
             </div>
             <div class="column column-left">
@@ -544,11 +585,12 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">Literacy</span></h3>
+                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
                 </div>
             </div>
         </div>
 
+        
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
@@ -557,7 +599,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px; " >Jenny A. Junio - Mother</h3>
+                    <input type="text" name="gname" id="gname" value="" placeholder=" ">              
                 </div>
             </div>
             <div class="column column-left">
@@ -567,20 +609,19 @@
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left:10px">0923583892</h3>
-                </div>
+                    <input type="text" name="cnumber" id="cnumber" value="" placeholder=" " class="right">           </div>
             </div>
         </div>
 
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="notes" placeholder="Counselor's Notes" readonly>dvfdvd</textarea>                
+                    <textarea class="editable-text" id="notes" placeholder="Counselor's Notes"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly></textarea>                
+                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter"></textarea>                
                 </div>
             </div>
         </div>
@@ -588,17 +629,17 @@
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly></textarea>                
+                    <textarea class="editable-text" id="intervention" placeholder="Intervention"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="advice" placeholder="Advice" readonly></textarea>                
+                    <textarea class="editable-text" id="advice" placeholder="Advice"></textarea>                
                 </div>
             </div>
         </div>
     </div>
-
+    </form>
 
  
 </body>

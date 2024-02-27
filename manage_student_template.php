@@ -134,8 +134,8 @@
         }
 
         nav a:hover {
-            background-color: #ddd;
-            color: black;
+            background-color:#F3F3F3;
+            color:#190572;
         }
 
         h3{
@@ -192,9 +192,8 @@
             width: 100%;
             display: flex;
             height: calc(100vh - 140px);
-            margin: 20px;
-            margin-top: 125px;
-            bottom: 0;
+            margin-top: 115px;
+            margin-bottom: 50;
             background-color: #E2DFEE;
             overflow: auto;
         }
@@ -234,8 +233,8 @@
         }
 
         .navbar-item:hover {
-            background-color: #ddd;
-            color:#190572;
+            background-color:#F3F3F3;
+            color:#130550;
         }
 
         .title a{
@@ -271,7 +270,7 @@
     <div class="navbar">
         <nav>
             <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="">Manage Students List</a>
+            <a href="" style="background:#F3F3F3; color:#130550">Manage Students List</a>
         </nav>
     </div>
 
@@ -279,8 +278,8 @@
         <div class="navbar-container">
                 <div class="navbar-content">
 
-                    <div class="navbar-item title"><a href="#"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Kindergarten</a></div>
-                    <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Kindergarten</div>
+                    <div class="navbar-item" style="background:#F3F3F3; color:#130550"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
@@ -288,7 +287,7 @@
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
                     
                     <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><a href="#"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 1</a></div>
+                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 1</div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
@@ -297,7 +296,7 @@
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
 
                     <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><a href="#"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 2</a></div>
+                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 2</div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
@@ -306,7 +305,7 @@
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
 
                     <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><a href="#"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 3</a></div>
+                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 3</div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
                     <div class="navbar-item"><a href="#"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>

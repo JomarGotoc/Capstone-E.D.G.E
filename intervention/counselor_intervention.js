@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
     editableIcons.forEach(icon => {
         icon.addEventListener('click', () => {
             const container = icon.parentElement;
-            const content = container.querySelector('h3');
+            const content = container.querySelector('input');
             content.contentEditable = !content.isContentEditable;
             content.focus();
             icon.className = content.isContentEditable ? 'bx bx-check editable-icon' : 'bx bx-edit editable-icon';
