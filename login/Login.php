@@ -49,10 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             header("Location: ../monitoring_tracking/Principal_tracking_reports.php");
                             break;
                         case 'school_admin':
-                            header("Location: ../button_options/school_admin.php");
+                            header("Location: ../button_options/School_Admin_Create_Account.php");
                             break;
                         case 'sdo_admin':
-                            header("Location: ../button_options/SDO_button.php");
+                            header("Location: ../button_options/SDO_CreateAccnt_button.php");
                             break;
                         case 'executive_committee':
                             header("Location: ../monitoring_tracking/executive_monitoring_reports.php");

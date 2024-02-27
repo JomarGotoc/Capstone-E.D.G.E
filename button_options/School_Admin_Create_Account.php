@@ -123,7 +123,7 @@
             align-items: center;
         }
 
-            .navbar {
+        .navbar {
             background-color: #190572;;
             opacity: 80%;
             display: flex;
@@ -131,8 +131,8 @@
             height: 50px;
             width: 100%;
             position: fixed;
-            top: 75px; 
-            }
+            top: 57px; 
+        }
 
             nav {
             display: flex;
@@ -230,11 +230,17 @@
             </div>
         </div>
     </header>
+
+    <div class="navbar">
+        <nav>
+            <a href="../button_options/School_Admin_Create_Account.php" style="background:#F3F3F3; color:#130550">Manage Accounts</a>
+            <a href="" >Manage Students List</a>
+        </nav>
+    </div>
   
     <div class="login-container">
-        <a href="School_Admin.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Select the Admin<p>you'd like to create an account for:</p></h2>
+        <h2>Select the User<p>you'd like to manage:</p></h2>
 
         <div class="buttons">
             <a href="../create_account/Create_Principal_Account.php"><button class="button">Principal</button></a>

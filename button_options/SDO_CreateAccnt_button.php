@@ -202,10 +202,9 @@
     </header>
   
     <div class="login-container">
-        <a href="SDO_button.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Welcome to E.D.G.E</h2>
-        <h3>Select the Person you’d like to create an account for:</h3>
+        <h3>Select the Person you’d like to manage:</h3>
 
         <div class="buttons">
             <a href="../create_account/Create_SDO_Admin_Account.php"><button class="button">SDO Administrator</button></a>
