@@ -689,7 +689,6 @@ if (isset($_GET['id'])) {
     </header>
 
     <div class="navbar">
-        <a href="../button_options/SDO_button.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <nav>
             <a href="SDO_manageaccount.php" id="deped-admin">SDO Administrators</a>
             <a href="SDO_manageaccount2.php" id="division-admin">Executive Committee</a>

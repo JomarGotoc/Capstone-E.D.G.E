@@ -642,6 +642,31 @@ if(isset($_POST['reset_password'])) {
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .plus-button {
+            position: absolute;
+            bottom: 40px; 
+            right: 30px; 
+        }
+
+        .plus-button i{
+            font-size: 20px;
+        }
+
+        .add-button {
+            background-color: #130550;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.3s;
+        }
+
+        .add-button:hover {
+            background-color: #ddd;
+            color: #190572;
+        }
         
     </style>
 </head>
@@ -665,7 +690,7 @@ if(isset($_POST['reset_password'])) {
     </header>
 
     <div class="navbar">
-        <a href="../button_options/School_Admin.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <nav>
             <a href="../school_admin_manage_account/Principal_Account.php" id="school-admin">Principal</a>
             <a href="../school_admin_manage_account/Adviser_Account.php" style="background:#F3F3F3; color:#130550" id="school2-admin">Advisers</a>
@@ -723,6 +748,9 @@ if(isset($_POST['reset_password'])) {
     </div>
 
     <script src="school_admin_manage_account.js"></script>
+    <div class="plus-button">
+            <a href="../create_account/Create_Adviser_Account.php"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+        </div>
     
 </body>
 </html>

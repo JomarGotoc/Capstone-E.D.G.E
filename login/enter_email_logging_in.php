@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($tableName === 'sdo_admin') {
             // Redirect to sdo_admin.php
-            header("Location: ../button_options/SDO_button.php");
+            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
             exit();
         } 
     }

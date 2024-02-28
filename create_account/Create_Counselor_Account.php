@@ -404,15 +404,13 @@ $conn->close();
 
     <div class="navbar">
          <nav>
-         <a href="../button_options/School_Admin_Create_Account.php">Create Account</a>
-            <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
+            <a href="../manage_student_list/grade_kinder_section_1.php">Manage Students List</a>
         </nav>
     </div>
 
  
     <div class="login-container">
-    <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../school_admin_manage_account/Counselor_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Guidance Counselor</h2>
 

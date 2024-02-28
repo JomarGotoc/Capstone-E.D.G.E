@@ -230,22 +230,14 @@
             </div>
         </div>
     </header>
-
-    <div class="navbar">
-        <nav>
-            <a href="../button_options/School_Admin_Create_Account.php" style="background:#F3F3F3; color:#130550">Manage Accounts</a>
-            <a href="" >Manage Students List</a>
-        </nav>
-    </div>
   
     <div class="login-container">
         <div class="logo"></div>
         <h2>Select the User<p>you'd like to manage:</p></h2>
 
         <div class="buttons">
-            <a href="../create_account/Create_Principal_Account.php"><button class="button">Principal</button></a>
-            <a href="../create_account/Create_Adviser_Account.php"><button class="button">Adviser</button></a>
-            <a href="../create_account/Create_Counselor_Account.php"><button class="button">Guidance Counselor</button></a>
+            <a href="../school_admin_manage_account/Adviser_Account.php"><button class="button">Manage Accounts</button></a>
+            <a href="../manage_student_list/grade_kinder_section_1.php"><button class="button">Manage Students List's</button></a>
         </div>
     </div>
 

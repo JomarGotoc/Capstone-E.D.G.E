@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             header("Location: ../button_options/School_Admin_Create_Account.php");
                             break;
                         case 'sdo_admin':
-                            header("Location: ../button_options/SDO_CreateAccnt_button.php");
+                            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
                             break;
                         case 'executive_committee':
                             header("Location: ../monitoring_tracking/executive_monitoring_reports.php");
