@@ -840,7 +840,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -971,6 +971,13 @@ $conn->close();
                     <h3 style="padding: 7px;">P.A.R. Identification<i class='bx bx-filter-alt'; id="star-filter-icon"></i></h3>
                 </div>
             </div>
+
+            </div> <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 7px;">Grade & Section</h3>
+                </div>
+            </div>
+
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 7px;">Status <i class='bx bx-filter-alt'></i></h3>
@@ -1004,7 +1011,7 @@ foreach ($results as $tableResult) {
 
 
         <div class="plus-button">
-            <a hre3f="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
     <div class="popup" id="popup" style="display: none;">
