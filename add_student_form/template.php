@@ -3,6 +3,7 @@ include "../database.php";
 
 // Code 1
 $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
+$currentFileName1 = basename($_SERVER["SCRIPT_FILENAME"]);
 $words = explode('_', $currentFileName);
 
 if (count($words) >= 4) {
@@ -503,7 +504,7 @@ if(isset($_POST['submit2'])){
 
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $currentFileName1?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="error-message">
             <?php echo $errorMsg; ?>
