@@ -1,3 +1,112 @@
+<?php
+if(isset($_POST['submit'])) {
+    // Get the current PHP file name without the extension
+    $tableName = basename(__FILE__, '.php');
+
+    include('../database.php');
+
+    // SQL query to create a table with the specified columns
+    $sqlCreateTable = "CREATE TABLE IF NOT EXISTS $tableName (
+        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        lrn VARCHAR(20) NOT NULL,
+        fullname VARCHAR(255) NOT NULL,
+        gender VARCHAR(10) NOT NULL
+    )";
+
+    // Execute the query to create the table
+    if ($conn->query($sqlCreateTable) === TRUE) {
+    } else {
+    }
+
+    if(isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
+        // CSV file upload
+        $csv_file = $_FILES['csv_file']['tmp_name'];
+
+        // Read CSV file starting from the second row (B1)
+        if (($handle = fopen($csv_file, "r")) !== FALSE) {
+            // Skip the first row
+            fgetcsv($handle, 1000, ",");
+
+            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                // Process and insert data into the database
+                $lrn = $data[0];
+                $fullname = $data[1];
+                $gender = $data[2];
+
+                // SQL query to insert data into the table
+                $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender) VALUES ('$lrn', '$fullname', '$gender')";
+
+                // Execute the query
+                $conn->query($sqlInsertData);
+            }
+            fclose($handle);
+        }
+    } elseif(isset($_POST['lrn']) && isset($_POST['fullname']) && isset($_POST['gender'])) {
+        // User input
+        $lrn = $_POST['lrn'];
+        $fullname = $_POST['fullname'];
+        $gender = $_POST['gender'];
+
+        // SQL query to insert data into the table
+        $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender) VALUES ('$lrn', '$fullname', '$gender')";
+
+        // Execute the query
+        $conn->query($sqlInsertData);
+    }
+
+    // Close the database connection
+    $conn->close();
+}
+?>
+<?php
+// Get the current PHP file name without extension
+$currentFileName = pathinfo(__FILE__, PATHINFO_FILENAME);
+
+// Remove .php extension
+$tableName = str_replace('.php', '', $currentFileName);
+
+include('../database.php');
+
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die('Connection failed: ' . $conn->connect_error);
+}
+
+// Check if the table exists in the database
+$tableExistsQuery = "SHOW TABLES LIKE '$tableName'";
+$tableExistsResult = $conn->query($tableExistsQuery);
+
+if ($tableExistsResult->num_rows > 0) {
+    $getMalesQuery = "SELECT * FROM $tableName WHERE gender = 'male'";
+    $result = $conn->query($getMalesQuery);
+}
+
+// Close the database connection
+$conn->close();
+?>
+<?php
+// Get the current PHP file name without extension
+$currentFile = basename(__FILE__, '.php');
+
+// Assuming you have a MySQL database connection
+include('../database.php');
+
+// Find the table with the same name as the PHP file
+$tableName = $currentFile;
+
+// Query to retrieve all males from the identified table
+$query = "SELECT * FROM $tableName WHERE gender = 'male'";
+$result = $conn->query($query);
+
+$femaleQuery = "SELECT * FROM $tableName WHERE gender = 'female'";
+$femaleResult = $conn->query($femaleQuery);
+
+// Display the results
+
+
+// Close the database connection
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,6 +249,7 @@
 
         h3{
         color: #fff;
+        text-align: center;
         }
 
         ::-webkit-scrollbar {
@@ -420,7 +530,14 @@
             background-color: #DDDAE7;
             color: #0C052F;
         }
-   
+        #selectedFileName {
+        display: block;
+        margin: 0 auto;
+        background-color: white;
+        padding: 5px;
+        border-radius: 8px; /* Add rounded corners */
+        color: black; /* Set text color to black */
+    }
     </style>
 </head>
 <body>
@@ -450,46 +567,47 @@
     </div>
 
     <div class="main-container" >
-        <div class="navbar-container">
+    <div class="navbar-container">
                 <div class="navbar-content">
 
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Kindergarten</div>
-                    <div class="navbar-item"><a href="kinder_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="kinder_section2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item" ><a href="kinder_section3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="kinder_section4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="kinder_section5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="kinder_section6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
+                    <div class="navbar-item"><a href="grade_kinder_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item"><a href="grade_kinder_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
+                    <div class="navbar-item" ><a href="grade_kinder_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
+                    <div class="navbar-item"><a href="grade_kinder_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
+                    <div class="navbar-item"><a href="grade_kinder_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
+                    <div class="navbar-item"><a href="grade_kinder_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
                     
                     <hr color="#0d054c" size="5" >
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 1</div>
-                    <div class="navbar-item"><a href="grade1_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item" style="background:#F3F3F3; color:#130550"><a href="grade1_section2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade1_section3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade1_section4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade1_section5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade1_section6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
+                    <div class="navbar-item" style="background:#F3F3F3; color:#130550"><a href="grade1_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item" ><a href="grade_1_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
+                    <div class="navbar-item"><a href="grade_1_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
+                    <div class="navbar-item"><a href="grade_1_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
+                    <div class="navbar-item"><a href="grade_1_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
+                    <div class="navbar-item"><a href="grade_1_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
 
                     <hr color="#0d054c" size="5" >
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 2</div>
-                    <div class="navbar-item"><a href="grade2_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="grade2_section2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade2_section3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade2_section4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade2_section5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade2_section6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
+                    <div class="navbar-item"><a href="grade_2_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
 
                     <hr color="#0d054c" size="5" >
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 3</div>
-                    <div class="navbar-item"><a href="grade3_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="grade3_section2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade3_section3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade3_section4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade3_section5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade3_section6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
+                    <div class="navbar-item"><a href="grade_3_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
                     
                 </div>
             </div>
+
 
         <div class="main-content">
         <div id="section1Content">
@@ -500,13 +618,22 @@
                     <th>Learner's Reference Number (LRN)</th>
                     <th>Student's Name</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0721226926</td>
-                    <td>Vanessa Aldana Junio</td>
-                </tr>
 
+                <?php
+                if ($result->num_rows > 0) {
+                    $count = 1; 
+                    while ($row = $result->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td>' . $count . '</td>';
+                        echo '<td>' . $row['lrn'] . '</td>';
+                        echo '<td>' . $row['fullname'] . '</td>';
+                        echo '</tr>';
+                        $count++;
+                    }
+                }
+                ?>
             </table>
+            
         </div>
         <div id="section2Content">
             <h3>Female</h3>
@@ -516,13 +643,22 @@
                     <th>Learner's Reference Number (LRN)</th>
                     <th>Student's Name</th>
                 </tr>
-                <tr>
-                    <td>1</td>
-                    <td>0721226926</td>
-                    <td>Vanessa Aldana Junio</td>
-                </tr>
+                <?php
+                if ($femaleResult->num_rows > 0) {
+                    $count = 1; // Resetting the count for female records
+                    while ($row = $femaleResult->fetch_assoc()) {
+                        echo '<tr>';
+                        echo '<td>' . $count . '</td>';
+                        echo '<td>' . $row['lrn'] . '</td>';
+                        echo '<td>' . $row['fullname'] . '</td>';
+                        echo '</tr>';
+                        $count++;
+                    }
+                }
+                ?>
 
             </table>
+
         </div>
     </div>
 
@@ -539,13 +675,13 @@
             <span class="close" onclick="closeModal()">&times;</span>
             <img src="../img/logo.png" class="modal-logo" alt="Logo">
             <h2>Add Student</h2>
-            <form id="studentForm">
+            <form id="studentForm" method="post" action="" enctype="multipart/form-data">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required><br><br>
+                <input type="text" id="name" name="fullname" ><br><br>
                 <label for="lrn">LRN:</label>
-                <input type="number" id="lrn" name="lrn" pattern="[0-9]*" required><br><br>
+                <input type="number" id="lrn" name="lrn"  ><br><br>
                 <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
+                <select id="gender" name="gender" >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                 </select>
@@ -557,16 +693,16 @@
                 </div>
 
                 <div class="upload-container">
-                    <label for="studentListFile" class="upload-button">Choose File (CSV)</label><br><br>
-                    <input type="file" id="studentListFile" name="studentListFile" accept=".csv" style="display: none;">
+                <h3>Upload File</h3>
+                <input type="file" name="csv_file" id="csv_file"><br>
+                   <br>
                     <select id="genderSelection" name="genderSelection">
                         <option value="Male">Gender:</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
                 </div>
-
-                <button type="submit">Submit</button>
+                <button type="submit" name="submit">Submit</button>
             </form>
         </div>
     </div>
