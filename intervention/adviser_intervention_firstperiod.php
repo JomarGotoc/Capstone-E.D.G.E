@@ -542,7 +542,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="lrn" id="lrn" value="" placeholder=" ">
+                <input type="text" name="lrn" id="lrn" value="<?= isset($lrn) ? htmlspecialchars($lrn) : ''; ?>" readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -552,7 +552,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                    <input type="text" name="grade&section" id="grade&section" value="" placeholder=" " class="right">
+                <input type="text" name="grade" class="right"  id="grade" value="<?= isset($grade) ? htmlspecialchars($grade) : ''; ?>" readonly>
                 </div>
             </div>
         </div>
@@ -566,7 +566,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="name" id="name" value="" placeholder=" ">
+                <input type="text" name="fullname" id="fullname" value="<?= isset($fullname) ? htmlspecialchars($fullname) : ''; ?>" readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -576,7 +576,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
+                <input type="text" name="classification" id="classification" class="right" value="<?= isset($classification) ? htmlspecialchars($classification) : ''; ?>" readonly>
                 </div>
             </div>
         </div>
@@ -636,6 +636,52 @@
     </form>
 
     <script src="adviser_intervention.js"></script>
+    <!-- Add this script at the end of your HTML body -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to get URL parameter by name
+        function getUrlParameter(name) {
+            name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Fetch parameters from URL
+        var lrnFromURL = getUrlParameter('lrn');
+        var fullnameFromURL = getUrlParameter('fullname');
+        var classificationFromURL = getUrlParameter('classification');
+        var gradeFromURL = getUrlParameter('grade');
+        var sectionFromURL = getUrlParameter('section');
+
+        // Set values in their respective input fields
+        if (lrnFromURL) {
+            var lrnInput = document.getElementById('lrn');
+            lrnInput.value = lrnFromURL;
+        }
+
+        if (fullnameFromURL) {
+            var fullnameInput = document.getElementById('fullname');
+            fullnameInput.value = fullnameFromURL;
+        }
+
+        if (classificationFromURL) {
+            var classificationInput = document.getElementById('classification');
+            classificationInput.value = classificationFromURL.trim(); // Remove leading and trailing spaces
+        }
+
+        if (gradeFromURL) {
+            var gradeInput = document.getElementById('grade');
+            gradeInput.value = gradeFromURL.trim(); // Remove leading and trailing spaces
+        }
+
+        if (sectionFromURL) {
+            var sectionInput = document.getElementById('section');
+            sectionInput.value = sectionFromURL.trim(); // Remove leading and trailing spaces
+        }
+    });
+</script>
+
  
 </body>
 </html>
