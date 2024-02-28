@@ -280,13 +280,16 @@
         <div class="logo"></div>
         <h2>Select School</h2>
 
-        <form action="Select_school.php" method="post">
-        <div class="search-container">
-            <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required>
-            <i class='bx bx-search-alt-2 search-icon'></i>
-        </div>
-        <a href="Create_Account_School_Admin.php"><button type="submit" name="submit">Confirm</button></a>
-    </form>
+        <form>
+    <div class="search-container">
+        <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required>
+        <i class='bx bx-search-alt-2 search-icon'></i>
+    </div>
+    <a href="Create_Account_School_Admin.php">
+        <button type="button">Confirm</button>
+    </a>
+</form>
+
 
     </div>
 
