@@ -170,7 +170,7 @@ $conn->close();
         }
 
         .vertical-line {
-            margin-left: 37rem;
+            margin-left: 40rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -811,7 +811,7 @@ $conn->close();
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 100px;
+            right: 150px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }
@@ -968,11 +968,11 @@ $conn->close();
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">P.A.R. Identification<i class='bx bx-filter-alt'; id="star-filter-icon"></i></h3>
+                    <h3 style="padding: 7px;">P.A.R. Identification</h3>
                 </div>
             </div>
 
-            </div> <div class="wide-column">
+            <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 7px;">Grade & Section</h3>
                 </div>
@@ -980,7 +980,7 @@ $conn->close();
 
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Status <i class='bx bx-filter-alt'></i></h3>
+                    <h3 style="padding: 7px;">Status </h3>
                 </div>
             </div>
             <div class="wide-column">

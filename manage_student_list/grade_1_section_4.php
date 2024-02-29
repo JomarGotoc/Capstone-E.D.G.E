@@ -254,19 +254,16 @@ $conn->close();
 
         ::-webkit-scrollbar {
             width: 10px;
-            visibility: hidden;
         }
     
         ::-webkit-scrollbar-thumb {
-            background-color: #190572;
+            background-color: #0d054c;
             border-radius: 20px;
-            visibility: hidden;
         }
     
         ::-webkit-scrollbar-track {
             background-color: #E2DFEE;
             border-radius: 20px;
-            visibility: hidden;
         }
 
         .dropdown-content {
@@ -317,8 +314,12 @@ $conn->close();
 
         .navbar-content {
             height: 100%;
-            overflow-y: auto; 
+            overflow-y: hidden; 
             padding-right: 5px; 
+        }
+
+        .navbar-content:hover{
+            overflow-y: auto;
         }
 
         .navbar-item {
