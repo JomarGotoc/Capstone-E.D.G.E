@@ -5,9 +5,6 @@ if (isset($_GET['update'])) {
     $classification = $_GET['classification'];
     $grade = $_GET['grade'];
     $section = $_GET['section'];
-
-    // Now you can use these variables as needed in your update logic
-    // For example, you can display them on the page or use them in a form
    
 }
 ?>

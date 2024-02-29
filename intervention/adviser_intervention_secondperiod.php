@@ -1,3 +1,65 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    $lrn = $_POST["lrn"];
+    $fullname = $_POST["fullname"];
+    $grade = $_POST["grade"];
+    $identification = $_POST["classification"];
+    $gname = $_POST["gname"];
+    $number = $_POST["number"];
+    $notes = $_POST["notes"];
+    $intervention = $_POST["intervention"];
+    $topic = $_POST["topic"];
+    $advice = $_POST["advice"];
+    $status = $_POST["status"];
+
+    include('../database.php');
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $sql = "INSERT INTO adviser_intervention_second_period (lrn, fullname, grade, identification, gname, number, notes, intervention, topic, advice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssssss", $lrn, $fullname, $grade, $identification, $gname, $number, $notes, $intervention, $topic, $advice, $status);
+    
+    if ($stmt->execute()) {
+        header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Check if LRN parameter is set in the URL
+    if (isset($_GET['lrn'])) {
+        // Get LRN from the URL
+        $lrn = $_GET['lrn'];
+
+        include('../database.php');
+
+        $sql = "SELECT COUNT(*) as count FROM adviser_intervention_second_period WHERE lrn = '$lrn'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $count = $row["count"];
+
+            if ($count > 0) {
+                header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+            }
+        } else {
+            echo "Error: " . $conn->error;
+        }
+
+        $conn->close();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -504,7 +566,7 @@
         <div class="school">
             <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
         </div>
-        <a href="adviser_intervention_secondperiod_view.php"><button class="update" >Update Record</button></a>
+        <button class="update" name="update">Update Record</button>
     </div>
     <div class="main-container">
         <div class="row">
@@ -524,11 +586,11 @@
                 </div>
             </div>
             <div class="column half-width">
-                    <select id="topdown" name="school-year" class="containers first">
-                        <option value="school-year">Pending</option>
-                        <option value="school-year">On-going</option>
-                        <option value="school-year">Resolved</option>
-                        <option value="school-year">Unresolved</option>
+                    <select id="topdown" name="status" class="containers first">
+                        <option value="Pending">Pending</option>
+                        <option value="On-going">On-going</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Unresolved">Unresolved</option>
                     </select>
             </div>
         </div>
@@ -601,7 +663,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="cnumber" id="cnumber" value="" placeholder=" " class="right">
+                    <input type="text" name="number" id="cnumber" value="" placeholder=" " class="right">
                     <i class='bx bx-edit editable-icon' style=" cursor: pointer"></i>
                 </div>
             </div>
@@ -610,12 +672,12 @@
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="notes" placeholder="Adviser's Notes"></textarea>                
+                    <textarea class="editable-text" name="notes" id="notes" placeholder="Adviser's Notes"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter"></textarea>                
+                    <textarea class="editable-text" name="topic" id="topic" placeholder="Topic/Matter"></textarea>                
                 </div>
             </div>
         </div>
@@ -623,12 +685,12 @@
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="intervention" placeholder="Intervention"></textarea>                
+                    <textarea class="editable-text" name="intervention" id="intervention" placeholder="Intervention"></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="advice" placeholder="Advice"></textarea>                
+                    <textarea class="editable-text" name="advice" id="advice" placeholder="Advice"></textarea>                
                 </div>
             </div>
         </div>
