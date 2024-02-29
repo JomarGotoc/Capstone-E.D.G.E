@@ -1,3 +1,269 @@
+<?php
+    include('../database.php');
+    $english = 0;
+    $filipino = 0;
+    $numeracy = 0;
+    $behavioral = 0;
+    $resolvedEnglish = 0;
+    $resolvedFilipino = 0;
+    $resolvedNumeracy = 0;
+    $resolvedBehavioral = 0;
+
+    $query = "SELECT identification, status, COUNT(*) as count FROM adviser_intervention_first_period
+            WHERE identification IN ('Academic - Literacy in English', 'Academic - Literacy in Filipino', 'Academic - Numeracy', 'Behavioral')
+            GROUP BY identification, status";
+
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            switch ($row["identification"]) {
+                case 'Academic - Literacy in English':
+                    $english += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedEnglish += $row["count"];
+                    }
+                    break;
+                case 'Academic - Literacy in Filipino':
+                    $filipino += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedFilipino += $row["count"];
+                    }
+                    break;
+                case 'Academic - Numeracy':
+                    $numeracy += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedNumeracy += $row["count"];
+                    }
+                    break;
+                case 'Behavioral':
+                    $behavioral += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedBehavioral += $row["count"];
+                    }
+                    break;
+            }
+        }
+    }
+?>
+<?php
+    include('../database.php');
+    $english2 = 0;
+    $filipino2 = 0;
+    $numeracy2 = 0;
+    $behavioral2 = 0;
+    $resolvedEnglish2 = 0;
+    $resolvedFilipino2 = 0;
+    $resolvedNumeracy2 = 0;
+    $resolvedBehavioral2 = 0;
+
+    $query = "SELECT identification, status, COUNT(*) as count FROM adviser_intervention_second_period
+            WHERE identification IN ('Academic - Literacy in English', 'Academic - Literacy in Filipino', 'Academic - Numeracy', 'Behavioral')
+            GROUP BY identification, status";
+
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            switch ($row["identification"]) {
+                case 'Academic - Literacy in English':
+                    $english2 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedEnglish2 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Literacy in Filipino':
+                    $filipino2 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedFilipino2 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Numeracy':
+                    $numeracy2 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedNumeracy2 += $row["count"];
+                    }
+                    break;
+                case 'Behavioral':
+                    $behavioral2 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedBehavioral2 += $row["count"];
+                    }
+                    break;
+            }
+        }
+    }
+?>
+<?php
+    include('../database.php');
+    $english3 = 0;
+    $filipino3 = 0;
+    $numeracy3 = 0;
+    $behavioral3 = 0;
+    $resolvedEnglish3 = 0;
+    $resolvedFilipino3 = 0;
+    $resolvedNumeracy3 = 0;
+    $resolvedBehavioral3 = 0;
+
+    $query = "SELECT identification, status, COUNT(*) as count FROM adviser_intervention_third_period
+            WHERE identification IN ('Academic - Literacy in English', 'Academic - Literacy in Filipino', 'Academic - Numeracy', 'Behavioral')
+            GROUP BY identification, status";
+
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            switch ($row["identification"]) {
+                case 'Academic - Literacy in English':
+                    $english3 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedEnglish3 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Literacy in Filipino':
+                    $filipino3 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedFilipino3 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Numeracy':
+                    $numeracy3 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedNumeracy3 += $row["count"];
+                    }
+                    break;
+                case 'Behavioral':
+                    $behavioral3 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedBehavioral3 += $row["count"];
+                    }
+                    break;
+            }
+        }
+    }
+?>
+<?php
+    include('../database.php');
+    $english4 = 0;
+    $filipino4 = 0;
+    $numeracy4 = 0;
+    $behavioral4 = 0;
+    $resolvedEnglish4 = 0;
+    $resolvedFilipino4 = 0;
+    $resolvedNumeracy4 = 0;
+    $resolvedBehavioral4 = 0;
+
+    $query = "SELECT identification, status, COUNT(*) as count FROM adviser_intervention_fourth_period
+            WHERE identification IN ('Academic - Literacy in English', 'Academic - Literacy in Filipino', 'Academic - Numeracy', 'Behavioral')
+            GROUP BY identification, status";
+
+    $result = $conn->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            switch ($row["identification"]) {
+                case 'Academic - Literacy in English':
+                    $english4 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedEnglish4 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Literacy in Filipino':
+                    $filipino4 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedFilipino4 += $row["count"];
+                    }
+                    break;
+                case 'Academic - Numeracy':
+                    $numeracy4 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedNumeracy4 += $row["count"];
+                    }
+                    break;
+                case 'Behavioral':
+                    $behavioral4 += $row["count"];
+                    if ($row["status"] === 'Resolved') {
+                        $resolvedBehavioral4 += $row["count"];
+                    }
+                    break;
+            }
+        }
+    }
+?>
+<?php
+include('../database.php');
+$tables = array(
+    'adviser_intervention_first_period',
+    'adviser_intervention_second_period',
+    'adviser_intervention_third_period',
+    'adviser_intervention_fourth_period'
+);
+
+$totalEnglish = 0;
+$totalFilipino = 0;
+$totalNumeracy = 0;
+$totalBehavioral = 0;
+
+$totalResolvedEnglish = 0;
+$totalResolvedFilipino = 0;
+$totalResolvedNumeracy = 0;
+$totalResolvedBehavioral = 0;
+
+foreach ($tables as $table) {
+    $sqlEnglish = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - literacy in english'";
+    $resultEnglish = $conn->query($sqlEnglish);
+    if ($resultEnglish->num_rows > 0) {
+        $rowEnglish = $resultEnglish->fetch_assoc();
+        $totalEnglish += $rowEnglish['count'];
+    }
+    $sqlFilipino = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - literacy in filipino'";
+    $resultFilipino = $conn->query($sqlFilipino);
+    if ($resultFilipino->num_rows > 0) {
+        $rowFilipino = $resultFilipino->fetch_assoc();
+        $totalFilipino += $rowFilipino['count'];
+    }
+    $sqlNumeracy = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - numeracy'";
+    $resultNumeracy = $conn->query($sqlNumeracy);
+    if ($resultNumeracy->num_rows > 0) {
+        $rowNumeracy = $resultNumeracy->fetch_assoc();
+        $totalNumeracy += $rowNumeracy['count'];
+    }
+    $sqlBehavioral = "SELECT COUNT(*) as count FROM $table WHERE identification = 'behavioral'";
+    $resultBehavioral = $conn->query($sqlBehavioral);
+    if ($resultBehavioral->num_rows > 0) {
+        $rowBehavioral = $resultBehavioral->fetch_assoc();
+        $totalBehavioral += $rowBehavioral['count'];
+    }
+    $sqlResolvedEnglish = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - literacy in english' AND status = 'resolved'";
+    $resultResolvedEnglish = $conn->query($sqlResolvedEnglish);
+    if ($resultResolvedEnglish->num_rows > 0) {
+        $rowResolvedEnglish = $resultResolvedEnglish->fetch_assoc();
+        $totalResolvedEnglish += $rowResolvedEnglish['count'];
+    }
+    $sqlResolvedFilipino = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - literacy in filipino' AND status = 'resolved'";
+    $resultResolvedFilipino = $conn->query($sqlResolvedFilipino);
+    if ($resultResolvedFilipino->num_rows > 0) {
+        $rowResolvedFilipino = $resultResolvedFilipino->fetch_assoc();
+        $totalResolvedFilipino += $rowResolvedFilipino['count'];
+    }
+    $sqlResolvedNumeracy = "SELECT COUNT(*) as count FROM $table WHERE identification = 'academic - numeracy' AND status = 'resolved'";
+    $resultResolvedNumeracy = $conn->query($sqlResolvedNumeracy);
+    if ($resultResolvedNumeracy->num_rows > 0) {
+        $rowResolvedNumeracy = $resultResolvedNumeracy->fetch_assoc();
+        $totalResolvedNumeracy += $rowResolvedNumeracy['count'];
+    }
+    $sqlResolvedBehavioral = "SELECT COUNT(*) as count FROM $table WHERE identification = 'behavioral' AND status = 'resolved'";
+    $resultResolvedBehavioral = $conn->query($sqlResolvedBehavioral);
+    if ($resultResolvedBehavioral->num_rows > 0) {
+        $rowResolvedBehavioral = $resultResolvedBehavioral->fetch_assoc();
+        $totalResolvedBehavioral += $rowResolvedBehavioral['count'];
+    }
+}
+
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -470,55 +736,55 @@
                 <tr>
                     <tr>
                         <th style="width:10%">Academic - Literacy in English</th>
-                        <th style="width:9%">435</th>
-                        <th style="width:9%">57</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
+                        <th style="width:9%"><?php echo $english ?></th>
+                        <th style="width:9%"><?php echo $resolvedEnglish ?></th>
+                        <th style="width:9%"><?php echo $english2 ?></th>
+                        <th style="width:9%"><?php echo $resolvedEnglish2 ?></th>
+                        <th style="width:9%"><?php echo $english3 ?></th>
+                        <th style="width:9%"><?php echo $resolvedEnglish3 ?></th>
+                        <th style="width:9%"><?php echo $english4 ?></th>
+                        <th style="width:9%"><?php echo $resolvedEnglish4 ?></th>
+                        <th style="width:9%"><?php echo $totalEnglish ?></th>
+                        <th style="width:9%"><?php echo $totalResolvedEnglish ?></th>
                     </tr>
                     <tr>
                         <th style="width:10%">Academic - Literacy in Filipino</th>
-                        <th style="width:9%">435</th>
-                        <th style="width:9%">57</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
+                        <th style="width:9%"><?php echo $filipino ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino ?></th>
+                        <th style="width:9%"><?php echo $filipino2 ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino2 ?></th>
+                        <th style="width:9%"><?php echo $filipino3 ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino3 ?></th>
+                        <th style="width:9%"><?php echo $filipino4 ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino4 ?></th>
+                        <th style="width:9%"><?php echo $totalFilipino ?></th>
+                        <th style="width:9%"><?php echo $totalResolvedFilipino ?></th>
                     </tr>
                     <tr>
                         <th style="width:10%">Academic - Numeracy</th>
-                        <th style="width:9%">435</th>
-                        <th style="width:9%">57</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
+                        <th style="width:9%"><?php echo $numeracy ?></th>
+                        <th style="width:9%"><?php echo $resolvedNumeracy ?></th>
+                        <th style="width:9%"><?php echo $numeracy2 ?></th>
+                        <th style="width:9%"><?php echo $resolvedNumeracy2 ?></th>
+                        <th style="width:9%"><?php echo $numeracy3 ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino3 ?></th>
+                        <th style="width:9%"><?php echo $numeracy4 ?></th>
+                        <th style="width:9%"><?php echo $resolvedNumeracy4 ?></th>
+                        <th style="width:9%"><?php echo $totalNumeracy ?></th>
+                        <th style="width:9%"><?php echo $totalResolvedNumeracy ?></th>
                     </tr>
                     <tr>
                         <th style="width:10%">Behavioral</th>
-                        <th style="width:9%">435</th>
-                        <th style="width:9%">57</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
-                        <th style="width:9%">452</th>
+                        <th style="width:9%"><?php echo $behavioral ?></th>
+                        <th style="width:9%"><?php echo $resolvedBehavioral ?></th>
+                        <th style="width:9%"><?php echo $behavioral2 ?></th>
+                        <th style="width:9%"><?php echo $resolvedBehavioral2 ?></th>
+                        <th style="width:9%"><?php echo $behavioral3 ?></th>
+                        <th style="width:9%"><?php echo $resolvedFilipino3 ?></th>
+                        <th style="width:9%"><?php echo $behavioral4 ?></th>
+                        <th style="width:9%"><?php echo $resolvedBehavioral4 ?></th>
+                        <th style="width:9%"><?php echo $totalBehavioral ?></th>
+                        <th style="width:9%"><?php echo $totalResolvedBehavioral ?></th>
                     </tr>
                 </tr>
             </tbody>
