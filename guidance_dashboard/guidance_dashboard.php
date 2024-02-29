@@ -198,6 +198,7 @@
 
         .school h3{
             color: #fff;
+            margin-left: 15px;
         }
 
         .main-container {
@@ -629,12 +630,12 @@
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">P.A.R. Identification<i class='bx bx-filter-alt'; id="star-filter-icon"></i></h3>
+                    <h3 style="padding: 7px;">P.A.R. Identification</h3>
                 </div>
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Status <i class='bx bx-filter-alt'></i></h3>
+                    <h3 style="padding: 7px;">Status </h3>
                 </div>
             </div>
             <div class="wide-column">
