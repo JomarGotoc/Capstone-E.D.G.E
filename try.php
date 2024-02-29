@@ -1,42 +1,36 @@
 <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
 
-// Initialize variables
-$english = 0;
-$filipino = 0;
-$numeracy = 0;
-$behavioral = 0;
+// Create connection
+$conn = new mysqli($servername, $username, $password);
 
-include('database.php');
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 
-// Query to count occurrences for each identification
-$query = "SELECT identification, COUNT(*) as count FROM adviser_intervention_first_period
-          WHERE identification IN ('Academic - Literacy in English', 'Academic - Literacy in Filipino', 'Academic - Numeracy', 'Behavioral')
-          GROUP BY identification";
-
+// Query to get all databases
+$query = "SHOW DATABASES";
 $result = $conn->query($query);
 
-if ($result->num_rows > 0) {
-    // Process data of each row
+// Check if the query was successful
+if ($result) {
+    // Fetch each row from the result set
     while ($row = $result->fetch_assoc()) {
-        switch ($row["identification"]) {
-            case 'Academic - Literacy in English':
-                $english = $row["count"];
-                break;
-            case 'Academic - Literacy in Filipino':
-                $filipino = $row["count"];
-                break;
-            case 'Academic - Numeracy':
-                $numeracy = $row["count"];
-                break;
-            case 'Behavioral':
-                $behavioral = $row["count"];
-                break;
+        $databaseName = $row['Database'];
+
+        // Exclude default databases and databases that cannot be deleted
+        if (!in_array($databaseName, ['information_schema', 'mysql', 'performance_schema', 'sys', 'other_excluded_db'])) {
+            // Output the database name
+            echo $databaseName . "<br>";
         }
     }
 } else {
-    echo "No results found";
+    echo "Error: " . $conn->error;
 }
 
-// Close connection
+// Close the connection
 $conn->close();
 ?>

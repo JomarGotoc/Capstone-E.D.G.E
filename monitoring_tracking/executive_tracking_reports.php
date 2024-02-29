@@ -1,3 +1,50 @@
+<?php
+
+include('../database.php');
+
+// Initialize total students count
+$totalstudents = 0;
+
+// Get the name of the current database
+$dbnameQuery = "SELECT DATABASE() AS dbname";
+$dbnameResult = $conn->query($dbnameQuery);
+
+if ($dbnameResult) {
+    $dbnameRow = $dbnameResult->fetch_assoc();
+    $dbname = ucfirst($dbnameRow['dbname']);
+    
+    $searchTerm1 = 'grade';
+    $searchTerm2 = 'section';
+
+    $query = "SHOW TABLES LIKE '%$searchTerm1%$searchTerm2%'";
+    $result = $conn->query($query);
+
+    if ($result) {
+        $tableCount = $result->num_rows;
+
+        if ($tableCount > 0) {
+            while ($row = $result->fetch_row()) {
+                $tableName = $row[0];
+
+                // Count records in 'lrn' field for each table
+                $countQuery = "SELECT COUNT(lrn) AS recordCount FROM $tableName";
+                $countResult = $conn->query($countQuery);
+
+                if ($countResult) {
+                    $countRow = $countResult->fetch_assoc();
+                    $recordCount = $countRow['recordCount'];
+                    $totalstudents += $recordCount;
+                }
+            }
+        } 
+    }
+}
+
+// Close connection
+$conn->close();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -550,8 +597,8 @@
 
         <table border="0" >
             <tr>
-                <th style="width:29%">School</th>
-                <th style="width:12%">123</th>
+                <th style="width:29%"><?php echo $dbname ?></th>
+                <th style="width:12%"><?php echo $totalstudents ?></th>
                 <th style="width:12%">123</th>
                 <th style="width:12%">123</th>
                 <th style="width:12%">123</th>
