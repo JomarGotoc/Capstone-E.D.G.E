@@ -580,7 +580,7 @@ $conn->close();
                     
                     <hr color="#0d054c" size="5" >
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 1</div>
-                    <div class="navbar-item" style="background:#F3F3F3; color:#130550"><a href="grade1_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
+                    <div class="navbar-item"><a href="grade1_section1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item" ><a href="grade_1_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
                     <div class="navbar-item"><a href="grade_1_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
                     <div class="navbar-item"><a href="grade_1_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
@@ -600,7 +600,7 @@ $conn->close();
                     <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 3</div>
                     <div class="navbar-item"><a href="grade_3_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
                     <div class="navbar-item"><a href="grade_3_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade_3_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
+                    <div class="navbar-item"style="background:#F3F3F3; color:#130550"><a href="grade_3_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
                     <div class="navbar-item"><a href="grade_3_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
                     <div class="navbar-item"><a href="grade_3_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
                     <div class="navbar-item"><a href="grade_3_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
