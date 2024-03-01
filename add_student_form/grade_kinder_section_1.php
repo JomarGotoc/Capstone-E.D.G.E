@@ -527,7 +527,7 @@ if(isset($_POST['submit2'])){
 
                 <div class="row">
                     <div class="column">Name</div>
-                    <input type="text" class="column" placeholder="Full Name" name="fullname" id="fullname" value="<?php echo $fullname1; ?>" readonly>
+                    <input type="text" class="column" placeholder="Full Name" name="fullname" id="fullname" value="<?php echo $fullname1; ?>">
                     <div class="column">Quarter</div>
                     <select class="classification column" name="quarter" >
                             <option value="1">1</option>
@@ -539,9 +539,9 @@ if(isset($_POST['submit2'])){
 
                 <div class="row">
                     <div class="column">Grade</div>
-                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php echo $grade; ?>" readonly>
+                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php echo $grade; ?>" >
                     <div class="column">Section </div>
-                    <input type="text" class="column" placeholder="Section" name="section" id="section" value="<?php echo $section; ?>" readonly>
+                    <input type="text" class="column" placeholder="Section" name="section" id="section" value="<?php echo $section; ?>">
                     <select class="classification" name="classification">
                             <option value="Academic - Literacy in English">Academic - Literacy in English</option>
                             <option value="Academic - Literacy in Filipino">Academic - Literacy in Filipino</option>

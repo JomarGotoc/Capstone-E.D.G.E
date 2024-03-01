@@ -10,7 +10,10 @@ if(isset($_POST['submit'])) {
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         lrn VARCHAR(20) NOT NULL,
         fullname VARCHAR(255) NOT NULL,
-        gender VARCHAR(10) NOT NULL
+        gender VARCHAR(10) NOT NULL,
+        grade VARCHAR(10) NOT NULL,
+        section VARCHAR(10) NOT NULL
+
     )";
 
     // Execute the query to create the table
@@ -32,9 +35,11 @@ if(isset($_POST['submit'])) {
                 $lrn = $data[0];
                 $fullname = $data[1];
                 $gender = $data[2];
+                $grade = $data[3];
+                $section = $data[4];
 
                 // SQL query to insert data into the table
-                $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender) VALUES ('$lrn', '$fullname', '$gender')";
+                $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender, grade, section) VALUES ('$lrn', '$fullname', '$gender' , '$grade', '$section')";
 
                 // Execute the query
                 $conn->query($sqlInsertData);
@@ -48,7 +53,7 @@ if(isset($_POST['submit'])) {
         $gender = $_POST['gender'];
 
         // SQL query to insert data into the table
-        $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender) VALUES ('$lrn', '$fullname', '$gender')";
+        $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender, grade, section) VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section')";
 
         // Execute the query
         $conn->query($sqlInsertData);

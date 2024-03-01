@@ -101,7 +101,7 @@ $conn->close();
         // Close the statement
         $stmt->close();
     }
-?>
+?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -978,7 +978,7 @@ $conn->close();
 
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Status </h3>
+                    <h3 style="padding: 7px;">Status</h3>
                 </div>
             </div>
             <div class="wide-column">

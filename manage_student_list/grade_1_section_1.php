@@ -10,7 +10,9 @@ if(isset($_POST['submit'])) {
         id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         lrn VARCHAR(20) NOT NULL,
         fullname VARCHAR(255) NOT NULL,
-        gender VARCHAR(10) NOT NULL
+        gender VARCHAR(10) NOT NULL,
+        grade VARCHAR(10) NOT NULL,
+        section VARCHAR(10) NOT NULL
     )";
 
     // Execute the query to create the table
