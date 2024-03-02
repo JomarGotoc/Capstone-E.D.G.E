@@ -3,7 +3,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $lrn = $_POST["lrn"];
     $fullname = $_POST["fullname"];
     $grade = $_POST["grade"];
-    $identification = $_POST["classification"];
+    $classification = $_POST["classification"];
     $gname = $_POST["gname"];
     $number = $_POST["number"];
     $notes = $_POST["notes"];
@@ -18,13 +18,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO adviser_intervention_first_period (lrn, fullname, grade, identification, gname, number, notes, intervention, topic, advice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Validate and sanitize the classification input to prevent SQL injection
+    $safeClassification = mysqli_real_escape_string($conn, $classification);
+
+    // Create a mapping for classification to table name
+    $tableMapping = array(
+        "Academic - Literacy in English" => "academic_english",
+        "Academic - Literacy in Filipino" => "academic_filipino",
+        "Academic - Numeracy" => "academic_numeracy",
+        "Behavioral" => "behavioral"
+    );
+
+    // Get the corresponding table name from the mapping
+    $tableName = $tableMapping[$safeClassification];
+
+    $sql = "UPDATE $tableName SET 
+            fullname = ?,
+            gname = ?,
+            number = ?,
+            notes = ?,
+            intervention = ?,
+            topic = ?,
+            advice = ?,
+            status = ?
+            WHERE lrn = ? AND quarter = '1'";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssss", $lrn, $fullname, $grade, $identification, $gname, $number, $notes, $intervention, $topic, $advice, $status);
+    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
         header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
-
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -33,33 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $conn->close();
 }
 ?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Check if LRN parameter is set in the URL
-    if (isset($_GET['lrn'])) {
-        // Get LRN from the URL
-        $lrn = $_GET['lrn'];
 
-        include('../database.php');
-
-        $sql = "SELECT COUNT(*) as count FROM adviser_intervention_first_period WHERE lrn = '$lrn'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count"];
-
-            if ($count > 0) {
-                header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
-            }
-        } else {
-            echo "Error: " . $conn->error;
-        }
-
-        $conn->close();
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -614,7 +610,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade" class="right"  id="grade" value="<?= isset($grade) ? htmlspecialchars($grade) : ''; ?>" readonly>
+                <input type="text" name="grade" class="right" id="grade" value="<?= isset($grade) ? htmlspecialchars($grade . ' - ' . $section) : ''; ?>" readonly>
                 </div>
             </div>
         </div>
@@ -699,7 +695,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     <script src="adviser_intervention.js"></script>
     <!-- Add this script at the end of your HTML body -->
-<script>
+    <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Function to get URL parameter by name
         function getUrlParameter(name) {
@@ -732,17 +728,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             classificationInput.value = classificationFromURL.trim(); // Remove leading and trailing spaces
         }
 
-        if (gradeFromURL) {
-            var gradeInput = document.getElementById('grade');
-            gradeInput.value = gradeFromURL.trim(); // Remove leading and trailing spaces
-        }
-
-        if (sectionFromURL) {
-            var sectionInput = document.getElementById('section');
-            sectionInput.value = sectionFromURL.trim(); // Remove leading and trailing spaces
+        if (gradeFromURL || sectionFromURL) {
+            var gradeSectionInput = document.getElementById('grade');
+            var combinedGradeSection = (gradeFromURL ? gradeFromURL : '') + (sectionFromURL ? ' - ' + sectionFromURL : '');
+            gradeSectionInput.value = combinedGradeSection.trim(); // Remove leading and trailing spaces
         }
     });
 </script>
+
 
  
 </body>

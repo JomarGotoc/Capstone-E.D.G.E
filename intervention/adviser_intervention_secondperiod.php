@@ -3,7 +3,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $lrn = $_POST["lrn"];
     $fullname = $_POST["fullname"];
     $grade = $_POST["grade"];
-    $identification = $_POST["classification"];
+    $classification = $_POST["classification"];
     $gname = $_POST["gname"];
     $number = $_POST["number"];
     $notes = $_POST["notes"];
@@ -18,13 +18,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO adviser_intervention_second_period (lrn, fullname, grade, identification, gname, number, notes, intervention, topic, advice, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    // Validate and sanitize the classification input to prevent SQL injection
+    $safeClassification = mysqli_real_escape_string($conn, $classification);
+
+    // Create a mapping for classification to table name
+    $tableMapping = array(
+        "Academic - Literacy in English" => "academic_english",
+        "Academic - Literacy in Filipino" => "academic_filipino",
+        "Academic - Numeracy" => "academic_numeracy",
+        "Behavioral" => "behavioral"
+    );
+
+    // Get the corresponding table name from the mapping
+    $tableName = $tableMapping[$safeClassification];
+
+    $sql = "UPDATE $tableName SET 
+            fullname = ?,
+            gname = ?,
+            number = ?,
+            notes = ?,
+            intervention = ?,
+            topic = ?,
+            advice = ?,
+            status = ?
+            WHERE lrn = ? AND quarter = '2'";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssssss", $lrn, $fullname, $grade, $identification, $gname, $number, $notes, $intervention, $topic, $advice, $status);
+    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
-        header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
-
+        header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
     } else {
         echo "Error: " . $stmt->error;
     }
