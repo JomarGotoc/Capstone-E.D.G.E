@@ -332,7 +332,7 @@ $conn->close();
         }
 
         .wide-columns {
-            flex: 0 0 calc(38% - 7px);
+            flex: 0 0 calc(22% - 7px);
             margin-bottom: 20px;
             margin-top: 10px;
         }
@@ -1011,7 +1011,7 @@ $conn->close();
 
                 echo "<tr class='sheshable' style='background-color: $rowColor;'>
                         <th style='width:15%'>{$row['lrn']}</th>
-                        <th style='width:35%'>{$row['fullname']}</th>
+                        <th style='width:22%'>{$row['fullname']}</th>
                         <th style='width:15%'>{$classification}</th>
                         <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
                         <th style='width:15%'>{$row['status']}</th>
