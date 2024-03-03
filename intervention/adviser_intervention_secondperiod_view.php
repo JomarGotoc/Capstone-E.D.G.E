@@ -388,7 +388,7 @@ $conn->close();
         }
 
         .half-width {
-            flex: 0 0 calc(15%);
+            flex: 0 0 calc(25%);
             margin-right: 0;
         }
 
@@ -466,7 +466,7 @@ $conn->close();
             color:#130550;
             font-weight: 500;
             font-size: 15px;
-            width: 180px;
+            width: 310px;
             border: none;
             background: none;
             margin-left: 10px;

@@ -1,45 +1,4 @@
-<?php
-// Assuming you have a database connection
-include("../database.php");
 
-$id = $_GET["id"];
-
-// Retrieve user information from the database based on ID
-$sql_select_user = "SELECT * FROM adviser WHERE id=$id";
-$result_user = $conn->query($sql_select_user);
-
-if ($result_user->num_rows > 0) {
-    $row_user = $result_user->fetch_assoc();
-    $fullname = $row_user["fullname"];
-    $password = $row_user["password"];
-    $employment_number = $row_user["employment_number"];
-    $date = $row_user["date"];
-} else {
-    echo "User not found";
-    $conn->close();
-    exit();
-}
-
-// Check if form is submitted for updating
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $new_full_name = $_POST["fullname"];
-    $new_password = $_POST["password"];
-    $new_employment_number = $_POST["employment_number"];
-    $new_date = $_POST["date"];
-
-    // Update user information in the database
-    $sql_update = "UPDATE adviser SET fullname='$new_full_name', password='$new_password', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
-
-    if ($conn->query($sql_update) === TRUE) {
-        header("Location: adviser_account.php");
-    } else {
-        $error_message = "Error updating record: " . $conn->error;
-    }
-}
-
-// Close the database connection
-$conn->close();
-?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -244,7 +203,7 @@ $conn->close();
 
             textarea,
             input[type="text"],
-            input[type="password"],
+            input[type="email"],
             select, #date-added {
             height: 20x;
             padding: 10px;
@@ -408,8 +367,8 @@ $conn->close();
 
                 <div class="columns">
                     <div class="form-group">
-                        <label for="pass">Password</label>
-                        <input type="password" id="pass" name="password" value="<?php echo $password; ?>" required>
+                        <label for="pass">Email</label>
+                        <input type="email" id="email" name="email" value="" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>

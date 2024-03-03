@@ -406,8 +406,8 @@ $conn->close();
 
                 <div class="columns">
                     <div class="form-group">
-                        <label for="pass">Password</label>
-                        <input type="password" id="pass" name="password" value="<?php echo $date; ?>" required>
+                        <label for="pass">Email</label>
+                        <input type="email" id="email" name="email" value="" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>

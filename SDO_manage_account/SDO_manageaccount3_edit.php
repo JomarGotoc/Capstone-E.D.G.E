@@ -244,7 +244,7 @@ $conn->close();
 
             textarea,
             input[type="text"],
-            input[type="password"],
+            input[type="email"],
             select, #date-added {
             height: 20x;
             padding: 10px;
@@ -408,8 +408,8 @@ $conn->close();
 
                 <div class="columns">
                     <div class="form-group">
-                        <label for="pass">Password</label>
-                        <input type="password" id="pass" name="password" value="<?php echo $password; ?>" required>
+                        <label for="pass">Email</label>
+                        <input type="email" id="email" name="email" value=" " required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
