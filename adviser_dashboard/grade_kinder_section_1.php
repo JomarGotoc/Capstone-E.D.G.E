@@ -870,14 +870,12 @@ $conn->close();
                     <h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3>
                 </div>
             </div>
-            <div class="column full-width">
-                <div class="column third-column">
-                    <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Search Pupil's Name">
-                        <i class='bx bx-search search-icon'></i>
-                    </div>
-                </div>
-            </div>
+            <div class="column third-column">
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search Pupil's Name">
+        <i class='bx bx-search search-icon'></i>
+    </div>
+</div>
         </div>
 
 
@@ -984,25 +982,48 @@ $conn->close();
             </div>
         </div>
 
-        <table border="0" >
-        <?php
-foreach ($results as $tableResult) {
-    if ($tableResult) {
-        list($tableName, $tableData) = $tableResult;
-        foreach ($tableData as $row) {
-            echo "<tr class='sheshable'>
-                    <th style='width:15%'>{$row['lrn']}</th>
-                    <th style='width:35%'>{$row['fullname']}</th>
-                    <th style='width:15%'>{$row['classification']}</th>
-                    <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                    <th style='width:15%'>{$row['status']}</th>
-                    <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
-                  </tr>";
+        <table border="0">
+    <?php
+    foreach ($results as $tableResult) {
+        if ($tableResult) {
+            list($tableName, $tableData) = $tableResult;
+            foreach ($tableData as $row) {
+                // Determine the row color based on classification
+                $classification = $row['classification'];
+                $rowColor = '';
+
+                switch ($classification) {
+                    case 'Behavioral':
+                        $rowColor = 'red';
+                        break;
+                    case 'Academic - Numeracy':
+                        $rowColor = 'blue';
+                        break;
+                    case 'Academic - Literacy in English':
+                        $rowColor = 'yellow';
+                        break;
+                    case 'Academic - Literacy in Filipino':
+                        $rowColor = 'green';
+                        break;
+                        $rowColor = '';
+                        break;
+                }
+
+                echo "<tr class='sheshable' style='background-color: $rowColor;'>
+                        <th style='width:15%'>{$row['lrn']}</th>
+                        <th style='width:35%'>{$row['fullname']}</th>
+                        <th style='width:15%'>{$classification}</th>
+                        <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
+                        <th style='width:15%'>{$row['status']}</th>
+                        <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
+                      </tr>";
+            }
         }
     }
-}
-?>
-        </table>
+    ?>
+</table>
+
+
 
 
         <div class="plus-button">
@@ -1117,6 +1138,21 @@ foreach ($results as $tableResult) {
 
     });
 </script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $(".search-input").on("keyup", function () {
+        var searchText = $(this).val().toLowerCase();
+
+        $(".sheshable").each(function () {
+            var rowText = $(this).text().toLowerCase();
+            $(this).toggle(rowText.indexOf(searchText) > -1);
+        });
+    });
+});
+</script>
+
 
  
 </body>
