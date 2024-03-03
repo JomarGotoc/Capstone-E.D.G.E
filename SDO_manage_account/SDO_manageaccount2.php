@@ -1,28 +1,28 @@
-
-<?php 
-include "../database.php";
+<?php
+include('../database.php');
 $sql = "SELECT * FROM executive_committee";
-$result = $conn->query($sql);
+$result1 = $conn->query($sql);
 
-if (isset($_GET['id'])) {
+if(isset($_POST['reset_password'])) {
+    // Get user ID from the form
+    $user_id = $_POST['user_id'];
+    $query = "SELECT * FROM executive_committee WHERE id = $user_id";
+    $result = $conn->query($query);
 
-    $user_id = $_GET['id'];
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $employment_number = $row['employment_number'];
+        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+        $update_query = "UPDATE executive_committee SET password = '$hashed_password' WHERE id = $user_id";
 
-    $sql = "DELETE FROM `executive_committee` WHERE `id`='$user_id'";
-
-     $result = $conn->query($sql);
-
-     if ($result == TRUE) {
-
-        header("Location: ".$_SERVER['PHP_SELF']);
-
-    }else{
-
-        echo "Error:" . $sql . "<br>" . $conn->error;
-
+        if ($conn->query($update_query) === TRUE) {
+        } else {
+        }
+    } else {
+        echo "User not found";
     }
-
-} 
+    $conn->close();
+}
 ?> 
 <!DOCTYPE html>
 <html lang="en">
@@ -719,9 +719,9 @@ if (isset($_GET['id'])) {
             <table class="table">
             <?php
 
-            if ($result->num_rows > 0) {
+            if ($result1->num_rows > 0) {
 
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $result1->fetch_assoc()) {
 
             ?>
                 <tr class="sheshable">
@@ -732,7 +732,10 @@ if (isset($_GET['id'])) {
                     <td class="rows">
                         <div class="button-container">
                         <a href="sdo_manageaccount2_edit.php?id=<?php echo $row['id']; ?>"><button class="edit-button">Edit</button></a>
-                        <a href="sdo_manageaccount.php?id=<?php echo $row['id']; ?>"><button class="delete-button">Reset Password</button></a>
+                        <form method="post" action="SDO_manageaccount2.php">
+                            <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
+                            <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
+                        </form>
                         </div>
                     </td>
                     

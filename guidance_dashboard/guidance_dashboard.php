@@ -1,3 +1,10 @@
+<?php
+include('../database.php');
+$sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral";
+$result = $conn->query($sql);
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -643,17 +650,26 @@
                     <h3 style="padding: 7px;">Action</h3>
                 </div>
             </div>
-        </div>
+    </div>
+    <table border="0">
+        <?php
+    if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Define row color dynamically or use a default color
+        $rowColor = '#ffffff';
 
-        <table border="0" >
-            <tr>
-                <th style="width:15%">03-2122-035908</th>
-                <th style="width:36%">Junio, Vanessa Mei</th>
-                <th style="width:15%">Adacemic - Literacy</th>
-                <th style="width:15%">On-Going</th>
-                <th style="width:15%" class="act"><button id="updateRecordButton">UPDATE RECORD</button></th>
-            </tr>
-        </table>
+        echo "<tr class='sheshable' style='background-color: $rowColor;'>
+                <th style='width:15%'>{$row['lrn']}</th>
+                <th style='width:35%'>{$row['fullname']}</th>
+                <th style='width:15%'>{$row['classification']}</th>
+                <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
+                <th style='width:15%'>{$row['status']}</th>
+                <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
+            </tr>";
+    }
+}
+?>
+    </table>
     </div>
 
     <div class="popup" id="popup" style="display: none;">
@@ -661,52 +677,124 @@
         <h2>SELECT RECORD TO VIEW / UPDATE</h2>
       
         <div class="row">
-        <a href="../intervention/counselor_intervention_firstperiod.php"> <div class="containerss" id="container1" >
-          <p>Q1</p> 
-          </div> </a>
+        <a id="q1Link" href="../intervention/counselor_intervention_firstperiod.php">
+            <div class="containerss" id="container1">
+                <p>Q1</p>
+            </div>
+        </a>
       
-        <a href="../intervention/counselor_intervention_secondperiod.php">  <div class="containerss" id="container2">
-            <p>Q2</p>
-          </div> </a>
-        </div>
+        <a id="q2Link" href="../intervention/counselor_intervention_secondperiod.php">
+            <div class="containerss" id="container2">
+                <p>Q2</p>
+            </div>
+        </a>
       
         <div class="row">
-        <a href="../intervention/counselor_intervention_thirdperiod.php">  <div class="containerss" id="container3">
-            <p>Q3</p> 
-          </div></a>
+        <a id="q3Link" href="../intervention/counselor_intervention_thirdperiod.php">
+            <div class="containerss" id="container3">
+                <p>Q3</p>
+            </div>
+        </a>
       
-        <a href="../intervention/counselor_intervention_fourthperiod.php"> <div class="containerss" id="container4">
-         <p>Q4</p>
-          </div></a>
+        <a id="q4Link" href="../intervention/counselor_intervention_fourthperiod.php">
+            <div class="containerss" id="container4">
+                <p>Q4</p>
+            </div>
+        </a>
         </div>
       
       </div>
+    </div>
 
     <script src="adviserdashboard.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            function showPopup() {
-                var popup = document.getElementById('popup');
-                popup.style.display = 'flex';
-                popup.style.position = 'fixed';
-                popup.style.top = '12%'; 
-                popup.style.left = '50%';
-                popup.style.transform = 'translateX(-50%)';
-                popup.style.zIndex = '1';
-            }
-    
-            function closePopup() {
-                var popup = document.getElementById('popup');
-                popup.style.display = 'none';
-            }
-    
-            var updateRecordButton = document.getElementById('updateRecordButton');
-            updateRecordButton.addEventListener('click', showPopup);
-    
-            var closeIcon = document.querySelector('.close-icon');
-            closeIcon.addEventListener('click', closePopup);
+    document.addEventListener("DOMContentLoaded", function () {
+        function showPopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'flex';
+            popup.style.position = 'fixed';
+            popup.style.top = '12%';
+            popup.style.left = '50%';
+            popup.style.transform = 'translateX(-50%)';
+            popup.style.zIndex = '1';
+
+            var row = this.closest('tr');
+            var lrn = row.querySelector('th:nth-child(1)').textContent;
+            var fullname = row.querySelector('th:nth-child(2)').textContent;
+            var classification = row.querySelector('th:nth-child(3)').textContent;
+            var gradeSection = row.querySelector('th:nth-child(4)').textContent; // Assuming 4th column is for grade
+            var status = row.querySelector('th:nth-child(5)').textContent;
+            var gradeSectionParts = gradeSection.split('-');
+            var grade = gradeSectionParts[0].trim();
+            var section = gradeSectionParts[1].trim();// Assuming 5th column is for section
+
+            // Pass data to Q1 link
+            var q1Link = document.getElementById('q1Link');
+            q1Link.href = '../intervention/counselor_intervention_firstperiod.php?lrn=' + encodeURIComponent(lrn) +
+                '&fullname=' + encodeURIComponent(fullname) +
+                '&classification=' + encodeURIComponent(classification) +
+                '&grade=' + encodeURIComponent(grade) +
+                '&section=' + encodeURIComponent(section) + // Include the section parameter
+                '&status=' + encodeURIComponent(status);
+
+
+            // Pass data to Q2 link
+            var q2Link = document.getElementById('q2Link');
+            q2Link.href = '../intervention/counselor_intervention_secondperiod.php?lrn=' + encodeURIComponent(lrn) +
+                '&fullname=' + encodeURIComponent(fullname) +
+                '&classification=' + encodeURIComponent(classification) +
+                '&grade=' + encodeURIComponent(grade) +
+                '&section=' + encodeURIComponent(section) +
+                '&status=' + encodeURIComponent(status);
+            // Pass data to Q3 link
+            var q3Link = document.getElementById('q3Link');
+            q3Link.href = '../intervention/counselor_intervention_thirdperiod.php?lrn=' + encodeURIComponent(lrn) +
+                '&fullname=' + encodeURIComponent(fullname) +
+                '&classification=' + encodeURIComponent(classification) +
+                '&grade=' + encodeURIComponent(grade) +
+                '&section=' + encodeURIComponent(section) +
+                '&status=' + encodeURIComponent(status);
+
+            // Pass data to Q4 link
+            var q4Link = document.getElementById('q4Link');
+            q4Link.href = '../intervention/counselor_intervention_fourthperiod.php?lrn=' + encodeURIComponent(lrn) +
+                '&fullname=' + encodeURIComponent(fullname) +
+                '&classification=' + encodeURIComponent(classification) +
+                '&grade=' + encodeURIComponent(grade) +
+                '&section=' + encodeURIComponent(section) +
+                '&status=' + encodeURIComponent(status);
+        }
+
+        function closePopup() {
+            var popup = document.getElementById('popup');
+            popup.style.display = 'none';
+        }
+
+        var updateRecordButtons = document.querySelectorAll('.updateRecordButton');
+
+        updateRecordButtons.forEach(function (button) {
+            button.addEventListener('click', showPopup);
         });
-    </script>
+
+        var closeIcon = document.querySelector('.close-icon');
+        closeIcon.addEventListener('click', closePopup);
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    $(".search-input").on("keyup", function () {
+        var searchText = $(this).val().toLowerCase();
+
+        $(".sheshable").each(function () {
+            var rowText = $(this).text().toLowerCase();
+            $(this).toggle(rowText.indexOf(searchText) > -1);
+        });
+    });
+});
+</script>
  
 </body>
 </html>

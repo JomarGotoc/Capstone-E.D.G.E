@@ -1062,6 +1062,7 @@ $conn->close();
         </div>
       
       </div>
+    </div>
 
     <script src="adviserdashboard.js"></script>
     <script>

@@ -1,3 +1,56 @@
+<?php
+include('../database.php');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$lrnToDisplay = $_GET["lrn"] ?? '';
+
+// Array of tables to search for LRN
+$tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavioral'];
+$data = [];  // Array to store fetched data
+
+foreach ($tables as $table) {
+    $sql = "SELECT * FROM $table WHERE lrn = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $lrnToDisplay);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // LRN found in the current table
+        $row = $result->fetch_assoc();
+        
+        // Merge the data into the $data array
+        $data = array_merge($data, $row);
+    }
+
+    $stmt->close();
+}
+
+// Check if any data was found
+if (!empty($data)) {
+    // Output data from the fetched rows
+    $lrn = $data['lrn'];
+    $fullname = $data['fullname'];
+    $gname = $data['gname'];
+    $number = $data['number'];
+    $grade = $data['grade'];
+    $classification = $data['classification'];
+    $status = $data['status'];
+    $advice = $data['advice'];
+    $topic = $data['topic'];
+    $notes = $data['notes'];
+    $intervention = $data['intervention'];
+} else {
+    // LRN not found in any table
+    echo "LRN not found in the specified tables.";
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -533,12 +586,12 @@
                 </div>
             </div>
             <div class="column half-width">
-                    <select id="topdown" name="school-year" class="containers first" disabled>
-                        <option value="school-year">Pending</option>
-                        <option value="school-year">On-going</option>
-                        <option value="school-year">Resolved</option>
-                        <option value="school-year">Unresolved</option>
-                    </select>
+                <select id="topdown" name="school-year" class="containers first" disabled>
+                    <option value="Pending" <?php echo ($status === 'Pending') ? 'selected' : ''; ?>>Pending</option>
+                    <option value="On-going" <?php echo ($status === 'On-going') ? 'selected' : ''; ?>>On-going</option>
+                    <option value="Resolved" <?php echo ($status === 'Resolved') ? 'selected' : ''; ?>>Resolved</option>
+                    <option value="Unresolved" <?php echo ($status === 'Unresolved') ? 'selected' : ''; ?>>Unresolved</option>
+                </select>
             </div>
         </div>
 
@@ -551,7 +604,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="lrn" id="lrn" value="" placeholder=" ">
+                <input type="text" name="lrn" id="lrn" value="<?php echo htmlspecialchars($lrn); ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -561,7 +614,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                    <input type="text" name="grade&section" id="grade&section" value="" placeholder=" " class="right">
+                <input type="text" name="grade&section" id="grade&section" value="<?php echo htmlspecialchars($grade); ?>" placeholder="" class="right" readonly>
                 </div>
             </div>
         </div>
@@ -575,7 +628,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="name" id="name" value="" placeholder=" ">
+                <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($fullname); ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -585,7 +638,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
+                <input type="text" name="identification" id="identification" value="<?php echo htmlspecialchars($classification); ?>" placeholder=" " class="right" readonly>
                 </div>
             </div>
         </div>
@@ -599,7 +652,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="gname" id="gname" value="" placeholder=" ">              
+                <input type="text" name="gname" id="gname" value="<?php echo htmlspecialchars($gname); ?>" placeholder=" "readonly>            
                 </div>
             </div>
             <div class="column column-left">
@@ -609,19 +662,19 @@
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="cnumber" id="cnumber" value="" placeholder=" " class="right">           </div>
+                <input type="text" name="cnumber" id="cnumber" value="<?php echo htmlspecialchars($number); ?>" placeholder=" " class="right" readonly>          </div>
             </div>
         </div>
 
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="notes" placeholder="Counselor's Notes"></textarea>                
+                <textarea class="editable-text" id="notes" placeholder="Adviser's Notes" readonly><?php echo htmlspecialchars($notes); ?></textarea >                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter"></textarea>                
+                <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly><?php echo htmlspecialchars($topic); ?></textarea >              
                 </div>
             </div>
         </div>
@@ -629,12 +682,12 @@
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="intervention" placeholder="Intervention"></textarea>                
+                <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly><?php echo htmlspecialchars($intervention); ?></textarea>                 
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="advice" placeholder="Advice"></textarea>                
+                <textarea class="editable-text" id="advice" placeholder="Advice" readonly><?php echo htmlspecialchars($advice); ?></textarea >               
                 </div>
             </div>
         </div>

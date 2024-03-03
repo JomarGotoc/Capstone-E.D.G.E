@@ -1,3 +1,47 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    $lrn = $_POST["lrn"];
+    $fullname = $_POST["fullname"];
+    $grade = $_POST["grade"];
+    $classification = $_POST["classification"];
+    $gname = $_POST["gname"];
+    $number = $_POST["number"];
+    $notes = $_POST["notes"];
+    $intervention = $_POST["intervention"];
+    $topic = $_POST["topic"];
+    $advice = $_POST["advice"];
+    $status = $_POST["status"];
+
+    include('../database.php');
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+
+    $sql = "UPDATE behavioral SET 
+            fullname = ?,
+            gname = ?,
+            number = ?,
+            notes = ?,
+            intervention = ?,
+            topic = ?,
+            advice = ?,
+            status = ?
+            WHERE lrn = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
+    
+    if ($stmt->execute()) {
+        header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -484,156 +528,48 @@
         
     </style>
 </head>
-<body>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    $lrn = $_POST["lrn"];
+    $fullname = $_POST["fullname"];
+    $grade = $_POST["grade"];
+    $classification = $_POST["classification"];
+    $gname = $_POST["gname"];
+    $number = $_POST["number"];
+    $notes = $_POST["notes"];
+    $intervention = $_POST["intervention"];
+    $topic = $_POST["topic"];
+    $advice = $_POST["advice"];
+    $status = $_POST["status"];
 
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <img src="../img/logo.png" class="logs">
-                <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
-            </div>
-        </div>
-    </header>
+    include('../database.php');
 
-
-    <form action="" method="POST" class="form-container">
-    <div class="top-container">
-        <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
-        </div>
-        <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
-        </div>
-        <a href="counselor_intervention_thirdperiod_view.php"><button class="update" >Update Record</button></a>
-    </div>
-    <div class="main-container">
-        <div class="row">
-            <div class="column">
-                <div class="containers first">
-                    <h3>S.Y. 2023 - 2024</h3>
-                </div>
-            </div>
-            <div class="column">
-                <div class="containers second">
-                    <h3><i class='bx bx-printer' ></i>Print Reports</h3>
-                </div>
-            </div>
-            <div class="column column-left">
-                <div class="containers third" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Q1 P.A.R. Status</h3>
-                </div>
-            </div>
-            <div class="column half-width">
-                    <select id="topdown" name="school-year" class="containers first">
-                        <option value="school-year">Pending</option>
-                        <option value="school-year">On-going</option>
-                        <option value="school-year">Resolved</option>
-                        <option value="school-year">Unresolved</option>
-                    </select>
-            </div>
-        </div>
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
 
-        <div class="row">
-            <div class="column" >
-                <div class="containers" style="background-color: #190572">
-                    <h3 style="margin-left:10px">LRN</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="lrn" id="lrn" value="" placeholder=" ">
-                </div>
-            </div>
-            <div class="column column-left">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Grade & Section</h3>
-                </div>
-            </div>
-            <div class="column half-width">
-                <div class="containers" style="background-color: #F3F3F3; ">
-                    <input type="text" name="grade&section" id="grade&section" value="" placeholder=" " class="right">
-                </div>
-            </div>
-        </div>
+    $sql = "UPDATE behavioral SET 
+            fullname = ?,
+            gname = ?,
+            number = ?,
+            notes = ?,
+            intervention = ?,
+            topic = ?,
+            advice = ?,
+            status = ?
+            WHERE lrn = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
+    
+    if ($stmt->execute()) {
+        header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+    } else {
+        echo "Error: " . $stmt->error;
+    }
 
-
-        <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Student's Name</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="name" id="name" value="" placeholder=" ">
-                </div>
-            </div>
-            <div class="column column-left">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Identification</h3>
-                </div>
-            </div>
-            <div class="column half-width">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
-                </div>
-            </div>
-        </div>
-
-        
-        <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Guardian Name</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="" placeholder=" ">
-                </div>
-            </div>
-            <div class="column column-left">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Contact Number</h3>
-                </div>
-            </div>
-            <div class="column half-width">
-                <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="" placeholder=" " class="right">
-                </div>
-            </div>
-        </div>
-
-        <div class="row ints">
-            <div class="column">
-                <div class="text-container">
-                    <textarea class="editable-text" id="notes" placeholder="Counselor's Notes"></textarea>                
-                </div>
-            </div>
-            <div class="column wide-columns">
-                <div class="text-container">
-                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter"></textarea>                
-                </div>
-            </div>
-        </div>
-
-        <div class="row ">
-            <div class="column">
-                <div class="text-container">
-                    <textarea class="editable-text" id="intervention" placeholder="Intervention"></textarea>                
-                </div>
-            </div>
-            <div class="column wide-columns">
-                <div class="text-container">
-                    <textarea class="editable-text" id="advice" placeholder="Advice"></textarea>                
-                </div>
-            </div>
-        </div>
-    </div>
-    </form>
-
-    <script src="counselor_intervention.js"></script>
- 
-</body>
+    $stmt->close();
+    $conn->close();
+}
+?>
 </html>
