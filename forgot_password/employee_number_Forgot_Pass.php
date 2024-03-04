@@ -1,5 +1,69 @@
+<?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../vendor/autoload.php';
 
+function sendOTP($toEmail, $otp) {
+    $mail = new PHPMailer(true);
+
+    try {
+        // Server settings
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'edge.developers1234@gmail.com'; 
+        $mail->Password = 'rlhe negz baut bnps'; 
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+        $mail->setFrom('edge.developers1234@gmail.com', 'EDGE');
+        $mail->addAddress($toEmail);
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Your OTP Code';
+        $mail->Body = 'Your OTP code is: ' . $otp;
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+
+if (isset($_POST['continue'])) {
+    $employmentNumber = $_POST['employment_number'];
+
+    include('../database.php');
+    $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
+
+    foreach ($tables as $table) {
+        $sql = "SELECT * FROM $table WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $employmentNumber);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        if ($row) {
+            $userEmail = $row['email'];
+            $otpCode = generateOTP();
+            $updateSql = "UPDATE $table SET otp = ? WHERE employment_number = ?";
+            $updateStmt = $conn->prepare($updateSql);
+            $updateStmt->bind_param('ss', $otpCode, $employmentNumber);
+            $updateStmt->execute();
+            sendOTP($userEmail, $otpCode);
+            header("location: forgot_pass_enter_otp.php");
+            break;
+        }
+    }
+    $conn->close();
+}
+
+function generateOTP() {
+    return rand(100000, 999999);
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

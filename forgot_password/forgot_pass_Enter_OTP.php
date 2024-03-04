@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $otp = $_POST["otp"];
 
     if (verifyOTP($conn, $otp)) {
-        header("Location: ../Reset_Password/Forgot_pass_Reset_Pass.php");
+        header("Location: ../forgot_Password/Forgot_pass_Reset_Pass.php");
     } else {
         echo "Invalid OTP. Please try again.";
     }
