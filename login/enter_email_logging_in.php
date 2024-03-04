@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit();
         } elseif ($tableName === 'school_admin') {
             // Redirect to school_admin.php
-            header("Location: ../button_options/school_admin.php");
+            header("Location: ../button_options/School_Admin_Create_Account.php");
             exit();
         } elseif ($tableName === 'sdo_admin') {
             // Redirect to sdo_admin.php
