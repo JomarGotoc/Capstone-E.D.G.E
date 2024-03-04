@@ -140,7 +140,7 @@
         }
 
         .vertical-line {
-            margin-left: 37rem;
+            margin-left: 40rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -221,39 +221,51 @@
             margin-top: 20px;
             border: 2px dashed #fff;
             border-radius: 10px;
-            padding: 80px;
+            padding: 20px;
             text-align: center;
             color: #fff;
         }
 
-        .file-upload-container:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        .file-upload-container p {
+            margin-bottom: 20px;
         }
 
-        .file-upload-container p{
-            margin-bottom: 50px;
+        .file-upload-container .form-group {
+            margin-bottom: 20px;
         }
 
-        #file-input {
-            display: none;
+        .file-upload-container label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
         }
 
-        .import-button {
+        .file-upload-container select, .file-upload-container input[type="file"] {
+            width: 90%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            background-color:#190572;
+            opacity: 80%;
+            color: #fff;
+        }
+
+        .file-upload-container button {
             background-color: #D9D9D9;
             color: #190572;
             padding: 10px 20px;
-            margin-top: 30px;
             border: 1px solid #fff;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
         }
 
-        .import-button:hover {
+        .file-upload-container button:hover {
             background-color: #0C052F; 
             border: 1px solid #190572;
-            color: #D9D9D9;
+            color:#D9D9D9;
         }
+
         .blue-text{
             color: green;
             font-family: 'Darker Grotesque', sans-serif;
@@ -276,7 +288,7 @@
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 100px;
+            right: 150px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }
@@ -321,7 +333,6 @@
 
     <div class="navbar">
         <nav>
-            <a href="../button_options/School_Admin_Create_Account.php">Create Account</a>
             <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
             <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
         </nav>
@@ -340,35 +351,33 @@
         </div>
 
     <form action="" method="POST" enctype="multipart/form-data">
-    <div class="file-upload-container">
+        <div class="file-upload-container">
         <p>Upload CSV file only</p>
-            
-                <br>
-                <input type="file" id="file" name="file" accept=".csv" required>
-                <br>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="topdown">Grade Level</label>
-                        <select id="topdown" name="grade" >
-                            <option value="kinder">Kinder</option>
-                            <option value="one">1</option>
-                            <option value="two">2</option>
-                            <option value="three">3</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Section</label>
-                        <select id="topdown" name="section" >
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select>
-                    </div>
-            </div>
-        <button type="submit" value="Upload" class="import-button">Import</button>
+        <div class="form-group">
+            <label for="file">Choose File:</label>
+            <input type="file" id="file" name="file" accept=".csv" required>
+        </div>
+        <div class="form-group">
+            <label for="grade">Grade Level:</label>
+            <select id="grade" name="grade">
+                <option value="kinder">Kinder</option>
+                <option value="one">1</option>
+                <option value="two">2</option>
+                <option value="three">3</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="section">Section:</label>
+            <select id="section" name="section">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>
+        <button type="submit" class="import-button">Import</button>
     </div>
     </form>
     </div>

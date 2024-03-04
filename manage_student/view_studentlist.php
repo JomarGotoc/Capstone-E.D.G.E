@@ -6,8 +6,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>School Administrator</title>
     <style>
-            
-        body {
+            body {
             font-family: Arial, sans-serif;
             background-color: #f2f2f2;
             margin: 0;
@@ -21,8 +20,8 @@
         }
         
         .logo {
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             margin: 0 auto 20px;
             background-image: url('../img/logo.png'); 
             background-size: cover;
@@ -66,7 +65,7 @@
         }
 
         .vertical-line {
-            margin-left: 37rem;
+            margin-left: 40rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -135,13 +134,32 @@
         }
 
         nav a:hover {
-            background-color: #ddd;
-            color: black;
+            background-color:#F3F3F3;
+            color:#190572;
         }
 
         h3{
         color: #fff;
+        text-align: center;
         }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            visibility: hidden;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+            background-color: #190572;
+            border-radius: 20px;
+            visibility: hidden;
+        }
+    
+        ::-webkit-scrollbar-track {
+            background-color: #E2DFEE;
+            border-radius: 20px;
+            visibility: hidden;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -149,7 +167,7 @@
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 100px;
+            right: 150px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }
@@ -171,68 +189,267 @@
             display: block;
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        ::-webkit-scrollbar-thumb {
-            background-color: #190572;
-            border-radius: 20px;
-        }
-    
-        ::-webkit-scrollbar-track {
-            background-color: #E2DFEE;
-            border-radius: 20px;
-        }
-
-        
         .main-container {
-            display: grid;
-            grid-template-rows: repeat(2, 1fr);
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
             width: 100%;
-            height: calc(90vh - 140px);
-            margin: 20px;
-            margin-top: 125px;
-            bottom: 0;
-            background-color: #E2DFEE;
-            opacity: 80%;
-            overflow: auto;
-            padding: 20px;
-            border-radius: 20px;
+            display: flex;
+            margin-top: 115px;
+            background-color: #fff;
         }
 
-        .column {
-        flex: 1;
-        padding: 20px;
+        .navbar-container {
+            height: calc(100vh - 140px);
+            width: 15%; 
+            border-right: 1px solid #ddd; 
+            padding-right: 10px; 
+            background-color: #190572; 
+            color: #fff; 
+            padding: 5px;
         }
 
-        .column:first-child{
-            width: 30%;
-        }
-        .blue {
-            background-color: #190572;
-            border-radius: 5px;
-            color: white;
-            padding: 10px;
-            margin-bottom: 10px;
+        .navbar-content {
+            height: 100%;
+            overflow-y: auto; 
+            padding-right: 5px; 
         }
 
-        .blue:hover{
-            background-color: #190572ca;
+        .navbar-item {
+            padding: 10px 0; 
+            margin-bottom: 10px; 
+            padding-left: 10px;
+        }
+
+        .navbar-item-text {
+            margin-left: 10px;
+        }
+
+        .navbar-item a {
+            display: block;
+            color: inherit;
+            text-decoration: none;
             cursor: pointer;
         }
 
-        .options {
-            width: calc(100% - 50px);
-            margin-top: 10px;
-            margin-left: auto;
-            border-bottom: 1px solid #E2DFEE ;
-            border-top: 1px solid #E2DFEE ;
+        .navbar-item:hover {
+            background-color:#F3F3F3;
+            color:#130550;
         }
 
-        
+        .title a{
+            font-weight: 600;
+        }
+        #gradeSectionSelection {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        #gradeDropdown{
+            margin-right: 20px;
+        }
+
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+        }
+
+        label {
+            margin-right: 5px;
+            background-color: #190572;
+            color:#ddd;
+            padding: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .dropdowns {
+            background-color: #fff;
+            color: #000;
+            padding: 5px 10px;
+            width: 150px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+
+        .dropdowns:hover {
+            background-color: #f3f3f3;
+        }
+
+        .dropdowns:focus {
+            outline: none;
+        }
+
+        .main-container {
+            width: 100%;
+            display: flex;
+            margin-top: 115px;
+            background-color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            background: #fff;
+            overflow-y: auto;
+            height: calc(100vh - 140px);
+        }
+
+        .main-content h3 {
+            color: #130550;
+            background-color: #D4D4D4; 
+            padding: 10px;
+            padding-left: 50px;
+            margin: 0;
+        }
+
+        .main-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .main-content th,
+        .main-content td {
+            padding: 4px;
+            text-align: left;
+            padding-left: 15px;
+        }
+
+        .main-content th:first-child,
+        .main-content td:first-child {
+            padding-left: 0;
+            text-align: center; 
+        }
+
+        .main-content th {
+            border: 2px solid #ddd;
+            background-color: #190572;
+            color: #fff; 
+        }
+
+        .main-content tr:nth-child(even) {
+            background-color: #E2DFEECC;
+        }
+
+        .main-content tr:nth-child(odd) {
+            background-color: #B7B7B7CC; 
+        }
+
+        .main-content th:nth-child(1),
+        .main-content td:nth-child(1) {
+            width: 5%; 
+        }
+
+        .main-content th:nth-child(2),
+        .main-content td:nth-child(2) {
+            width: 32%; /
+        }
+
+        .main-content th:nth-child(3),
+        .main-content td:nth-child(3) {
+            width: 63%; 
+        }
+
+        .plus-button {
+            position: absolute;
+            bottom: 40px; 
+            right: 30px; 
+        }
+
+        .plus-button i{
+            font-size: 20px;
+        }
+
+        .add-button {
+            background-color: #130550;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            transition: background-color 0.3s;
+        }
+
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 999; 
+            display: none; 
+        }
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #190572;
+            opacity: 90%;
+            z-index: 1000; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            display: none; 
+            color: #ddd;
+            width: 24rem;
+        }
+
+        .modal h2{
+            top: 0;
+            text-align: center;
+            font-size: 25px;
+            font-weight: 400;
+        }
+
+        .modal-logo {
+            height: 75px;
+            width: 75px;
+            margin: 20px auto; 
+            display: block;
+        }
+
+        #studentForm input,
+        #studentForm select{
+            height: 30px;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        #studentForm label{
+            font-family: 'Darker Grotesque', sans-serif;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        button{
+            width: 100%;
+            background-color: #0C052F;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 30px;
+            cursor: pointer;
+            margin-top: 20px; 
+        }
+
+        button:hover {
+            background-color: #DDDAE7;
+            color: #0C052F;
+        }
     </style>
 </head>
 <body>
@@ -256,67 +473,92 @@
 
     <div class="navbar">
         <nav>
-            <a href="../button_options/School_Admin_Create_Account.php">Create Account</a>
             <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
+            <a href="School_Admin_Studentlist.php" style="background:#F3F3F3; color:#130550">Manage Students List</a>
         </nav>
     </div>
 
-
-    <div class="main-container">
-        <div class="right-bar">
-            <div class="column" id="first-column">
-                <div class="blue" onclick="toggleOptions(this)">Kindergarten</div>
-                <div class="options"></div>
-                <div class="blue" onclick="toggleOptions(this)">Grade 1</div>
-                <div class="options"></div>
-                <div class="blue" onclick="toggleOptions(this)">Grade 2</div>
-                <div class="options"></div>
-                <div class="blue" onclick="toggleOptions(this)">Grade 3</div>
-                <div class="options"></div>
+    <div class="main-container" >
+        <div class="main-content">
+            <div id="gradeSectionSelection">
+                <div class="dropdown-container">
+                    <label for="gradeDropdown">Grade:</label>
+                    <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
+                        <option value="kinder">Kinder</option>
+                        <option value="one">1</option>
+                        <option value="two">2</option>
+                        <option value="three">3</option>
+                    </select>
+                </div>
+                <div class="dropdown-container">
+                    <label for="sectionDropdown">Section:</label>
+                    <select id="sectionDropdown" class="dropdowns" onchange="filterStudents()">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
             </div>
-        </div>
 
-        <div class="column" id="second-column">
+        <div id="section1Content">
+            <h3>Male</h3>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Learner's Reference Number (LRN)</th>
+                    <th>Student's Name</th>
+                </tr>
+
+            </table>
+            
+        </div>
+        <div id="section2Content">
+            <h3>Female</h3>
+            <table>
+                <tr>
+                    <th>#</th>
+                    <th>Learner's Reference Number (LRN)</th>
+                    <th>Student's Name</th>
+                </tr>
+
+            </table>
 
         </div>
     </div>
 
-    <script>
-    function toggleOptions(element) {
-        const options = element.nextElementSibling;
-        if (options.style.display === "block") {
-            options.style.display = "none";
-        } else {
-            document.querySelectorAll('.options').forEach(option => {
-                option.style.display = "none";
-            });
-            options.innerHTML = ''; 
-            const optionsList = ['Section 1', 'Section 2', 'Section 3', 'Section 4', 'Section 5', 'Section 6'];
-            optionsList.forEach(optionText => {
-                const div = document.createElement('div');
-                div.textContent = optionText;
-                div.classList.add('blue', 'option');
-                options.appendChild(div);
-            });
+    <div class="plus-button">
+        <button id="addRecordButton" class="add-button" onclick="togglePopupForm()"><i class='bx bx-plus'></i></button>
+    </div>
+    </div>
 
-            options.style.display = "block";
- 
-            const rect = element.getBoundingClientRect();
-            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            const elementTop = rect.top + scrollTop;
+    <div id="overlay"></div>
 
-            window.scrollTo({
-                top: elementTop,
-                behavior: 'smooth'
-            });
-        }
-    }
-</script>
 
+    <div id="popupForm" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img src="../img/logo.png" class="modal-logo" alt="Logo">
+            <h2>Add Student</h2>
+            <form id="studentForm" method="post" action="" enctype="multipart/form-data">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="fullname" ><br><br>
+                <label for="lrn">LRN:</label>
+                <input type="number" id="lrn" name="lrn"  ><br><br>
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+
+                <button type="submit" name="submit">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="view_studentlist2.js"></script>
     
-    <script src="manage_student.js"></script>
-
- 
 </body>
 </html>

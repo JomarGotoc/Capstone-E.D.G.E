@@ -237,7 +237,7 @@
 
         <div class="buttons">
             <a href="../school_admin_manage_account/Adviser_Account.php"><button class="button">Manage Accounts</button></a>
-            <a href="../manage_student_list/grade_kinder_section_1.php"><button class="button">Manage Students List's</button></a>
+            <a href="../manage_student/School_Admin_Studentlist.php"><button class="button">Manage Students List's</button></a>
         </div>
     </div>
 

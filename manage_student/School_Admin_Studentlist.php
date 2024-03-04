@@ -79,7 +79,7 @@
         }
 
         .vertical-line {
-            margin-left: 37rem;
+            margin-left: 40rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -188,7 +188,7 @@
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 100px;
+            right: 150px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }
@@ -233,7 +233,6 @@
 
     <div class="navbar">
         <nav>
-            <a href="../button_options/School_Admin_Create_Account.php">Create Account</a>
             <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
             <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
         </nav>
@@ -241,13 +240,13 @@
 
  
     <div class="login-container">
-        <a href="../button_options/School_Admin.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>What would like to manage?</h2>
 
         <div class="buttons">
             <a href="view_studentlist.php"><button class="button">View Students List</button></a>
-            <a href="Add_Studentlist.php"><button class="button">Add Students List</button></a>
+            <a href="Add_Studentlist_import.php"><button class="button">Add Students List</button></a>
         </div>
     </div>
 
