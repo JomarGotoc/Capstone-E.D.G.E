@@ -982,7 +982,7 @@ $conn->close();
             </div>
         </div>
 
-        <table border="0">
+        <table border="0" id="pupilTable">
     <?php
     foreach ($results as $tableResult) {
         if ($tableResult) {
@@ -1010,7 +1010,7 @@ $conn->close();
                         break;
                 }
 
-                echo "<tr>
+                echo "<tr class='sheshable'>
                         <th style='width:.5%; background-color: $rowColor;'></th>
                         <th style='width:13%'>{$row['lrn']}</th>
                         <th style='width:22%'>{$row['fullname']}</th>
@@ -1144,16 +1144,23 @@ $conn->close();
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-$(document).ready(function () {
-    $(".search-input").on("keyup", function () {
-        var searchText = $(this).val().toLowerCase();
+    $(document).ready(function () {
+        $(".search-input").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase().trim();
 
-        $(".sheshable").each(function () {
-            var rowText = $(this).text().toLowerCase();
-            $(this).toggle(rowText.indexOf(searchText) > -1);
+            $(".sheshable").each(function () {
+                var rowText = $(this).find('th:nth-child(3)').text().toLowerCase().trim();
+                
+                if (searchText === "") {
+                    // Show all rows if search box is empty
+                    $(this).show();
+                } else {
+                    // Otherwise, toggle based on the search text
+                    $(this).toggle(rowText === searchText);
+                }
+            });
         });
     });
-});
 </script>
 
 
