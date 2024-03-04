@@ -1005,12 +1005,14 @@ $conn->close();
                     case 'Academic - Literacy in Filipino':
                         $rowColor = 'green';
                         break;
+                    default:
                         $rowColor = '';
                         break;
                 }
 
-                echo "<tr class='sheshable' style='background-color: $rowColor;'>
-                        <th style='width:15%'>{$row['lrn']}</th>
+                echo "<tr>
+                        <th style='width:.5%; background-color: $rowColor;'></th>
+                        <th style='width:13%'>{$row['lrn']}</th>
                         <th style='width:22%'>{$row['fullname']}</th>
                         <th style='width:15%'>{$classification}</th>
                         <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
