@@ -1,71 +1,75 @@
 <?php
-    $errorMsg = "";
-    $errorMsg1= "";
+$errorMsg = "";
+$errorMsg1 = "";
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Check if file is uploaded successfully
-        if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
-            $grade = ($_POST["grade"]); // Ensure $grade is an integer
-            $section = ($_POST["section"]); // Ensure $section is an integer
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
+        $grade = ($_POST["grade"]);
+        $section = ($_POST["section"]);
 
-            // Combine grade and section to form the table name
-            $tableName = strtolower("grade_".$grade."_section_" . $section);
+        $tableName = strtolower("grade_" . $grade . "_section_" . $section);
+        $fileName = "grade_" . $grade . "_section_" . $section . ".php";
+        $filePath = "grade_sections/" . $fileName;
 
-            // Check if the table already exists
-            include("../database.php");
+        include("../database.php");
 
-            $checkTableQuery = "SHOW TABLES LIKE '$tableName'";
-            $result = $conn->query($checkTableQuery);
+        $checkTableQuery = "SHOW TABLES LIKE '$tableName'";
+        $result = $conn->query($checkTableQuery);
 
-            if ($result->num_rows > 0) {
-                $errorMsg1 = "Record already exists.";
-            } else {
-                // If the table doesn't exist, create it
-                $createTableQuery = "CREATE TABLE $tableName (
-                                        id INT AUTO_INCREMENT PRIMARY KEY,
-                                        lrn VARCHAR(255) NOT NULL,
-                                        fullname VARCHAR(255) NOT NULL,
-                                        section VARCHAR(255) NOT NULL,
-                                        grade VARCHAR(255) NOT NULL
-                                    )";
-
-                if ($conn->query($createTableQuery) === FALSE) {
-                    $errorMessage = "Error creating table: " . $conn->error;
-                } else {
-                    // Process CSV file and skip the first row (headers)
-                    $file = $_FILES["file"]["tmp_name"];
-                    $csvData = array_map("str_getcsv", file($file));
-
-                    // Skip the first row (headers)
-                    array_shift($csvData);
-
-                    // Loop through the remaining rows
-                    foreach ($csvData as $row) {
-                        $lrn = $row[0]; // Assuming A contains LRN
-                        $fullname = $row[1]; // Assuming B contains Fullname
-                        $section = $row[2]; // Assuming C contains Section
-                        $grade = $row[3]; // Assuming D contains Phone
-
-                        // Insert data into the table
-                        $insertQuery = "INSERT INTO $tableName (lrn, fullname, section, grade)
-                                        VALUES ('$lrn', '$fullname', '$section', '$grade')";
-
-                        if ($conn->query($insertQuery) === FALSE) {
-                            $errorMsg1 = "Error inserting data: " . $conn->error;
-                            break; // Exit the loop if an error occurs
-                        }
-                    }
-
-                    $errorMsg = "File Upload Successful";
-                }
-            }
-
-            $conn->close();
+        if ($result->num_rows > 0) {
+            $errorMsg1 = "Record already exists.";
         } else {
-            $errorMsg1 = "Error uploading file.";
+            $createTableQuery = "CREATE TABLE $tableName (
+                                    id INT AUTO_INCREMENT PRIMARY KEY,
+                                    lrn VARCHAR(255) NOT NULL,
+                                    fullname VARCHAR(255) NOT NULL,
+                                    gender VARCHAR(255) NOT NULL,
+                                    section VARCHAR(255) NOT NULL,
+                                    grade VARCHAR(255) NOT NULL
+                                )";
+
+            if ($conn->query($createTableQuery) === FALSE) {
+                $errorMsg1 = "Error creating table: " . $conn->error;
+            } else {
+                $file = $_FILES["file"]["tmp_name"];
+                $csvData = array_map("str_getcsv", file($file));
+                array_shift($csvData);
+
+                foreach ($csvData as $row) {
+                    $lrn = $row[0];
+                    $fullname = $row[1];
+                    $gender = $row[2];
+                    $grade = $row[3];
+                    $section = $row[4];
+                    $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section)
+                                    VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section')";
+
+                    if ($conn->query($insertQuery) === FALSE) {
+                        $errorMsg1 = "Error inserting data: " . $conn->error;
+                        break;
+                    }
+                }
+
+                // Create PHP file in grade_sections folder
+                $templateContent = file_get_contents("template.php");
+                $templateContent = str_replace("{GRADE}", $grade, $templateContent);
+                $templateContent = str_replace("{SECTION}", $section, $templateContent);
+
+                file_put_contents($filePath, $templateContent);
+
+                $errorMsg = "File Upload Successful";
+            }
         }
+
+        $conn->close();
+    } else {
+        $errorMsg1 = "Error uploading file.";
     }
-    ?>
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -361,9 +365,9 @@
             <label for="grade">Grade Level:</label>
             <select id="grade" name="grade">
                 <option value="kinder">Kinder</option>
-                <option value="one">1</option>
-                <option value="two">2</option>
-                <option value="three">3</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
             </select>
         </div>
         <div class="form-group">

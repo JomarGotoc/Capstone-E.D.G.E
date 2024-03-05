@@ -1,126 +1,30 @@
 <?php
-if(isset($_POST['submit'])) {
-    // Get the current PHP file name without the extension
-    $tableName = basename(__FILE__, '.php');
+include('../../database.php');
 
-    include('../database.php');
+$currentFileName = basename(__FILE__, '.php');
 
-    // SQL query to create a table with the specified columns
-    $sqlCreateTable = "CREATE TABLE IF NOT EXISTS $tableName (
-        id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        lrn VARCHAR(20) NOT NULL,
-        fullname VARCHAR(255) NOT NULL,
-        gender VARCHAR(10) NOT NULL,
-        grade VARCHAR(10) NOT NULL,
-        section VARCHAR(10) NOT NULL
-    )";
-
-    // Execute the query to create the table
-    if ($conn->query($sqlCreateTable) === TRUE) {
-    } else {
-    }
-
-    if(isset($_FILES['csv_file']) && $_FILES['csv_file']['error'] == 0) {
-        // CSV file upload
-        $csv_file = $_FILES['csv_file']['tmp_name'];
-
-        // Read CSV file starting from the second row (B1)
-        if (($handle = fopen($csv_file, "r")) !== FALSE) {
-            // Skip the first row
-            fgetcsv($handle, 1000, ",");
-
-            while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-                // Process and insert data into the database
-                $lrn = $data[0];
-                $fullname = $data[1];
-                $gender = $data[2];
-                $gender = $data[3];
-                $gender = $data[4];
-
-                // SQL query to insert data into the table
-                $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender, grade, section) VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section')";
-
-                // Execute the query
-                $conn->query($sqlInsertData);
-            }
-            fclose($handle);
-        }
-    } elseif(isset($_POST['lrn']) && isset($_POST['fullname']) && isset($_POST['gender'])) {
-        // User input
-        $lrn = $_POST['lrn'];
-        $fullname = $_POST['fullname'];
-        $gender = $_POST['gender'];
-    
-        // Get the filename and extract 2nd and 4th words
-        $filename = pathinfo(__FILE__, PATHINFO_FILENAME);
-        $filenameWords = explode('_', $filename);
-        
-        if(count($filenameWords) >= 4) {
-            $grade = $filenameWords[1];
-            $section = $filenameWords[3];
-    
-            // SQL query to insert data into the table
-            $sqlInsertData = "INSERT INTO $tableName (lrn, fullname, gender, grade, section) VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section')";
-    
-            // Execute the query
-            $conn->query($sqlInsertData);
-        }
-    }
-    
-
-    // Close the database connection
-    $conn->close();
-}
-?>
-<?php
-// Get the current PHP file name without extension
-$currentFileName = pathinfo(__FILE__, PATHINFO_FILENAME);
-
-// Remove .php extension
-$tableName = str_replace('.php', '', $currentFileName);
-
-include('../database.php');
-
-// Check if the connection was successful
-if ($conn->connect_error) {
-    die('Connection failed: ' . $conn->connect_error);
-}
-
-// Check if the table exists in the database
-$tableExistsQuery = "SHOW TABLES LIKE '$tableName'";
+$tableExistsQuery = "SHOW TABLES LIKE '$currentFileName'";
 $tableExistsResult = $conn->query($tableExistsQuery);
 
+$result = null; // Initialize $result outside the if condition
+
 if ($tableExistsResult->num_rows > 0) {
-    $getMalesQuery = "SELECT * FROM $tableName WHERE gender = 'male'";
-    $result = $conn->query($getMalesQuery);
+    $fetchQuery = "SELECT lrn, fullname, gender FROM $currentFileName";
+    $result = $conn->query($fetchQuery);
 }
 
-// Close the database connection
-$conn->close();
 ?>
 <?php
-// Get the current PHP file name without extension
-$currentFile = basename(__FILE__, '.php');
+$currentFileName = basename(__FILE__, '.php');
+$words = explode('_', $currentFileName);
 
-// Assuming you have a MySQL database connection
-include('../database.php');
+if (count($words) >= 4) {
+    $grade = $words[1];
+    $section = $words[3];
 
-// Find the table with the same name as the PHP file
-$tableName = $currentFile;
-
-// Query to retrieve all males from the identified table
-$query = "SELECT * FROM $tableName WHERE gender = 'male'";
-$result = $conn->query($query);
-
-$femaleQuery = "SELECT * FROM $tableName WHERE gender = 'female'";
-$femaleResult = $conn->query($femaleQuery);
-
-// Display the results
-
-
-// Close the database connection
-$conn->close();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,6 +32,7 @@ $conn->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>School Administrator</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
             body {
             font-family: Arial, sans-serif;
@@ -138,7 +43,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
         }
         
@@ -146,7 +51,7 @@ $conn->close();
             width: 70px;
             height: 70px;
             margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
+            background-image: url('../../img/logo.png'); 
             background-size: cover;
         }
         
@@ -360,11 +265,63 @@ $conn->close();
         .title a{
             font-weight: 600;
         }
+        #gradeSectionSelection {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        #gradeDropdown{
+            margin-right: 20px;
+        }
+
+        .dropdown-container {
+            display: flex;
+            align-items: center;
+        }
+
+        label {
+            margin-right: 5px;
+            background-color: #190572;
+            color:#ddd;
+            padding: 5px;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+
+        .dropdowns {
+            background-color: #fff;
+            color: #000;
+            padding: 5px 10px;
+            width: 150px;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+
+        .dropdowns:hover {
+            background-color: #f3f3f3;
+        }
+
+        .dropdowns:focus {
+            outline: none;
+        }
+
+        .main-container {
+            width: 100%;
+            display: flex;
+            margin-top: 115px;
+            background-color: #fff;
+        }
 
         .main-content {
-            flex: 1; 
+            flex: 1;
             background: #fff;
-            overflow-y: auto; 
+            overflow-y: auto;
             height: calc(100vh - 140px);
         }
 
@@ -461,7 +418,7 @@ $conn->close();
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #190572;
-            opacity: 1;
+            opacity: 90%;
             z-index: 1000; 
             padding: 20px;
             border-radius: 10px;
@@ -506,29 +463,6 @@ $conn->close();
             font-size: 20px;
         }
 
-        .upload-container {
-            border: 3px dashed #ccc;
-            padding: 15px;
-            margin-bottom: 20px; 
-            border-radius: 5px;
-        }
-
-        .upload-container label {
-            display: block;
-        }
-
-        .upload-container input[type="file"] {
-            border: none; 
-            width: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-
-        .upload-container label{
-            text-align: center;
-            justify-content: center;
-        }
-
         button{
             width: 100%;
             background-color: #0C052F;
@@ -537,21 +471,13 @@ $conn->close();
             border-radius: 5px;
             padding: 7px 30px;
             cursor: pointer;
-            margin-top: 10px; 
+            margin-top: 20px; 
         }
 
         button:hover {
             background-color: #DDDAE7;
             color: #0C052F;
         }
-        #selectedFileName {
-        display: block;
-        margin: 0 auto;
-        background-color: white;
-        padding: 5px;
-        border-radius: 8px; /* Add rounded corners */
-        color: black; /* Set text color to black */
-    }
     </style>
 </head>
 <body>
@@ -559,7 +485,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -576,53 +502,38 @@ $conn->close();
     <div class="navbar">
         <nav>
             <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="" style="background:#F3F3F3; color:#130550">Manage Students List</a>
+            <a href="School_Admin_Studentlist.php" style="background:#F3F3F3; color:#130550">Manage Students List</a>
         </nav>
     </div>
 
     <div class="main-container" >
-    <div class="navbar-container">
-                <div class="navbar-content">
-
-                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Kindergarten</div>
-                    <div class="navbar-item"><a href="grade_kinder_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="grade_kinder_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item" ><a href="grade_kinder_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade_kinder_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade_kinder_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade_kinder_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
-                    
-                    <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 1</div>
-                    <div class="navbar-item"><a href="grade_1_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item" ><a href="grade_1_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade_1_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade_1_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade_1_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade_1_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
-
-                    <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 2</div>
-                    <div class="navbar-item"><a href="grade_2_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="grade_2_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade_2_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade_2_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade_2_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item"><a href="grade_2_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
-
-                    <hr color="#0d054c" size="5" >
-                    <div class="navbar-item title"><i class='bx bx-book-open' style="margin-right: 10px; font-size: 20px"></i>Grade 3</div>
-                    <div class="navbar-item"><a href="grade_3_section_1.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 1</a></div>
-                    <div class="navbar-item"><a href="grade_3_section_2.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 2</a></div>
-                    <div class="navbar-item"><a href="grade_3_section_3.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 3</a></div>
-                    <div class="navbar-item"><a href="grade_3_section_4.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 4</a></div>
-                    <div class="navbar-item"><a href="grade_3_section_5.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 5</a></div>
-                    <div class="navbar-item" style="background:#F3F3F3; color:#130550"><a href="grade_3_section_6.php"><i class='bx bx-circle' style="margin-right: 10px" ></i>Section 6</a></div>
-                    
-                </div>
-            </div>
-
         <div class="main-content">
+            <div id="gradeSectionSelection">
+            <div class="dropdown-container">
+                <label for="gradeDropdown">Grade:</label>
+                <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
+                    <option value=""></option>
+                    <option value="kinder">Kinder</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="sectionDropdown">Section:</label>
+                <select id="sectionDropdown" class="dropdowns" onchange="filterStudents()">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <h3><?php echo "Grade" . $grade . "Section" . $section ?></h3>
+        </div>
+
         <div id="section1Content">
             <h3>Male</h3>
             <table>
@@ -631,20 +542,26 @@ $conn->close();
                     <th>Learner's Reference Number (LRN)</th>
                     <th>Student's Name</th>
                 </tr>
-
                 <?php
-                if ($result->num_rows > 0) {
-                    $count = 1; 
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . $count . '</td>';
-                        echo '<td>' . $row['lrn'] . '</td>';
-                        echo '<td>' . $row['fullname'] . '</td>';
-                        echo '</tr>';
-                        $count++;
-                    }
+        if ($result && $result->num_rows > 0) {
+            $counter = 1;
+
+            while ($row = $result->fetch_assoc()) {
+                $gender = strtolower($row['gender']);
+
+                if ($gender === 'male') {
+                    echo "<tr>";
+                    echo "<td>{$counter}</td>";
+                    echo "<td>{$row['lrn']}</td>";
+                    echo "<td>{$row['fullname']}</td>";
+                    echo "</tr>";
+
+                    $counter++;
                 }
-                ?>
+            }
+        } 
+        ?>
+
             </table>
             
         </div>
@@ -657,18 +574,29 @@ $conn->close();
                     <th>Student's Name</th>
                 </tr>
                 <?php
-                if ($femaleResult->num_rows > 0) {
-                    $count = 1; // Resetting the count for female records
-                    while ($row = $femaleResult->fetch_assoc()) {
-                        echo '<tr>';
-                        echo '<td>' . $count . '</td>';
-                        echo '<td>' . $row['lrn'] . '</td>';
-                        echo '<td>' . $row['fullname'] . '</td>';
-                        echo '</tr>';
-                        $count++;
-                    }
+        // Re-fetch the records since the pointer is at the end of the result set
+        $result = $conn->query($fetchQuery);
+
+        if ($result && $result->num_rows > 0) {
+            $counter = 1;
+
+            while ($row = $result->fetch_assoc()) {
+                $gender = strtolower($row['gender']);
+
+                if ($gender === 'female') {
+                    echo "<tr>";
+                    echo "<td>{$counter}</td>";
+                    echo "<td>{$row['lrn']}</td>";
+                    echo "<td>{$row['fullname']}</td>";
+                    echo "</tr>";
+
+                    $counter++;
                 }
-                ?>
+            }
+        } else {
+            echo "<tr><td colspan='3'>No female records found in the table.</td></tr>";
+        }
+        ?>
 
             </table>
 
@@ -686,7 +614,7 @@ $conn->close();
     <div id="popupForm" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <img src="../img/logo.png" class="modal-logo" alt="Logo">
+            <img src="../../img/logo.png" class="modal-logo" alt="Logo">
             <h2>Add Student</h2>
             <form id="studentForm" method="post" action="" enctype="multipart/form-data">
                 <label for="name">Name:</label>
@@ -699,28 +627,64 @@ $conn->close();
                     <option value="Female">Female</option>
                 </select>
 
-                <div style="display: flex; align-items: center; justify-content: center; margin-top: 10px; margin-bottom:10px">
-                    <hr style="flex-grow: 1; border: 1px solid #ccc;">
-                    <span style="color: #fff; padding: 0 10px;">or</span>
-                    <hr style="flex-grow: 1; border: 1px solid #ccc;">
-                </div>
-
-                <div class="upload-container">
-                <h3>Upload File</h3>
-                <input type="file" name="csv_file" id="csv_file"><br>
-                   <br>
-                    <select id="genderSelection" name="genderSelection">
-                        <option value="Male">Gender:</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </div>
-                <button type="submit" name="submit">Submit</button>
+                <button type="submit" name="submit">Add Student</button>
             </form>
         </div>
     </div>
 
-    <script src="manage_student_list.js"></script>
+    <script src="view_studentlist2.js"></script>
+<script>
+    // Function to handle dropdown change event
+    function filterStudents() {
+        // Get selected grade and section values
+        var selectedGrade = document.getElementById("gradeDropdown").value;
+        var selectedSection = document.getElementById("sectionDropdown").value;
+
+        // Construct the PHP file URL
+        var phpFileUrl = "grade_" + selectedGrade + "_section_" + selectedSection + ".php";
+
+        // Check if the PHP file exists before navigating
+        fetch(phpFileUrl)
+            .then(response => {
+                if (response.ok) {
+                    // PHP file exists, navigate to the corresponding URL
+                    window.location.href = phpFileUrl;
+                } else {
+                    // PHP file not found, handle accordingly (e.g., show an error message)
+                    console.error("PHP file not found:", phpFileUrl);
+                }
+            })
+            .catch(error => {
+                console.error("Error checking PHP file:", error);
+            });
+    }
+
+    // Function to parse URL parameters
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return "";
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Get grade and section values from the URL
+    var urlGrade = getParameterByName("grade");
+    var urlSection = getParameterByName("section");
+
+    // Set the dropdown values based on the URL parameters
+    if (urlGrade && urlSection) {
+        document.getElementById("gradeDropdown").value = urlGrade;
+        document.getElementById("sectionDropdown").value = urlSection;
+    }
+
+    // Add event listeners to the dropdowns
+    document.getElementById("gradeDropdown").addEventListener("change", filterStudents);
+    document.getElementById("sectionDropdown").addEventListener("change", filterStudents);
+</script>
+
     
 </body>
 </html>

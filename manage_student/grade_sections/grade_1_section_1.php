@@ -1,3 +1,30 @@
+<?php
+include('../../database.php');
+
+$currentFileName = basename(__FILE__, '.php');
+
+$tableExistsQuery = "SHOW TABLES LIKE '$currentFileName'";
+$tableExistsResult = $conn->query($tableExistsQuery);
+
+$result = null; // Initialize $result outside the if condition
+
+if ($tableExistsResult->num_rows > 0) {
+    $fetchQuery = "SELECT lrn, fullname, gender FROM $currentFileName";
+    $result = $conn->query($fetchQuery);
+}
+
+?>
+<?php
+$currentFileName = basename(__FILE__, '.php');
+$words = explode('_', $currentFileName);
+
+if (count($words) >= 4) {
+    $grade = $words[1];
+    $section = $words[3];
+
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +32,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>School Administrator</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
             body {
             font-family: Arial, sans-serif;
@@ -15,7 +43,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
         }
         
@@ -23,7 +51,7 @@
             width: 70px;
             height: 70px;
             margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
+            background-image: url('../../img/logo.png'); 
             background-size: cover;
         }
         
@@ -457,7 +485,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -481,27 +509,30 @@
     <div class="main-container" >
         <div class="main-content">
             <div id="gradeSectionSelection">
-                <div class="dropdown-container">
-                    <label for="gradeDropdown">Grade:</label>
-                    <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
-                        <option value="kinder">Kinder</option>
-                        <option value="one">1</option>
-                        <option value="two">2</option>
-                        <option value="three">3</option>
-                    </select>
-                </div>
-                <div class="dropdown-container">
-                    <label for="sectionDropdown">Section:</label>
-                    <select id="sectionDropdown" class="dropdowns" onchange="filterStudents()">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
+            <div class="dropdown-container">
+                <label for="gradeDropdown">Grade:</label>
+                <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
+                    <option value=""></option>
+                    <option value="kinder">Kinder</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
             </div>
+            <div class="dropdown-container">
+                <label for="sectionDropdown">Section:</label>
+                <select id="sectionDropdown" class="dropdowns" onchange="filterStudents()">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+            </div>
+            <h3><?php echo "Grade" . $grade . "Section" . $section ?></h3>
+        </div>
 
         <div id="section1Content">
             <h3>Male</h3>
@@ -511,6 +542,25 @@
                     <th>Learner's Reference Number (LRN)</th>
                     <th>Student's Name</th>
                 </tr>
+                <?php
+        if ($result && $result->num_rows > 0) {
+            $counter = 1;
+
+            while ($row = $result->fetch_assoc()) {
+                $gender = strtolower($row['gender']);
+
+                if ($gender === 'male') {
+                    echo "<tr>";
+                    echo "<td>{$counter}</td>";
+                    echo "<td>{$row['lrn']}</td>";
+                    echo "<td>{$row['fullname']}</td>";
+                    echo "</tr>";
+
+                    $counter++;
+                }
+            }
+        } 
+        ?>
 
             </table>
             
@@ -523,6 +573,30 @@
                     <th>Learner's Reference Number (LRN)</th>
                     <th>Student's Name</th>
                 </tr>
+                <?php
+        // Re-fetch the records since the pointer is at the end of the result set
+        $result = $conn->query($fetchQuery);
+
+        if ($result && $result->num_rows > 0) {
+            $counter = 1;
+
+            while ($row = $result->fetch_assoc()) {
+                $gender = strtolower($row['gender']);
+
+                if ($gender === 'female') {
+                    echo "<tr>";
+                    echo "<td>{$counter}</td>";
+                    echo "<td>{$row['lrn']}</td>";
+                    echo "<td>{$row['fullname']}</td>";
+                    echo "</tr>";
+
+                    $counter++;
+                }
+            }
+        } else {
+            echo "<tr><td colspan='3'>No female records found in the table.</td></tr>";
+        }
+        ?>
 
             </table>
 
@@ -540,7 +614,7 @@
     <div id="popupForm" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <img src="../img/logo.png" class="modal-logo" alt="Logo">
+            <img src="../../img/logo.png" class="modal-logo" alt="Logo">
             <h2>Add Student</h2>
             <form id="studentForm" method="post" action="" enctype="multipart/form-data">
                 <label for="name">Name:</label>
@@ -559,6 +633,58 @@
     </div>
 
     <script src="view_studentlist2.js"></script>
+<script>
+    // Function to handle dropdown change event
+    function filterStudents() {
+        // Get selected grade and section values
+        var selectedGrade = document.getElementById("gradeDropdown").value;
+        var selectedSection = document.getElementById("sectionDropdown").value;
+
+        // Construct the PHP file URL
+        var phpFileUrl = "grade_" + selectedGrade + "_section_" + selectedSection + ".php";
+
+        // Check if the PHP file exists before navigating
+        fetch(phpFileUrl)
+            .then(response => {
+                if (response.ok) {
+                    // PHP file exists, navigate to the corresponding URL
+                    window.location.href = phpFileUrl;
+                } else {
+                    // PHP file not found, handle accordingly (e.g., show an error message)
+                    console.error("PHP file not found:", phpFileUrl);
+                }
+            })
+            .catch(error => {
+                console.error("Error checking PHP file:", error);
+            });
+    }
+
+    // Function to parse URL parameters
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return "";
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    // Get grade and section values from the URL
+    var urlGrade = getParameterByName("grade");
+    var urlSection = getParameterByName("section");
+
+    // Set the dropdown values based on the URL parameters
+    if (urlGrade && urlSection) {
+        document.getElementById("gradeDropdown").value = urlGrade;
+        document.getElementById("sectionDropdown").value = urlSection;
+    }
+
+    // Add event listeners to the dropdowns
+    document.getElementById("gradeDropdown").addEventListener("change", filterStudents);
+    document.getElementById("sectionDropdown").addEventListener("change", filterStudents);
+</script>
+
     
 </body>
 </html>

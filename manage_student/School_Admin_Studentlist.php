@@ -1,3 +1,31 @@
+<?php
+$errorMsg = "";
+if (isset($_POST['students'])) {
+    $gradeSectionPath = 'grade_sections/';
+
+    // Check if the folder exists
+    if (is_dir($gradeSectionPath)) {
+        // Get the list of PHP files in the folder
+        $phpFiles = glob($gradeSectionPath . '*.php');
+
+        // Check if there are PHP files
+        if (!empty($phpFiles)) {
+            // Redirect to the first PHP file
+            header("Location: " . $phpFiles[0]);
+            exit();
+        } else {
+            $errorMsg = "No Lists of Students to View";
+        }
+    } 
+}
+
+if (isset($_POST['add'])) {
+    // Redirect to the 'Add_Studentlist_import.php' file
+    header("Location: Add_Studentlist_import.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,6 +202,17 @@
         transition: background-color 0.3s;
         width: 90%;
         }
+        .button {
+        background-color: #0C052F;
+        color: #fff;
+        padding: 10px 10px;
+        margin: 0 10px;
+        border: 1px solid #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 90%;
+        }
         
         .button:hover {
         background-color: #ddd;
@@ -244,10 +283,16 @@
         <div class="logo"></div>
         <h2>What would like to manage?</h2>
 
-        <div class="buttons">
-            <a href="view_studentlist.php"><button class="button">View Students List</button></a>
-            <a href="Add_Studentlist_import.php"><button class="button">Add Students List</button></a>
+        <div class="errormsg">
+            <?php echo $errorMsg; ?>
         </div>
+
+        <form method="post">
+        <div class="buttons">
+            <button class="button" name="students">View Students List</button>
+            <button class="button" name="add">Add Students List</button>
+        </div>
+        </form>
     </div>
 
     <script src="manage_student.js"></script>
