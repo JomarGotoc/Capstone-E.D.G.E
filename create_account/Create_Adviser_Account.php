@@ -465,9 +465,9 @@ $conn->close();
                         <label for="topdown">Grade</label>
                         <select id="topdown" name="grade" >
                             <option value="kinder">Kinder</option>
-                            <option value="one">I</option>
-                            <option value="two">II</option>
-                            <option value="three">III</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
                         </select>
                     </div>
                     <div class="form-group">

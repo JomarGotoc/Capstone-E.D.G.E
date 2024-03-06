@@ -1,26 +1,6 @@
 <?php
 include "../database.php";
 
-// Code 1
-$currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
-$currentFileName1 = basename($_SERVER["SCRIPT_FILENAME"]);
-$words = explode('_', $currentFileName);
-
-if (count($words) >= 4) {
-    $secondWord = $words[1];
-    $fourthWord = $words[3];
-
-    // Construct the table name dynamically
-    $tableName = "grade_" . $secondWord . "_section_" . $fourthWord;
-
-    $sql = "SELECT * FROM $tableName";
-    $result = $conn->query($sql);
-    
-    // Rest of your code...
-} else {
-    echo "Invalid file name format.";
-}
-
 
 // Code 3
 // Extract the PHP file name without extension to use as the table name
@@ -65,8 +45,8 @@ if(isset($_POST['submit2'])){
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
 
-    include('../database.php');
-    $status = 'Unresolved'; // Set the default status
+    include('database.php');
+    $status = 'Pending'; // Set the default status
 
     switch ($classification) {
         case 'Academic - Literacy in English':

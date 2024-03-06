@@ -907,7 +907,7 @@ $conn->close();
                 <div class="containers" style="background-color: #F3F3F3;">
                     <?php 
                         $capitalizedSecondWord = ucfirst($secondWord);
-                        echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;&nbsp;&nbsp;' . $fourthWord . '</h3>';
+                        echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
                     ?>
                 </div>
             </div>
