@@ -129,13 +129,14 @@ $conn->close();
 
         .login-form button {
             background-color: #0C052F;
-            width: 18.5rem;
+            width: 98%;
             color: #fff;
             border: none;
             border-radius: 5px;
             padding: 7px 30px;
             cursor: pointer;
             margin-top: 10px; 
+            justify-content: center;
         }
 
         .login-form button:hover {
@@ -191,6 +192,9 @@ $conn->close();
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
         }
 
         .logs {
@@ -217,13 +221,14 @@ $conn->close();
 
         .login-container .forgot{
             background-color: #0C052F;
-            width: 18.5rem;
+            width: 98%;
             color: #fff;
             border: none;
             border-radius: 5px;
             padding: 7px 30px;
             cursor: pointer;
             margin-top: 5px; 
+            justify-content: center;
         }
 
         .login-container .forgot:hover {
@@ -235,6 +240,39 @@ $conn->close();
             font-weight:bold ;
             text-align: center;
           }
+
+          @media screen and (max-width: 600px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .forgot,
+            .login-form button{
+                width: 97%;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            h4 {
+                font-size: 1.3rem; 
+            }
+
+            .login-container {
+                max-width: 500px; 
+            }
+        }
 
     </style>
 </head>

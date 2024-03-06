@@ -7,10 +7,11 @@
         <link href="https://fonts.googleapis.com/css2?family=Goblin+One&display=swap" rel="stylesheet">
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300&display=swap');
-                        body {
+            body {
             background-image: url(img/bg.png); 
-            background-size: 100% auto; 
+            background-size: cover; 
             background-repeat: no-repeat; 
+            height: 100vh;
             }
 
             .logo{
@@ -18,7 +19,6 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh; 
             }
 
             .logo img{
@@ -27,6 +27,7 @@
             }
 
             h1{
+            font-size: 4vw;
             font-size: 50px;
             margin-top: 10px;
             font-family: 'Goblin One', cursive;
@@ -39,7 +40,7 @@
             }
 
             p{
-            font-size: 30px;
+            font-size: 2vw;
             margin-top: .5rem;
             font-family: 'Darker Grotesque', sans-serif;
             font-weight: 600;
@@ -87,6 +88,22 @@
             width: 3rem;
             height: 3rem;
             }
+
+            @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 6vw;
+            }
+
+            p {
+                font-size: 4vw; 
+            }
+
+            .logo img{
+                margin-top: 100px;
+                height: 18%;
+                width: 22%;
+            }
+        }
 
         </style>
         
