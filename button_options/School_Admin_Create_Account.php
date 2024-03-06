@@ -233,11 +233,11 @@
   
     <div class="login-container">
         <div class="logo"></div>
-        <h2>Select the User<p>you'd like to manage:</p></h2>
+        <h2>Welcome to E.D.G.E<br><p>Select your Agenda for Today</p></h2>
 
         <div class="buttons">
             <a href="../school_admin_manage_account/Adviser_Account.php"><button class="button">Manage Accounts</button></a>
-            <a href="../manage_student/School_Admin_Studentlist.php"><button class="button">Manage Students List's</button></a>
+            <a href="../manage_student/School_Admin_Studentlist.php"><button class="button">Manage Students Lists</button></a>
         </div>
     </div>
 

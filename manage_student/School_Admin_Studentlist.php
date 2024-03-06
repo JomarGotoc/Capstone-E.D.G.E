@@ -277,7 +277,7 @@ if (isset($_POST['add'])) {
     <div class="login-container">
         <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>What would like to manage?</h2>
+        <h2>Welcome to E.D.G.E<br><p>Select your Agenda for Today</p></h2>
 
         <div class="errormsg">
             <?php echo $errorMsg; ?>
@@ -285,8 +285,8 @@ if (isset($_POST['add'])) {
 
         <form method="post">
         <div class="buttons">
-            <button class="button" name="students">View Students List</button>
-            <button class="button" name="add">Add Students List</button>
+            <button class="button" name="students">View Students' List</button>
+            <button class="button" name="add">Add Students' List</button>
         </div>
         </form>
     </div>

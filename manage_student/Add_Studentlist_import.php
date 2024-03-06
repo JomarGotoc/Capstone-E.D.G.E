@@ -245,14 +245,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             text-align: left;
         }
 
-        .file-upload-container select, .file-upload-container input[type="file"] {
-            width: 90%;
+        .file-upload-container select, 
+        .file-upload-container option,
+        .file-upload-container input[type="file"],
+        .file-upload-container input[type="text"] {
+            width: 80%;
             padding: 10px;
             border-radius: 5px;
-            border: 1px solid #fff;
-            background-color:#190572;
+            border: 1px solid #130550;
+            background-color: #ddd;
             opacity: 80%;
-            color: #fff;
+            color: #130550;
+        }
+
+        .file-upload-container select, 
+        .file-upload-container option{
+            width: 85%;
         }
 
         .file-upload-container button {
@@ -370,24 +378,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="file" id="file" name="file" accept=".csv" required>
         </div>
         <div class="form-group">
-            <label for="grade">Grade Level:</label>
+            <label for="grade">Grade:</label>
             <select id="grade" name="grade">
                 <option value="kinder">Kinder</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
+                <option value="1">I</option>
+                <option value="2">II</option>
+                <option value="3">III</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="section">Section:</label>
-            <select id="section" name="section">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-            </select>
+                <label for="section">Section:</label>
+                <input type="text" id="section" name="section" value="" required>
+
         </div>
         <button type="submit" class="import-button">Import</button>
     </div>
