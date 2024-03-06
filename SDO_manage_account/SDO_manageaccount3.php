@@ -727,7 +727,7 @@ if(isset($_POST['reset_password'])) {
                 <tr class="sheshable">
                 <td class="rows"><?php echo $row['fullname']; ?></td>
                 <td class="rows"><?php echo $row['employment_number']; ?></td>
-                <td class="rows"><?php echo $row['date']; ?></td>
+                <td class="rows"><?php echo $row['email']; ?></td>
                 <td class="rows"><?php echo $row['date']; ?></td>
                     <td class="rows">
                         <div class="button-container">

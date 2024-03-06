@@ -1,8 +1,35 @@
 <?php
+    include('../database.php');
+    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral";
+    $result = $conn->query($sql);
+?>
+<?php
+    include('../database.php');
+
+    // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
+    $sql = "SELECT fullname, employment_number FROM counselor";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
+            $fullname = $row["fullname"];
+            $employment_number = $row["employment_number"];
+            
+        }
+    }
+?>
+<?php
 include('../database.php');
-$sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral";
+$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
+
 $result = $conn->query($sql);
-$conn->close();
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $count = $row['count'];
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -584,7 +611,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px">0123456789</h3>
+                    <h3 style="color: #190572; margin-left:7px"><?php echo $employment_number; ?></h3>
                 </div>
             </div>
             <div class="column column-left">
@@ -608,7 +635,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px">Kristina E. Lopez</h3>
+                    <h3 style="color: #190572; margin-left:7px"><?php echo $fullname; ?></h3>
                 </div>
             </div>
             <div class="column column-left">
@@ -618,7 +645,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px">Overall</h3>
+                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
             </div>
         </div>

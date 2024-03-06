@@ -11,7 +11,7 @@ $result_user = $conn->query($sql_select_user);
 if ($result_user->num_rows > 0) {
     $row_user = $result_user->fetch_assoc();
     $fullname = $row_user["fullname"];
-    $password = $row_user["password"];
+    $email = $row_user["email"];
     $employment_number = $row_user["employment_number"];
     $date = $row_user["date"];
 } else {
@@ -23,12 +23,12 @@ if ($result_user->num_rows > 0) {
 // Check if form is submitted for updating
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $new_full_name = $_POST["fullname"];
-    $new_password = $_POST["password"];
+    $new_email = $_POST["email"];
     $new_employment_number = $_POST["employment_number"];
     $new_date = $_POST["date"];
 
     // Update user information in the database
-    $sql_update = "UPDATE counselor SET fullname='$new_full_name', password='$new_password', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
+    $sql_update = "UPDATE counselor SET fullname='$new_full_name', email ='$new_email', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
 
     if ($conn->query($sql_update) === TRUE) {
         header("Location: counselor_account.php");
@@ -36,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         $error_message = "Error updating record: " . $conn->error;
     }
 }
+
+// Close the database connection
 $conn->close();
 ?> 
 <!DOCTYPE html>
@@ -44,7 +46,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>School Administrator</title>
+    <title>SDO Administrator</title>
     <style>
                     body {
             font-family: Arial, sans-serif;
@@ -242,7 +244,7 @@ $conn->close();
 
             textarea,
             input[type="text"],
-            input[type="password"],
+            input[type="email"],
             select, #date-added {
             height: 20x;
             padding: 10px;
@@ -387,9 +389,9 @@ $conn->close();
 
  
     <div class="login-container">
-        <a href="Counselor_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="SDO_manageaccount.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Guidance Counselor</h2>
+        <h2>SDO Administrator</h2>
 
         <form class="login-form" action="" method="post">
             <div class="row">
@@ -399,15 +401,15 @@ $conn->close();
                         <input type="text" id="full-name" name="fullname" value="<?php echo $fullname; ?>" required>
                     </div>
                     <div class="form-group">
-                        <label for="employment_number">Employee Number</label>
-                        <input type="text" id="employment_number" name="employment_number" value="<?php echo $employment_number; ?>" required>
+                        <label for="idnum">Employee Number</label>
+                        <input type="text" id="idnum" name="employment_number" value="<?php echo $employment_number; ?>" required>
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
                         <label for="pass">Email</label>
-                        <input type="email" id="email" name="email" value="" required>
+                        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
@@ -419,6 +421,7 @@ $conn->close();
         </form>
     </div>
 
-    <script src="school_admin_manage_account.js"></script>
+    <script src="SDO_manage_account.js"></script>
+
 </body>
 </html>

@@ -11,7 +11,7 @@ $result_user = $conn->query($sql_select_user);
 if ($result_user->num_rows > 0) {
     $row_user = $result_user->fetch_assoc();
     $fullname = $row_user["fullname"];
-    $password = $row_user["password"];
+    $email = $row_user["email"];
     $employment_number = $row_user["employment_number"];
     $date = $row_user["date"];
 } else {
@@ -23,12 +23,12 @@ if ($result_user->num_rows > 0) {
 // Check if form is submitted for updating
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $new_full_name = $_POST["fullname"];
-    $new_password = $_POST["password"];
+    $new_email = $_POST["email"];
     $new_employment_number = $_POST["employment_number"];
     $new_date = $_POST["date"];
 
     // Update user information in the database
-    $sql_update = "UPDATE school_admin SET fullname='$new_full_name', password='$new_password', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
+    $sql_update = "UPDATE school_admin SET fullname='$new_full_name', email='$new_email', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
 
     if ($conn->query($sql_update) === TRUE) {
         header("Location: sdo_manageaccount3.php");
@@ -402,14 +402,14 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="idnum">Employee Number</label>
-                        <input type="text" id="idnum" name="idnum" value="<?php echo $employment_number; ?>" required>
+                        <input type="text" id="idnum" name="employment_number" value="<?php echo $employment_number; ?>" required>
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
                         <label for="pass">Email</label>
-                        <input type="email" id="email" name="email" value=" " required>
+                        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>

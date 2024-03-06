@@ -1,11 +1,52 @@
+<?php
+// Assuming you have a database connection
+include("../database.php");
 
+$id = $_GET["id"];
+
+// Retrieve user information from the database based on ID
+$sql_select_user = "SELECT * FROM adviser WHERE id=$id";
+$result_user = $conn->query($sql_select_user);
+
+if ($result_user->num_rows > 0) {
+    $row_user = $result_user->fetch_assoc();
+    $fullname = $row_user["fullname"];
+    $email = $row_user["email"];
+    $employment_number = $row_user["employment_number"];
+    $date = $row_user["date"];
+} else {
+    echo "User not found";
+    $conn->close();
+    exit();
+}
+
+// Check if form is submitted for updating
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+    $new_full_name = $_POST["fullname"];
+    $new_email = $_POST["email"];
+    $new_employment_number = $_POST["employment_number"];
+    $new_date = $_POST["date"];
+
+    // Update user information in the database
+    $sql_update = "UPDATE adviser SET fullname='$new_full_name', email ='$new_email', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
+
+    if ($conn->query($sql_update) === TRUE) {
+        header("Location: adviser_account.php");
+    } else {
+        $error_message = "Error updating record: " . $conn->error;
+    }
+}
+
+// Close the database connection
+$conn->close();
+?> 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>School Administrator</title>
+    <title>Adviser</title>
     <style>
                     body {
             font-family: Arial, sans-serif;
@@ -19,7 +60,7 @@
             background: url(../img/bg.png);
             background-size: cover;
             }
-            
+
             .logo {
             width: 75px;
             height: 75px;
@@ -348,9 +389,9 @@
 
  
     <div class="login-container">
-        <a href="Adviser_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="SDO_manageaccount.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Adviser</h2>
+        <h2>SDO Administrator</h2>
 
         <form class="login-form" action="" method="post">
             <div class="row">
@@ -361,14 +402,14 @@
                     </div>
                     <div class="form-group">
                         <label for="idnum">Employee Number</label>
-                        <input type="text" id="idnum" name="idnum" value="<?php echo $employment_number; ?>" required>
+                        <input type="text" id="idnum" name="employment_number" value="<?php echo $employment_number; ?>" required>
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
                         <label for="pass">Email</label>
-                        <input type="email" id="email" name="email" value="" required>
+                        <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
@@ -380,6 +421,7 @@
         </form>
     </div>
 
-    <script src="school_admin_manage_account.js"></script>
+    <script src="SDO_manage_account.js"></script>
+
 </body>
 </html>

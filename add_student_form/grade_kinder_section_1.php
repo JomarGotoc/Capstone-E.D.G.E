@@ -219,7 +219,7 @@ if(isset($_POST['submit2'])){
             height: 42px; 
             background-color: #0C052F7A;
             position: fixed;
-            top: 100px; 
+            top: 245px; 
             width: 82.7%;
             border-top-left-radius: 20px;
             border-top-right-radius: 20px;
@@ -243,12 +243,11 @@ if(isset($_POST['submit2'])){
 
         .main-container {
             width: 80%;
-            height: calc(90vh - 140px);
+            height: fit-content;
             margin: 20px;
             margin-top: 125px;
             bottom: 0;
             background-color: #E2DFEE;
-            opacity: 80%;
             overflow: auto;
             padding: 20px;
             border-bottom-left-radius: 20px;
@@ -532,34 +531,6 @@ if(isset($_POST['submit2'])){
                             <option value="Academic - Numeracy">Academic - Numeracy</option>
                             <option value="Behavioral">Behavioral</option>
                     </select>
-                </div>
-
-                <div class="rows ints">
-                <div class="column">
-                    <div class="text-container">
-                        <div contenteditable="true" placeholder="Identification Indicators" class="editable-text" id="indic">
-                        </div>
-                        <div class="formatting-buttons">
-                            <button onclick="document.execCommand('bold', false, null)">B</button>
-                            <button onclick="document.execCommand('italic', false, null)">I</button>
-                            <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                        </div>
-                    </div>
-                </div>
-                </div>
-
-                <div class="rows ints">
-                <div class="column">
-                    <div class="text-container">
-                        <div contenteditable="true" placeholder="Notes Upon Identification" class="editable-text" id="notes">
-                        </div>
-                        <div class="formatting-buttons">
-                            <button onclick="document.execCommand('bold', false, null)">B</button>
-                            <button onclick="document.execCommand('italic', false, null)">I</button>
-                            <button onclick="document.execCommand('insertUnorderedList', false, null)">•</button>
-                        </div>
-                    </div>
-                </div>
                 </div>
 
                 <button class="add-button" name="submit2">Add Pupil At-Risk</button>
