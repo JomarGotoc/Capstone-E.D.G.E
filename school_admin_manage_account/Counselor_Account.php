@@ -703,10 +703,10 @@ if(isset($_POST['reset_password'])) {
             <div class="middle-inner-container"><h3>Guidance Counselor</h3></div>
 
             <div class="bottom-inner-container2">
-                <div class="column"><h3>Name <i class='bx bx-filter-alt'></i></h3></div>
+                <div class="column"><h3>Name</h3></div>
                 <div class="column"><h3>Employee Number</h3></div>
                 <div class="column"><h3>Email Address</h3></div>
-                <div class="column"><h3>Date Added <i class='bx bx-filter-alt'></i></h3></div>
+                <div class="column"><h3>Date Added</h3></div>
                 <div class="column"><h3>Action</h3></div>
             </div>
 

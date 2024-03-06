@@ -478,6 +478,22 @@ if (count($words) >= 4) {
             background-color: #DDDAE7;
             color: #0C052F;
         }
+
+         #gradeSectionSelection span{
+            margin-left: 10px;
+            padding: 5px;
+            background-color: #190572;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+            display: inline-block;
+         }
+
+        .grade, .section {
+            color: #130550;
+            background-color: transparent;
+        }
+
     </style>
 </head>
 <body>
@@ -531,7 +547,9 @@ if (count($words) >= 4) {
                     <option value="6">6</option>
                 </select>
             </div>
-            <h3><?php echo "Grade" . $grade . "Section" . $section ?></h3>
+            <span class="grade"><?php echo "Grade " ?></span><span style="color: white; font-weight: bold; margin-right: 20px"><?php echo $grade ?></span>
+            <span class="section"><?php echo "Section " ?></span><span style="color: white; font-weight: bold"><?php echo $section ?></span>
+            <!--?php echo "Grade " . $grade . "  Section " . $section ?-->
         </div>
 
         <div id="section1Content">

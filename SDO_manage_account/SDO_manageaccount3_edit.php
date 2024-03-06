@@ -391,7 +391,7 @@ $conn->close();
     <div class="login-container">
         <a href="SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>School Administrators</h2>
+        <h2>School Administrator</h2>
 
         <form class="login-form" action="" method="post">
             <div class="row">
