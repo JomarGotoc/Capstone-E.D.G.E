@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           background-size: cover;
         }
         
-        input[type="text"],
+        input[type="number"],
         .login-form input[type="password"] {
           width: 90%;
           padding: 10px;
@@ -249,11 +249,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
   <form action="Forgot_pass_enter_otp.php" method="post">
     <div class="login-container">
-    <a href="../forgot_password/Email_Forgot_Pass.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="employee_number_Forgot_Pass.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <p>Enter the code that was sent to your email address to reset your password.</p>
 
-          <input type="text" id="otp" name="otp"  placeholder="enter your otp " required >
+          <input type="number" id="otp" name="otp"  placeholder="enter your otp " required >
             <button type="submit" name="verify_otp" class="cont">Continue</button>
             <p style="cursor:pointer" class="shesh">Didn't recieve a mail? Resend Mail</p>
         

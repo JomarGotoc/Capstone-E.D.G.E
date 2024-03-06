@@ -107,7 +107,7 @@ function generateOTP() {
             background-size: cover;
           }
 
-          .login-form input[type="text"],
+          .login-form input[type="number"],
           .login-form input[type="password"] {
             width: 90%;
             padding: 10px;
@@ -273,7 +273,7 @@ function generateOTP() {
 
           
         <form class="login-form" action=" " method="post">
-            <input type="text" id="employment_number" name="employment_number"  placeholder="enter your employee number " required>
+            <input type="number" id="employment_number" name="employment_number"  placeholder="enter your employee number " required>
             <button type="submit" name="continue" value="continue" class="log">Continue</button>
         </form>
     </div>

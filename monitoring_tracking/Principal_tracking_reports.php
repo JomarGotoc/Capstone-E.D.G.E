@@ -518,6 +518,9 @@ $conn->close();
                             <option value="topdown">Grade 1</option>
                             <option value="topdown">Grade 2</option>
                             <option value="topdown">Grade 3</option>
+                            <option value="topdown">Grade 4</option>
+                            <option value="topdown">Grade 5</option>
+                            <option value="topdown">Grade 6</option>
                         </select>
                     </div>
                 </div>
