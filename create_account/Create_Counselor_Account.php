@@ -402,11 +402,6 @@ $conn->close();
         </div>
     </header>
 
-    <div class="navbar">
-         <nav>
-            <a href="../manage_student_list/grade_kinder_section_1.php">Manage Students List</a>
-        </nav>
-    </div>
 
  
     <div class="login-container">

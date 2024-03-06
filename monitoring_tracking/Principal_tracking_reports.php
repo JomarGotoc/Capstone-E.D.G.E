@@ -513,6 +513,7 @@ $conn->close();
                 <div class="column third-column">
                     <div class="containers">
                         <select id="topdown" name="topdown" class="first">
+                            <option value="topdown">View All Grade Levels</option>
                             <option value="topdown">Kinder</option>
                             <option value="topdown">Grade 1</option>
                             <option value="topdown">Grade 2</option>
@@ -557,10 +558,10 @@ $conn->close();
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
                     <select style="border:none; background-color:transparent">
-                        <option>I</option>
-                        <option>II</option>
-                        <option>III</option>
-                        <option>IV</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
                     </select>
                 </div>
             </div>
@@ -593,7 +594,7 @@ $conn->close();
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3># of S.T.A.R.</h3>
+                    <h3># of P.A.R</h3>
                 </div>
             </div>
             <div class="wide-column">
@@ -621,7 +622,7 @@ $conn->close();
         <table border="0" >
         <?php foreach ($dataArray as $data) : ?>
         <tr>
-            <th style="width:14.5%"><?php echo $data['grade'] . '&nbsp;&nbsp;&nbsp;' . $data['section']; ?></th>
+            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;&nbsp;' . $data['section']; ?></th>
             <th style="width:14.5%"><?php echo $data['fullname']; ?></th>
             <th style="width:11.5%"><?php echo $data['lrn_count']; ?></th>
             <th style="width:11.5%"><?php echo $data['academic_english_count'] + $data['academic_filipino_count'] + $data['academic_numeracy_count'] + $data['behavioral_count']; ?></th>

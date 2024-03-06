@@ -610,7 +610,7 @@
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3># of S.T.A.R.</h3>
+                    <h3># of P.A.R</h3>
                 </div>
             </div>
             <div class="wide-column">

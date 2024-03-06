@@ -123,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 20px;
             width: 400px;
             text-align: center;
+            position: relative;
         }
         
         a {
@@ -313,6 +314,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .back-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+          }
+                
+          .back-icon i {
+            margin-right: 5px;
+          } 
+
         
     </style>
 </head>
@@ -335,15 +349,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </header>
 
-    <div class="navbar">
-        <nav>
-            <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
-        </nav>
-    </div>
-
  
     <div class="login-container">
+        <a href="../manage_student/School_Admin_Studentlist.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h3>Import Data File</h3>
 

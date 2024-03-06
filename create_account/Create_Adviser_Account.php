@@ -424,11 +424,6 @@ $conn->close();
         </div>
     </header>
 
-    <div class="navbar">
-         <nav>
-            <a href="../manage_student_list/grade_kinder_section_1.php">Manage Students List</a>
-        </nav>
-    </div>
 
  
     <div class="login-container">
@@ -470,21 +465,14 @@ $conn->close();
                         <label for="topdown">Grade</label>
                         <select id="topdown" name="grade" >
                             <option value="kinder">Kinder</option>
-                            <option value="one">1</option>
-                            <option value="two">2</option>
-                            <option value="three">3</option>
+                            <option value="one">I</option>
+                            <option value="two">II</option>
+                            <option value="three">III</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="topdown">Section</label>
-                        <select id="topdown" name="section" >
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                        </select>
+                        <label for="pass">Section</label>
+                        <input type="text" id="section" name="section" >
                     </div>
                 </div>
             </div>

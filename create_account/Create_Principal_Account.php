@@ -401,13 +401,6 @@ $conn->close();
             </div>
         </div>
     </header>
-
-    <div class="navbar">
-         <nav>
-            <a href="../manage_student_list/grade_kinder_section_1.php">Manage Students List</a>
-        </nav>
-    </div>
-
  
     <div class="login-container">
     <a href="../school_admin_manage_account/Principal_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>

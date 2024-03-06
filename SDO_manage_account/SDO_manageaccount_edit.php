@@ -398,11 +398,11 @@ $conn->close();
                 <div class="columns">
                     <div class="form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="full-name" name="fullname" value="<?php echo $fullname; ?>" required>
+                        <input type="text" id="full-name" name="fullname" value="<?php echo $fullname; ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Employee Number</label>
-                        <input type="text" id="idnum" name="employment_number" value="<?php echo $employment_number; ?>" required>
+                        <input type="text" id="idnum" name="employment_number" value="<?php echo $employment_number; ?>" readonly>
                     </div>
                 </div>
 
@@ -413,7 +413,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="<?php echo $date; ?>" required>
+                        <input type="date" id="date-added" name="date" value="<?php echo $date; ?>" readonly>
                     </div>
                 </div>
             </div>

@@ -248,6 +248,10 @@ if (isset($_POST['add'])) {
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .errormsg {
+            color:#fff;
+            margin-bottom: 10px;
+        }
         
     </style>
 </head>
@@ -269,14 +273,6 @@ if (isset($_POST['add'])) {
             </div>
         </div>
     </header>
-
-    <div class="navbar">
-        <nav>
-            <a href="../school_admin_manage_account/Adviser_Account.php">Manage Accounts</a>
-            <a href="../manage_student/School_Admin_Studentlist.php">Manage Students List</a>
-        </nav>
-    </div>
-
  
     <div class="login-container">
         <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
