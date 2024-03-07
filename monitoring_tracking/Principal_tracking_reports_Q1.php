@@ -1,86 +1,65 @@
 <?php
-
     include('../database.php');
 
-    // Initialize total students count
-    $totalstudents = 0;
+    // Fetch data from the adviser table for the first quarter
+    $sql = "SELECT grade, section, fullname FROM adviser";
+    $result = $conn->query($sql);
 
-    // Get the name of the current database
-    $dbnameQuery = "SELECT DATABASE() AS dbname";
-    $dbnameResult = $conn->query($dbnameQuery);
+    // Store the fetched data in an array
+    $dataArray = array();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            // Concatenate "grade_" and "section_" to the values and store in $newvalue
+            $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
 
-    if ($dbnameResult) {
-        $dbnameRow = $dbnameResult->fetch_assoc();
-        $dbname = preg_replace('/\bIi\b/', 'II', str_replace('_', ' ', ucwords(strtolower($dbnameRow['dbname']), '_')));
-        
-        $searchTerm1 = 'grade';
-        $searchTerm2 = 'section';
+            include('../database.php');
+            $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
+            $tableExists = $conn->query($checkTableSql);
 
-        $query = "SHOW TABLES LIKE '%$searchTerm1%$searchTerm2%'";
-        $result = $conn->query($query);
+            // Display the number of LRN data found in the 3rd <th>
+            $lrnCount = 0; // Initialize the count
+            if ($tableExists->num_rows > 0) {
+                $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue";
+                $lrnResult = $conn->query($countQuery);
 
-        if ($result) {
-            $tableCount = $result->num_rows;
-
-            if ($tableCount > 0) {
-                while ($row = $result->fetch_row()) {
-                    $tableName = $row[0];
-
-                    // Count records in 'lrn' field for each table
-                    $countQuery = "SELECT COUNT(lrn) AS recordCount FROM $tableName";
-                    $countResult = $conn->query($countQuery);
-
-                    if ($countResult) {
-                        $countRow = $countResult->fetch_assoc();
-                        $recordCount = $countRow['recordCount'];
-                        $totalstudents += $recordCount;
-                    }
+                if ($lrnResult->num_rows > 0) {
+                    $lrnCountRow = $lrnResult->fetch_assoc();
+                    $lrnCount = $lrnCountRow['lrn_count'];
                 }
-            } 
+            }
+
+            // Check matches in classifications table (in the 'classification' database)
+            include('../database.php'); // Include the connection to the 'classification' database
+
+            $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
+            $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
+            $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
+            $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
+
+            $academicEnglishResult = $conn->query($academicEnglishQuery);
+            $academicFilipinoResult = $conn->query($academicFilipinoQuery);
+            $academicNumeracyResult = $conn->query($academicNumeracyQuery);
+            $behavioralResult = $conn->query($behavioralQuery);
+
+            $academicEnglishCount = ($academicEnglishResult->num_rows > 0) ? $academicEnglishResult->fetch_assoc()['academic_english_count'] : 0;
+            $academicFilipinoCount = ($academicFilipinoResult->num_rows > 0) ? $academicFilipinoResult->fetch_assoc()['academic_filipino_count'] : 0;
+            $academicNumeracyCount = ($academicNumeracyResult->num_rows > 0) ? $academicNumeracyResult->fetch_assoc()['academic_numeracy_count'] : 0;
+            $behavioralCount = ($behavioralResult->num_rows > 0) ? $behavioralResult->fetch_assoc()['behavioral_count'] : 0;
+
+            // Add counts to the row
+            $row['newvalue'] = $newvalue;
+            $row['lrn_count'] = $lrnCount;
+            $row['academic_english_count'] = $academicEnglishCount;
+            $row['academic_filipino_count'] = $academicFilipinoCount;
+            $row['academic_numeracy_count'] = $academicNumeracyCount;
+            $row['behavioral_count'] = $behavioralCount;
+
+            $dataArray[] = $row;
         }
     }
     $conn->close();
-
 ?>
-<?php
-    include('../database.php');
 
-    $tables = ['academic_english', 'academic_filipino', 'behavioral', 'academic_numeracy'];
-
-    $englishCount = 0;
-    $filipinoCount = 0;
-    $behavioralCount = 0;
-    $numeracyCount = 0;
-    $totalstar = 0;
-
-    foreach ($tables as $table) {
-        $query = "SELECT COUNT(*) AS count FROM $table";
-        $result = $conn->query($query);
-
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $count = $row['count'];
-
-            // Assign count to the appropriate variable based on the table
-            switch ($table) {
-                case 'academic_english':
-                    $englishCount = $count;
-                    break;
-                case 'academic_filipino':
-                    $filipinoCount = $count;
-                    break;
-                case 'behavioral':
-                    $behavioralCount = $count;
-                    break;
-                case 'academic_numeracy':
-                    $numeracyCount = $count;
-                    break;
-            }
-            $totalstar += $count;
-        } 
-    }
-    $conn->close();
-?>
 <?php
     include('../database.php');
 
@@ -112,13 +91,14 @@
     $conn->close();
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>SDO Superintendent</title>
+    <title>Principal</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -329,6 +309,7 @@
         }
 
         .wide-row {
+            margin-top: 0;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between; 
@@ -340,7 +321,7 @@
         }
 
         .wide-columns {
-            flex: 0 0 calc(30% - 10px);
+            flex: 0 0 calc(15% - 5px);
             margin-bottom: 20px;
             margin-top: 10px;
         }
@@ -389,7 +370,6 @@
         }
 
         .containers {
-            background-color: #3498db;
             padding: .5px;
         }
 
@@ -540,8 +520,8 @@
 
     <div class="navbar">
         <nav>
-            <a href="executive_tracking_reports.php" style="background:#F3F3F3; color:#130550">Quarterly Reports</a>
-            <a href="executive_monitoring_reports.php">Report Summary</a>
+        <a href="Principal_tracking_reports.php" style="background:#F3F3F3; color:#130550" >Quarterly Reports</a>
+        <a href="Principal_monitoring_reports.php">Report Summary</a>
         </nav>
     </div>
 
@@ -561,21 +541,28 @@
                 </div>
             </div>
             <div class="column full-width">
-            <div class="column third-column">
-            <div class="search-box">
-    <input type="text" class="search-input" placeholder="Search School" oninput="filterTable()">
-    <i class='bx bx-search search-icon'></i>
-</div>
+    <div class="column third-column">
+    <div class="containers">
+        <select id="topdown" name="topdown" class="first" onchange="filterTable()">
+            <option value="all">View All Grade Levels</option>
+            <option value="Kinder">Kinder</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+        </select>
     </div>
-
-            </div>
+</div>
+</div>
         </div>
 
 
         <div class="row">
             <div class="column" >
                 <div class="containers" style="background-color: #B7B7B7">
-                    <h3>Division</h3>
+                    <h3>School Name</h3>
                 </div>
             </div>
             <div class="column column-right">
@@ -603,15 +590,17 @@
                 </div>
             </div>
             <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <select style="border:none; background-color:transparent">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </div>
-            </div>
+            <div class="containers" style="background-color: #F3F3F3;">
+            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()">
+    <option value="">Select Quarter</option>
+    <option value="all">Show All Quarters</option>
+        <option value="1">Quarter 1</option>
+        <option value="2">Quarter 2</option>
+        <option value="3">Quarter 3</option>
+        <option value="4">Quarter 4</option>
+    </select>
+</div>
+</div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
                     <h3>Resolved Cases</h3>
@@ -623,12 +612,15 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="wide-row">
+        <div class="wide-row" style="margin-top:0">
             <div class="wide-columns">
                 <div class="containers">
-                    <h3>Elementary School's Name</h3>
+                    <h3>Grade and Section</h3>
+                </div>
+            </div>
+            <div class="wide-columns">
+                <div class="containers">
+                    <h3>Section Adviser</h3>
                 </div>
             </div>
             <div class="wide-column">
@@ -663,41 +655,41 @@
             </div>
         </div>
 
-        <table border="0" id="schoolTable">
-            <tr>
-                <th style="width:29%"><?php echo $dbname ?></th>
-                <th style="width:12%"><?php echo $totalstudents ?></th>
-                <th style="width:12%"><?php echo $totalstar ?></th>
-                <th style="width:12%"><?php echo $englishCount ?></th>
-                <th style="width:12%"><?php echo $filipinoCount ?></th>
-                <th style="width:12%"><?php echo $numeracyCount ?></th>
-                <th style="width:12%"><?php echo $behavioralCount ?></th>
-            </tr>
+        <table border="0" id="data-table">
+        <?php foreach ($dataArray as $data) : ?>
+        <tr>
+            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;' . $data['section']; ?></th>
+            <th style="width:14.5%"><?php echo $data['fullname']; ?></th>
+            <th style="width:11.5%"><?php echo $data['lrn_count']; ?></th>
+            <th style="width:11.5%"><?php echo $data['academic_english_count'] + $data['academic_filipino_count'] + $data['academic_numeracy_count'] + $data['behavioral_count']; ?></th>
+            <th style="width:11.5%"><?php echo $data['academic_english_count']; ?></th>
+            <th style="width:11.5%"><?php echo $data['academic_filipino_count']; ?></th>
+            <th style="width:11.5%"><?php echo $data['academic_numeracy_count']; ?></th>
+            <th style="width:11.5%"><?php echo $data['behavioral_count']; ?></th>
+        </tr>
+    <?php endforeach; ?>
+
+            
         </table>
     </div>
+
     <script src="monitoring_tracking.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    function filterTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.querySelector('.search-input');
-        filter = input.value.toUpperCase();
-        table = document.getElementById('schoolTable');
-        tr = table.getElementsByTagName('tr');
+    function redirectReports() {
+        var selectedQuarter = document.getElementById("quarter-dropdown").value;
 
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName('th')[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = '';
-                } else {
-                    tr[i].style.display = 'none';
-                }
-            }
+        if (selectedQuarter !== "all") {
+            var redirectURL = "principal_tracking_reports_Q" + selectedQuarter + ".php";
+            window.location.href = redirectURL;
+        } else {
+            // Handle the case when "Show All Quarters" is selected
+            // You can redirect to a different URL or perform other actions if needed
+            // For now, let's redirect to principal_tracking_reports.php
+            window.location.href = "principal_tracking_reports.php";
         }
     }
 </script>
- 
+
 </body>
 </html>

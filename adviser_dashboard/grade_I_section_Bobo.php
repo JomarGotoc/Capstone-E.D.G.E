@@ -989,20 +989,20 @@ $conn->close();
             list($tableName, $tableData) = $tableResult;
             foreach ($tableData as $row) {
                 // Determine the row color based on classification
-                $status = $row['status'];
+                $classification = $row['classification'];
                 $rowColor = '';
 
-                switch ($status) {
-                    case 'Unresolved':
+                switch ($classification) {
+                    case 'Behavioral':
                         $rowColor = 'red';
                         break;
-                    case 'Pending':
+                    case 'Academic - Numeracy':
                         $rowColor = 'blue';
                         break;
-                    case 'On Going':
+                    case 'Academic - Literacy in English':
                         $rowColor = 'yellow';
                         break;
-                    case 'Resolved':
+                    case 'Academic - Literacy in Filipino':
                         $rowColor = 'green';
                         break;
                     default:
@@ -1017,9 +1017,9 @@ $conn->close();
                         <th style='width:.5%; background-color: $rowColor;'></th>
                         <th style='width:13%'>{$row['lrn']}</th>
                         <th style='width:22%'>{$row['fullname']}</th>
-                        <th style='width:15%'>{$row['classification']}</th>
+                        <th style='width:15%'>{$classification}</th>
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
-                        <th style='width:15%'>{$status}</th>
+                        <th style='width:15%'>{$row['status']}</th>
                         <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
                       </tr>";
             }
@@ -1083,11 +1083,11 @@ $conn->close();
             popup.style.zIndex = '1';
 
             var row = this.closest('tr');
-            var lrn = row.querySelector('th:nth-child(2)').textContent;
-            var fullname = row.querySelector('th:nth-child(3)').textContent;
-            var classification = row.querySelector('th:nth-child(4)').textContent;
-            var gradeSection = row.querySelector('th:nth-child(5)').textContent; // Assuming 4th column is for grade
-            var status = row.querySelector('th:nth-child(6)').textContent;
+            var lrn = row.querySelector('th:nth-child(1)').textContent;
+            var fullname = row.querySelector('th:nth-child(2)').textContent;
+            var classification = row.querySelector('th:nth-child(3)').textContent;
+            var gradeSection = row.querySelector('th:nth-child(4)').textContent; // Assuming 4th column is for grade
+            var status = row.querySelector('th:nth-child(5)').textContent;
             var gradeSectionParts = gradeSection.split('-');
             var grade = gradeSectionParts[0].trim();
             var section = gradeSectionParts[1].trim();// Assuming 5th column is for section

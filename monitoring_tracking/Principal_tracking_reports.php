@@ -1,66 +1,96 @@
 <?php
-include('../database.php');
+    include('../database.php');
 
-// Fetch data from the adviser table
-$sql = "SELECT grade, section, fullname FROM adviser";
-$result = $conn->query($sql);
+    // Fetch data from the adviser table
+    $sql = "SELECT grade, section, fullname FROM adviser";
+    $result = $conn->query($sql);
 
-// Store the fetched data in an array
-$dataArray = array();
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        // Concatenate "grade_" and "section_" to the values and store in $newvalue
-        $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
+    // Store the fetched data in an array
+    $dataArray = array();
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            // Concatenate "grade_" and "section_" to the values and store in $newvalue
+            $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
 
-        include('../database.php');
-        $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
-        $tableExists = $conn->query($checkTableSql);
+            include('../database.php');
+            $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
+            $tableExists = $conn->query($checkTableSql);
 
-        // Display the number of LRN data found in the 3rd <th>
-        $lrnCount = 0; // Initialize the count
-        if ($tableExists->num_rows > 0) {
-            $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue";
-            $lrnResult = $conn->query($countQuery);
+            // Display the number of LRN data found in the 3rd <th>
+            $lrnCount = 0; // Initialize the count
+            if ($tableExists->num_rows > 0) {
+                $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue";
+                $lrnResult = $conn->query($countQuery);
 
-            if ($lrnResult->num_rows > 0) {
-                $lrnCountRow = $lrnResult->fetch_assoc();
-                $lrnCount = $lrnCountRow['lrn_count'];
+                if ($lrnResult->num_rows > 0) {
+                    $lrnCountRow = $lrnResult->fetch_assoc();
+                    $lrnCount = $lrnCountRow['lrn_count'];
+                }
             }
+
+            // Check matches in classifications table (in the 'classification' database)
+            include('../database.php'); // Include the connection to the 'classification' database
+
+            $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
+            $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
+            $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
+            $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
+
+            $academicEnglishResult = $conn->query($academicEnglishQuery);
+            $academicFilipinoResult = $conn->query($academicFilipinoQuery);
+            $academicNumeracyResult = $conn->query($academicNumeracyQuery);
+            $behavioralResult = $conn->query($behavioralQuery);
+
+            $academicEnglishCount = ($academicEnglishResult->num_rows > 0) ? $academicEnglishResult->fetch_assoc()['academic_english_count'] : 0;
+            $academicFilipinoCount = ($academicFilipinoResult->num_rows > 0) ? $academicFilipinoResult->fetch_assoc()['academic_filipino_count'] : 0;
+            $academicNumeracyCount = ($academicNumeracyResult->num_rows > 0) ? $academicNumeracyResult->fetch_assoc()['academic_numeracy_count'] : 0;
+            $behavioralCount = ($behavioralResult->num_rows > 0) ? $behavioralResult->fetch_assoc()['behavioral_count'] : 0;
+
+            // Add counts to the row
+            $row['newvalue'] = $newvalue;
+            $row['lrn_count'] = $lrnCount;
+            $row['academic_english_count'] = $academicEnglishCount;
+            $row['academic_filipino_count'] = $academicFilipinoCount;
+            $row['academic_numeracy_count'] = $academicNumeracyCount;
+            $row['behavioral_count'] = $behavioralCount;
+
+            $dataArray[] = $row;
         }
-
-        // Check matches in classifications table (in the 'classification' database)
-        include('../database.php'); // Include the connection to the 'classification' database
-
-        $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
-        $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
-        $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
-        $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}'";
-
-        $academicEnglishResult = $conn->query($academicEnglishQuery);
-        $academicFilipinoResult = $conn->query($academicFilipinoQuery);
-        $academicNumeracyResult = $conn->query($academicNumeracyQuery);
-        $behavioralResult = $conn->query($behavioralQuery);
-
-        $academicEnglishCount = ($academicEnglishResult->num_rows > 0) ? $academicEnglishResult->fetch_assoc()['academic_english_count'] : 0;
-        $academicFilipinoCount = ($academicFilipinoResult->num_rows > 0) ? $academicFilipinoResult->fetch_assoc()['academic_filipino_count'] : 0;
-        $academicNumeracyCount = ($academicNumeracyResult->num_rows > 0) ? $academicNumeracyResult->fetch_assoc()['academic_numeracy_count'] : 0;
-        $behavioralCount = ($behavioralResult->num_rows > 0) ? $behavioralResult->fetch_assoc()['behavioral_count'] : 0;
-
-        // Add counts to the row
-        $row['newvalue'] = $newvalue;
-        $row['lrn_count'] = $lrnCount;
-        $row['academic_english_count'] = $academicEnglishCount;
-        $row['academic_filipino_count'] = $academicFilipinoCount;
-        $row['academic_numeracy_count'] = $academicNumeracyCount;
-        $row['behavioral_count'] = $behavioralCount;
-
-        $dataArray[] = $row;
     }
-}
-
-// Close the database connections
-$conn->close();
+    $conn->close();
 ?>
+<?php
+    include('../database.php');
+
+    // Define the tables
+    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+
+    // Initialize total count
+    $totalpars = 0;
+    $totalresolved = 0;
+
+    // Iterate through tables and count rows with 'lrn' field and 'status' field
+    foreach ($tables as $table) {
+        // Count rows with 'lrn' field
+        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL";
+        $resultPars = $conn->query($sqlPars);
+
+        if ($resultPars->num_rows > 0) {
+            $rowPars = $resultPars->fetch_assoc();
+            $totalpars += $rowPars['count'];
+        }
+        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved'";
+        $resultResolved = $conn->query($sqlResolved);
+
+        if ($resultResolved->num_rows > 0) {
+            $rowResolved = $resultResolved->fetch_assoc();
+            $totalresolved += $rowResolved['count'];
+        }
+    }
+    $conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -509,22 +539,22 @@ $conn->close();
                     <h3><i class='bx bx-printer' ></i>Print Reports</h3>
                 </div>
             </div>
-            <div class="column full-width" >
-                <div class="column third-column">
-                    <div class="containers">
-                        <select id="topdown" name="topdown" class="first">
-                            <option value="topdown">View All Grade Levels</option>
-                            <option value="topdown">Kinder</option>
-                            <option value="topdown">Grade 1</option>
-                            <option value="topdown">Grade 2</option>
-                            <option value="topdown">Grade 3</option>
-                            <option value="topdown">Grade 4</option>
-                            <option value="topdown">Grade 5</option>
-                            <option value="topdown">Grade 6</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+            <div class="column full-width">
+    <div class="column third-column">
+    <div class="containers">
+        <select id="topdown" name="topdown" class="first" onchange="filterTable()">
+            <option value="all">View All Grade Levels</option>
+            <option value="Kinder">Kinder</option>
+            <option value="Grade 1">Grade 1</option>
+            <option value="Grade 2">Grade 2</option>
+            <option value="Grade 3">Grade 3</option>
+            <option value="Grade 4">Grade 4</option>
+            <option value="Grade 5">Grade 5</option>
+            <option value="Grade 6">Grade 6</option>
+        </select>
+    </div>
+</div>
+</div>
         </div>
 
 
@@ -546,7 +576,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>90</h3>
+                    <h3><?php echo $totalpars ?></h3>
                 </div>
             </div>
         </div>
@@ -559,15 +589,16 @@ $conn->close();
                 </div>
             </div>
             <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <select style="border:none; background-color:transparent">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                    </select>
-                </div>
-            </div>
+            <div class="containers" style="background-color: #F3F3F3;">
+            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()">
+    <option value="">Select Quarter</option>
+        <option value="1">Quarter 1</option>
+        <option value="2">Quarter 2</option>
+        <option value="3">Quarter 3</option>
+        <option value="4">Quarter 4</option>
+    </select>
+</div>
+</div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
                     <h3>Resolved Cases</h3>
@@ -575,7 +606,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>0 <span>/90</span></h3>
+                    <h3><?php echo $totalresolved ?> <span>/<?php echo $totalpars ?></span></h3>
                 </div>
             </div>
         </div>
@@ -622,10 +653,10 @@ $conn->close();
             </div>
         </div>
 
-        <table border="0" >
+        <table border="0" id="data-table">
         <?php foreach ($dataArray as $data) : ?>
         <tr>
-            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;&nbsp;' . $data['section']; ?></th>
+            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;' . $data['section']; ?></th>
             <th style="width:14.5%"><?php echo $data['fullname']; ?></th>
             <th style="width:11.5%"><?php echo $data['lrn_count']; ?></th>
             <th style="width:11.5%"><?php echo $data['academic_english_count'] + $data['academic_filipino_count'] + $data['academic_numeracy_count'] + $data['behavioral_count']; ?></th>
@@ -641,5 +672,22 @@ $conn->close();
     </div>
 
     <script src="monitoring_tracking.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+    function redirectReports() {
+        var selectedQuarter = document.getElementById("quarter-dropdown").value;
+
+        if (selectedQuarter !== "all") {
+            var redirectURL = "principal_tracking_reports_Q" + selectedQuarter + ".php";
+            window.location.href = redirectURL;
+        } else {
+            // Handle the case when "Show All Quarters" is selected
+            // You can redirect to a different URL or perform other actions if needed
+            // For now, let's redirect to principal_tracking_reports.php
+            window.location.href = "principal_tracking_reports.php";
+        }
+    }
+</script>
+
 </body>
 </html>

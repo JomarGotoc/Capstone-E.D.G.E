@@ -989,20 +989,20 @@ $conn->close();
             list($tableName, $tableData) = $tableResult;
             foreach ($tableData as $row) {
                 // Determine the row color based on classification
-                $classification = $row['classification'];
+                $status = $row['status'];
                 $rowColor = '';
 
-                switch ($classification) {
-                    case 'Behavioral':
+                switch ($status) {
+                    case 'Unresolved':
                         $rowColor = 'red';
                         break;
-                    case 'Academic - Numeracy':
+                    case 'Pending':
                         $rowColor = 'blue';
                         break;
-                    case 'Academic - Literacy in English':
+                    case 'On Going':
                         $rowColor = 'yellow';
                         break;
-                    case 'Academic - Literacy in Filipino':
+                    case 'Resolved':
                         $rowColor = 'green';
                         break;
                     default:
@@ -1010,13 +1010,16 @@ $conn->close();
                         break;
                 }
 
+                $capitalizedGrade = ucfirst($row['grade']);
+                $capitalizedSection = ucfirst($row['section']);
+
                 echo "<tr class='sheshable'>
                         <th style='width:.5%; background-color: $rowColor;'></th>
                         <th style='width:13%'>{$row['lrn']}</th>
                         <th style='width:22%'>{$row['fullname']}</th>
-                        <th style='width:15%'>{$classification}</th>
-                        <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                        <th style='width:15%'>{$row['status']}</th>
+                        <th style='width:15%'>{$row['classification']}</th>
+                        <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
+                        <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
                       </tr>";
             }
@@ -1024,6 +1027,7 @@ $conn->close();
     }
     ?>
 </table>
+
 
 
 
@@ -1079,11 +1083,11 @@ $conn->close();
             popup.style.zIndex = '1';
 
             var row = this.closest('tr');
-            var lrn = row.querySelector('th:nth-child(1)').textContent;
-            var fullname = row.querySelector('th:nth-child(2)').textContent;
-            var classification = row.querySelector('th:nth-child(3)').textContent;
-            var gradeSection = row.querySelector('th:nth-child(4)').textContent; // Assuming 4th column is for grade
-            var status = row.querySelector('th:nth-child(5)').textContent;
+            var lrn = row.querySelector('th:nth-child(2)').textContent;
+            var fullname = row.querySelector('th:nth-child(3)').textContent;
+            var classification = row.querySelector('th:nth-child(4)').textContent;
+            var gradeSection = row.querySelector('th:nth-child(5)').textContent; // Assuming 4th column is for grade
+            var status = row.querySelector('th:nth-child(6)').textContent;
             var gradeSectionParts = gradeSection.split('-');
             var grade = gradeSectionParts[0].trim();
             var section = gradeSectionParts[1].trim();// Assuming 5th column is for section
