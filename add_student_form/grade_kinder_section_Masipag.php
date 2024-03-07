@@ -5,6 +5,7 @@ ini_set('display_errors', 1);
 include "../database.php";
 
 $phpFileName = basename(__FILE__, '.php');
+$phpFileName1 = basename(__FILE__,);
 $tableName1 = strtolower($phpFileName);
 
 $fullname1 = $lrn = $grade = $section = "";
@@ -59,7 +60,7 @@ if(isset($_POST['submit2'])){
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
 
-    include('database.php');
+    include('../database.php');
     $status = 'Pending'; // Set the default status
 
     switch ($classification) {
@@ -487,7 +488,7 @@ if(isset($_POST['submit2'])){
 
     <div class="top-container">
         <div class="back-button">
-            <a href="../adviser_dashboard/<?php echo $currentFileName1?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $phpFileName1?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="error-message">
             <?php echo $errorMsg; ?>
