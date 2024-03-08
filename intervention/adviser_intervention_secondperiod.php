@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    // Validate and sanitize the classification input to prevent SQL injection
     $safeClassification = mysqli_real_escape_string($conn, $classification);
 
     // Create a mapping for classification to table name
@@ -63,20 +62,30 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $lrn = $_GET['lrn'];
 
         include('../database.php');
+        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+        $validQuarter = false;
 
-        $sql = "SELECT COUNT(*) as count FROM adviser_intervention_second_period WHERE lrn = '$lrn'";
-        $result = $conn->query($sql);
+        foreach ($tables as $table) {
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '2'";
+            $result = $conn->query($sql);
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count"];
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $count = $row["count"];
 
-            if ($count > 0) {
-                header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+                if ($count > 0) {
+                    $validQuarter = true;
+                    break;
+                }
+            } else {
+                echo "Error in query for table $table: " . $conn->error;
             }
-        } else {
-            echo "Error: " . $conn->error;
         }
+
+        if ($validQuarter) {
+            header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            exit();
+        } 
 
         $conn->close();
     }

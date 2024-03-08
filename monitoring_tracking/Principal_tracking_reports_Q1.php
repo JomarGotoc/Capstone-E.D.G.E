@@ -658,8 +658,8 @@
         <table border="0" id="data-table">
         <?php foreach ($dataArray as $data) : ?>
         <tr>
-            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;' . $data['section']; ?></th>
-            <th style="width:14.5%"><?php echo $data['fullname']; ?></th>
+            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;' . ucfirst($data['section']); ?></th>
+            <th style="width:14.5%"><?php echo ucwords($data['fullname']); ?></th>
             <th style="width:11.5%"><?php echo $data['lrn_count']; ?></th>
             <th style="width:11.5%"><?php echo $data['academic_english_count'] + $data['academic_filipino_count'] + $data['academic_numeracy_count'] + $data['behavioral_count']; ?></th>
             <th style="width:11.5%"><?php echo $data['academic_english_count']; ?></th>

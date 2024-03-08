@@ -55,6 +55,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $conn->close();
 }
 ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Check if LRN parameter is set in the URL
+    if (isset($_GET['lrn'])) {
+        // Get LRN from the URL
+        $lrn = $_GET['lrn'];
+
+        include('../database.php');
+
+        // Check if the quarter field is set to '1' in any of the specified tables
+        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+        $validQuarter = false;
+
+        foreach ($tables as $table) {
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '1'";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $count = $row["count"];
+
+                if ($count > 0) {
+                    $validQuarter = true;
+                    break;
+                }
+            } else {
+                echo "Error in query for table $table: " . $conn->error;
+            }
+        }
+
+        if ($validQuarter) {
+            header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            exit();
+        }
+
+        $conn->close();
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -734,8 +773,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         }
     });
 </script>
-
-
- 
 </body>
 </html>

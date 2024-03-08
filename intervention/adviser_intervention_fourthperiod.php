@@ -64,18 +64,30 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         include('../database.php');
 
-        $sql = "SELECT COUNT(*) as count FROM adviser_intervention_fourth_period WHERE lrn = '$lrn'";
-        $result = $conn->query($sql);
+        // Check if the quarter field is set to '1' in any of the specified tables
+        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+        $validQuarter = false;
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $count = $row["count"];
+        foreach ($tables as $table) {
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '4'";
+            $result = $conn->query($sql);
 
-            if ($count > 0) {
-                header('location: adviser_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn));
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $count = $row["count"];
+
+                if ($count > 0) {
+                    $validQuarter = true;
+                    break;
+                }
+            } else {
+                echo "Error in query for table $table: " . $conn->error;
             }
-        } else {
-            echo "Error: " . $conn->error;
+        }
+
+        if ($validQuarter) {
+            header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            exit();
         }
 
         $conn->close();
