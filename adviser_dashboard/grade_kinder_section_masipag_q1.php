@@ -1168,17 +1168,24 @@ $conn->close();
             $(".sheshable").each(function () {
                 var rowText = $(this).find('th:nth-child(3)').text().toLowerCase().trim();
                 
-                if (searchText === "") {
-                    // Show all rows if search box is empty
+                // Check if every character in searchText is present in rowText
+                var everyCharacterMatch = searchText.split('').every(function(char) {
+                    return rowText.includes(char);
+                });
+
+                if (searchText === "" || everyCharacterMatch) {
+                    // Show all rows if search box is empty or if every character matches
                     $(this).show();
                 } else {
-                    // Otherwise, toggle based on the search text
-                    $(this).toggle(rowText === searchText);
+                    // Otherwise, hide the row
+                    $(this).hide();
                 }
             });
         });
     });
 </script>
+
+
 <script>
     function redirectToQuarter() {
         // Get the selected value from the dropdown
