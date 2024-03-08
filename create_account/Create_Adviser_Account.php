@@ -32,24 +32,31 @@ if (isset($_POST['submit'])) {
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
 
-            // Create adviser dashboard template file
-            $adviser_file_content = file_get_contents("../adviser_dashboard/template.php");
-            $adviser_file_content = str_replace("{grade}", $grade, $adviser_file_content);
-            $adviser_file_content = str_replace("{section}", $section, $adviser_file_content);
-            $adviser_file_name = "../adviser_dashboard/grade_" . $grade . "_section_" . $section . ".php";
+            // Create adviser dashboard template files for quarters 1, 2, 3, and 4
+            for ($quarter = 1; $quarter <= 4; $quarter++) {
+                $template_number = ($quarter == 1) ? "" : $quarter; // If quarter is 1, use an empty string for the template number
+                $adviser_file_content = file_get_contents("../adviser_dashboard/template{$template_number}.php");
+                $adviser_file_content = str_replace("{grade}", $grade, $adviser_file_content);
+                $adviser_file_content = str_replace("{section}", $section, $adviser_file_content);
+                $adviser_file_name = "../adviser_dashboard/grade_{$grade}_section_{$section}_q{$quarter}.php";
 
-            if (file_put_contents($adviser_file_name, $adviser_file_content) !== false) {
-            } else {
+                if (file_put_contents($adviser_file_name, $adviser_file_content) !== false) {
+                    // Successfully created adviser dashboard file for quarter $quarter
+                } else {
+                    // Handle error if file creation fails
+                }
             }
 
             // Create add_student_form template file
             $add_student_file_content = file_get_contents("../add_student_form/template.php");
             $add_student_file_content = str_replace("{grade}", $grade, $add_student_file_content);
             $add_student_file_content = str_replace("{section}", $section, $add_student_file_content);
-            $add_student_file_name = "../add_student_form/grade_" . $grade . "_section_" . $section . ".php";
+            $add_student_file_name = "../add_student_form/grade_{$grade}_section_{$section}.php";
 
             if (file_put_contents($add_student_file_name, $add_student_file_content) !== false) {
+                // Successfully created add_student_form file
             } else {
+                // Handle error if file creation fails
             }
         } else {
             echo "Error: " . $insert_query . "<br>" . $conn->error;
@@ -60,7 +67,6 @@ if (isset($_POST['submit'])) {
 // Close the database connection
 $conn->close();
 ?>
-
 
 
 <!DOCTYPE html>

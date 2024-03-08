@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $section = $row['section'];
 
                 // Redirect to the corresponding grade and section page
-                header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section . ".php");
+                header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1". ".php");
                 exit();
             } else {
                 echo "Error fetching grade and section: " . $conn->error;

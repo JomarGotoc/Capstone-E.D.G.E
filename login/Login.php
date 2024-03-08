@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         case 'adviser':
                             $grade = $row['grade'];
                             $section = $row['section'];
-                            header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section . ".php");
+                            header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1". ".php");
                             break;
                         case 'counselor':
                             header("Location: ../guidance_dashboard/guidance_dashboard.php");

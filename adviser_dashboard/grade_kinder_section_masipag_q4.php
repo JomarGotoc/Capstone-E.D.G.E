@@ -1,6 +1,11 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
-    $currentFileName1 = basename($_SERVER["SCRIPT_FILENAME"]);
+
+    $currentFileName1 = basename(__FILE__,'_q4.php');
+    $currentFileName1 = $currentFileName1.'.php';
+    
+    $currentFileName2 = basename(__FILE__,'_q4.php');
+
     include("../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -75,7 +80,7 @@ $conn->close();
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ?";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -860,7 +865,7 @@ $conn->close();
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown" name="school-year" class="containers first">
+                    <select id="topdown1" name="school-year" class="containers first">
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
@@ -919,6 +924,15 @@ $conn->close();
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Adviser</h3>
+                </div>
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value=""></option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
                 </div>
             </div>
             <?php
@@ -1166,7 +1180,21 @@ $conn->close();
         });
     });
 </script>
+<script>
+    function redirectToQuarter() {
+        // Get the selected value from the dropdown
+        var selectedQuarter = document.getElementById("topdown").value;
 
+        // Check if a quarter is selected
+        if (selectedQuarter !== "") {
+            // Construct the URL for redirection
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+
+            // Redirect to the selected quarter's PHP file
+            window.location.href = redirectURL;
+        }
+    }
+</script>
 
  
 </body>

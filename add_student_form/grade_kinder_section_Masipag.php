@@ -5,7 +5,8 @@ ini_set('display_errors', 1);
 include "../database.php";
 
 $phpFileName = basename(__FILE__, '.php');
-$phpFileName1 = basename(__FILE__,);
+$phpFileName1 = basename(__FILE__,'.php');
+$phpFileName1 = $phpFileName1.'_q1.php';
 $tableName1 = strtolower($phpFileName);
 
 $fullname1 = $lrn = $grade = $section = "";
