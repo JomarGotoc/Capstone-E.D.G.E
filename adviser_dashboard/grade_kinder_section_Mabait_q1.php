@@ -925,7 +925,7 @@ $conn->close();
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Adviser</h3>
                 </div>
-                <div class="select-wrapper1">
+                <div class="select-wrapper">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
                         <option value="" disabled selected hidden>Quarter I</option>
                         <option value="q1">Quarter I</option>

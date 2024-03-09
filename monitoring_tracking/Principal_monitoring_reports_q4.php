@@ -1,4 +1,5 @@
 <?php
+    $currentFileName2 = basename(__FILE__,'_q4.php');
     include('../database.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1";
@@ -228,7 +229,7 @@
     include('../database.php');
 
     function countOccurrences($conn, $table, $grade) {
-        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$grade'";
+        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$grade' AND quarter = '4'";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -300,7 +301,15 @@
             font-family: 'Darker Grotesque', sans-serif;
             color: #fff;
         }
-        
+        #topdown1 {
+            padding: 2px;
+            width: 100%;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: center;
+            border: 1px solid #190572;
+            border-radius: 5px;
+        }
         h2 p{
             margin-top: 5px;
             font-size: 18px;
@@ -669,7 +678,7 @@
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown" name="school-year" class="containers first">
+                    <select id="topdown1" name="school-year" class="containers first">
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
@@ -817,16 +826,15 @@
                     <h3>Quarter</h3>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <select class="containers"style="border:none; background-color: #F3F3F3;">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+            <div class="select-wrapper">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value="" disabled selected hidden>Quarter IV</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
-            </div>
         </div>
 
         <table border="0">
@@ -881,5 +889,20 @@
     </div>
 
     <script src="monitoring_tracking.js"></script>
+    <script>
+    function redirectToQuarter() {
+        // Get the selected value from the dropdown
+        var selectedQuarter = document.getElementById("topdown").value;
+
+        // Check if a quarter is selected
+        if (selectedQuarter !== "") {
+            // Construct the URL for redirection
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+
+            // Redirect to the selected quarter's PHP file
+            window.location.href = redirectURL;
+        }
+    }
+</script>
 </body>
 </html>
