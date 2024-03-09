@@ -275,6 +275,7 @@ $conn->close();
 
             textarea,
             input[type="text"],
+            input[type="number"],
             input[type="password"],
             select, #date-added {
             height: 20x;
@@ -447,25 +448,33 @@ $conn->close();
 
         <form class="login-form" action="Create_adviser_Account.php" method="post">
             <div class="row">
-            <div class="columns">
+                <div class="columns">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="full-name" name="fullname" >
+                        <label for="name">First Name</label>
+                        <input type="text" id="full-name" name="fullname" required>
                     </div>
                     <div class="form-group">
-                        <label for="idnum">Employee Number</label>
-                        <input type="text" id="idnum" name="employment_number" >
+                        <label for="idnum">Middle Name</label>
+                        <input type="text" id="idnum" name="middle_name" required>
                     </div>
                     <div class="form-group">
-                        <label for="pass">Password</label>
-                        <input type="password" id="pass" name="password" >
+                        <label for="pass">Last Name</label>
+                        <input type="text" id="pass" name="last_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-added">Extension Name </label>
+                        <input type="text"  name="extension">
                     </div>
                 </div>
 
                 <div class="columns">
                 <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" >
+                        <input type="date" id="date-added" name="date" required >
+                    </div>
+                    <div class="form-group">
+                        <label for="topdown">Employee Number</label>
+                        <input type="number"  name="" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Grade</label>
@@ -483,7 +492,7 @@ $conn->close();
                         <label for="pass">Section</label>
                         <input type="text" id="section" name="section" >
                     </div>
-                </div>
+            </div>
             </div>
             <button type="submit" name="submit" id="add-btn">Create Account</button>
         </form>

@@ -236,6 +236,7 @@ $conn->close();
 
         textarea,
         input[type="text"],
+        input[type="number"],
         input[type="password"],
         select, #date-added {
         height: 20x;
@@ -401,29 +402,35 @@ $conn->close();
         <div class="error-message1">
             <?php echo $errorMsg1; ?>
         </div>
-
-
-<form class="login-form" action="Create_Executive_Committee_Account.php" method="post">
+        <form class="login-form" action=" " method="post">
         <div class="row">
                 <div class="columns">
                 <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name">First Name</label>
                         <input type="text" id="full-name" name="fullname" required>
                     </div>
                     <div class="form-group">
-                        <label for="idnum">Employee Number</label>
+                        <label for="idnum">Last Name</label>
                         <input type="text" id="idnum" name="employment_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="topdown">Employee Number</label>
+                        <input type="number"  name="" required>     
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
-                        <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" required>
+                        <label for="date-added">Middle Name</label>
+                        <input type="text" id="middle-name" name="middle" required>
                     </div>
                     <div class="form-group">
-                        <label for="topdown">Password</label>
-                        <input type="password" placeholder="Enter Password " name="password" required>     
+                        <label for="topdown">Extension Name</label>
+                        <input type="text"  name="extension">     
+                    </div>
+                    <div class="form-group">
+                        <label for="date-added">Date Added</label>
+                        <input type="date" id="date-added" name="date" required>
                     </div>
                 </div>
             </div>
