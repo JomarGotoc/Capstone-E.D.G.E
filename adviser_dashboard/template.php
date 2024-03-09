@@ -1,107 +1,4 @@
-<?php
-    $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q1.php');
-    $currentFileName1 = $currentFileName1.'.php';
-
-    $currentFileName2 = basename(__FILE__,'_q1.php');
-    
-    include("../database.php");
-    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
-    $words = explode('_', $filenameWithoutExtension);
-
-    if (count($words) >= 4) {
-        $secondWord = $words[1];
-        $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
-        $result1 = $conn->query($sql);
-        $result2 = $conn->query($sql);
-    } 
-?>
-<?php
-include('../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $count += $row['count'];
-        }
-    }
-}
-$conn->close();
-?>
-
-<?php
-    include('../database.php');
-
-    // Get the current PHP filename without the extension
-    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
-
-    // Remove the ".php" extension
-    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
-
-    // Explode the filename into an array of words
-    $words = explode('_', $currentFileWithoutExtension);
-
-    // Initialize variables for grade and section
-    $grade = "";
-    $section = "";
-
-    // Check if there are at least 4 words
-    if (count($words) >= 4) {
-        // Get the 2nd and 4th words
-        $grade = $words[1];
-        $section = $words[3];
-
-        // Initialize an array to store the results
-        $results = array();
-
-        // Perform query on academic_english table
-        $results[] = fetchTable($conn, "academic_english", $grade, $section);
-
-        // Perform query on academic_filipino table
-        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
-
-        // Perform query on academic_numeracy table
-        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
-
-        // Perform query on behavioral table
-        $results[] = fetchTable($conn, "behavioral", $grade, $section);
-
-        // Close the connection
-        $conn->close();
-    } 
-
-    function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $grade, $section);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            // Return an array containing the table name and the fetched data
-            $tableData = array();
-            while ($row = $result->fetch_assoc()) {
-                $tableData[] = $row;
-            }
-
-            return array($tableName, $tableData);
-        } else {
-            return null;
-        }
-
-        // Close the statement
-        $stmt->close();
-    }
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -927,11 +824,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter I</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
@@ -1033,7 +930,7 @@ $conn->close();
                         <th style='width:15%'>{$row['classification']}</th>
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
-                        <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
+                        <th style='width:15%' class='act'><a href='../intervention/adviser_intervention_firstperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
                       </tr>";
             }
         }
@@ -1049,39 +946,7 @@ $conn->close();
             <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
-    <div class="popup" id="popup" style="display: none;">
-        <i class='bx bx-x-circle close-icon' onclick="closePopup()"></i>
-        <h2>SELECT RECORD TO VIEW / UPDATE</h2>
-      
-        <div class="row">
-        <a id="q1Link" href="../intervention/adviser_intervention_firstperiod.php">
-            <div class="containerss" id="container1">
-                <p>Q1</p>
-            </div>
-        </a>
-      
-        <a id="q2Link" href="../intervention/adviser_intervention_secondperiod.php">
-            <div class="containerss" id="container2">
-                <p>Q2</p>
-            </div>
-        </a>
-      
-        <div class="row">
-        <a id="q3Link" href="../intervention/adviser_intervention_thirdperiod.php">
-            <div class="containerss" id="container3">
-                <p>Q3</p>
-            </div>
-        </a>
-      
-        <a id="q4Link" href="../intervention/adviser_intervention_fourthperiod.php">
-            <div class="containerss" id="container4">
-                <p>Q4</p>
-            </div>
-        </a>
-        </div>
-      
-      </div>
-    </div>
+
 
     <script src="adviserdashboard.js"></script>
     <script>

@@ -927,11 +927,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter III</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 3</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
@@ -1034,7 +1034,7 @@ $conn->close();
                         <th style='width:15%'>{$row['classification']}</th>
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
-                        <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
+                        <th style='width:15%' class='act'><a href='../intervention/adviser_intervention_thirdperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
                       </tr>";
             }
         }
@@ -1050,39 +1050,6 @@ $conn->close();
             <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
-    <div class="popup" id="popup" style="display: none;">
-        <i class='bx bx-x-circle close-icon' onclick="closePopup()"></i>
-        <h2>SELECT RECORD TO VIEW / UPDATE</h2>
-      
-        <div class="row">
-        <a id="q1Link" href="../intervention/adviser_intervention_firstperiod.php">
-            <div class="containerss" id="container1">
-                <p>Q1</p>
-            </div>
-        </a>
-      
-        <a id="q2Link" href="../intervention/adviser_intervention_secondperiod.php">
-            <div class="containerss" id="container2">
-                <p>Q2</p>
-            </div>
-        </a>
-      
-        <div class="row">
-        <a id="q3Link" href="../intervention/adviser_intervention_thirdperiod.php">
-            <div class="containerss" id="container3">
-                <p>Q3</p>
-            </div>
-        </a>
-      
-        <a id="q4Link" href="../intervention/adviser_intervention_fourthperiod.php">
-            <div class="containerss" id="container4">
-                <p>Q4</p>
-            </div>
-        </a>
-        </div>
-      
-      </div>
-    </div>
 
     <script src="adviserdashboard.js"></script>
     <script>
