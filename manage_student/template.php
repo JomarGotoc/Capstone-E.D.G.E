@@ -25,36 +25,42 @@ if (count($words) >= 4) {
 }
 ?>
 <?php
+$errorMsg = "";
 include('../../database.php');
-// Search for tables with the specified conditions in the name
 $tableNameKeyword = "grade";
 $sectionKeyword = "section";
 
 $sql = "SHOW TABLES LIKE '%$tableNameKeyword%$sectionKeyword%'";
-$result1 = $conn->query($sql); // Changed variable name to $result1
-
-// Initialize empty options strings
+$result1 = $conn->query($sql);
 $sectionOptions = '';
-$gradeOptions = '';
+$gradeOptions = [];
+$uniqueGrades = [];
 
-if ($result1->num_rows > 0) { // Changed variable name to $result1
-    // Fetch the table names and get the 4th and 1st words
-    while ($row = $result1->fetch_assoc()) { // Changed variable name to $result1
+if ($result1->num_rows > 0) { 
+    while ($row = $result1->fetch_assoc()) { 
         $tableName = reset($row);
 
-        // Extract the 4th and 1st words from the table name
-        $tableWords = explode('_', $tableName); // Assuming tables are separated by underscores
+        $tableWords = explode('_', $tableName); 
         if (count($tableWords) >= 4) {
             $fourthWord = ucfirst($tableWords[3]); // Capitalize the first letter
-            $firstWord = ucfirst($tableWords[1]); // Capitalize the first letter
+            $secondWord = ucfirst($tableWords[1]); // Capitalize the first letter
 
-            // Append the option tags to the options strings
+            // Check if the grade is not in the list of unique grades
+            if (!in_array($secondWord, $uniqueGrades)) {
+                // Append the option tag to the options string
+                $gradeOptions[] = "<option value=\"$secondWord\">$secondWord</option>";
+
+                // Add the grade to the list of unique grades
+                $uniqueGrades[] = $secondWord;
+            }
+
+            // Append the option tag to the options string for section
             $sectionOptions .= "<option value=\"$fourthWord\">$fourthWord</option>";
-            $gradeOptions .= "<option value=\"$firstWord\">$firstWord</option>";
         }
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -554,18 +560,21 @@ if ($result1->num_rows > 0) { // Changed variable name to $result1
 
     <div class="main-container" >
         <div class="main-content">
+        <div class="errorMessage">
+        <?php echo isset($errorMsg) ? $errorMsg : ''; ?>
+        </div>
             <div id="gradeSectionSelection">
             <div class="dropdown-container">
                 <label for="gradeDropdown">Grade:</label>
                 <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
-                    <option value=""></option>
-                    <?php echo $gradeOptions; ?>
+                    <option value="" disabled selected hidden>Grade</option>
+                    <?php echo implode('', $gradeOptions); ?>
                 </select>
             </div>
             <div class="dropdown-container">
                 <label for="sectionDropdown">Section:</label>
                 <select id="sectionDropdown" class="dropdowns" onchange="filterStudents()">
-                    <option value=""></option>
+                    <option value="" disabled selected hidden>Section</option>
                     <?php echo $sectionOptions; ?>
                 </select>
             </div>
@@ -672,7 +681,7 @@ if ($result1->num_rows > 0) { // Changed variable name to $result1
     </div>
 
     <script src="view_studentlist2.js"></script>
-<script>
+    <script>
     // Function to handle dropdown change event
     function filterStudents() {
         // Get selected grade and section values
@@ -689,13 +698,22 @@ if ($result1->num_rows > 0) { // Changed variable name to $result1
                     // PHP file exists, navigate to the corresponding URL
                     window.location.href = phpFileUrl;
                 } else {
-                    // PHP file not found, handle accordingly (e.g., show an error message)
-                    console.error("PHP file not found:", phpFileUrl);
+                    // PHP file not found, show an error message
+                    showError("Grade and Section Doesn't Exist");
                 }
             })
             .catch(error => {
                 console.error("Error checking PHP file:", error);
+                // Handle other errors if needed
+                showError("An error occurred. Please try again later.");
             });
+    }
+
+    // Function to display error message
+    function showError(message) {
+        // Display an error message to the user (you can customize this based on your needs)
+        var errorMessageDiv = document.querySelector(".errorMessage");
+        errorMessageDiv.innerHTML = message;
     }
 
     // Function to parse URL parameters
@@ -723,6 +741,7 @@ if ($result1->num_rows > 0) { // Changed variable name to $result1
     document.getElementById("gradeDropdown").addEventListener("change", filterStudents);
     document.getElementById("sectionDropdown").addEventListener("change", filterStudents);
 </script>
+
 
     
 </body>
