@@ -1,4 +1,107 @@
+<?php
+    $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
+    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = $currentFileName1.'.php';
+
+    $currentFileName2 = basename(__FILE__,'_q1.php');
+    
+    include("../database.php");
+    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
+    $words = explode('_', $filenameWithoutExtension);
+
+    if (count($words) >= 4) {
+        $secondWord = $words[1];
+        $fourthWord = $words[3];
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $result1 = $conn->query($sql);
+        $result2 = $conn->query($sql);
+    } 
+?>
+<?php
+include('../database.php');
+$filename = basename(__FILE__, '.php');
+$words = explode('_', $filename);
+$secondWord = $words[1];
+$fourthWord = $words[3];
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+$count = 0;
+foreach ($tables as $table) {
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $count += $row['count'];
+        }
+    }
+}
+$conn->close();
+?>
+
+<?php
+    include('../database.php');
+
+    // Get the current PHP filename without the extension
+    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
+
+    // Remove the ".php" extension
+    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
+
+    // Explode the filename into an array of words
+    $words = explode('_', $currentFileWithoutExtension);
+
+    // Initialize variables for grade and section
+    $grade = "";
+    $section = "";
+
+    // Check if there are at least 4 words
+    if (count($words) >= 4) {
+        // Get the 2nd and 4th words
+        $grade = $words[1];
+        $section = $words[3];
+
+        // Initialize an array to store the results
+        $results = array();
+
+        // Perform query on academic_english table
+        $results[] = fetchTable($conn, "academic_english", $grade, $section);
+
+        // Perform query on academic_filipino table
+        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
+
+        // Perform query on academic_numeracy table
+        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
+
+        // Perform query on behavioral table
+        $results[] = fetchTable($conn, "behavioral", $grade, $section);
+
+        // Close the connection
+        $conn->close();
+    } 
+
+    function fetchTable($conn, $tableName, $grade, $section) {
+        // Prepare and execute the SQL query with the condition for quarter = 1
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $grade, $section);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            // Return an array containing the table name and the fetched data
+            $tableData = array();
+            while ($row = $result->fetch_assoc()) {
+                $tableData[] = $row;
+            }
+
+            return array($tableName, $tableData);
+        } else {
+            return null;
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
