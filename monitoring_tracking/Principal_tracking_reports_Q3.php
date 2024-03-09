@@ -561,22 +561,22 @@
         <div class="row">
             <div class="column" >
                 <div class="containers" style="background-color: #B7B7B7">
-                    <h3>School Name</h3>
+                    <h3 style="margin-left: 7px">School Name</h3>
                 </div>
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>Dagupan City Division Elementary Schools</h3>
+                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
                 </div>
             </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Total P.A.R.s</h3>
+                    <h3 style="margin-left: 7px">Total P.A.R.s</h3>
                 </div>
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3><?php echo $totalpars ?></h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalpars ?></h3>
                 </div>
             </div>
         </div>
@@ -585,12 +585,12 @@
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Quarter</h3>
+                    <h3 style="margin-left: 7px">Quarter</h3>
                 </div>
             </div>
             <div class="column column-right">
             <div class="containers" style="background-color: #F3F3F3;">
-            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()">
+            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
     <option value="">Select Quarter</option>
     <option value="all">Show All Quarters</option>
         <option value="1">Quarter 1</option>
@@ -602,12 +602,12 @@
 </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Resolved Cases</h3>
+                    <h3 style="margin-left: 7px">Resolved Cases</h3>
                 </div>
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3><?php echo $totalresolved ?> <span>/<?php echo $totalpars ?></span></h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalresolved ?> <span>/<?php echo $totalpars ?></span></h3>
                 </div>
             </div>
         </div>

@@ -518,10 +518,10 @@
 
         .shesh {
             background-color: transparent;
-            border-radius: 3px;
-            border: 1px solid #919097;
+            border-radius: 5px;
+            border: 2px solid #919097;
             background: rgba(251, 251, 251, 0.25);
-            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.25) inset, 0px 7px 7px 0px rgba(0, 0, 0, 0.25);
             padding: 10px;
             padding-top: 15px;
             margin-bottom: 20px;  
@@ -569,12 +569,14 @@
 
         #topdown {
             padding: 2px;
-            width: 100%;
+            width: 400px;
             background: #FBFBFB;
             color: #190572;
-            text-align: center;
-            border: 1px solid #190572;
+            text-align: start;
+            border: none;
             border-radius: 5px;
+            font-weight: bold;
+            font-size: 17px;
         }
 
         .second{
@@ -700,12 +702,12 @@
         <div class="row">
             <div class="column" >
                 <div class="containers" style="background-color: #B7B7B7">
-                    <h3>Division</h3>
+                    <h3 style="margin-left: 7px">Division</h3>
                 </div>
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>Dagupan City Division Elementary Schools</h3>
+                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
                 </div>
             </div>
             <div class="column">
@@ -805,12 +807,12 @@
         <div class="row">
             <div class="column" >
                 <div class="containers" style="background-color: #B7B7B7">
-                    <h3>No. of P.A.Rs</h3>
+                    <h3 style="margin-left: 7px">No. of P.A.Rs</h3>
                 </div>
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>Highest to Lowest</h3>
+                    <h3 style="margin-left: 7px">Highest to Lowest</h3>
                 </div>
             </div>
             <div class="column">
@@ -823,11 +825,11 @@
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Quarter</h3>
+                    <h3 style="margin-left: 7px">Quarter</h3>
                 </div>
             </div>
             <div class="select-wrapper">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()" style="margin-left: 3px">
                         <option value="" disabled selected hidden>Quarter IV</option>
                         <option value="q1">Quarter I</option>
                         <option value="q2">Quarter II</option>
