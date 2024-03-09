@@ -400,6 +400,19 @@
             border-radius: 5px;
         }
 
+        
+        #topdowns {
+            padding: 2px;
+            width: 400px;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: start;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
         .second{
             border-radius: 3px;
             background-color: #2206A0;
@@ -590,7 +603,7 @@
             </div>
             <div class="column column-right">
             <div class="containers" style="background-color: #F3F3F3;">
-            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
+            <select id="topdowns" style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
     <option value="">Select Quarter</option>
     <option value="all">Show All Quarters</option>
         <option value="1">Quarter 1</option>

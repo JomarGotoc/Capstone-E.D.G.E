@@ -519,7 +519,7 @@
         .shesh {
             background-color: transparent;
             border-radius: 5px;
-            border: 2px solid #919097;
+            border: 3px solid #919097;
             background: rgba(251, 251, 251, 0.25);
             box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.25) inset, 0px 7px 7px 0px rgba(0, 0, 0, 0.25);
             padding: 10px;

@@ -590,8 +590,8 @@
             </div>
             <div class="column column-right">
             <div class="containers" style="background-color: #F3F3F3;">
-            <select id="quarter-dropdown" style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
-    <option value="">Select Quarter</option>
+            <select id="quarter-dropdown" class="topdown "style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
+        <option value="">Select Quarter</option>
         <option value="1">Quarter 1</option>
         <option value="2">Quarter 2</option>
         <option value="3">Quarter 3</option>
