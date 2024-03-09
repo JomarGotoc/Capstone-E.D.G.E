@@ -1,11 +1,11 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = basename(__FILE__,'_q4.php');
     $currentFileName1 = $currentFileName1.'.php';
-
-    $currentFileName2 = basename(__FILE__,'_q1.php');
     
+    $currentFileName2 = basename(__FILE__,'_q4.php');
+
     include("../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -78,14 +78,15 @@ $conn->close();
         // Close the connection
         $conn->close();
     } 
-
     function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1";
+        // Prepare and execute the SQL query
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        // Check if there are any results
         if ($result->num_rows > 0) {
             // Return an array containing the table name and the fetched data
             $tableData = array();
@@ -102,7 +103,6 @@ $conn->close();
         $stmt->close();
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -927,11 +927,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value=""></option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="" disabled selected hidden>Quarter IV</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
             </div>
@@ -946,6 +946,7 @@ $conn->close();
             </div>";
             }
             ?>
+
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1184,8 +1185,6 @@ $conn->close();
         });
     });
 </script>
-
-
 <script>
     function redirectToQuarter() {
         // Get the selected value from the dropdown
