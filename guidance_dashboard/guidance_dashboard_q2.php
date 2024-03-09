@@ -1,7 +1,8 @@
 <?php
     include('../database.php');
-    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral";
-    $result = $conn->query($sql);
+    $currentFileName2 = basename(__FILE__,'_q2.php');
+    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='2'";
+    $result1 = $conn->query($sql);
 ?>
 <?php
     include('../database.php');
@@ -582,7 +583,7 @@ if ($result) {
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown" name="school-year" class="containers first">
+                    <select id="topdown1" name="school-year" class="containers first">
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
@@ -631,6 +632,15 @@ if ($result) {
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Guidance Counselor</h3>
+                </div>
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value=""></option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
                 </div>
             </div>
             <div class="column column-right">
@@ -685,9 +695,8 @@ if ($result) {
     </div>
     <table border="0">
         <?php
-    if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Define row color dynamically or use a default color
+    if ($result1->num_rows > 0) {
+    while ($row = $result1->fetch_assoc()) {
         $rowColor = '#ffffff';
 
         echo "<tr class='sheshable' style='background-color: $rowColor;'>
@@ -826,6 +835,21 @@ $(document).ready(function () {
         });
     });
 });
+</script>
+<script>
+    function redirectToQuarter() {
+        // Get the selected value from the dropdown
+        var selectedQuarter = document.getElementById("topdown").value;
+
+        // Check if a quarter is selected
+        if (selectedQuarter !== "") {
+            // Construct the URL for redirection
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+
+            // Redirect to the selected quarter's PHP file
+            window.location.href = redirectURL;
+        }
+    }
 </script>
  
 </body>

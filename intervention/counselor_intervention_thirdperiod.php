@@ -42,6 +42,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $conn->close();
 }
 ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET['lrn'])) {
+        $lrn = $_GET['lrn'];
+
+        include('../database.php');
+        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+        $validQuarter = false;
+
+        foreach ($tables as $table) {
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '3' AND 
+        gname IS NOT NULL AND gname <> '' AND 
+        number IS NOT NULL AND number <> '' AND 
+        notes IS NOT NULL AND notes <> '' AND 
+        intervention IS NOT NULL AND intervention <> '' AND 
+        topic IS NOT NULL AND topic <> '' AND 
+        advice IS NOT NULL AND advice <> ''";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $count = $row["count"];
+
+                if ($count > 0) {
+                    $validQuarter = true;
+                    break;
+                }
+            } else {
+                echo "Error in query for table $table: " . $conn->error;
+            }
+        }
+
+        if ($validQuarter) {
+            header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            exit();
+        }
+
+        $conn->close();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -528,48 +569,197 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         
     </style>
 </head>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $lrn = $_POST["lrn"];
-    $fullname = $_POST["fullname"];
-    $grade = $_POST["grade"];
-    $classification = $_POST["classification"];
-    $gname = $_POST["gname"];
-    $number = $_POST["number"];
-    $notes = $_POST["notes"];
-    $intervention = $_POST["intervention"];
-    $topic = $_POST["topic"];
-    $advice = $_POST["advice"];
-    $status = $_POST["status"];
+<body>
 
-    include('../database.php');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <img src="../img/logo.png" class="logs">
+                <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
+            </div>
+        </div>
+    </header>
 
 
-    $sql = "UPDATE behavioral SET 
-            fullname = ?,
-            gname = ?,
-            number = ?,
-            notes = ?,
-            intervention = ?,
-            topic = ?,
-            advice = ?,
-            status = ?
-            WHERE lrn = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
-    
-    if ($stmt->execute()) {
-        header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
-    } else {
-        echo "Error: " . $stmt->error;
-    }
+    <form action="" method="POST" class="form-container">
+    <div class="top-container">
+        <div class="back-button">
+            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        </div>
+        <div class="school">
+            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+        </div>
+        <button class="update" name="update">Update Record</button>
+    </div>
+    <div class="main-container">
+        <div class="row">
+            <div class="column">
+                <div class="containers first">
+                    <h3>S.Y. 2023 - 2024</h3>
+                </div>
+            </div>
+            <div class="column">
+                <div class="containers second">
+                    <h3><i class='bx bx-printer' ></i>Print Reports</h3>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers third" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Q1 P.A.R. Status</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                    <select id="topdown" name="status" class="containers first">
+                        <option value="Pending">Pending</option>
+                        <option value="On-going">On-going</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Unresolved">Unresolved</option>
+                    </select>
+            </div>
+        </div>
 
-    $stmt->close();
-    $conn->close();
-}
-?>
+
+        <div class="row">
+            <div class="column" >
+                <div class="containers" style="background-color: #190572">
+                    <h3 style="margin-left:10px">LRN</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="lrn" id="lrn" value="<?= isset($lrn) ? htmlspecialchars($lrn) : ''; ?>" readonly>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Grade & Section</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers" style="background-color: #F3F3F3; ">
+                <input type="text" name="grade" class="right" id="grade" value="<?= isset($grade) ? htmlspecialchars($grade . ' - ' . $section) : ''; ?>" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Student's Name</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="fullname" id="fullname" value="<?= isset($fullname) ? htmlspecialchars($fullname) : ''; ?>" readonly>
+
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Identification</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="classification" id="classification" class="right" value="<?= isset($classification) ? htmlspecialchars($classification) : ''; ?>" readonly>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Guardian Name</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <input type="text" name="gname" id="identification" value="" placeholder=" ">
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Contact Number</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <input type="text" name="number" id="identification" value="" placeholder=" " class="right">
+                </div>
+            </div>
+        </div>
+
+        <div class="row ints">
+            <div class="column">
+                <div class="text-container">
+                    <textarea class="editable-text" name="notes" id="notes" placeholder="Counselor's Notes"></textarea>                
+                </div>
+            </div>
+            <div class="column wide-columns">
+                <div class="text-container">
+                    <textarea class="editable-text" name="topic" id="topic" placeholder="Topic/Matter"></textarea>                
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="column">
+                <div class="text-container">
+                    <textarea class="editable-text" name="intervention" id="intervention" placeholder="Intervention"></textarea>                
+                </div>
+            </div>
+            <div class="column wide-columns">
+                <div class="text-container">
+                    <textarea class="editable-text" name="advice" id="advice" placeholder="Advice"></textarea>                
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
+    <script src="counselor_intervention.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to get URL parameter by name
+        function getUrlParameter(name) {
+            name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Fetch parameters from URL
+        var lrnFromURL = getUrlParameter('lrn');
+        var fullnameFromURL = getUrlParameter('fullname');
+        var classificationFromURL = getUrlParameter('classification');
+        var gradeFromURL = getUrlParameter('grade');
+        var sectionFromURL = getUrlParameter('section');
+
+        // Set values in their respective input fields
+        if (lrnFromURL) {
+            var lrnInput = document.getElementById('lrn');
+            lrnInput.value = lrnFromURL;
+        }
+
+        if (fullnameFromURL) {
+            var fullnameInput = document.getElementById('fullname');
+            fullnameInput.value = fullnameFromURL;
+        }
+
+        if (classificationFromURL) {
+            var classificationInput = document.getElementById('classification');
+            classificationInput.value = classificationFromURL.trim(); // Remove leading and trailing spaces
+        }
+
+        if (gradeFromURL || sectionFromURL) {
+            var gradeSectionInput = document.getElementById('grade');
+            var combinedGradeSection = (gradeFromURL ? gradeFromURL : '') + (sectionFromURL ? ' - ' + sectionFromURL : '');
+            gradeSectionInput.value = combinedGradeSection.trim(); // Remove leading and trailing spaces
+        }
+    });
+</script>
+ 
+</body>
 </html>

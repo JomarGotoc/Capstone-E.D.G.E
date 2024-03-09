@@ -56,9 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 ?>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Check if LRN parameter is set in the URL
     if (isset($_GET['lrn'])) {
-        // Get LRN from the URL
         $lrn = $_GET['lrn'];
 
         include('../database.php');
@@ -66,7 +64,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $validQuarter = false;
 
         foreach ($tables as $table) {
-            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '2'";
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '2' AND 
+        gname IS NOT NULL AND gname <> '' AND 
+        number IS NOT NULL AND number <> '' AND 
+        notes IS NOT NULL AND notes <> '' AND 
+        intervention IS NOT NULL AND intervention <> '' AND 
+        topic IS NOT NULL AND topic <> '' AND 
+        advice IS NOT NULL AND advice <> ''";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -83,9 +87,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         if ($validQuarter) {
-            header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
             exit();
-        } 
+        }
 
         $conn->close();
     }

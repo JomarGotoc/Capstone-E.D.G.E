@@ -57,19 +57,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 ?>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Check if LRN parameter is set in the URL
     if (isset($_GET['lrn'])) {
-        // Get LRN from the URL
         $lrn = $_GET['lrn'];
 
         include('../database.php');
-
-        // Check if the quarter field is set to '1' in any of the specified tables
         $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
         $validQuarter = false;
 
         foreach ($tables as $table) {
-            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '1'";
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '1' AND 
+        gname IS NOT NULL AND gname <> '' AND 
+        number IS NOT NULL AND number <> '' AND 
+        notes IS NOT NULL AND notes <> '' AND 
+        intervention IS NOT NULL AND intervention <> '' AND 
+        topic IS NOT NULL AND topic <> '' AND 
+        advice IS NOT NULL AND advice <> ''";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -94,7 +96,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

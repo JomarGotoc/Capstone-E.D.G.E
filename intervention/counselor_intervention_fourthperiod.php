@@ -42,6 +42,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $conn->close();
 }
 ?>
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    if (isset($_GET['lrn'])) {
+        $lrn = $_GET['lrn'];
+
+        include('../database.php');
+        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+        $validQuarter = false;
+
+        foreach ($tables as $table) {
+            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '4' AND 
+        gname IS NOT NULL AND gname <> '' AND 
+        number IS NOT NULL AND number <> '' AND 
+        notes IS NOT NULL AND notes <> '' AND 
+        intervention IS NOT NULL AND intervention <> '' AND 
+        topic IS NOT NULL AND topic <> '' AND 
+        advice IS NOT NULL AND advice <> ''";
+            $result = $conn->query($sql);
+
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $count = $row["count"];
+
+                if ($count > 0) {
+                    $validQuarter = true;
+                    break;
+                }
+            } else {
+                echo "Error in query for table $table: " . $conn->error;
+            }
+        }
+
+        if ($validQuarter) {
+            header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            exit();
+        }
+
+        $conn->close();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
