@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             header("Location: ../guidance_dashboard/guidance_dashboard_q1.php");
                             break;
                         case 'principal':
-                            header("Location: ../monitoring_tracking/Principal_tracking_reports.php");
+                            header("Location: ../monitoring_tracking/Principal_tracking_reports_q1.php");
                             break;
                         case 'school_admin':
                             header("Location: ../button_options/School_Admin_Create_Account.php");
