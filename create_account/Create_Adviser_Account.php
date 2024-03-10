@@ -4,59 +4,62 @@ $errorMsg = "";
 $errorMsg1 = "";
 
 if (isset($_POST['submit'])) {
-    // Get form data
-    $fullname = $_POST['fullname'];
+    $firstname = $_POST['firstname'];
+    $middlename = $_POST['middlename'];
+    $lastname = $_POST['lastname'];
+    $extension = $_POST['extension'];
+    $fullname = $firstname . ' ' . $middlename . ' ' . $extension;
     $employment_number = $_POST['employment_number'];
-    $password = $_POST['password'];
+    $firstThreeLetters = substr($firstname, 0, 3);
+    $firstTwoLettersLastName = substr($lastname, 0, 2);
+    $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
+    $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
     $grade = $_POST['grade'];
     $section = $_POST['section'];
 
-    // Check if the fullname already exists
     $check_fullname_query = "SELECT * FROM adviser WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
 
-    // Check if the employment_number already exists
     $check_employment_number_query = "SELECT * FROM adviser WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
+
+    $check_grade_section_query = "SELECT * FROM adviser WHERE grade='$grade' AND section='$section'";
+    $check_grade_section_result = $conn->query($check_grade_section_query);
 
     if ($check_fullname_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Full Name already exists.";
     } elseif ($check_employment_number_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
+    } elseif ($check_grade_section_result->num_rows > 0) {
+        $errorMsg1 = "Account with the provided Grade and Section combination already exists.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $verified = "no"; // Set the default value for the "verified" field
+        $verified = "no";
         $insert_query = "INSERT INTO adviser (fullname, employment_number, password, date, grade, section, verified) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date', '$grade', '$section', '$verified')";
 
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
 
-            // Create adviser dashboard template files for quarters 1, 2, 3, and 4
             for ($quarter = 1; $quarter <= 4; $quarter++) {
-                $template_number = ($quarter == 1) ? "" : $quarter; // If quarter is 1, use an empty string for the template number
+                $template_number = ($quarter == 1) ? "" : $quarter;
                 $adviser_file_content = file_get_contents("../adviser_dashboard/template{$template_number}.php");
                 $adviser_file_content = str_replace("{grade}", $grade, $adviser_file_content);
                 $adviser_file_content = str_replace("{section}", $section, $adviser_file_content);
                 $adviser_file_name = "../adviser_dashboard/grade_{$grade}_section_{$section}_q{$quarter}.php";
 
                 if (file_put_contents($adviser_file_name, $adviser_file_content) !== false) {
-                    // Successfully created adviser dashboard file for quarter $quarter
                 } else {
-                    // Handle error if file creation fails
                 }
             }
 
-            // Create add_student_form template file
             $add_student_file_content = file_get_contents("../add_student_form/template.php");
             $add_student_file_content = str_replace("{grade}", $grade, $add_student_file_content);
             $add_student_file_content = str_replace("{section}", $section, $add_student_file_content);
             $add_student_file_name = "../add_student_form/grade_{$grade}_section_{$section}.php";
 
             if (file_put_contents($add_student_file_name, $add_student_file_content) !== false) {
-                // Successfully created add_student_form file
             } else {
-                // Handle error if file creation fails
             }
         } else {
             echo "Error: " . $insert_query . "<br>" . $conn->error;
@@ -64,11 +67,8 @@ if (isset($_POST['submit'])) {
     }
 }
 
-// Close the database connection
 $conn->close();
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -451,15 +451,15 @@ $conn->close();
                 <div class="columns">
                     <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="fullname" required>
+                        <input type="text" id="full-name" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Middle Name</label>
-                        <input type="text" id="idnum" name="middle_name" required>
+                        <input type="text" id="idnum" name="middlename" required>
                     </div>
                     <div class="form-group">
                         <label for="pass">Last Name</label>
-                        <input type="text" id="pass" name="last_name" required>
+                        <input type="text" id="pass" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="date-added">Extension Name </label>
@@ -474,7 +474,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
-                        <input type="number"  name="" required>
+                        <input type="number"  name="employment_number" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Grade</label>

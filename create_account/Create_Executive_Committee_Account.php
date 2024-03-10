@@ -3,9 +3,16 @@ include ("../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
 if (isset($_POST['submit'])) {
-    $fullname = $_POST['fullname'];
+    $firstname = $_POST['firstname'];
+    $middlename = $_POST['middlename'];
+    $lastname = $_POST['lastname'];
+    $extension = $_POST['extension'];
+    $fullname = $firstname . ' ' . $middlename . ' ' . $extension;
     $employment_number = $_POST['employment_number'];
-    $password = $_POST['password'];
+    $firstThreeLetters = substr($firstname, 0, 3);
+    $firstTwoLettersLastName = substr($lastname, 0, 2);
+    $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
+    $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
 
     $check_fullname_query = "SELECT * FROM executive_committee WHERE fullname='$fullname'";
@@ -407,22 +414,22 @@ $conn->close();
                 <div class="columns">
                 <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="fullname" required>
+                        <input type="text" id="full-name" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="employment_number" required>
+                        <input type="text" id="idnum" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
-                        <input type="number"  name="" required>     
+                        <input type="number"  name="employment_number" required>     
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
                         <label for="date-added">Middle Name</label>
-                        <input type="text" id="middle-name" name="middle" required>
+                        <input type="text" id="middle-name" name="middlename" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Extension Name</label>
