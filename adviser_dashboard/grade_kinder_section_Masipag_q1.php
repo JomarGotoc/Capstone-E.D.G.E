@@ -1,36 +1,106 @@
 <?php
-    include('../database.php');
-    $currentFileName2 = basename(__FILE__,'_q2.php');
-    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='2'";
-    $result1 = $conn->query($sql);
-?>
-<?php
-    include('../database.php');
+    $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
-    $sql = "SELECT fullname, employment_number FROM counselor";
-    $result = $conn->query($sql);
+    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = $currentFileName1.'.php';
 
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            $fullname = $row["fullname"];
-            $employment_number = $row["employment_number"];
-            
-        }
-    }
+    $currentFileName2 = basename(__FILE__,'_q1.php');
+    
+    include("../database.php");
+    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
+    $words = explode('_', $filenameWithoutExtension);
+
+    if (count($words) >= 4) {
+        $secondWord = $words[1];
+        $fourthWord = $words[3];
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $result1 = $conn->query($sql);
+        $result2 = $conn->query($sql);
+    } 
 ?>
 <?php
 include('../database.php');
-$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
-
-$result = $conn->query($sql);
-
-if ($result) {
-    $row = $result->fetch_assoc();
-    $count = $row['count'];
-    $conn->close();
+$filename = basename(__FILE__, '.php');
+$words = explode('_', $filename);
+$secondWord = $words[1];
+$fourthWord = $words[3];
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+$count = 0;
+foreach ($tables as $table) {
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $count += $row['count'];
+        }
+    }
 }
+$conn->close();
+?>
+
+<?php
+    include('../database.php');
+
+    // Get the current PHP filename without the extension
+    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
+
+    // Remove the ".php" extension
+    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
+
+    // Explode the filename into an array of words
+    $words = explode('_', $currentFileWithoutExtension);
+
+    // Initialize variables for grade and section
+    $grade = "";
+    $section = "";
+
+    // Check if there are at least 4 words
+    if (count($words) >= 4) {
+        // Get the 2nd and 4th words
+        $grade = $words[1];
+        $section = $words[3];
+
+        // Initialize an array to store the results
+        $results = array();
+
+        // Perform query on academic_english table
+        $results[] = fetchTable($conn, "academic_english", $grade, $section);
+
+        // Perform query on academic_filipino table
+        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
+
+        // Perform query on academic_numeracy table
+        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
+
+        // Perform query on behavioral table
+        $results[] = fetchTable($conn, "behavioral", $grade, $section);
+
+        // Close the connection
+        $conn->close();
+    } 
+
+    function fetchTable($conn, $tableName, $grade, $section) {
+        // Prepare and execute the SQL query with the condition for quarter = 1
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $grade, $section);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            // Return an array containing the table name and the fetched data
+            $tableData = array();
+            while ($row = $result->fetch_assoc()) {
+                $tableData[] = $row;
+            }
+
+            return array($tableName, $tableData);
+        } else {
+            return null;
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +109,7 @@ if ($result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Guidance Counselor</title>
+    <title>Adviser</title>
     <style>
          body {
             font-family: Arial, sans-serif;
@@ -523,7 +593,219 @@ if ($result) {
             background-color: #ddd;
             color: #190572;
         }
-        
+
+
+        .main-containers {
+            width: 100%;
+            height: calc(100vh - 140px);
+            margin: 20px;
+            margin-top: 80px;
+            bottom: 0;
+            background-color: #E2DFEE;
+            overflow: auto;
+            padding: 20px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .rows {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .columns input[type="text"],
+        .columns,
+        input[type="date"] {
+            flex: 1;
+            padding: 5px;
+            border-radius: 3px;
+            margin-right: 5px;
+        }
+        input[type="text"],
+        input[type="date"],
+        .columns input[type="text"],
+        select{
+            border: none;
+        }
+
+        select option[value="one"]{
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .text-field {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .classification{
+            padding: 5px;
+        }
+
+        .rows > :first-child,
+        .rows > :nth-child(3) {
+            flex: 0 0 11.5rem; 
+            text-align: center;
+            justify-content: center;
+            background-color: #190572;
+            color: #FFFFFF;
+            font-weight: 900;
+        }
+
+        .rows > :nth-child(2) {
+            flex: 0 0 35rem; 
+            background-color: #F3F3F3;
+            color: #190572;
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .rows > :nth-child(4) {
+            flex: 0 0 10rem; 
+            background-color: #F3F3F3;
+            color: #190572;
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .rows:nth-child(3) > :nth-child(2),
+        .rows:nth-child(3) > :nth-child(4) {
+            flex: 0 0 15rem; 
+            background-color: #F3F3F3;
+            color: #190572;
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .rows:nth-child(2) > :nth-child(4){
+            flex: 0 0 10.5rem; 
+        }
+
+        .rows:nth-child(3) > :nth-child(5){
+            flex: 0 0 13.5rem;
+            background-color: #F3F3F3;
+            color: #190572;
+            font-weight: 700;
+            justify-content: center;
+        }
+
+        .text-container {
+            position: relative;
+            width: 73rem; 
+        }
+
+        .editable-text {
+            width: calc(100% - 10px);
+            height: 200px;
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #190572;
+            border-radius: 7px;
+            background: rgba(25, 5, 114, 0.19);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-bottom: 10px;
+            margin: 0 auto;
+        }
+
+        .editable-text::before {
+            content: attr(placeholder);
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #190572;
+            font-weight: bold;
+            letter-spacing: 2px;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 7px;
+            background: rgba(255, 255, 255, 0.90);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            width: fit-content;
+            padding: 5px;
+
+        }
+
+        .editable-text.content-entered::before {
+            display: none;
+        }
+
+        .text-container div {
+            margin: 0;
+        }
+    
+        .ints{
+            margin-top: 20px;
+        }
+    
+        .formatting-buttons {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: flex;
+        }
+    
+        .formatting-buttons button {
+            background-color: #b3adcb;
+            color:#190572;
+            font-weight: bold;
+            border: 1px solid #190572;
+            padding: 5px 10px;
+            margin-left: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+    
+        .formatting-buttons button:hover {
+            background-color: #190572;
+            color: #ddd;
+        }
+
+        .add-buttons {
+            width: 100%;
+            background-color: #190572;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            padding: 10px 0;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .add-buttons:hover {
+            background-color: #130550;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 1; 
+            display: none;
+        }
+
+        .columns input[type="text"]{
+            width: 90%;
+        }
+
+        .lrn-search{
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .lrn-search:hover{
+            font-weight: bold;
+            color:#2206A0;
+        }
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -576,7 +858,7 @@ if ($result) {
 
     <div class="top-container">
         <div class="school">
-            <h3> LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
         </div>
     </div>   
     <div class="main-container">
@@ -593,14 +875,12 @@ if ($result) {
                     <h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3>
                 </div>
             </div>
-            <div class="column full-width">
-                <div class="column third-column">
-                    <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Search Pupil's Name">
-                        <i class='bx bx-search search-icon'></i>
-                    </div>
-                </div>
-            </div>
+            <div class="column third-column">
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="Search Pupil's Name">
+        <i class='bx bx-search search-icon'></i>
+    </div>
+</div>
         </div>
 
 
@@ -610,11 +890,19 @@ if ($result) {
                     <h3 style="margin-left:7px">Employee Number</h3>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><?php echo $employment_number; ?></h3>
+            <?php
+            if ($result1->num_rows > 0) {
+                // Get the data of the first row
+                $row = $result1->fetch_assoc();
+                $employment_number = $row["employment_number"];
+                echo "<div class=\"column column-right\">
+                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
+                    <h3 style=\"color: #190572; margin-left:7px\">$employment_number</h3>
                 </div>
-            </div>
+            </div>";
+            }
+            ?>
+
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Grade and Section</h3>
@@ -622,32 +910,43 @@ if ($result) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px">Overall</h3>
+                    <?php 
+                        $capitalizedSecondWord = ucfirst($secondWord);
+                        echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
+                    ?>
                 </div>
             </div>
+
         </div>
 
 
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Guidance Counselor</h3>
+                    <h3 style="margin-left:7px">Adviser</h3>
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter II</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><?php echo $fullname; ?></h3>
+            <?php
+            if ($result2->num_rows > 0) {
+                $row = $result2->fetch_assoc();
+                $fullname = $row["fullname"];
+                echo "<div class=\"column column-right\">
+                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
+                    <h3 style=\"color: #190572; margin-left:7px\">$fullname</h3>
                 </div>
-            </div>
+            </div>";
+            }
+            ?>
+
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Total Students</h3>
@@ -677,14 +976,16 @@ if ($result) {
                     <h3 style="padding: 7px;">P.A.R. Identification</h3>
                 </div>
             </div>
+
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 7px;">Grade & Section</h3>
                 </div>
             </div>
+
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Status </h3>
+                    <h3 style="padding: 7px;">Status</h3>
                 </div>
             </div>
             <div class="wide-column">
@@ -692,60 +993,66 @@ if ($result) {
                     <h3 style="padding: 7px;">Action</h3>
                 </div>
             </div>
-    </div>
-    <table border="0">
-        <?php
-    if ($result1->num_rows > 0) {
-    while ($row = $result1->fetch_assoc()) {
-        $rowColor = '#ffffff';
-
-        echo "<tr class='sheshable' style='background-color: $rowColor;'>
-                <th style='width:15%'>{$row['lrn']}</th>
-                <th style='width:22%'>{$row['fullname']}</th>
-                <th style='width:15%'>{$row['classification']}</th>
-                <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                <th style='width:15%'>{$row['status']}</th>
-                <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
-            </tr>";
-    }
-}
-?>
-    </table>
-    </div>
-
-    <div class="popup" id="popup" style="display: none;">
-        <i class='bx bx-x-circle close-icon' onclick="closePopup()"></i>
-        <h2>SELECT RECORD TO VIEW / UPDATE</h2>
-      
-        <div class="row">
-        <a id="q1Link" href="../intervention/counselor_intervention_firstperiod.php">
-            <div class="containerss" id="container1">
-                <p>Q1</p>
-            </div>
-        </a>
-      
-        <a id="q2Link" href="../intervention/counselor_intervention_secondperiod.php">
-            <div class="containerss" id="container2">
-                <p>Q2</p>
-            </div>
-        </a>
-      
-        <div class="row">
-        <a id="q3Link" href="../intervention/counselor_intervention_thirdperiod.php">
-            <div class="containerss" id="container3">
-                <p>Q3</p>
-            </div>
-        </a>
-      
-        <a id="q4Link" href="../intervention/counselor_intervention_fourthperiod.php">
-            <div class="containerss" id="container4">
-                <p>Q4</p>
-            </div>
-        </a>
         </div>
-      
-      </div>
-    </div>
+
+        <table border="0" id="pupilTable">
+    <?php
+    foreach ($results as $tableResult) {
+        if ($tableResult) {
+            list($tableName, $tableData) = $tableResult;
+            foreach ($tableData as $row) {
+                // Determine the row color based on classification
+                $status = $row['status'];
+                $rowColor = '';
+
+                switch ($status) {
+                    case 'Unresolved':
+                        $rowColor = 'red';
+                        break;
+                    case 'Pending':
+                        $rowColor = 'blue';
+                        break;
+                    case 'On Going':
+                        $rowColor = 'yellow';
+                        break;
+                    case 'Resolved':
+                        $rowColor = 'green';
+                        break;
+                    default:
+                        $rowColor = '';
+                        break;
+                }
+
+                $capitalizedGrade = ucfirst($row['grade']);
+                $capitalizedSection = ucfirst($row['section']);
+
+                echo "<tr class='sheshable'>
+                        <th style='width:.5%; background-color: $rowColor;'></th>
+                        <th style='width:13%'>{$row['lrn']}</th>
+                        <th style='width:22%'>{$row['fullname']}</th>
+                        <th style='width:15%'>{$row['classification']}</th>
+                        <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
+                        <th style='width:15%'>{$status}</th>
+                        <th style='width:15%' class='act'>
+                            <a href='../intervention/adviser_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}' class='updateRecordButton'>UPDATE RECORD</a>
+                        </th>
+                      </tr>";
+            }
+        }
+    }
+    ?>
+</table>
+
+
+
+
+
+
+        <div class="plus-button">
+            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+        </div>
+
+
 
     <script src="adviserdashboard.js"></script>
     <script>
@@ -760,18 +1067,18 @@ if ($result) {
             popup.style.zIndex = '1';
 
             var row = this.closest('tr');
-            var lrn = row.querySelector('th:nth-child(1)').textContent;
-            var fullname = row.querySelector('th:nth-child(2)').textContent;
-            var classification = row.querySelector('th:nth-child(3)').textContent;
-            var gradeSection = row.querySelector('th:nth-child(4)').textContent; // Assuming 4th column is for grade
-            var status = row.querySelector('th:nth-child(5)').textContent;
+            var lrn = row.querySelector('th:nth-child(2)').textContent;
+            var fullname = row.querySelector('th:nth-child(3)').textContent;
+            var classification = row.querySelector('th:nth-child(4)').textContent;
+            var gradeSection = row.querySelector('th:nth-child(5)').textContent; // Assuming 4th column is for grade
+            var status = row.querySelector('th:nth-child(6)').textContent;
             var gradeSectionParts = gradeSection.split('-');
             var grade = gradeSectionParts[0].trim();
             var section = gradeSectionParts[1].trim();// Assuming 5th column is for section
 
             // Pass data to Q1 link
             var q1Link = document.getElementById('q1Link');
-            q1Link.href = '../intervention/counselor_intervention_firstperiod.php?lrn=' + encodeURIComponent(lrn) +
+            q1Link.href = '../intervention/adviser_intervention_firstperiod.php?lrn=' + encodeURIComponent(lrn) +
                 '&fullname=' + encodeURIComponent(fullname) +
                 '&classification=' + encodeURIComponent(classification) +
                 '&grade=' + encodeURIComponent(grade) +
@@ -781,7 +1088,7 @@ if ($result) {
 
             // Pass data to Q2 link
             var q2Link = document.getElementById('q2Link');
-            q2Link.href = '../intervention/counselor_intervention_secondperiod.php?lrn=' + encodeURIComponent(lrn) +
+            q2Link.href = '../intervention/adviser_intervention_secondperiod.php?lrn=' + encodeURIComponent(lrn) +
                 '&fullname=' + encodeURIComponent(fullname) +
                 '&classification=' + encodeURIComponent(classification) +
                 '&grade=' + encodeURIComponent(grade) +
@@ -789,7 +1096,7 @@ if ($result) {
                 '&status=' + encodeURIComponent(status);
             // Pass data to Q3 link
             var q3Link = document.getElementById('q3Link');
-            q3Link.href = '../intervention/counselor_intervention_thirdperiod.php?lrn=' + encodeURIComponent(lrn) +
+            q3Link.href = '../intervention/adviser_intervention_thirdperiod.php?lrn=' + encodeURIComponent(lrn) +
                 '&fullname=' + encodeURIComponent(fullname) +
                 '&classification=' + encodeURIComponent(classification) +
                 '&grade=' + encodeURIComponent(grade) +
@@ -798,7 +1105,7 @@ if ($result) {
 
             // Pass data to Q4 link
             var q4Link = document.getElementById('q4Link');
-            q4Link.href = '../intervention/counselor_intervention_fourthperiod.php?lrn=' + encodeURIComponent(lrn) +
+            q4Link.href = '../intervention/adviser_intervention_fourthperiod.php?lrn=' + encodeURIComponent(lrn) +
                 '&fullname=' + encodeURIComponent(fullname) +
                 '&classification=' + encodeURIComponent(classification) +
                 '&grade=' + encodeURIComponent(grade) +
@@ -825,16 +1132,28 @@ if ($result) {
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-$(document).ready(function () {
-    $(".search-input").on("keyup", function () {
-        var searchText = $(this).val().toLowerCase();
+    $(document).ready(function () {
+        $(".search-input").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase().trim();
 
-        $(".sheshable").each(function () {
-            var rowText = $(this).text().toLowerCase();
-            $(this).toggle(rowText.indexOf(searchText) > -1);
+            $(".sheshable").each(function () {
+                var rowText = $(this).find('th:nth-child(3)').text().toLowerCase().trim();
+                
+                // Check if every character in searchText is present in rowText
+                var everyCharacterMatch = searchText.split('').every(function(char) {
+                    return rowText.includes(char);
+                });
+
+                if (searchText === "" || everyCharacterMatch) {
+                    // Show all rows if search box is empty or if every character matches
+                    $(this).show();
+                } else {
+                    // Otherwise, hide the row
+                    $(this).hide();
+                }
+            });
         });
     });
-});
 </script>
 <script>
     function redirectToQuarter() {
@@ -851,6 +1170,7 @@ $(document).ready(function () {
         }
     }
 </script>
+
  
 </body>
 </html>

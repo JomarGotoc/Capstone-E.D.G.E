@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
+    // Validate and sanitize the classification input to prevent SQL injection
     $safeClassification = mysqli_real_escape_string($conn, $classification);
 
     // Create a mapping for classification to table name
@@ -32,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $tableName = $tableMapping[$safeClassification];
 
     $sql = "UPDATE $tableName SET 
-            fullname = ?,
             gname = ?,
             number = ?,
             notes = ?,
@@ -42,10 +42,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
             status = ?
             WHERE lrn = ? AND quarter = '2'";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
+    $stmt->bind_param("ssssssss",$gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
-        header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+        header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -408,7 +408,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         .column-left {
             flex: 0 0 calc(15%);
-            margin-left: 0;
             margin-left: auto; 
         }
 
@@ -617,7 +616,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column column-left">
                 <div class="containers third" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Q2 P.A.R. Status</h3>
+                    <h3 style="margin-left:10px">Q1 P.A.R. Status</h3>
                 </div>
             </div>
             <div class="column half-width">
@@ -649,7 +648,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade" id="grade" class="right"  value="<?= isset($grade) ? htmlspecialchars($grade) : ''; ?>" readonly>
+                <input type="text" name="grade" class="right" id="grade" value="<?= isset($grade) ? htmlspecialchars($grade . ' - ' . $section) : ''; ?>" readonly>
                 </div>
             </div>
         </div>
@@ -673,7 +672,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="classification" class="right"  id="classification" value="<?= isset($classification) ? htmlspecialchars($classification) : ''; ?>" readonly>
+                <input type="text" name="classification" id="classification" class="right" value="<?= isset($classification) ? htmlspecialchars($classification) : ''; ?>" readonly>
                 </div>
             </div>
         </div>
@@ -733,6 +732,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     </form>
 
     <script src="adviser_intervention.js"></script>
+    <!-- Add this script at the end of your HTML body -->
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         // Function to get URL parameter by name
@@ -766,17 +766,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             classificationInput.value = classificationFromURL.trim(); // Remove leading and trailing spaces
         }
 
-        if (gradeFromURL) {
-            var gradeInput = document.getElementById('grade');
-            gradeInput.value = gradeFromURL.trim(); // Remove leading and trailing spaces
-        }
-
-        if (sectionFromURL) {
-            var sectionInput = document.getElementById('section');
-            sectionInput.value = sectionFromURL.trim(); // Remove leading and trailing spaces
+        if (gradeFromURL || sectionFromURL) {
+            var gradeSectionInput = document.getElementById('grade');
+            var combinedGradeSection = (gradeFromURL ? gradeFromURL : '') + (sectionFromURL ? ' - ' + sectionFromURL : '');
+            gradeSectionInput.value = combinedGradeSection.trim(); // Remove leading and trailing spaces
         }
     });
 </script>
- 
 </body>
 </html>

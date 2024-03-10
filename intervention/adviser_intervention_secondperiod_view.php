@@ -12,7 +12,7 @@ $tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavio
 $data = [];  // Array to store fetched data
 
 foreach ($tables as $table) {
-    $sql = "SELECT * FROM $table WHERE lrn = ?";
+    $sql = "SELECT * FROM $table WHERE lrn = ? AND quarter = '2'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $lrnToDisplay);
     $stmt->execute();
@@ -34,10 +34,11 @@ foreach ($tables as $table) {
 if (!empty($data)) {
     // Output data from the fetched rows
     $lrn = $data['lrn'];
-    $fullname = $data['fullname'];
-    $gname = $data['gname'];
+    $fullname = ucwords($data['fullname']);
+    $gname = ucwords($data['gname']);
     $number = $data['number'];
-    $grade = $data['grade'];
+    $grade = ucfirst($data['grade']);
+    $section = ucfirst($data['section']);
     $classification = $data['classification'];
     $status = $data['status'];
     $advice = $data['advice'];
@@ -604,7 +605,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="lrn" id="lrn" value="<?php echo htmlspecialchars($lrn); ?>" placeholder=" " readonly>
+                <input type="text" name="lrn" id="lrn" value="<?php echo ($lrn); ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -614,7 +615,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade&section" id="grade&section" value="<?php echo htmlspecialchars($grade); ?>" placeholder="" class="right" readonly>
+                <input type="text" name="grade&section" id="grade&section" value="<?php echo ($section); ?>" placeholder="" class="right" readonly>
                 </div>
             </div>
         </div>
@@ -628,7 +629,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="name" id="name" value="<?php echo htmlspecialchars($fullname); ?>" placeholder=" " readonly>
+                <input type="text" name="name" id="name" value="<?php echo ($fullname); ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -638,7 +639,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="identification" id="identification" value="<?php echo htmlspecialchars($identification); ?>" placeholder=" " class="right" readonly>
+                <input type="text" name="identification" id="identification" value="<?php echo ($classification); ?>" placeholder=" " class="right" readonly>
                 </div>
             </div>
         </div>
@@ -652,7 +653,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                <input type="text" name="gname" id="gname" value="<?php echo htmlspecialchars($gname); ?>" placeholder=" "readonly>
+                <input type="text" name="gname" id="gname" value="<?php echo ($gname); ?>" placeholder=" "readonly>
                     <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i>                
                 </div>
             </div>
@@ -663,7 +664,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                <input type="text" name="cnumber" id="cnumber" value="<?php echo htmlspecialchars($number); ?>" placeholder=" " class="right" readonly>
+                <input type="text" name="cnumber" id="cnumber" value="<?php echo ($number); ?>" placeholder=" " class="right" readonly>
                     <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i>                </div>
             </div>
         </div>
@@ -671,12 +672,12 @@ $conn->close();
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                <textarea class="editable-text" id="notes" placeholder="Adviser's Notes" readonly><?php echo htmlspecialchars($notes); ?></textarea >                
+                <textarea class="editable-text" id="notes" placeholder="Adviser's Notes" readonly><?php echo ($notes); ?></textarea >                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly><?php echo htmlspecialchars($topic); ?></textarea >               
+                <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly><?php echo ($topic); ?></textarea >               
                 </div>
             </div>
         </div>
@@ -684,12 +685,12 @@ $conn->close();
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly><?php echo htmlspecialchars($intervention); ?></textarea>                
+                <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly><?php echo ($intervention); ?></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                <textarea class="editable-text" id="advice" placeholder="Advice" readonly><?php echo htmlspecialchars($advice); ?></textarea >                
+                <textarea class="editable-text" id="advice" placeholder="Advice" readonly><?php echo ($advice); ?></textarea >                
                 </div>                
                 </div>
             </div>
