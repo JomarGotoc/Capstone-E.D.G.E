@@ -3,18 +3,24 @@ include ("../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
 if (isset($_POST['submit'])) {
-    // Get form data
-    $fullname = $_POST['fullname'];
-    $employment_number = $_POST['employment_number'];
-    $password = $_POST['password'];
+    $firstname = $_POST['firstname'];
+    $middlename = $_POST['middlename'];
+    $lastname = $_POST['lastname'];
+    $extension = $_POST['extension'];
+    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
+    $firstThreeLetters = substr($firstname, 0, 3);
+    $firstTwoLettersLastName = substr($lastname, 0, 2);
+    $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
+    $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
+    $employment_number = $_POST['employment_number'];
 
-    // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM school_admin WHERE fullname='$fullname'";
+
+    $check_fullname_query = "SELECT * FROM counselor WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
 
     // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM school_admin WHERE employment_number='$employment_number'";
+    $check_employment_number_query = "SELECT * FROM counselor WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
 
     if ($check_fullname_result->num_rows > 0) {
@@ -23,7 +29,7 @@ if (isset($_POST['submit'])) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
+        $insert_query = "INSERT INTO counselor (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
 
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
@@ -42,7 +48,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>SDO Administrator</title>
+    <title>School Administrator</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -90,7 +96,7 @@ $conn->close();
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 400px;
+            width: 450px;
             text-align: center;
             position: relative;
         }
@@ -99,7 +105,6 @@ $conn->close();
             color: #fff;
             text-decoration: none;
         }
-        
         header {
             position: fixed;
             top: 0;
@@ -332,6 +337,19 @@ $conn->close();
         border: 1px solid #0C052F;
         color: #190572;
         }
+
+        .back-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+          }
+                
+          .back-icon i {
+            margin-right: 5px;
+          }
           .error-message1{
             color: red;
             font-weight:bold ;
@@ -391,10 +409,12 @@ $conn->close();
         </div>
     </header>
 
+
+ 
     <div class="login-container">
-        <a href="../SDO_manage_account/SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../school_admin_manage_account/Counselor_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>School Administrator</h2>
+        <h2>Guidance Counselor</h2>
 
         <div class="error-message">
             <?php echo $errorMsg; ?>
@@ -408,22 +428,22 @@ $conn->close();
                 <div class="columns">
                 <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="fullname" required>
+                        <input type="text" id="full-name" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="employment_number" required>
+                        <input type="text" id="idnum" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
-                        <input type="number"  name="" required>     
+                        <input type="number"  name="employment_number" required>     
                     </div>
                 </div>
 
                 <div class="columns">
                     <div class="form-group">
                         <label for="date-added">Middle Name</label>
-                        <input type="text" id="middle-name" name="middle" required>
+                        <input type="text" id="middle-name" name="middlename" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Extension Name</label>
@@ -442,5 +462,6 @@ $conn->close();
     </div>
 
     <script src="create_account.js"></script>
+
 </body>
 </html>

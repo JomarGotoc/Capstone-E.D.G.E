@@ -7,20 +7,18 @@ if (isset($_POST['submit'])) {
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
     $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' ' . $extension;
-    $employment_number = $_POST['employment_number'];
+    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
     $firstThreeLetters = substr($firstname, 0, 3);
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
+    $employment_number = $_POST['employment_number'];
 
-    // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM principal WHERE fullname='$fullname'";
+    $check_fullname_query = "SELECT * FROM executive_committee WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
 
-    // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM principal WHERE employment_number='$employment_number'";
+    $check_employment_number_query = "SELECT * FROM executive_committee WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
 
     if ($check_fullname_result->num_rows > 0) {
@@ -29,7 +27,7 @@ if (isset($_POST['submit'])) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_query = "INSERT INTO principal (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
+        $insert_query = "INSERT INTO executive_committee (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
 
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
@@ -96,7 +94,7 @@ $conn->close();
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 450px;
+            width: 400px;
             text-align: center;
             position: relative;
         }
@@ -105,6 +103,7 @@ $conn->close();
             color: #fff;
             text-decoration: none;
         }
+        
         header {
             position: fixed;
             top: 0;
@@ -337,19 +336,6 @@ $conn->close();
         border: 1px solid #0C052F;
         color: #190572;
         }
-
-        .back-icon {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 30px;
-            color: #fff;
-            text-decoration: none;
-          }
-                
-          .back-icon i {
-            margin-right: 5px;
-          }
           .error-message1{
             color: red;
             font-weight:bold ;
@@ -408,11 +394,14 @@ $conn->close();
             </div>
         </div>
     </header>
+
+  
+
  
     <div class="login-container">
-    <a href="../school_admin_manage_account/Principal_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../SDO_manage_account/SDO_manageaccount2.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Principal</h2>
+        <h2>Executive Committee</h2>
 
         <div class="error-message">
             <?php echo $errorMsg; ?>
@@ -420,7 +409,6 @@ $conn->close();
         <div class="error-message1">
             <?php echo $errorMsg1; ?>
         </div>
-
         <form class="login-form" action=" " method="post">
         <div class="row">
                 <div class="columns">
@@ -460,6 +448,5 @@ $conn->close();
     </div>
 
     <script src="create_account.js"></script>
-
 </body>
 </html>

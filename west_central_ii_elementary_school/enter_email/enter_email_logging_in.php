@@ -4,9 +4,8 @@
 // Database connection (replace with your database credentials)
 include('../database.php');
 $employmentNumber = ''; // Initialize employment number variable
-$tableName = ''; // Initialize table name variable
+$tableName = '';
 
-// Check if the employment number and table name are provided in the URL
 if (isset($_GET['employment_number'], $_GET['table'])) {
     $employmentNumber = $_GET['employment_number'];
     $tableName = $_GET['table'];
@@ -15,8 +14,6 @@ if (isset($_GET['employment_number'], $_GET['table'])) {
     header("Location: login.php");
     exit();
 }
-
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
     $email = $_POST['email'];

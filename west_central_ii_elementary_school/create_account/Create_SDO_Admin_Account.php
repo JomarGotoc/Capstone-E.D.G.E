@@ -7,13 +7,13 @@ if (isset($_POST['submit'])) {
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
     $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' ' . $extension;
-    $employment_number = $_POST['employment_number'];
+    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
     $firstThreeLetters = substr($firstname, 0, 3);
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
+    $employment_number = $_POST['employment_number'];
 
     // Check if the fullname already exists
     $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";

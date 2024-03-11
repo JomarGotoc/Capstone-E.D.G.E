@@ -1,83 +1,118 @@
 <?php
-$errorMsg ="";
-function hashPassword($password) {
-    return password_hash($password, PASSWORD_BCRYPT);
-}
 
-// Function to verify the hashed password
-function verifyPassword($password, $hashedPassword) {
-    return password_verify($password, $hashedPassword);
-}
-
-// Database connection (replace with your database credentials)
-include('../database.php');
-
-// Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve user inputs
-    $employmentNumber = $_POST['employment_number'];
-    $password = $_POST['password'];
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
 
-    // Array of tables to check against
-    $tables = ['adviser', 'counselor', 'principal', 'school_admin', 'sdo_admin', 'executive_committee'];
+    // Create connection
+    $conn = new mysqli($servername, $username, $password);
 
-    // Loop through tables and check login
-    foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE employment_number = '$employmentNumber'";
-        $result = $conn->query($query);
-
-        if ($result->num_rows > 0) {
-            // User found in this table, check the password
-            $row = $result->fetch_assoc();
-            $hashedPassword = $row['password']; // replace 'password' with the actual column name
-            $verified = $row['verified']; // replace 'verified' with the actual column name
-
-            if (verifyPassword($password, $hashedPassword)) {
-                // Password is correct, user is authenticated
-                if ($verified === 'yes') {
-                    // User is verified, check user type and redirect accordingly
-                    switch ($table) {
-                        case 'adviser':
-                            $grade = $row['grade'];
-                            $section = $row['section'];
-                            header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1". ".php");
-                            break;
-                        case 'counselor':
-                            header("Location: ../guidance_dashboard/guidance_dashboard_q1.php");
-                            break;
-                        case 'principal':
-                            header("Location: ../monitoring_tracking/Principal_tracking_reports_q1.php");
-                            break;
-                        case 'school_admin':
-                            header("Location: ../button_options/School_Admin_Create_Account.php");
-                            break;
-                        case 'sdo_admin':
-                            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
-                            break;
-                        case 'executive_committee':
-                            header("Location: ../monitoring_tracking/executive_monitoring_reports.php");
-                            break;
-                    }
-                    exit();
-                } else {
-                    // User is not verified, redirect to enter_email_logging_in.php
-                    header("Location: enter_email_logging_in.php?employment_number=$employmentNumber&table=$table");
-                    exit();
-                }
-            } else {
-                $errorMsg ="Invalid Account";
-            }
-        }
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    // If the loop completes and no matching user is found, redirect to enter_email_logging_in.php
-    header("Location: enter_email_logging_in.php");
-    exit();
-}
+    // Get a list of all databases
+    $result = $conn->query("SHOW DATABASES");
 
-// Close the database connection
-$conn->close();
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            $databaseName = $row["Database"];
+
+            // Check if the database name contains the word "school"
+            if (strpos($databaseName, 'school') !== false) {
+                // Remove underscores and make ucwords
+                $formattedName = ucwords(str_replace('_', ' ', $databaseName));
+
+                // Example: Assuming you have tables in each database (adviser, principal, counselor, school_admin, sdo_admin, executive_committee)
+                $databaseConn = new mysqli($servername, $username, $password, $databaseName);
+
+                // Check connection to the specific database
+                if ($databaseConn->connect_error) {
+                    die("Connection failed: " . $databaseConn->connect_error);
+                }
+
+                // User input (replace with actual input method)
+                $employmentNumber = $_POST['employment_number'];
+                $inputPassword = $_POST['password'];
+
+                // Build the SQL query
+                $query = "SELECT employment_number, password, verified, grade, section, 'adviser' as table_name FROM adviser WHERE employment_number = '$employmentNumber'
+                          UNION 
+                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'principal' as table_name FROM principal WHERE employment_number = '$employmentNumber'
+                          UNION 
+                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'counselor' as table_name FROM counselor WHERE employment_number = '$employmentNumber'
+                          UNION 
+                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'school_admin' as table_name FROM school_admin WHERE employment_number = '$employmentNumber'
+                          UNION 
+                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'sdo_admin' as table_name FROM sdo_admin WHERE employment_number = '$employmentNumber'
+                          UNION 
+                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'executive_committee' as table_name FROM executive_committee WHERE employment_number = '$employmentNumber'";
+                
+                $userResult = $databaseConn->query($query);
+
+                while ($row = $userResult->fetch_assoc()) {
+                    // Check if the hashed password matches the input password and the user is verified
+                    $hashedPassword = $row['password'];
+
+                    // Use a secure password hashing function like password_verify
+                    if (password_verify($inputPassword, $hashedPassword)) {
+                        // User found in the current database
+                        $table = $row['table_name'];
+
+                        // Check if the user is verified
+                        if ($row['verified'] == 'yes') {
+                            // Redirect based on the found table
+                            switch ($table) {
+                                case 'adviser':
+                                    $grade = $row['grade'];
+                                    $section = $row['section'];
+                                    header("Location: ../$databaseName/adviser_dashboard/grade_${grade}_section_${section}_q1.php");
+                                    exit;
+                                    break;
+                                case 'principal':
+                                    header("Location: ../$databaseName/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employmentNumber&table=$table");
+                                    exit;
+                                    break;
+                                case 'counselor':
+                                    header("Location: ../$databaseName/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employmentNumber&table=$table");
+                                    exit;
+                                    break;
+                                case 'school_admin':
+                                    header("Location: ../$databaseName/button_options/School_Admin_Create_Account.php?employment_number=$employmentNumber&table=$table");
+                                    exit;
+                                    break;
+                                case 'sdo_admin':
+                                    header("Location: ../$databaseName/SDO_manage_account/SDO_manageaccount.php?employment_number=$employmentNumber&table=$table");
+                                    exit;
+                                    break;
+                                case 'executive_committee':
+                                    header("Location: ../$databaseName/monitoring_tracking/executive_monitoring_reports.php?employment_number=$employmentNumber&table=$table");
+                                    exit;
+                                    break;
+                            }
+                        } else {
+                            // User not verified, redirect to login/enter_email_logging_in.php
+                            header("Location: ../$databaseName/enter_email/enter_email_logging_in.php?employment_number=$employmentNumber&table=$table");
+                            exit;
+                        }
+                    }
+                }
+
+                $databaseConn->close();
+            }
+        }
+    } else {
+        echo "No databases found";
+    }
+
+    // Close connection to the main server
+    $conn->close();
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -290,15 +325,11 @@ $conn->close();
     <div class="logo"></div>
     <h2>Sign in to E.D.G.E.</h2>
 
-    <div class="error-message">
-            <?php echo $errorMsg; ?>
-    </div>
-
 
     <form class="login-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
         <input type="text" id="idnum" name="employment_number" placeholder="Enter Employee Number ">
         <input type="password" id="password" name="password" placeholder="Enter Password ">
-        <button type="submit" name="submit" value="Login">Log In</button>
+        <button type="submit" name="submit" >Log In</button>
     </form>
     
     <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="forgot">Forgot Password</button></a>

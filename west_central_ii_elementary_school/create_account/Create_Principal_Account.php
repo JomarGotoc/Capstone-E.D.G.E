@@ -7,20 +7,20 @@ if (isset($_POST['submit'])) {
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
     $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' ' . $extension;
-    $employment_number = $_POST['employment_number'];
+    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
     $firstThreeLetters = substr($firstname, 0, 3);
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
+    $employment_number = $_POST['employment_number'];
 
-
-    $check_fullname_query = "SELECT * FROM counselor WHERE fullname='$fullname'";
+    // Check if the fullname already exists
+    $check_fullname_query = "SELECT * FROM principal WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
 
     // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM counselor WHERE employment_number='$employment_number'";
+    $check_employment_number_query = "SELECT * FROM principal WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
 
     if ($check_fullname_result->num_rows > 0) {
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_query = "INSERT INTO counselor (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
+        $insert_query = "INSERT INTO principal (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
 
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
@@ -408,13 +408,11 @@ $conn->close();
             </div>
         </div>
     </header>
-
-
  
     <div class="login-container">
-    <a href="../school_admin_manage_account/Counselor_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../school_admin_manage_account/Principal_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Guidance Counselor</h2>
+        <h2>Principal</h2>
 
         <div class="error-message">
             <?php echo $errorMsg; ?>
