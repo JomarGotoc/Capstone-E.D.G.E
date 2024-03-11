@@ -705,7 +705,7 @@ if ($result) {
                 <th style='width:15%'>{$row['classification']}</th>
                 <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
                 <th style='width:15%'>{$row['status']}</th>
-                <th style='width:15%' class='act'><button class='updateRecordButton'>UPDATE RECORD</button></th>
+                <th style='width:15%' class='act'><a href='../intervention/adviser_intervention_thirdperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
             </tr>";
     }
 }
@@ -713,39 +713,6 @@ if ($result) {
     </table>
     </div>
 
-    <div class="popup" id="popup" style="display: none;">
-        <i class='bx bx-x-circle close-icon' onclick="closePopup()"></i>
-        <h2>SELECT RECORD TO VIEW / UPDATE</h2>
-      
-        <div class="row">
-        <a id="q1Link" href="../intervention/counselor_intervention_firstperiod.php">
-            <div class="containerss" id="container1">
-                <p>Q1</p>
-            </div>
-        </a>
-      
-        <a id="q2Link" href="../intervention/counselor_intervention_secondperiod.php">
-            <div class="containerss" id="container2">
-                <p>Q2</p>
-            </div>
-        </a>
-      
-        <div class="row">
-        <a id="q3Link" href="../intervention/counselor_intervention_thirdperiod.php">
-            <div class="containerss" id="container3">
-                <p>Q3</p>
-            </div>
-        </a>
-      
-        <a id="q4Link" href="../intervention/counselor_intervention_fourthperiod.php">
-            <div class="containerss" id="container4">
-                <p>Q4</p>
-            </div>
-        </a>
-        </div>
-      
-      </div>
-    </div>
 
     <script src="adviserdashboard.js"></script>
     <script>
