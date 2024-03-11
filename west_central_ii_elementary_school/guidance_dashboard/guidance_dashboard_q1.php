@@ -1,4 +1,37 @@
+<?php
+    include('../database.php');
+    $currentFileName2 = basename(__FILE__,'_q1.php');
+    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='1'";
+    $result1 = $conn->query($sql);
+?>
+<?php
+    include('../database.php');
 
+    // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
+    $sql = "SELECT fullname, employment_number FROM counselor";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
+            $fullname = $row["fullname"];
+            $employment_number = $row["employment_number"];
+            
+        }
+    }
+?>
+<?php
+include('../database.php');
+$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
+
+$result = $conn->query($sql);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $count = $row['count'];
+    $conn->close();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -556,7 +589,7 @@
         </div>
             <div class="column">
                 <div class="containers second">
-                    <h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3>
+                <button style="background:transparent; border: none"> <h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3></button>
                 </div>
             </div>
             <div class="column full-width">
