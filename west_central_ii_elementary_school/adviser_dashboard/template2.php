@@ -423,7 +423,6 @@ $conn->close();
             border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
@@ -905,7 +904,7 @@ $conn->close();
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Grade and Section</h3>
+                    <h3 style="margin-left:7px">Grade & Section</h3>
                 </div>
             </div>
             <div class="column half-width">

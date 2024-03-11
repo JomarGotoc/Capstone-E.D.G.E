@@ -657,7 +657,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:10px">Student's Name</h3>
+                    <h3 style="margin-left:10px">Pupil's Name</h3>
                 </div>
             </div>
             <div class="column column-right">

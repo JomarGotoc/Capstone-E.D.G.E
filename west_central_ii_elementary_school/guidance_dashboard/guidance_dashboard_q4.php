@@ -353,7 +353,6 @@ if ($result) {
             border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
@@ -617,7 +616,7 @@ if ($result) {
             </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Grade and Section</h3>
+                    <h3 style="margin-left:7px">Grade & Section</h3>
                 </div>
             </div>
             <div class="column half-width">
@@ -635,11 +634,11 @@ if ($result) {
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter IV</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 4</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>

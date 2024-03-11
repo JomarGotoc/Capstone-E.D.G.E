@@ -1,37 +1,4 @@
-<?php
-    include('../database.php');
-    $currentFileName2 = basename(__FILE__,'_q1.php');
-    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='1'";
-    $result1 = $conn->query($sql);
-?>
-<?php
-    include('../database.php');
 
-    // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
-    $sql = "SELECT fullname, employment_number FROM counselor";
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            $fullname = $row["fullname"];
-            $employment_number = $row["employment_number"];
-            
-        }
-    }
-?>
-<?php
-include('../database.php');
-$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
-
-$result = $conn->query($sql);
-
-if ($result) {
-    $row = $result->fetch_assoc();
-    $count = $row['count'];
-    $conn->close();
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -353,7 +320,6 @@ if ($result) {
             border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
@@ -617,7 +583,7 @@ if ($result) {
             </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Grade and Section</h3>
+                    <h3 style="margin-left:7px">Grade & Section</h3>
                 </div>
             </div>
             <div class="column half-width">
@@ -636,10 +602,10 @@ if ($result) {
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
                         <option value="" disabled selected hidden>Quarter 1</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
