@@ -871,7 +871,7 @@ $conn->close();
         </div>
             <div class="column">
                 <div class="containers second">
-                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3></button>
+                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3><button>
                 </div>
             </div>
             <div class="column third-column">
@@ -1033,7 +1033,9 @@ $conn->close();
                         <th style='width:15%'>{$row['classification']}</th>
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
-                        <th style='width:15%' class='act'><a href='../intervention/adviser_intervention_fourthperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
+                        <th style='width:15%' class='act'>
+                            <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}' class='updateRecordButton'>UPDATE RECORD</a>
+                        </th>
                       </tr>";
             }
         }

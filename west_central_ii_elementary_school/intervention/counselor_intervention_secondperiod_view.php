@@ -1,3 +1,56 @@
+<?php
+include('../database.php');
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$lrnToDisplay = $_GET["lrn"] ?? '';
+
+// Array of tables to search for LRN
+$tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavioral'];
+$data = [];  // Array to store fetched data
+
+foreach ($tables as $table) {
+    $sql = "SELECT * FROM $table WHERE lrn = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $lrnToDisplay);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        // LRN found in the current table
+        $row = $result->fetch_assoc();
+        
+        // Merge the data into the $data array
+        $data = array_merge($data, $row);
+    }
+
+    $stmt->close();
+}
+
+// Check if any data was found
+if (!empty($data)) {
+    // Output data from the fetched rows
+    $lrn = $data['lrn'];
+    $fullname = $data['fullname'];
+    $gname = $data['gname'];
+    $number = $data['number'];
+    $grade = $data['grade'];
+    $classification = $data['classification'];
+    $status = $data['status'];
+    $advice = $data['advice'];
+    $topic = $data['topic'];
+    $notes = $data['notes'];
+    $intervention = $data['intervention'];
+} else {
+    // LRN not found in any table
+    echo "LRN not found in the specified tables.";
+}
+
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

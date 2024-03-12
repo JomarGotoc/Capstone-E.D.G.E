@@ -704,7 +704,9 @@ if ($result) {
                 <th style='width:15%'>{$row['classification']}</th>
                 <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
                 <th style='width:15%'>{$row['status']}</th>
-                <th style='width:15%' class='act'><a href='../intervention/counselor_intervention_fourthperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
+                <th style='width:15%' class='act'>
+                <a href='../intervention/counselor_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}' class='updateRecordButton'>UPDATE RECORD</a>
+            </th>
             </tr>";
     }
 }

@@ -1033,7 +1033,9 @@ $conn->close();
                         <th style='width:15%'>{$row['classification']}</th>
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
-                        <th style='width:15%' class='act'><a href='../intervention/adviser_intervention_thirdperiod.php' class='updateRecordButton'>UPDATE RECORD</a></th>
+                        <th style='width:15%' class='act'>
+                            <a href='../intervention/adviser_intervention_thirdperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}' class='updateRecordButton'>UPDATE RECORD</a>
+                        </th>
                       </tr>";
             }
         }

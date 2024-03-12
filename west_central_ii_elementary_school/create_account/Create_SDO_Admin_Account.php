@@ -3,6 +3,7 @@ include ("../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
 if (isset($_POST['submit'])) {
+    $employment_number = $_POST['employment_number'];
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
@@ -13,7 +14,7 @@ if (isset($_POST['submit'])) {
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
-    $employment_number = $_POST['employment_number'];
+    
 
     // Check if the fullname already exists
     $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
@@ -29,7 +30,10 @@ if (isset($_POST['submit'])) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $insert_query = "INSERT INTO sdo_admin (fullname, employment_number, password, date) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date')";
+        $verified = "no";
+        $school = "West Central II"; 
+        $insert_query = "INSERT INTO sdo_admin (fullname, employment_number, password, date, verified, school) 
+                 VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
 
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";

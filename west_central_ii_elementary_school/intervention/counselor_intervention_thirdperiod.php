@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
-        header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+        header('location: counselor_intervention_thirdperiod_view.php?lrn=' . urlencode($lrn));
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         if ($validQuarter) {
-            header('location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
+            header('location: counselor_intervention_thirdperiod_view.php?lrn=' . urlencode($lrn));
             exit();
         }
 

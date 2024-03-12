@@ -17,7 +17,6 @@ if (isset($_POST['submit'])) {
     $date = $_POST['date'];
     $grade = $_POST['grade'];
     $section = $_POST['section'];
-    echo $password;
 
     $check_fullname_query = "SELECT * FROM adviser WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
@@ -37,8 +36,10 @@ if (isset($_POST['submit'])) {
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $verified = "no";
-        $insert_query = "INSERT INTO adviser (fullname, employment_number, password, date, grade, section, verified) VALUES ('$fullname', '$employment_number', '$hashed_password', '$date', '$grade', '$section', '$verified')";
+        $school = "West Central II"; 
 
+        $insert_query = "INSERT INTO adviser (fullname, employment_number, password, date, grade, section, verified, school) 
+                 VALUES ('$fullname', '$employment_number', '$hashed_password', '$date', '$grade', '$section', '$verified', '$school')";
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
 

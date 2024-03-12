@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         } elseif ($tableName === 'counselor') {
             // Redirect to counselor.php
-            header("Location: ../guidance_dashboard/guidance_dashboard.php");
+            header("Location: ../guidance_dashboard/guidance_dashboard_q1.php");
             exit();
         } elseif ($tableName === 'executive_committee') {
             // Redirect to executive_committee.php
