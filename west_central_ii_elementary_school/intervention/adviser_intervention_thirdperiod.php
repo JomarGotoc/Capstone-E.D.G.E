@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $advice = $_POST["advice"];
     $status = $_POST["status"];
 
-    include('../database.php');
+    include('../../database.php');
 
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['lrn'])) {
         $lrn = $_GET['lrn'];
 
-        include('../database.php');
+        include('../../database.php');
         $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
         $validQuarter = false;
 

@@ -1,5 +1,5 @@
 <?php
-include("../database.php");
+include("../../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
 if (isset($_POST['submit'])) {
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $verified = "no";
-        $school = "West Central II"; 
+        $school = "West Central II Elementary School"; 
         $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date, verified, school) 
                  VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
         if ($conn->query($insert_query) === TRUE) {

@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $fileName = "grade_" . $grade . "_section_" . $section . ".php";
         $filePath = "grade_sections/" . $fileName;
 
-        include("../database.php");
+        include("../../database.php");
 
         $checkTableQuery = "SHOW TABLES LIKE '$tableName'";
         $result = $conn->query($checkTableQuery);

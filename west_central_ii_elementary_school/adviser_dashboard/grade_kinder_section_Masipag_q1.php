@@ -6,7 +6,7 @@
 
     $currentFileName2 = basename(__FILE__,'_q1.php');
     
-    include("../database.php");
+    include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
 
@@ -19,7 +19,7 @@
     } 
 ?>
 <?php
-include('../database.php');
+include('../../database.php');
 $filename = basename(__FILE__, '.php');
 $words = explode('_', $filename);
 $secondWord = $words[1];
@@ -39,7 +39,7 @@ $conn->close();
 ?>
 
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     // Get the current PHP filename without the extension
     $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);

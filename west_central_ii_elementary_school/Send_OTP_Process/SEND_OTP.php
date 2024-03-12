@@ -2,7 +2,7 @@
 require '../vendor/autoload.php'; // Include PHPMailer
 
 // Database connection
-include ("../database.php");
+include ("../../database.php");
 
 // Function to generate OTP
 function generateOTP() {

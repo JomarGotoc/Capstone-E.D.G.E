@@ -1,119 +1,114 @@
 <?php
+include('../database.php');
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
+function sanitizeInput($data) {
+    return htmlspecialchars(strip_tags($data));
+}
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password);
+if (isset($_POST['submit'])) {
+    $employment_number = sanitizeInput($_POST['employment_number']);
+    $password = sanitizeInput($_POST['password']);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $tables = array('adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee');
 
-    // Get a list of all databases
-    $result = $conn->query("SHOW DATABASES");
+    foreach ($tables as $table) {
+        $query = "SELECT * FROM $table WHERE employment_number = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $employment_number);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while ($row = $result->fetch_assoc()) {
-            $databaseName = $row["Database"];
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedPasswordInDB = $row['password'];
+            $verifiedStatus = $row['verified'];
+            $schoolField = $row['school'];
 
-            // Check if the database name contains the word "school"
-            if (strpos($databaseName, 'school') !== false) {
-                // Remove underscores and make ucwords
-                $formattedName = ucwords(str_replace('_', ' ', $databaseName));
-
-                // Example: Assuming you have tables in each database (adviser, principal, counselor, school_admin, sdo_admin, executive_committee)
-                $databaseConn = new mysqli($servername, $username, $password, $databaseName);
-
-                // Check connection to the specific database
-                if ($databaseConn->connect_error) {
-                    die("Connection failed: " . $databaseConn->connect_error);
-                }
-
-                // User input (replace with actual input method)
-                $employmentNumber = $_POST['employment_number'];
-                $inputPassword = $_POST['password'];
-
-                // Build the SQL query
-                $query = "SELECT employment_number, password, verified, grade, section, 'adviser' as table_name FROM adviser WHERE employment_number = '$employmentNumber'
-                          UNION 
-                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'principal' as table_name FROM principal WHERE employment_number = '$employmentNumber'
-                          UNION 
-                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'counselor' as table_name FROM counselor WHERE employment_number = '$employmentNumber'
-                          UNION 
-                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'school_admin' as table_name FROM school_admin WHERE employment_number = '$employmentNumber'
-                          UNION 
-                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'sdo_admin' as table_name FROM sdo_admin WHERE employment_number = '$employmentNumber'
-                          UNION 
-                          SELECT employment_number, password, verified, NULL as grade, NULL as section, 'executive_committee' as table_name FROM executive_committee WHERE employment_number = '$employmentNumber'";
-                
-                $userResult = $databaseConn->query($query);
-
-                while ($row = $userResult->fetch_assoc()) {
-                    // Check if the hashed password matches the input password and the user is verified
-                    $hashedPassword = $row['password'];
-
-                    // Use a secure password hashing function like password_verify
-                    if (password_verify($inputPassword, $hashedPassword)) {
-                        // User found in the current database
-                        $table = $row['table_name'];
-
-                        // Check if the user is verified
-                        if ($row['verified'] == 'yes') {
-                            // Redirect based on the found table
-                            switch ($table) {
-                                case 'adviser':
-                                    $grade = $row['grade'];
-                                    $section = $row['section'];
-                                    header("Location: ../$databaseName/adviser_dashboard/grade_${grade}_section_${section}_q1.php");
-                                    exit;
-                                    break;
-                                case 'principal':
-                                    header("Location: ../$databaseName/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employmentNumber&table=$table");
-                                    exit;
-                                    break;
-                                case 'counselor':
-                                    header("Location: ../$databaseName/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employmentNumber&table=$table");
-                                    exit;
-                                    break;
-                                case 'school_admin':
-                                    header("Location: ../$databaseName/button_options/School_Admin_Create_Account.php?employment_number=$employmentNumber&table=$table");
-                                    exit;
-                                    break;
-                                case 'sdo_admin':
-                                    header("Location: ../$databaseName/SDO_manage_account/SDO_manageaccount.php?employment_number=$employmentNumber&table=$table");
-                                    exit;
-                                    break;
-                                case 'executive_committee':
-                                    header("Location: ../$databaseName/monitoring_tracking/executive_monitoring_reports.php?employment_number=$employmentNumber&table=$table");
-                                    exit;
-                                    break;
-                            }
+            if (password_verify($password, $hashedPasswordInDB)) {
+                switch ($table) {
+                    case 'adviser':
+                        if ($verifiedStatus == 'yes') {
+                            // Extract grade and section fields
+                            $grade = $row['grade'];
+                            $section = $row['section'];
+                            $school = str_replace(' ', '_', $schoolField);
+                            header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php");
+                            exit();
                         } else {
-                            // User not verified, redirect to login/enter_email_logging_in.php
-                            header("Location: ../$databaseName/enter_email/enter_email_logging_in.php?employment_number=$employmentNumber&table=$table");
-                            exit;
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
                         }
-                    }
-                }
+                        break;
 
-                $databaseConn->close();
+                    case 'principal':
+                        if ($verifiedStatus == 'yes') {
+                            $school = str_replace(' ', '_', $schoolField);
+                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?");
+                            exit();
+                        } else {
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
+                        }
+                        break;
+
+                    case 'counselor':
+                        if ($verifiedStatus == 'yes') {
+                            $school = str_replace(' ', '_', $schoolField);
+                            header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php");
+                            exit();
+                        } else {
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
+                        }
+                        break;
+
+                    case 'school_admin':
+                        if ($verifiedStatus == 'yes') {
+                            $school = str_replace(' ', '_', $schoolField);
+                            header("Location: ../$school/button_options/School_Admin_Create_Account.php");
+                            exit();
+                        } else {
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
+                        }
+                        break;
+
+                    case 'sdo_admin':
+                        if ($verifiedStatus == 'yes') {
+                            $school = str_replace(' ', '_', $schoolField);
+                            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
+                            exit();
+                        } else {
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
+                        }
+                        break;
+
+                    case 'executive_committee':
+                        if ($verifiedStatus == 'yes') {
+                            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
+                            exit();
+                        } else {
+                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                            exit();
+                        }
+                        break;
+
+                    default:
+                        echo "User found in table: $table";
+                        break;
+                }
             }
         }
-    } else {
-        echo "No databases found";
     }
 
-    // Close connection to the main server
+    // Invalid login credentials
+    echo "Invalid login credentials";
+
+    $stmt->close();
     $conn->close();
 }
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

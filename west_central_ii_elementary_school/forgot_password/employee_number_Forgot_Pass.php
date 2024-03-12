@@ -34,7 +34,7 @@ function sendOTP($toEmail, $otp) {
 if (isset($_POST['continue'])) {
     $employmentNumber = $_POST['employment_number'];
 
-    include('../database.php');
+    include('../../database.php');
     $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
 
     foreach ($tables as $table) {

@@ -1,6 +1,6 @@
 <?php
     $currentFileName2 = basename(__FILE__,'_q2.php');
-    include('../database.php');
+    include('../../atabase.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1";
     $resultEnglish = $conn->query($queryEnglish);
@@ -44,7 +44,7 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q2english FROM academic_english WHERE quarter = 2";
     $resultEnglish = $conn->query($queryEnglish);
@@ -89,7 +89,7 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q3english FROM academic_english WHERE quarter = 3";
     $resultEnglish = $conn->query($queryEnglish);
@@ -134,7 +134,7 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q4english FROM academic_english WHERE quarter = 4";
     $resultEnglish = $conn->query($queryEnglish);
@@ -180,7 +180,7 @@
 ?>
 <?php
 
-    include('../database.php');
+    include('../../database.php');
 
     // Count the total rows in each table
     $sqlEnglish = "SELECT COUNT(*) AS total FROM academic_english";
@@ -226,7 +226,7 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     function countOccurrences($conn, $table, $grade) {
         $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$grade' AND quarter = '2'";

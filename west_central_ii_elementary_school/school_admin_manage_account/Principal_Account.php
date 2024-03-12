@@ -1,5 +1,5 @@
 <?php
-include('../database.php');
+include('../../database.php');
 $sql = "SELECT * FROM principal";
 $result1 = $conn->query($sql);
 

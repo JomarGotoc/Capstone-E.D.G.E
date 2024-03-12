@@ -1,6 +1,6 @@
 <?php
 // Assuming you have a database connection
-include("../database.php");
+include("../../database.php");
 
 $id = $_GET["id"];
 

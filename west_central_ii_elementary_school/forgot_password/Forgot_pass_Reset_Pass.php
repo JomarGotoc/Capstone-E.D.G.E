@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($newPassword == $repeatPassword) {
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-        include("../database.php");
+        include("../../database.php");
 
         $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
 

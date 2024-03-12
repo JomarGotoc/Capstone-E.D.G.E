@@ -2,7 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-include "../database.php";
+include "../../database.php";
 
 $phpFileName = basename(__FILE__, '.php');
 $phpFileName1 = basename(__FILE__,'.php');
@@ -61,7 +61,7 @@ if(isset($_POST['submit2'])){
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
 
-    include('../database.php');
+    include('../../database.php');
     $status = 'Pending'; // Set the default status
 
     switch ($classification) {

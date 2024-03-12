@@ -1,5 +1,5 @@
 <?php
-include('../database.php');
+include('../../database.php');
 $sql = "SELECT * FROM adviser";
 $result1 = $conn->query($sql);
 

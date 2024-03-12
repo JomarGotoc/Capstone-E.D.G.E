@@ -1,73 +1,71 @@
 <?php
-// enter_email_login.php
-
-// Database connection (replace with your database credentials)
 include('../database.php');
-$employmentNumber = ''; // Initialize employment number variable
+$employmentNumber = '';
 $tableName = '';
+$school = '';
 
 if (isset($_GET['employment_number'], $_GET['table'])) {
     $employmentNumber = $_GET['employment_number'];
     $tableName = $_GET['table'];
 } else {
-    // If not provided, redirect back to login.php
     header("Location: login.php");
     exit();
 }
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve user input
-    $email = $_POST['email'];
 
-    // Update the email and verified fields in the corresponding table
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
     $query = "UPDATE $tableName SET email = '$email', verified = 'yes' WHERE employment_number = '$employmentNumber'";
 
     if ($conn->query($query) === TRUE) {
         echo "Email updated successfully! User verified.";
 
-        // Additional logic to check grade and section
+        // Additional logic to check grade, section, and school
         if ($tableName === 'adviser') {
-            $selectQuery = "SELECT grade, section FROM $tableName WHERE employment_number = '$employmentNumber'";
+            $selectQuery = "SELECT grade, section, school FROM $tableName WHERE employment_number = '$employmentNumber'";
             $result = $conn->query($selectQuery);
 
             if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $grade = $row['grade'];
                 $section = $row['section'];
+                $school = str_replace(' ', '_', $row['school']);
 
-                // Redirect to the corresponding grade and section page
-                header("Location: ../adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1". ".php");
+                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
                 exit();
-            } else {
-                echo "Error fetching grade and section: " . $conn->error;
             }
-        } elseif ($tableName === 'counselor') {
-            // Redirect to counselor.php
-            header("Location: ../guidance_dashboard/guidance_dashboard_q1.php");
-            exit();
-        } elseif ($tableName === 'executive_committee') {
-            // Redirect to executive_committee.php
-            header("Location: ../monitoring_tracking/executive_monitoring_reports.php");
-            exit();
-        } elseif ($tableName === 'principal') {
-            // Redirect to principal.php
-            header("Location: ../monitoring_tracking/principal_tracking_reports.php");
-            exit();
-        } elseif ($tableName === 'school_admin') {
-            // Redirect to school_admin.php
-            header("Location: ../button_options/School_Admin_Create_Account.php");
-            exit();
-        } elseif ($tableName === 'sdo_admin') {
-            // Redirect to sdo_admin.php
-            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
-            exit();
-        } 
+          } elseif ($tableName === 'counselor') {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $school = str_replace(' ', '_', $row['school']);
+              header("Location: ../$school/counselor_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
+              exit();
+          }
+          } elseif ($tableName === 'executive_committee') {
+              header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
+              exit();
+          } elseif ($tableName === 'principal') {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $school = str_replace(' ', '_', $row['school']);
+              header("Location: ../$school/principal_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
+              exit();
+          }
+          } elseif ($tableName === 'school_admin') {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $school = str_replace(' ', '_', $row['school']);
+              header("Location: ../$school/button_options/School_Admin_Create_Account.php");
+              exit();
+          }
+          } elseif ($tableName === 'sdo_admin') {
+              header("Location: ../SDO_manage_account/SDO_manageaccount.php");
+              exit();
+          } 
     }
 }
 
-// Close the database connection
 $conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">

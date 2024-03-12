@@ -1,11 +1,11 @@
 <?php
-    include('../database.php');
+    include('../../database.php');
     $currentFileName2 = basename(__FILE__,'_q4.php');
     $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='4'";
     $result1 = $conn->query($sql);
 ?>
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
     $sql = "SELECT fullname, employment_number FROM counselor";
@@ -21,7 +21,7 @@
     }
 ?>
 <?php
-include('../database.php');
+include('../../database.php');
 $sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
 
 $result = $conn->query($sql);

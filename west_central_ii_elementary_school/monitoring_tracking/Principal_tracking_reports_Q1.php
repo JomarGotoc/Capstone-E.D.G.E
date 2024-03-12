@@ -1,5 +1,5 @@
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     // Fetch data from the adviser table for the first quarter
     $sql = "SELECT grade, section, fullname FROM adviser";
@@ -12,7 +12,7 @@
             // Concatenate "grade_" and "section_" to the values and store in $newvalue
             $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
 
-            include('../database.php');
+            include('../../database.php');
             $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
             $tableExists = $conn->query($checkTableSql);
 
@@ -29,7 +29,7 @@
             }
 
             // Check matches in classifications table (in the 'classification' database)
-            include('../database.php'); // Include the connection to the 'classification' database
+            include('../../database.php'); // Include the connection to the 'classification' database
 
             $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
             $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
@@ -61,7 +61,7 @@
 ?>
 
 <?php
-    include('../database.php');
+    include('../../database.php');
 
     // Define the tables
     $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
