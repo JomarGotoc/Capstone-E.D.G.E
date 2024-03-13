@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             width: 100px;
             height: 100px;
             margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
+            background-image: url('../../img/logo.png'); 
             background-size: cover;
         }
         
@@ -585,7 +585,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
             </div>
         </div>
