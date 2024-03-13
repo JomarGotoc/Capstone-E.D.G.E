@@ -15,7 +15,7 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
-                background: url(../img/bg.png);
+                background: url(../../img/bg.png);
                 background-size: cover;
             }
             
@@ -174,10 +174,12 @@
 
             input[type="text"] {
             padding: 10px;
-            margin-right: 10px;
+            margin-right: 15px;
             border: 1px solid #ddd;
             border-radius: 5px;
             flex-grow: 1;
+            width: 375px;
+            margin-top: -200px;
             }
 
             .search-icon {
@@ -246,6 +248,34 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .dropdown-contents {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            max-height: 200px; /* Set maximum height for the dropdown */
+            overflow-y: auto; /* Add scrollbar when content overflows */
+        }
+        .dropdown-contents a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-contents a:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+        }
+  
+        .search-container:hover .dropdown-contents {
+            display: block;
+        }
+        .search-container {
+    position: relative;
+    display: inline-block;
+  }
         
     </style>
 </head>
@@ -254,7 +284,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -268,22 +298,49 @@
         </div>
     </header>
 
-    <div class="navbar">
-        <nav>
-            <a href="../button_options/SDO_CreateAccnt_button.php">Create Accounts</a>
-            <a href="../../SDO_manage_account/SDO_manageaccount.php">Manage Accounts</a>
-        </nav>
-    </div>
-
     <div class="form-container">
-        <a href="../button_options/SDO_CreateAccnt_button.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../../SDO_manage_account/SDO_manageaccount3.phpp" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Select School</h2>
 
         <form>
     <div class="search-container">
         <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required>
-        <i class='bx bx-search-alt-2 search-icon'></i>
+        <div class="dropdown-contents" id="schoolDropdown">
+            <a>Bacayao Sur Elementary School</a>
+            <a>Bliss Elementary School</a>
+            <a>Bolosan Elementary School</a>
+            <a>Bonuan Boquig Elementary School</a>
+            <a>Calmay Elementary School</a>
+            <a>Carael Elementary School</a>
+            <a>Caranglaan Elementary School</a>
+            <a>East Central Integrated School</a>
+            <a>Federico N. Ceralde School Integrated School</a>
+            <a>Gen. Gregorio Del Pilar Elementary School</a>
+            <a>Juan L. Siapno Elementary School</a>
+            <a>Juan P. Guadiz Elementary School</a>
+            <a>Lasip Grande Elementary School</a>
+            <a>Leon-Francisco Elementary School</a>
+            <a>Lomboy Elementary School</a>
+            <a>Lucao Elementary School</a>
+            <a>Malued Sur Elementary School</a>
+            <a>Mamalingling Elementary School</a>
+            <a>Mangin-Tebeng Elementary School</a>
+            <a>North Central Elementary School</a>
+            <a>Pantal Elementary School</a>
+            <a>Pascuala G. Villamil Elementary School</a>
+            <a>Pogo-Lasip Elementary School</a>
+            <a>Pugaro Integrated School</a>
+            <a>Sabangan Elementary School</a>
+            <a>Salapingao Elementary School</a>
+            <a>Salisay Elementary School</a>
+            <a>Suit Elementary School</a>
+            <a>T. Ayson Rosario Elementary School</a>
+            <a>Tambac Elementary School</a>
+            <a>Tebeng Elementary School</a>
+            <a>Victoria Q. Zarate Elementary School</a>
+
+        </div>
     </div>
     <a href="Create_Account_School_Admin.php">
         <button type="button">Confirm</button>
@@ -294,6 +351,20 @@
     </div>
 
     <script src="create_account.js"></script>
+    <script>
+  // Get references to the input field and the dropdown menu
+  var schoolInput = document.getElementById("schoolName");
+  var schoolDropdown = document.getElementById("schoolDropdown");
+
+  // Add event listener to the dropdown menu
+  schoolDropdown.addEventListener("click", function(event) {
+    // Check if the clicked element is an anchor tag
+    if (event.target.tagName === "A") {
+      // Update the input field value with the text of the clicked anchor tag
+      schoolName.value = event.target.textContent;
+    }
+  });
+</script>
 
 </body>
 </html>
