@@ -1,5 +1,5 @@
 <?php
-include('../../database.php');
+include('../../../database.php');
 
 $currentFileName = basename(__FILE__, '.php');
 
@@ -26,7 +26,7 @@ if (count($words) >= 4) {
 ?>
 <?php
 $errorMsg = "";
-include('../../database.php');
+include('../../../database.php');
 $tableNameKeyword = "grade";
 $sectionKeyword = "section";
 
