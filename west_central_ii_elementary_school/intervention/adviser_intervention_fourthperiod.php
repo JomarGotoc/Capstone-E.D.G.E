@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
             topic = ?,
             advice = ?,
             status = ?
-            WHERE lrn = ? AND quarter = '4'";
+            WHERE lrn = ? AND quarter = '4' AND school = 'West Central II Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss",$gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         notes IS NOT NULL AND notes <> '' AND 
         intervention IS NOT NULL AND intervention <> '' AND 
         topic IS NOT NULL AND topic <> '' AND 
-        advice IS NOT NULL AND advice <> ''";
+        advice IS NOT NULL AND advice <> '' AND school = 'West Central II Elementary School'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -585,7 +585,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
             </div>
         </div>

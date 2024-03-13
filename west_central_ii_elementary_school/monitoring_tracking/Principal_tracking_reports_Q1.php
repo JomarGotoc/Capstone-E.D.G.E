@@ -1,7 +1,6 @@
 <?php
     include('../../database.php');
-
-    // Fetch data from the adviser table for the first quarter
+    $currentFileName2 = basename(__FILE__,'_Q1.php');
     $sql = "SELECT grade, section, fullname FROM adviser";
     $result = $conn->query($sql);
 
@@ -31,10 +30,10 @@
             // Check matches in classifications table (in the 'classification' database)
             include('../../database.php'); // Include the connection to the 'classification' database
 
-            $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
-            $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
-            $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
-            $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1";
+            $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'West Central II Elementary School'";
+            $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'West Central II Elementary School'";
+            $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'West Central II Elementary School'";
+            $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'West Central II Elementary School'";
 
             $academicEnglishResult = $conn->query($academicEnglishQuery);
             $academicFilipinoResult = $conn->query($academicFilipinoQuery);
@@ -73,14 +72,14 @@
     // Iterate through tables and count rows with 'lrn' field and 'status' field
     foreach ($tables as $table) {
         // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL";
+        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL AND quarter = 1 AND school = 'West Central II Elementary School'";
         $resultPars = $conn->query($sqlPars);
 
         if ($resultPars->num_rows > 0) {
             $rowPars = $resultPars->fetch_assoc();
             $totalpars += $rowPars['count'];
         }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved'";
+        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved' AND quarter = 1 AND school = 'West Central II Elementary School'";
         $resultResolved = $conn->query($sqlResolved);
 
         if ($resultResolved->num_rows > 0) {
@@ -109,7 +108,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -517,7 +516,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -543,7 +542,7 @@
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown" name="school-year" class="containers first">
+                    <select id="topdown1" name="school-year" class="containers first">
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
@@ -556,7 +555,7 @@
             <div class="column full-width">
     <div class="column third-column">
     <div class="containers">
-        <select id="topdown" name="topdown" class="first" onchange="filterTable()">
+        <select id="topdown1" name="topdown" class="first" onchange="filterTable()">
             <option value="all">View All Grade Levels</option>
             <option value="Kinder">Kinder</option>
             <option value="Grade 1">Grade 1</option>
@@ -603,16 +602,15 @@
                 </div>
             </div>
             <div class="column column-right">
-            <div class="containers" style="background-color: #F3F3F3;">
-            <select id="topdowns" style="border:none; background-color:transparent" onchange="redirectReports()" style="margin-left: 3px">
-    <option value="">Select Quarter</option>
-    <option value="all">Show All Quarters</option>
-        <option value="1">Quarter 1</option>
-        <option value="2">Quarter 2</option>
-        <option value="3">Quarter 3</option>
-        <option value="4">Quarter 4</option>
-    </select>
-</div>
+            <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value="" disabled selected hidden>Quarter I</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
+                    </select>
+                </div>
 </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
@@ -689,17 +687,17 @@
     <script src="monitoring_tracking.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-    function redirectReports() {
-        var selectedQuarter = document.getElementById("quarter-dropdown").value;
+    function redirectToQuarter() {
+        // Get the selected value from the dropdown
+        var selectedQuarter = document.getElementById("topdown").value;
 
-        if (selectedQuarter !== "all") {
-            var redirectURL = "principal_tracking_reports_Q" + selectedQuarter + ".php";
+        // Check if a quarter is selected
+        if (selectedQuarter !== "") {
+            // Construct the URL for redirection
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+
+            // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;
-        } else {
-            // Handle the case when "Show All Quarters" is selected
-            // You can redirect to a different URL or perform other actions if needed
-            // For now, let's redirect to principal_tracking_reports.php
-            window.location.href = "principal_tracking_reports.php";
         }
     }
 </script>

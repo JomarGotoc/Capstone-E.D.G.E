@@ -13,7 +13,7 @@
     if (count($words) >= 4) {
         $secondWord = $words[1];
         $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
         $result1 = $conn->query($sql);
         $result2 = $conn->query($sql);
     } 
@@ -27,7 +27,7 @@ $fourthWord = $words[3];
 $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
 $count = 0;
 foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -80,7 +80,7 @@ $conn->close();
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -120,7 +120,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
 
@@ -487,7 +487,7 @@ $conn->close();
         .containers h3{
             color: #FFF;
         }
-        .act a{
+        .act button {
         background-color: #008705;
         color: #fff;
         padding: 10px 20px;
@@ -497,7 +497,7 @@ $conn->close();
         transition: background-color 0.3s;
         }
 
-        .act a:hover {
+        .act button:hover {
             background-color: #CCFF00;
             color: #070000;
             font-weight: bold;
@@ -841,7 +841,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -926,11 +926,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 4</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="" disabled selected hidden>Quarter IV</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
             </div>
@@ -1053,80 +1053,7 @@ $conn->close();
 
 
     <script src="adviserdashboard.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        function showPopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'flex';
-            popup.style.position = 'fixed';
-            popup.style.top = '12%';
-            popup.style.left = '50%';
-            popup.style.transform = 'translateX(-50%)';
-            popup.style.zIndex = '1';
 
-            var row = this.closest('tr');
-            var lrn = row.querySelector('th:nth-child(2)').textContent;
-            var fullname = row.querySelector('th:nth-child(3)').textContent;
-            var classification = row.querySelector('th:nth-child(4)').textContent;
-            var gradeSection = row.querySelector('th:nth-child(5)').textContent; // Assuming 4th column is for grade
-            var status = row.querySelector('th:nth-child(6)').textContent;
-            var gradeSectionParts = gradeSection.split('-');
-            var grade = gradeSectionParts[0].trim();
-            var section = gradeSectionParts[1].trim();// Assuming 5th column is for section
-
-            // Pass data to Q1 link
-            var q1Link = document.getElementById('q1Link');
-            q1Link.href = '../intervention/adviser_intervention_firstperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) + // Include the section parameter
-                '&status=' + encodeURIComponent(status);
-
-
-            // Pass data to Q2 link
-            var q2Link = document.getElementById('q2Link');
-            q2Link.href = '../intervention/adviser_intervention_secondperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-            // Pass data to Q3 link
-            var q3Link = document.getElementById('q3Link');
-            q3Link.href = '../intervention/adviser_intervention_thirdperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-
-            // Pass data to Q4 link
-            var q4Link = document.getElementById('q4Link');
-            q4Link.href = '../intervention/adviser_intervention_fourthperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-        }
-
-        function closePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
-
-        var updateRecordButtons = document.querySelectorAll('.updateRecordButton');
-
-        updateRecordButtons.forEach(function (button) {
-            button.addEventListener('click', showPopup);
-        });
-
-        var closeIcon = document.querySelector('.close-icon');
-        closeIcon.addEventListener('click', closePopup);
-
-    });
-</script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>

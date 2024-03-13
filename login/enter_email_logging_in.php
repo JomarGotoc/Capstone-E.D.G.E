@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $section = $row['section'];
                 $school = str_replace(' ', '_', $row['school']);
 
-                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section . "_q1.php");
+                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
                 exit();
             }
           } elseif ($tableName === 'counselor') {
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($result->num_rows > 0) {
               $row = $result->fetch_assoc();
               $school = str_replace(' ', '_', $row['school']);
-              header("Location: ../$school/principal_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
+              header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?");
               exit();
           }
           } elseif ($tableName === 'school_admin') {

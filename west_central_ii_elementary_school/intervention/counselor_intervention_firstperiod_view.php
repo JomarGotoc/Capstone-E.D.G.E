@@ -12,7 +12,7 @@ $tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavio
 $data = [];  // Array to store fetched data
 
 foreach ($tables as $table) {
-    $sql = "SELECT * FROM $table WHERE lrn = ?";
+    $sql = "SELECT * FROM $table WHERE lrn = ? AND quarter = '1' AND school = 'West Central II Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $lrnToDisplay);
     $stmt->execute();
@@ -68,7 +68,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(.././img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -551,7 +551,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
             </div>
         </div>

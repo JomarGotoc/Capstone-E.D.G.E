@@ -13,7 +13,7 @@
     if (count($words) >= 4) {
         $secondWord = $words[1];
         $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
         $result1 = $conn->query($sql);
         $result2 = $conn->query($sql);
     } 
@@ -27,7 +27,7 @@ $fourthWord = $words[3];
 $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
 $count = 0;
 foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -80,7 +80,7 @@ $conn->close();
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 2";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 2 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -120,7 +120,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
 
@@ -487,7 +487,7 @@ $conn->close();
         .containers h3{
             color: #FFF;
         }
-        .act a {
+        .act button {
         background-color: #008705;
         color: #fff;
         padding: 10px 20px;
@@ -497,7 +497,7 @@ $conn->close();
         transition: background-color 0.3s;
         }
 
-        .act a:hover {
+        .act button:hover {
             background-color: #CCFF00;
             color: #070000;
             font-weight: bold;
@@ -841,7 +841,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -926,11 +926,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 2</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="" disabled selected hidden>Quarter II</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
             </div>

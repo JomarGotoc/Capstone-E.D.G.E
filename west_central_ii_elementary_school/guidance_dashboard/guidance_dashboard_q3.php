@@ -1,7 +1,7 @@
 <?php
     include('../../database.php');
     $currentFileName2 = basename(__FILE__,'_q3.php');
-    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='3'";
+    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter ='3' AND school = 'West Central II Elementary School'";
     $result1 = $conn->query($sql);
 ?>
 <?php
@@ -22,7 +22,7 @@
 ?>
 <?php
 include('../../database.php');
-$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != ''";
+$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != '' AND school = 'West Central II Elementary School'";
 
 $result = $conn->query($sql);
 
@@ -50,7 +50,7 @@ if ($result) {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
 
@@ -417,7 +417,7 @@ if ($result) {
         .containers h3{
             color: #FFF;
         }
-        .act a {
+        .act button {
         background-color: #008705;
         color: #fff;
         padding: 10px 20px;
@@ -427,7 +427,7 @@ if ($result) {
         transition: background-color 0.3s;
         }
 
-        .act a:hover {
+        .act button:hover {
             background-color: #CCFF00;
             color: #070000;
             font-weight: bold;
@@ -559,7 +559,7 @@ if ($result) {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">

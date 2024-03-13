@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
     } else {
         $lrn = $_POST["lrn"];
 
-        $sql = "SELECT fullname, lrn, grade, section FROM $tableName1 WHERE lrn = ?";
+        $sql = "SELECT fullname, lrn, grade, section FROM $tableName1 WHERE lrn = ? AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
 
         if (!$stmt) {
@@ -37,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
             $stmt->bind_result($fullname1, $fetchedLRN, $grade, $section);
 
             if ($stmt->fetch()) {
-                // Fetched data is stored in PHP variables
             } else {
                 $errorMsg1 = "No data found for LRN: $lrn";
             }
@@ -60,29 +59,30 @@ if(isset($_POST['submit2'])){
     $date = $_POST['date'];
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
+    $school = "West Central II Elementary School";
 
     include('../../database.php');
     $status = 'Pending'; // Set the default status
 
     switch ($classification) {
         case 'Academic - Literacy in English':
-            $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification, status)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status')";
+            $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
             break;
 
         case 'Academic - Literacy in Filipino':
-            $sql = "INSERT INTO academic_filipino (lrn, fullname, grade, section, date, quarter, classification, status)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status')";
+            $sql = "INSERT INTO academic_filipino (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
             break;
 
         case 'Academic - Numeracy':
-            $sql = "INSERT INTO academic_numeracy (lrn, fullname, grade, section, date, quarter, classification, status)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status')";
+            $sql = "INSERT INTO academic_numeracy (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
             break;
 
         case 'Behavioral':
-            $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification, status)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status')";
+            $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification, status,school)
+                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
             break;
 
         default:
@@ -117,7 +117,7 @@ if(isset($_POST['submit2'])){
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(.././img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -473,7 +473,7 @@ if(isset($_POST['submit2'])){
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
