@@ -374,6 +374,11 @@
         tr:nth-child(even){
             background-color: #b7b7b7;
         }
+
+        table tr th:first-child{
+            text-align: left;
+            padding-left: 10px;
+        }
         
         .dropdown-content {
             display: none;
@@ -552,7 +557,287 @@
 
         <table border="0" id="schoolTable">
             <tr>
-                <th style="width:29%"></th>
+                <th style="width:29%">Bacayao Sur Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Bliss Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Bolosan Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Bonuan Boquig Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Calmay Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Carael Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Caranglaan Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">East Central Integrated School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Federico N. Ceralde School Integrated School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Gen. Gregorio Del Pilar Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Juan L. Siapno Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Juan P. Guadiz Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Lasip Grande Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Leon-Francisco Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Lomboy Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Lucao Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Malued Sur Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Mamalingling Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Mangin-Tebeng Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">North Central Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Pantal Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+
+            <tr>
+                <th style="width:29%">Pascuala G. Villamil Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Pogo-Lasip Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Pugaro Integrated School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Sabangan Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Salapingao Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Salisay Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Suit Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">T. Ayson Rosario Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Tambac Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Tebeng Elementary School</th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+            </tr>
+            <tr>
+                <th style="width:29%">Victoria Q. Zarate Elementary School</th>
                 <th style="width:12%"></th>
                 <th style="width:12%"></th>
                 <th style="width:12%"></th>
