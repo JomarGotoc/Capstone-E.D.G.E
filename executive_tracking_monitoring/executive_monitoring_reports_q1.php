@@ -1,89 +1,4 @@
 <?php
-
-    include('../database.php');
-
-    // Initialize total students count
-    $totalstudents = 0;
-
-    // Get the name of the current database
-    $dbnameQuery = "SELECT DATABASE() AS dbname";
-    $dbnameResult = $conn->query($dbnameQuery);
-
-    if ($dbnameResult) {
-        $dbnameRow = $dbnameResult->fetch_assoc();
-        $dbname = preg_replace('/\bIi\b/', 'II', str_replace('_', ' ', ucwords(strtolower($dbnameRow['dbname']), '_')));
-        
-        $searchTerm1 = 'grade';
-        $searchTerm2 = 'section';
-
-        $query = "SHOW TABLES LIKE '%$searchTerm1%$searchTerm2%'";
-        $result = $conn->query($query);
-
-        if ($result) {
-            $tableCount = $result->num_rows;
-
-            if ($tableCount > 0) {
-                while ($row = $result->fetch_row()) {
-                    $tableName = $row[0];
-
-                    // Count records in 'lrn' field for each table
-                    $countQuery = "SELECT COUNT(lrn) AS recordCount FROM $tableName";
-                    $countResult = $conn->query($countQuery);
-
-                    if ($countResult) {
-                        $countRow = $countResult->fetch_assoc();
-                        $recordCount = $countRow['recordCount'];
-                        $totalstudents += $recordCount;
-                    }
-                }
-            } 
-        }
-    }
-
-    // Close connection
-    $conn->close();
-
-?>
-<?php
-    include('../database.php');
-
-    $tables = ['academic_english', 'academic_filipino', 'behavioral', 'academic_numeracy'];
-
-    $englishCount = 0;
-    $filipinoCount = 0;
-    $behavioralCount = 0;
-    $numeracyCount = 0;
-    $totalstar = 0;
-
-    foreach ($tables as $table) {
-        $query = "SELECT COUNT(*) AS count FROM $table";
-        $result = $conn->query($query);
-
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $count = $row['count'];
-
-            // Assign count to the appropriate variable based on the table
-            switch ($table) {
-                case 'academic_english':
-                    $englishCount = $count;
-                    break;
-                case 'academic_filipino':
-                    $filipinoCount = $count;
-                    break;
-                case 'behavioral':
-                    $behavioralCount = $count;
-                    break;
-                case 'academic_numeracy':
-                    $numeracyCount = $count;
-                    break;
-            }
-            $totalstar += $count;
-        } 
-    }
-    $conn->close();
-?>
-<?php
     include('../database.php');
 
     $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1";
@@ -309,6 +224,7 @@
 
     $conn->close();
 ?>
+<?php $currentFileName2 = basename(__FILE__,'_q1.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -702,8 +618,8 @@
 
     <div class="navbar">
         <nav>
-            <a href="executive_tracking_reports.php">Quarterly Reports</a>
-            <a href="executive_monitoring_reports.php" style="background:#F3F3F3; color:#130550">Report Summary</a>
+            <a href="executive_tracking_reports_q1.php">Quarterly Reports</a>
+            <a href="" style="background:#F3F3F3; color:#130550">Report Summary</a>
         </nav>
     </div>
 
@@ -712,7 +628,7 @@
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown" name="school-year" class="containers first">
+                    <select id="topdown1" name="school-year" class="containers first">
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
@@ -862,16 +778,15 @@
                     <h3 style="margin-left: 7px">Quarter</h3>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <select class="containers"style="border:none; background-color: #F3F3F3; margin-left: 7px">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
+            <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value="" disabled selected hidden>Quarter I</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
-            </div>
         </div>
 
         <table border="0">
@@ -889,274 +804,274 @@
                 <tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bliss Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bolosan Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bonuan Boquig Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Calmay Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Carael Elementary School<</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Caranglaan Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">East Central Integrated School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Federico N. Ceralde School Integrated School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Gen. Gregorio Del Pilar Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Juan L. Siapno Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Juan P. Guadiz Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Lasip Grande Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Leon-Francisco Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <<th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Lomboy Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Lucao Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Malued Sur Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Mamalingling Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Mangin-Tebeng Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">North Central Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Pantal Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Pascuala G. Villamil Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Pogo-Lasip Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Pugaro Integrated School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Sabangan Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Salapingao Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Salisay Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Suit Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">T. Ayson Rosario Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Tambac Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Tebeng Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Victoria Q. Zarate Elementary School</th>
-                        <th style="width:15%"><?php echo $englishCount ?></th>
-                        <th style="width:15%"><?php echo $filipinoCount ?></th>
-                        <th style="width:15%"><?php echo $numeracyCount ?></th>
-                        <th style="width:15%"><?php echo $behavioralCount ?></th>
-                        <th style="width:15%"><?php echo $totalstar ?></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
+                        <th style="width:15%"></th>
                     </tr>
 
                 </tr>
@@ -1166,5 +1081,20 @@
     </div>
 
     <script src="monitoring_tracking.js"></script>
+    <script>
+    function redirectToQuarter() {
+        // Get the selected value from the dropdown
+        var selectedQuarter = document.getElementById("topdown").value;
+
+        // Check if a quarter is selected
+        if (selectedQuarter !== "") {
+            // Construct the URL for redirection
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+
+            // Redirect to the selected quarter's PHP file
+            window.location.href = redirectURL;
+        }
+    }
+</script>
 </body>
 </html>

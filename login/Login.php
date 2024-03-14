@@ -1,6 +1,6 @@
 <?php
 include('../database.php');
-
+$errorMsg = "";
 function sanitizeInput($data) {
     return htmlspecialchars(strip_tags($data));
 }
@@ -101,9 +101,7 @@ if (isset($_POST['submit'])) {
             }
         }
     }
-
-    // Invalid login credentials
-    echo "Invalid login credentials";
+    $errorMsg = "Invalid login credentials";
 
     $stmt->close();
     $conn->close();
@@ -265,7 +263,7 @@ if (isset($_POST['submit'])) {
             background-color: #DDDAE7;
             color: #0C052F;
         }
-        .error-message{
+        .errorMessage{
             color: red;
             font-weight:bold ;
             text-align: center;
@@ -320,6 +318,9 @@ if (isset($_POST['submit'])) {
     <div class="logo"></div>
     <h2>Sign in to E.D.G.E.</h2>
 
+    <div class="errorMessage">
+        <?php echo $errorMsg ?>
+    </div>
 
     <form class="login-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
         <input type="text" id="idnum" name="employment_number" placeholder="Enter Employee Number ">

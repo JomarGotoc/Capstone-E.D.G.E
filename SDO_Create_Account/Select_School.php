@@ -1,3 +1,12 @@
+<?php
+    // Check if the form is submitted
+    if (isset($_POST['submit'])) {
+        // Retrieve the input value and store it in $schoolname
+        $schoolname = $_POST['schoolName'];
+
+        header("Location: create_account_school_admin.php?schoolname=$schoolname");
+    }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +24,7 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
-                background: url(../../img/bg.png);
+                background: url(../img/bg.png);
                 background-size: cover;
             }
             
@@ -284,7 +293,7 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -299,52 +308,50 @@
     </header>
 
     <div class="form-container">
-        <a href="../../SDO_manage_account/SDO_manageaccount3.phpp" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../SDO_manage_account/SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Select School</h2>
 
-        <form>
-    <div class="search-container">
-        <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required>
-        <div class="dropdown-contents" id="schoolDropdown">
-            <a>Bacayao Sur Elementary School</a>
-            <a>Bliss Elementary School</a>
-            <a>Bolosan Elementary School</a>
-            <a>Bonuan Boquig Elementary School</a>
-            <a>Calmay Elementary School</a>
-            <a>Carael Elementary School</a>
-            <a>Caranglaan Elementary School</a>
-            <a>East Central Integrated School</a>
-            <a>Federico N. Ceralde School Integrated School</a>
-            <a>Gen. Gregorio Del Pilar Elementary School</a>
-            <a>Juan L. Siapno Elementary School</a>
-            <a>Juan P. Guadiz Elementary School</a>
-            <a>Lasip Grande Elementary School</a>
-            <a>Leon-Francisco Elementary School</a>
-            <a>Lomboy Elementary School</a>
-            <a>Lucao Elementary School</a>
-            <a>Malued Sur Elementary School</a>
-            <a>Mamalingling Elementary School</a>
-            <a>Mangin-Tebeng Elementary School</a>
-            <a>North Central Elementary School</a>
-            <a>Pantal Elementary School</a>
-            <a>Pascuala G. Villamil Elementary School</a>
-            <a>Pogo-Lasip Elementary School</a>
-            <a>Pugaro Integrated School</a>
-            <a>Sabangan Elementary School</a>
-            <a>Salapingao Elementary School</a>
-            <a>Salisay Elementary School</a>
-            <a>Suit Elementary School</a>
-            <a>T. Ayson Rosario Elementary School</a>
-            <a>Tambac Elementary School</a>
-            <a>Tebeng Elementary School</a>
-            <a>Victoria Q. Zarate Elementary School</a>
-
-        </div>
+        <form method="post" action="">
+        <div class="search-container">
+    <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required oninput="filterSchools()">
+    <div class="dropdown-contents" id="schoolDropdown">
+        <a>Bacayao Sur Elementary School</a>
+        <a>Bliss Elementary School</a>
+        <a>Bolosan Elementary School</a>
+        <a>Bonuan Boquig Elementary School</a>
+        <a>Calmay Elementary School</a>
+        <a>Carael Elementary School</a>
+        <a>Caranglaan Elementary School</a>
+        <a>East Central Integrated School</a>
+        <a>Federico N. Ceralde School Integrated School</a>
+        <a>Gen. Gregorio Del Pilar Elementary School</a>
+        <a>Juan L. Siapno Elementary School</a>
+        <a>Juan P. Guadiz Elementary School</a>
+        <a>Lasip Grande Elementary School</a>
+        <a>Leon-Francisco Elementary School</a>
+        <a>Lomboy Elementary School</a>
+        <a>Lucao Elementary School</a>
+        <a>Malued Sur Elementary School</a>
+        <a>Mamalingling Elementary School</a>
+        <a>Mangin-Tebeng Elementary School</a>
+        <a>North Central Elementary School</a>
+        <a>Pantal Elementary School</a>
+        <a>Pascuala G. Villamil Elementary School</a>
+        <a>Pogo-Lasip Elementary School</a>
+        <a>Pugaro Integrated School</a>
+        <a>Sabangan Elementary School</a>
+        <a>Salapingao Elementary School</a>
+        <a>Salisay Elementary School</a>
+        <a>Suit Elementary School</a>
+        <a>T. Ayson Rosario Elementary School</a>
+        <a>Tambac Elementary School</a>
+        <a>Tebeng Elementary School</a>
+        <a>Victoria Q. Zarate Elementary School</a>
+        <a>West Central II Elementary School</a>
     </div>
-    <a href="Create_Account_School_Admin.php">
-        <button type="button">Confirm</button>
-    </a>
+</div>
+    <button type="submit" name="submit">Confirm</button>
 </form>
 
 
@@ -365,6 +372,38 @@
     }
   });
 </script>
+<script>
+function filterSchools() {
+    var input, filter, dropdown, a, i, txtValue;
+    input = document.getElementById("schoolName");
+    filter = input.value.toUpperCase();
+    dropdown = document.getElementById("schoolDropdown");
+    a = dropdown.getElementsByTagName("a");
+    if (filter === "") {
+        dropdown.style.display = "none";
+        return;
+    }
+    for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+        } else {
+            a[i].style.display = "none";
+        }
+    }
+    dropdown.style.display = "block";
+}
 
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.getElementById("schoolDropdown");
+    dropdown.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.tagName === 'A') {
+            document.getElementById("schoolName").value = target.textContent.trim();
+            dropdown.style.display = "none";
+        }
+    });
+});
+</script>
 </body>
 </html>

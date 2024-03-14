@@ -1,14 +1,20 @@
 <?php
-include("../../database.php");
+include ("../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
+
+// Retrieve schoolname from URL using GET
+if(isset($_GET['schoolname'])) {
+    $schoolname = $_GET['schoolname'];
+} 
+
 if (isset($_POST['submit'])) {
     $employment_number = $_POST['employment_number'];
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
     $lastname = $_POST['lastname'];
     $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
     $firstThreeLetters = substr($firstname, 0, 3);
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
@@ -16,11 +22,11 @@ if (isset($_POST['submit'])) {
     $date = $_POST['date'];
 
     // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM school_admin WHERE fullname='$fullname'";
+    $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
     $check_fullname_result = $conn->query($check_fullname_query);
 
     // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM school_admin WHERE employment_number='$employment_number'";
+    $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
 
     if ($check_fullname_result->num_rows > 0) {
@@ -28,11 +34,13 @@ if (isset($_POST['submit'])) {
     } elseif ($check_employment_number_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
     } else {
+            
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $verified = "no";
-        $school = "West Central II Elementary School"; 
+        $school = $schoolname; 
         $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date, verified, school) 
                  VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
+
         if ($conn->query($insert_query) === TRUE) {
             $errorMsg = "Account created successfully";
         } else {
@@ -41,8 +49,11 @@ if (isset($_POST['submit'])) {
     }
 }
 
+// Close the database connection
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +61,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>SDO Administrator</title>
+    <title>School Administrator</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -61,7 +72,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -69,7 +80,7 @@ $conn->close();
             width: 75px;
             height: 75px;
             margin: 0 auto 20px;
-            background-image: url('../../img/logo.png'); 
+            background-image: url('../img/logo.png'); 
             background-size: cover;
         }
         
@@ -98,7 +109,7 @@ $conn->close();
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 400px;
+            width: 450px;
             text-align: center;
             position: relative;
         }
@@ -107,7 +118,6 @@ $conn->close();
             color: #fff;
             text-decoration: none;
         }
-        
         header {
             position: fixed;
             top: 0;
@@ -340,6 +350,19 @@ $conn->close();
         border: 1px solid #0C052F;
         color: #190572;
         }
+
+        .back-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+          }
+                
+          .back-icon i {
+            margin-right: 5px;
+          }
           .error-message1{
             color: red;
             font-weight:bold ;
@@ -385,7 +408,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -399,8 +422,9 @@ $conn->close();
         </div>
     </header>
 
+ 
     <div class="login-container">
-        <a href="../../SDO_manage_account/SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="select_school.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>School Administrator</h2>
 
@@ -410,6 +434,7 @@ $conn->close();
         <div class="error-message1">
             <?php echo $errorMsg1; ?>
         </div>
+
 
         <form class="login-form" action=" " method="post">
         <div class="row">
@@ -447,8 +472,11 @@ $conn->close();
                 <button type="submit" name="submit">Create Account</button>
             </div>
         </form>
+
+        
     </div>
 
     <script src="create_account.js"></script>
+
 </body>
 </html>

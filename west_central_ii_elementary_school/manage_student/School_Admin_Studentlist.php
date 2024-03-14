@@ -249,8 +249,9 @@ if (isset($_POST['add'])) {
             display: block;
         }
         .errormsg {
-            color:#fff;
+            color:red;
             margin-bottom: 10px;
+            font-weight: bold;
         }
         
     </style>

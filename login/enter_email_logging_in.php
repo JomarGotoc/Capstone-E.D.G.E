@@ -1,5 +1,6 @@
 <?php
 include('../database.php');
+
 $employmentNumber = '';
 $tableName = '';
 $school = '';
@@ -24,44 +25,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $selectQuery = "SELECT grade, section, school FROM $tableName WHERE employment_number = '$employmentNumber'";
             $result = $conn->query($selectQuery);
 
-            if ($result->num_rows > 0) {
+            if ($result !== false && $result->num_rows > 0) {
                 $row = $result->fetch_assoc();
                 $grade = $row['grade'];
                 $section = $row['section'];
                 $school = str_replace(' ', '_', $row['school']);
 
-                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
+                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1.php");
                 exit();
+            } else {
+                // Handle case when no rows are returned or error occurs
             }
-          } elseif ($tableName === 'counselor') {
-            if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-              $school = str_replace(' ', '_', $row['school']);
-              header("Location: ../$school/counselor_dashboard/grade_" . $grade . "_section_" . $section . "_school_" . $school . "_q1.php");
-              exit();
-          }
-          } elseif ($tableName === 'executive_committee') {
-              header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
-              exit();
-          } elseif ($tableName === 'principal') {
-            if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-              $school = str_replace(' ', '_', $row['school']);
-              header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?");
-              exit();
-          }
-          } elseif ($tableName === 'school_admin') {
-            if ($result->num_rows > 0) {
-              $row = $result->fetch_assoc();
-              $school = str_replace(' ', '_', $row['school']);
-              header("Location: ../$school/button_options/School_Admin_Create_Account.php");
-              exit();
-          }
-          } elseif ($tableName === 'sdo_admin') {
-              header("Location: ../SDO_manage_account/SDO_manageaccount.php");
-              exit();
-          } 
-    }
+        } elseif ($tableName === 'counselor' || $tableName === 'principal' || $tableName === 'school_admin') {
+            $selectQuery = "SELECT school FROM $tableName WHERE employment_number = '$employmentNumber'";
+            $result = $conn->query($selectQuery);
+
+            if ($result !== false && $result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $school = str_replace(' ', '_', $row['school']);
+
+                if ($tableName === 'counselor') {
+                    header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php");
+                } elseif ($tableName === 'principal') {
+                    header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php");
+                } elseif ($tableName === 'school_admin') {
+                    header("Location: ../$school/button_options/School_Admin_Create_Account.php");
+                }
+                exit();
+            } else {
+                // Handle case when no rows are returned or error occurs
+            }
+        } elseif ($tableName === 'executive_committee') {
+            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
+            exit();
+        } elseif ($tableName === 'sdo_admin') {
+            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
+            exit();
+        } 
+    } 
 }
 
 $conn->close();
