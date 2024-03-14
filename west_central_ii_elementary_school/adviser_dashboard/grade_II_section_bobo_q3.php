@@ -13,10 +13,9 @@
     if (count($words) >= 4) {
         $secondWord = $words[1];
         $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname, school FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
         $result1 = $conn->query($sql);
         $result2 = $conn->query($sql);
-        $result3 = $conn->query($sql);
     } 
 ?>
 <?php
@@ -858,20 +857,9 @@ $conn->close();
 
     <div class="top-container">
         <div class="school">
-        <?php
-            if ($result3->num_rows > 0) {
-                // Get the data of the first row
-                $row = $result3->fetch_assoc();
-                $school = $row["school"];
-                echo "<div class=\"column column-right\">
-                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
-                    <h3 style=\"color: #190572; margin-left:7px\">$school</h3>
-                </div>
-            </div>";
-            }
-            ?>
+            <h3>West Central II Elementary School</h3>
         </div>
-    </div>    
+    </div>   
     <div class="main-container">
         <div class="row">
             <div class="column">

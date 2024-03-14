@@ -13,10 +13,9 @@
     if (count($words) >= 4) {
         $secondWord = $words[1];
         $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname, school FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord'";
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
         $result1 = $conn->query($sql);
         $result2 = $conn->query($sql);
-        $result3 = $conn->query($sql);
     } 
 ?>
 <?php
@@ -28,7 +27,7 @@ $fourthWord = $words[3];
 $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
 $count = 0;
 foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord'";
+    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -81,7 +80,7 @@ $conn->close();
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 2";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 2 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -858,18 +857,7 @@ $conn->close();
 
     <div class="top-container">
         <div class="school">
-        <?php
-            if ($result3->num_rows > 0) {
-                // Get the data of the first row
-                $row = $result3->fetch_assoc();
-                $school = $row["school"];
-                echo "<div class=\"column column-right\">
-                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
-                    <h3 style=\"color: #190572; margin-left:7px\">$school</h3>
-                </div>
-            </div>";
-            }
-            ?>
+            <h3>West Central II Elementary School</h3>
         </div>
     </div>   
     <div class="main-container">
@@ -938,11 +926,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 2</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="" disabled selected hidden>Quarter II</option>
+                        <option value="q1">Quarter I</option>
+                        <option value="q2">Quarter II</option>
+                        <option value="q3">Quarter III</option>
+                        <option value="q4">Quarter IV</option>
                     </select>
                 </div>
             </div>
