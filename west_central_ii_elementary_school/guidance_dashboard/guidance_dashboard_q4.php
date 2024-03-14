@@ -6,9 +6,7 @@
 ?>
 <?php
     include('../../database.php');
-
-    // Assuming 'full_name' and 'employment_number' are column names in your 'counselor' table
-    $sql = "SELECT fullname, employment_number FROM counselor";
+    $sql = "SELECT fullname, employment_number, school FROM counselor";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -16,7 +14,7 @@
         while($row = $result->fetch_assoc()) {
             $fullname = $row["fullname"];
             $employment_number = $row["employment_number"];
-            
+            $school = $row["school"];
         }
     }
 ?>
@@ -575,7 +573,7 @@ if ($result) {
 
     <div class="top-container">
         <div class="school">
-            <h3> LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3><?php echo $school ?></h3>
         </div>
     </div>   
     <div class="main-container">

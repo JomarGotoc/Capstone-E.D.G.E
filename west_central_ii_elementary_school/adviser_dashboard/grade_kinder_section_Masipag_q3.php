@@ -857,7 +857,7 @@ $conn->close();
 
     <div class="top-container">
         <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3>West Central II Elementary School</h3>
         </div>
     </div>   
     <div class="main-container">

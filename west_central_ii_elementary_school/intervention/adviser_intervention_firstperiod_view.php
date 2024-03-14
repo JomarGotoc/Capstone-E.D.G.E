@@ -45,9 +45,6 @@ if (!empty($data)) {
     $topic = $data['topic'];
     $notes = $data['notes'];
     $intervention = $data['intervention'];
-} else {
-    // LRN not found in any table
-    echo "LRN not found in the specified tables.";
 }
 
 $conn->close();
@@ -567,7 +564,7 @@ $conn->close();
             <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3>West Central II Elementary School</h3>
         </div>
         <div class="lock"><i class='bx bx-lock-alt' ></i>View Only</div>
     </div>

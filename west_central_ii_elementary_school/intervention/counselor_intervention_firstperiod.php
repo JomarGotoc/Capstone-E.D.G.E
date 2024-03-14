@@ -587,7 +587,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <a href="guidance_dashboard/guidance_dashboard.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3>West Central II Elementary School</h3>
         </div>
         <button class="update" name="update">Update Record</button>
     </div>

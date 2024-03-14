@@ -1,116 +1,3 @@
-<?php
-
-    include('../database.php');
-
-    // Initialize total students count
-    $totalstudents = 0;
-
-    // Get the name of the current database
-    $dbnameQuery = "SELECT DATABASE() AS dbname";
-    $dbnameResult = $conn->query($dbnameQuery);
-
-    if ($dbnameResult) {
-        $dbnameRow = $dbnameResult->fetch_assoc();
-        $dbname = preg_replace('/\bIi\b/', 'II', str_replace('_', ' ', ucwords(strtolower($dbnameRow['dbname']), '_')));
-        
-        $searchTerm1 = 'grade';
-        $searchTerm2 = 'section';
-
-        $query = "SHOW TABLES LIKE '%$searchTerm1%$searchTerm2%'";
-        $result = $conn->query($query);
-
-        if ($result) {
-            $tableCount = $result->num_rows;
-
-            if ($tableCount > 0) {
-                while ($row = $result->fetch_row()) {
-                    $tableName = $row[0];
-
-                    // Count records in 'lrn' field for each table
-                    $countQuery = "SELECT COUNT(lrn) AS recordCount FROM $tableName";
-                    $countResult = $conn->query($countQuery);
-
-                    if ($countResult) {
-                        $countRow = $countResult->fetch_assoc();
-                        $recordCount = $countRow['recordCount'];
-                        $totalstudents += $recordCount;
-                    }
-                }
-            } 
-        }
-    }
-    $conn->close();
-
-?>
-<?php
-    include('../database.php');
-
-    $tables = ['academic_english', 'academic_filipino', 'behavioral', 'academic_numeracy'];
-
-    $englishCount = 0;
-    $filipinoCount = 0;
-    $behavioralCount = 0;
-    $numeracyCount = 0;
-    $totalstar = 0;
-
-    foreach ($tables as $table) {
-        $query = "SELECT COUNT(*) AS count FROM $table";
-        $result = $conn->query($query);
-
-        if ($result) {
-            $row = $result->fetch_assoc();
-            $count = $row['count'];
-
-            // Assign count to the appropriate variable based on the table
-            switch ($table) {
-                case 'academic_english':
-                    $englishCount = $count;
-                    break;
-                case 'academic_filipino':
-                    $filipinoCount = $count;
-                    break;
-                case 'behavioral':
-                    $behavioralCount = $count;
-                    break;
-                case 'academic_numeracy':
-                    $numeracyCount = $count;
-                    break;
-            }
-            $totalstar += $count;
-        } 
-    }
-    $conn->close();
-?>
-<?php
-    include('../database.php');
-
-    // Define the tables
-    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
-
-    // Initialize total count
-    $totalpars = 0;
-    $totalresolved = 0;
-
-    // Iterate through tables and count rows with 'lrn' field and 'status' field
-    foreach ($tables as $table) {
-        // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL";
-        $resultPars = $conn->query($sqlPars);
-
-        if ($resultPars->num_rows > 0) {
-            $rowPars = $resultPars->fetch_assoc();
-            $totalpars += $rowPars['count'];
-        }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved'";
-        $resultResolved = $conn->query($sqlResolved);
-
-        if ($resultResolved->num_rows > 0) {
-            $rowResolved = $resultResolved->fetch_assoc();
-            $totalresolved += $rowResolved['count'];
-        }
-    }
-    $conn->close();
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -590,7 +477,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><?php echo $totalpars ?></h3>
+                    <h3 style="margin-left: 7px"></h3>
                 </div>
             </div>
         </div>
@@ -619,7 +506,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><?php echo $totalresolved ?> <span>/<?php echo $totalpars ?></span></h3>
+                    <h3 style="margin-left: 7px"></h3>
                 </div>
             </div>
         </div>
@@ -665,13 +552,13 @@
 
         <table border="0" id="schoolTable">
             <tr>
-                <th style="width:29%"><?php echo $dbname ?></th>
-                <th style="width:12%"><?php echo $totalstudents ?></th>
-                <th style="width:12%"><?php echo $totalstar ?></th>
-                <th style="width:12%"><?php echo $englishCount ?></th>
-                <th style="width:12%"><?php echo $filipinoCount ?></th>
-                <th style="width:12%"><?php echo $numeracyCount ?></th>
-                <th style="width:12%"><?php echo $behavioralCount ?></th>
+                <th style="width:29%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
+                <th style="width:12%"></th>
             </tr>
         </table>
     </div>

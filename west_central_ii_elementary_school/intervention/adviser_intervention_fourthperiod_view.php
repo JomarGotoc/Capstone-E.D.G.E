@@ -567,7 +567,7 @@ $conn->close();
             <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
-            <h3>LASIP GRANDE ELEMENTARY SCHOOL</h3>
+            <h3>West Central II Elementary School</h3>
         </div>
         <div class="lock"><i class='bx bx-lock-alt' ></i>View Only</div>
     </div>
