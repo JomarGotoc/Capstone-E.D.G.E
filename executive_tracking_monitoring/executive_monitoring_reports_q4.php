@@ -3034,6 +3034,7 @@
             border-radius: 5px;
             font-weight: bold;
             font-size: 17px;
+            text-align: left;
         }
 
         .second{

@@ -2604,7 +2604,7 @@
         }
 
         .vertical-line {
-            margin-left: 40rem;
+            margin-left: 30rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -2844,13 +2844,12 @@
             text-align: center;
             border: 1px solid #190572;
             border-radius: 5px;
+            text-align: left;
         }
 
         .second{
             border-radius: 3px;
             background-color: #2206A0;
-            text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
@@ -2925,7 +2924,7 @@
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 150px;
+            right: 300px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }

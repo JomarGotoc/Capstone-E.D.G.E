@@ -2844,13 +2844,13 @@
             text-align: center;
             border: 1px solid #190572;
             border-radius: 5px;
+            text-align: left;
         }
 
         .second{
             border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
