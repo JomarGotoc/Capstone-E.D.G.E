@@ -1,4 +1,840 @@
 <?php $currentFileName2 = basename(__FILE__,'_q1.php'); ?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $westcentralstudents = 0;
+    $westcentralfilipino = 0;
+    $westcentralnumeracy = 0;
+    $westcentralbehavioral = 0;
+    $westcentralenglish = 0;
+    $westcentraltotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'West Central II Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'West Central II Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'West Central II Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'West Central II Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'West Central II Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $westcentralenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $westcentralfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $westcentralnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $westcentralbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $westcentralstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $westcentraltotalpar = $westcentralenglish + $westcentralfilipino + $westcentralnumeracy + $westcentralbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $bucayaostudents = 0;
+    $bucayaofilipino = 0;
+    $bucayaonumeracy = 0;
+    $bucayaobehavioral = 0;
+    $bucayaoenglish = 0;
+    $bucayaototalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Bacayao Sur Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Bacayao Sur Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Bacayao Sur Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Bacayao Sur Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Bacayao Sur Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $bucayaoenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $bucayaofilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $bucayaonumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $bucayaobehavioral += $count_row['total'];
+                    break;
+                default:
+                    $bucayaostudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $bucayaoltotalpar = $bucayaoenglish + $bucayaofilipino + $bucayaonumeracy + $bucayaobehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $blissstudents = 0;
+    $blissfilipino = 0;
+    $blissnumeracy = 0;
+    $blissbehavioral = 0;
+    $blissenglish = 0;
+    $blisstotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Bliss Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Bliss Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Bliss Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Bliss Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Bliss Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $blissenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $blissfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $blissnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $blissbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $blissstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $blissltotalpar = $blissenglish + $blissfilipino + $blissnumeracy + $blissbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $bolosanstudents = 0;
+    $bolosanfilipino = 0;
+    $bolosannumeracy = 0;
+    $bolosanbehavioral = 0;
+    $bolosanenglish = 0;
+    $bolosantotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Bolosan Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Bolosan Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Bolosan Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Bolosan Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Bolosan Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $bolosanenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $bolosanfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $bolosannumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $bolosanbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $bolosanstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $bolosantotalpar = $bolosanenglish + $bolosanfilipino + $bolosannumeracy + $bolosanbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $bonuanstudents = 0;
+    $bonuanfilipino = 0;
+    $bonuannumeracy = 0;
+    $bonuanbehavioral = 0;
+    $bonuanenglish = 0;
+    $bonuantotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Bonuan Boquig Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Bonuan Boquig Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Bonuan Boquig Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Bonuan Boquig Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Bonuan Boquig Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $bonuanenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $bonuanfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $bonuannumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $bonuanbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $bonuanstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $bonuantotalpar = $bonuanenglish + $bonuanfilipino + $bonuannumeracy + $bonuanbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $calmaystudents = 0;
+    $calmayfilipino = 0;
+    $calmaynumeracy = 0;
+    $calmaybehavioral = 0;
+    $calmayenglish = 0;
+    $calmaytotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Calmay Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Calmay Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Calmay Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Calmay Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Calmay Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $calmayenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $calmayfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $calmaynumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $calmaybehavioral += $count_row['total'];
+                    break;
+                default:
+                    $calmaystudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $calmaytotalpar = $calmayenglish + $calmayfilipino + $calmaynumeracy + $calmaybehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $caraelstudents = 0;
+    $caraelfilipino = 0;
+    $caraelnumeracy = 0;
+    $caraelbehavioral = 0;
+    $caraelenglish = 0;
+    $caraeltotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Carael Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Carael Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Carael Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Carael Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Carael Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $caraelenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $caraelfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $caraelnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $caraelbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $caraelstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $caraeltotalpar = $caraelenglish + $caraelfilipino + $caraelnumeracy + $caraelbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $caranglaanstudents = 0;
+    $caranglaanfilipino = 0;
+    $caranglaannumeracy = 0;
+    $caranglaanbehavioral = 0;
+    $caranglaanenglish = 0;
+    $caranglaantotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Carael Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Caranglaan Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Caranglaan Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Caranglaan Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Caranglaan Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $caranglaanenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $caranglaanfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $caranglaannumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $caranglaanbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $caranglaanstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $caranglaantotalpar = $caranglaanenglish + $caranglaanfilipino + $caranglaannumeracy + $caranglaanbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $eaststudents = 0;
+    $eastfilipino = 0;
+    $eastnumeracy = 0;
+    $eastbehavioral = 0;
+    $eastenglish = 0;
+    $easttotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'East Central Integrated School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'East Central Integrated School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'East Central Integrated School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'East Central Integrated School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'East Central Integrated School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $eastenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $eastfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $eastnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $eastbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $eaststudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $easttotalpar = $eastenglish + $eastfilipino + $eastnumeracy + $eastbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $federicostudents = 0;
+    $federicofilipino = 0;
+    $federiconumeracy = 0;
+    $federicobehavioral = 0;
+    $federicoenglish = 0;
+    $federicototalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Federico N. Ceralde School Integrated School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Federico N. Ceralde School Integrated School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Federico N. Ceralde School Integrated School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Federico N. Ceralde School Integrated School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Federico N. Ceralde School Integrated School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $federicoenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $federicofilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $federiconumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $federicobehavioral += $count_row['total'];
+                    break;
+                default:
+                    $federicostudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $federicototalpar = $federicoenglish + $federicofilipino + $federiconumeracy + $federicobehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $genstudents = 0;
+    $genfilipino = 0;
+    $gennumeracy = 0;
+    $genbehavioral = 0;
+    $genenglish = 0;
+    $gentotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'Gen. Gregorio Del Pilar Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $genenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $genfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $gennumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $genbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $genstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $gentotalpar = $genenglish + $genfilipino + $gennumeracy + $genbehavioral;
+
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -555,95 +1391,95 @@
         </div>
 
         <table border="0" id="schoolTable">
-            <tr>
+        <tr>
                 <th style="width:29%">Bacayao Sur Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $bucayaostudents ?></th>
+                <th style="width:12%"><?php echo $bucayaoltotalpar ?></th>
+                <th style="width:12%"><?php echo $bucayaoenglish ?></th>
+                <th style="width:12%"><?php echo $bucayaofilipino ?></th>
+                <th style="width:12%"><?php echo $bucayaonumeracy ?></th>
+                <th style="width:12%"><?php echo $bucayaobehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Bliss Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $blissstudents ?></th>
+                <th style="width:12%"><?php echo $blisstotalpar ?></th>
+                <th style="width:12%"><?php echo $blissenglish ?></th>
+                <th style="width:12%"><?php echo $blissfilipino ?></th>
+                <th style="width:12%"><?php echo $blissnumeracy ?></th>
+                <th style="width:12%"><?php echo $blissbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Bolosan Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $bolosanstudents ?></th>
+                <th style="width:12%"><?php echo $bolosantotalpar ?></th>
+                <th style="width:12%"><?php echo $bolosanenglish ?></th>
+                <th style="width:12%"><?php echo $bolosanfilipino ?></th>
+                <th style="width:12%"><?php echo $bolosannumeracy ?></th>
+                <th style="width:12%"><?php echo $bolosanbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Bonuan Boquig Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $bonuanstudents ?></th>
+                <th style="width:12%"><?php echo $bonuantotalpar ?></th>
+                <th style="width:12%"><?php echo $bonuanenglish ?></th>
+                <th style="width:12%"><?php echo $bonuanfilipino ?></th>
+                <th style="width:12%"><?php echo $bonuannumeracy ?></th>
+                <th style="width:12%"><?php echo $bonuanbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Calmay Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $calmaystudents ?></th>
+                <th style="width:12%"><?php echo $calmaytotalpar ?></th>
+                <th style="width:12%"><?php echo $calmayenglish ?></th>
+                <th style="width:12%"><?php echo $calmayfilipino ?></th>
+                <th style="width:12%"><?php echo $calmaynumeracy ?></th>
+                <th style="width:12%"><?php echo $calmaybehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Carael Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $caraelstudents ?></th>
+                <th style="width:12%"><?php echo $caraeltotalpar ?></th>
+                <th style="width:12%"><?php echo $caraelenglish ?></th>
+                <th style="width:12%"><?php echo $caraelfilipino ?></th>
+                <th style="width:12%"><?php echo $caraelnumeracy ?></th>
+                <th style="width:12%"><?php echo $caraelbehavioral ?></th>
             </tr>
             <tr>
-                <th style="width:29%">Caranglaan Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:29%">Carael Elementary School</th>
+                <th style="width:12%"><?php echo $caranglaanstudents ?></th>
+                <th style="width:12%"><?php echo $caranglaantotalpar ?></th>
+                <th style="width:12%"><?php echo $caranglaanenglish ?></th>
+                <th style="width:12%"><?php echo $caranglaanfilipino ?></th>
+                <th style="width:12%"><?php echo $caranglaannumeracy ?></th>
+                <th style="width:12%"><?php echo $caranglaanbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">East Central Integrated School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $eaststudents ?></th>
+                <th style="width:12%"><?php echo $easttotalpar ?></th>
+                <th style="width:12%"><?php echo $eastenglish ?></th>
+                <th style="width:12%"><?php echo $eastfilipino ?></th>
+                <th style="width:12%"><?php echo $eastnumeracy ?></th>
+                <th style="width:12%"><?php echo $eastbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Federico N. Ceralde School Integrated School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $federicostudents ?></th>
+                <th style="width:12%"><?php echo $federicototalpar ?></th>
+                <th style="width:12%"><?php echo $federicoenglish ?></th>
+                <th style="width:12%"><?php echo $federicofilipino ?></th>
+                <th style="width:12%"><?php echo $federiconumeracy ?></th>
+                <th style="width:12%"><?php echo $federicobehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Gen. Gregorio Del Pilar Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $genstudents ?></th>
+                <th style="width:12%"><?php echo $gentotalpar ?></th>
+                <th style="width:12%"><?php echo $genenglish ?></th>
+                <th style="width:12%"><?php echo $genfilipino ?></th>
+                <th style="width:12%"><?php echo $gennumeracy ?></th>
+                <th style="width:12%"><?php echo $genbehavioral ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Juan L. Siapno Elementary School</th>
@@ -846,12 +1682,12 @@
             </tr>
             <tr>
                 <th style="width:29%">West Central II Elementary School</th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $westcentralstudents?></th>
+                <th style="width:12%"><?php echo $westcentraltotalpar?></th>
+                <th style="width:12%"><?php echo $westcentralenglish?></th>
+                <th style="width:12%"><?php echo $westcentralfilipino?></th>
+                <th style="width:12%"><?php echo $westcentralnumeracy?></th>
+                <th style="width:12%"><?php echo $westcentralbehavioral?></th>
             </tr>
         </table>
     </div>
