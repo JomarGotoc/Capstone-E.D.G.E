@@ -19,25 +19,24 @@
     } 
 ?>
 <?php
-include('../../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $count += $row['count'];
+    include('../../database.php');
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $words[1];
+    $fourthWord = $words[3];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    foreach ($tables as $table) {
+        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $count += $row['count'];
+            }
         }
     }
-}
-$conn->close();
+    $conn->close();
 ?>
-
 <?php
     include('../../database.php');
 
@@ -101,6 +100,11 @@ $conn->close();
 
         // Close the statement
         $stmt->close();
+    }
+?>
+<?php
+    if (isset($_GET['employment_number']) && isset($_GET['table'])) {
+        $employmentNumber = $_GET['employment_number'];
     }
 ?>
 <!DOCTYPE html>
@@ -848,7 +852,7 @@ $conn->close();
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="#">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -1088,7 +1092,7 @@ $conn->close();
         // Check if a quarter is selected
         if (selectedQuarter !== "") {
             // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo $employment_number?>";
 
             // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;

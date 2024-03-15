@@ -1,3 +1,57 @@
+<?php
+  $errorMsg = "";
+  if (isset($_POST['submit'])) {
+      $old_password = isset($_POST['old_password']) ? $_POST['old_password'] : '';
+      $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
+      $repeat_password = isset($_POST['repeat_password']) ? $_POST['repeat_password'] : '';
+      $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : '';
+
+      if (!empty($old_password) && !empty($new_password) && !empty($repeat_password) && !empty($employment_number)) {
+          if ($new_password === $repeat_password) {
+              include('../database.php');
+
+              $found_tables = [];
+
+              $tables = ['adviser', 'counselor', 'principal', 'school_admin', 'sdo_admin', 'executive_committee'];
+              foreach ($tables as $table) {
+                  $sql = "SELECT * FROM $table WHERE employment_number = ?";
+                  $stmt = $conn->prepare($sql);
+                  $stmt->bind_param("s", $employment_number);
+                  $stmt->execute();
+                  $result = $stmt->get_result();
+
+                  if ($result->num_rows > 0) {
+                      $found_tables[] = $table;
+
+                      $row = $result->fetch_assoc();
+                      $stored_password = $row['password'];
+
+                      if (password_verify($old_password, $stored_password)) {
+                          $hashed_new_password = password_hash($new_password, PASSWORD_DEFAULT);
+                          $update_sql = "UPDATE $table SET password = ? WHERE employment_number = ?";
+                          $update_stmt = $conn->prepare($update_sql);
+                          $update_stmt->bind_param("ss", $hashed_new_password, $employment_number);
+                          $update_stmt->execute();
+
+                          $errorMsg = "Password updated successfully.";
+                          break;
+                      } else {
+                        $errorMsg = "Old password is incorrect.";
+                      }
+                  }
+              }
+
+              if (empty($found_tables)) {
+                $errorMsg = "Employment Number not found in any table.";
+              }
+
+              $conn->close();
+          } else {
+            $errorMsg = "Password do not match.";
+          }
+      }
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,10 +214,11 @@
           color: green;
           font-weight: bold;
         }
-        .error-message1{
+        .errorMsg{
           color: red;
           font-weight: bold;
         }
+
     </style>
 </head>
 <body>
@@ -181,11 +236,15 @@
         <p>Enter a new password to change your password</p>
           
 
+        <div class="errorMsg">
+          <?php echo $errorMsg ?>
+        </div>
+
         <form class="login-form" action="" method="post">
             <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
-            <input type="password" id="password" name="new_password"  placeholder="New Password " required>
-            <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " required>
-            <button type="submit" value="Login">Change Password</button>
+            <input type="password" id="password" name="new_password"  placeholder="New Password " >
+            <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " >
+            <button type="submit" value="Login" name="submit">Change Password</button>
         </form>
 
   

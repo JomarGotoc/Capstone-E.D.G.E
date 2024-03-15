@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
                             $grade = $row['grade'];
                             $section = $row['section'];
                             $school = str_replace(' ', '_', $schoolField);
-                            header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php");
+                            header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
                     case 'principal':
                         if ($verifiedStatus == 'yes') {
                             $school = str_replace(' ', '_', $schoolField);
-                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?");
+                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
                     case 'counselor':
                         if ($verifiedStatus == 'yes') {
                             $school = str_replace(' ', '_', $schoolField);
-                            header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php");
+                            header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
                     case 'school_admin':
                         if ($verifiedStatus == 'yes') {
                             $school = str_replace(' ', '_', $schoolField);
-                            header("Location: ../$school/button_options/School_Admin_Create_Account.php");
+                            header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
                     case 'sdo_admin':
                         if ($verifiedStatus == 'yes') {
                             $school = str_replace(' ', '_', $schoolField);
-                            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
+                            header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 
                     case 'executive_committee':
                         if ($verifiedStatus == 'yes') {
-                            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
+                            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");

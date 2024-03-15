@@ -37,7 +37,6 @@ foreach ($tables as $table) {
 }
 $conn->close();
 ?>
-
 <?php
     include('../../database.php');
 
@@ -102,7 +101,6 @@ $conn->close();
         $stmt->close();
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -847,8 +845,8 @@ $conn->close();
                 <div class="dropdown">
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
-                        <a href="#">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="">Log Out</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -1047,7 +1045,7 @@ $conn->close();
 
 
         <div class="plus-button">
-            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+        <a href="../add_student_form/<?php echo $currentFileName1?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 
@@ -1088,7 +1086,7 @@ $conn->close();
         // Check if a quarter is selected
         if (selectedQuarter !== "") {
             // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo $employment_number?>";
 
             // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;

@@ -31,11 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $section = $row['section'];
                 $school = str_replace(' ', '_', $row['school']);
 
-                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1.php");
+                header("Location: ../$school/adviser_dashboard/grade_" . $grade . "_section_" . $section ."_q1.php?employment_number=$employmentNumber");
                 exit();
-            } else {
-                // Handle case when no rows are returned or error occurs
-            }
+            } 
         } elseif ($tableName === 'counselor' || $tableName === 'principal' || $tableName === 'school_admin') {
             $selectQuery = "SELECT school FROM $tableName WHERE employment_number = '$employmentNumber'";
             $result = $conn->query($selectQuery);
@@ -45,21 +43,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $school = str_replace(' ', '_', $row['school']);
 
                 if ($tableName === 'counselor') {
-                    header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php");
+                    header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'principal') {
-                    header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php");
+                    header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'school_admin') {
-                    header("Location: ../$school/button_options/School_Admin_Create_Account.php");
+                    header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employmentNumber");
                 }
                 exit();
             } else {
-                // Handle case when no rows are returned or error occurs
             }
         } elseif ($tableName === 'executive_committee') {
-            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php");
+            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports.php?employment_number=$employmentNumber");
             exit();
         } elseif ($tableName === 'sdo_admin') {
-            header("Location: ../SDO_manage_account/SDO_manageaccount.php");
+            header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employmentNumber");
             exit();
         } 
     } 

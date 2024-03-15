@@ -2732,7 +2732,7 @@
 
     $conn->close();
 ?>
-<?php $currentFileName2 = basename(__FILE__,'_q1.php'); ?>
+<?php $currentFileName2 = basename(__FILE__,'_q4.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3118,7 +3118,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="#">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -3127,7 +3127,7 @@
 
     <div class="navbar">
         <nav>
-            <a href="executive_tracking_reports_q1.php">Quarterly Reports</a>
+            <a href="executive_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Quarterly Reports</a>
             <a href="" style="background:#F3F3F3; color:#130550">Report Summary</a>
         </nav>
     </div>
@@ -3607,7 +3607,7 @@
         // Check if a quarter is selected
         if (selectedQuarter !== "") {
             // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
 
             // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;

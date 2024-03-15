@@ -1,105 +1,103 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
 
-include "../../database.php";
+    include "../../database.php";
 
-$phpFileName = basename(__FILE__, '.php');
-$phpFileName1 = basename(__FILE__,'.php');
-$phpFileName1 = $phpFileName1.'_q1.php';
-$tableName1 = strtolower($phpFileName);
+    $phpFileName = basename(__FILE__, '.php');
+    $phpFileName1 = basename(__FILE__,'.php');
+    $phpFileName1 = $phpFileName1.'_q1.php';
+    $tableName1 = strtolower($phpFileName);
 
-$fullname1 = $lrn = $grade = $section = "";
-$errorMsg1 = ""; // Initialize the error message variable
+    $fullname1 = $lrn = $grade = $section = "";
+    $errorMsg1 = ""; // Initialize the error message variable
 
-// Check database connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Check database connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
-    $result = $conn->query("SHOW TABLES LIKE '$tableName1'");
-    $tableExists = $result->num_rows > 0;
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit1"])) {
+        $result = $conn->query("SHOW TABLES LIKE '$tableName1'");
+        $tableExists = $result->num_rows > 0;
 
-    if (!$tableExists) {
-        $errorMsg1 = "No Student Found";
-    } else {
-        $lrn = $_POST["lrn"];
-
-        $sql = "SELECT fullname, lrn, grade, section FROM $tableName1 WHERE lrn = ? AND school = 'West Central II Elementary School'";
-        $stmt = $conn->prepare($sql);
-
-        if (!$stmt) {
-            $errorMsg1 = "Error in SQL statement: " . $conn->error;
+        if (!$tableExists) {
+            $errorMsg1 = "No Student Found";
         } else {
-            $stmt->bind_param("s", $lrn);
-            $stmt->execute();
-            $stmt->bind_result($fullname1, $fetchedLRN, $grade, $section);
+            $lrn = $_POST["lrn"];
 
-            if ($stmt->fetch()) {
+            $sql = "SELECT fullname, lrn, grade, section FROM $tableName1 WHERE lrn = ? AND school = 'West Central II Elementary School'";
+            $stmt = $conn->prepare($sql);
+
+            if (!$stmt) {
+                $errorMsg1 = "Error in SQL statement: " . $conn->error;
             } else {
-                $errorMsg1 = "No data found for LRN: $lrn";
+                $stmt->bind_param("s", $lrn);
+                $stmt->execute();
+                $stmt->bind_result($fullname1, $fetchedLRN, $grade, $section);
+
+                if ($stmt->fetch()) {
+                } else {
+                    $errorMsg1 = "No data found for LRN: $lrn";
+                }
+
+                $stmt->close();
             }
-
-            $stmt->close();
         }
-    }
-}
-
-$conn->close();
-?>
-
-<?php
-$errorMsg ="";
-if(isset($_POST['submit2'])){
-    $lrn = $_POST['lrn'];
-    $fullname = $_POST['fullname'];
-    $grade = $_POST['grade'];
-    $section = $_POST['section'];
-    $date = $_POST['date'];
-    $quarter = $_POST['quarter'];
-    $classification = $_POST['classification'];
-    $school = "West Central II Elementary School";
-
-    include('../../database.php');
-    $status = 'Pending'; // Set the default status
-
-    switch ($classification) {
-        case 'Academic - Literacy in English':
-            $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-            break;
-
-        case 'Academic - Literacy in Filipino':
-            $sql = "INSERT INTO academic_filipino (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-            break;
-
-        case 'Academic - Numeracy':
-            $sql = "INSERT INTO academic_numeracy (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-            break;
-
-        case 'Behavioral':
-            $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification, status,school)
-                    VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-            break;
-
-        default:
-            echo "Invalid classification";
-            break;
-    }
-
-    if ($conn->query($sql) === TRUE) {
-        $errorMsg =" Recorded Successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
     $conn->close();
-}
 ?>
+<?php
+    $errorMsg ="";
+    if(isset($_POST['submit2'])){
+        $lrn = $_POST['lrn'];
+        $fullname = $_POST['fullname'];
+        $grade = $_POST['grade'];
+        $section = $_POST['section'];
+        $date = $_POST['date'];
+        $quarter = $_POST['quarter'];
+        $classification = $_POST['classification'];
+        $school = "West Central II Elementary School";
 
+        include('../../database.php');
+        $status = 'Pending'; // Set the default status
+
+        switch ($classification) {
+            case 'Academic - Literacy in English':
+                $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
+                break;
+
+            case 'Academic - Literacy in Filipino':
+                $sql = "INSERT INTO academic_filipino (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
+                break;
+
+            case 'Academic - Numeracy':
+                $sql = "INSERT INTO academic_numeracy (lrn, fullname, grade, section, date, quarter, classification, status, school)
+                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
+                break;
+
+            case 'Behavioral':
+                $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification, status,school)
+                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
+                break;
+
+            default:
+                echo "Invalid classification";
+                break;
+        }
+
+        if ($conn->query($sql) === TRUE) {
+            $errorMsg =" Recorded Successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+
+        $conn->close();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -489,7 +487,7 @@ if(isset($_POST['submit2'])){
 
     <div class="top-container">
         <div class="back-button">
-            <a href="../adviser_dashboard/<?php echo $phpFileName1?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $phpFileName1?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="error-message">
             <?php echo $errorMsg; ?>

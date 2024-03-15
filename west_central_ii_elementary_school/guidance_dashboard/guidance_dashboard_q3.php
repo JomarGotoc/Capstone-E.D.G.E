@@ -564,7 +564,7 @@ if ($result) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="#">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -810,7 +810,7 @@ $(document).ready(function () {
         // Check if a quarter is selected
         if (selectedQuarter !== "") {
             // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php";
+            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
 
             // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;
