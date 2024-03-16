@@ -577,9 +577,11 @@ $conn->close();
                 </div>
             </div>
             <div class="column">
-                <div class="containers second">
-                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Reports</h3></button>
-                </div>
+            <div class="containers second">
+    <button style="background: transparent; border: none;" onclick="printPARsList()">
+        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+    </button>
+</div>
             </div>
             <div class="column column-left">
                 <div class="containers third" style="background-color: #190572;">
@@ -698,6 +700,10 @@ $conn->close();
     </div>
     </form>
 
- 
+    <script>
+    function printPARsList() {
+        window.print();
+    }
+</script>
 </body>
 </html>
