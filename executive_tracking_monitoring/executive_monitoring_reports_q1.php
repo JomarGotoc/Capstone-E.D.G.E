@@ -3351,7 +3351,6 @@
 
                     <tr>
                         <th style="width:40%; text-align: left; padding-left: 10px">Calmay Elementary School</th>
-                        <th style="width:12%"><?php echo $calmaytotalpar ?></th>
                         <th style="width:12%"><?php echo $calmayenglish ?></th>
                         <th style="width:12%"><?php echo $calmayfilipino ?></th>
                         <th style="width:12%"><?php echo $calmaynumeracy ?></th>
