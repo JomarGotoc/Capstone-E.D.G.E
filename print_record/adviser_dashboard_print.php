@@ -102,7 +102,7 @@
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
     </div>
-
+    
     <div class="details">
     <div class="update-record">
 
@@ -113,44 +113,43 @@
         <input class="response" type="text" value=" ">
 
     </div>
-
     <div class="update-record2">
-        
+    <button id="printButton">Print</button>
         <p class="label">Grade & Section</p>
         <input class="response" type="text" value=" ">
-        
         <p class="label">Total Students</p>
         <input class="response" type="text" value=" ">
     </div>
     </div>
-    <table>
-        <thead>
+    <?php
+if (isset($_GET['data'])) {
+    $jsonData = json_decode($_GET['data'], true);
+    echo "<table border='1'>
             <tr>
                 <th>LRN</th>
-                <th>Pupil's Name</th>
-                <th>P.A.R. Identification</th>
-                <th>Grade & Section</th>
+                <th>Full Name</th>
+                <th>Grade - Section</th>
+                <th>Classification</th>
                 <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
+            </tr>";
 
-            <tr>
-                <td>123456789012</td>
-                <td>John Doe</td>
-                <td>Par ID1</td>
-                <td>Grade 1 - Mabait</td>
-                <td>Resolved</td>
-            </tr>
-            <tr>
-                <td>123456789012</td>
-                <td>Jane Doe</td>
-                <td>Par ID2</td>
-                <td>Grade 2 - Medyo Mabait</td>
-                <td>Unresolved</td>
-            </tr>
+    foreach ($jsonData as $row) {
+        echo "<tr>
+                <td>{$row['lrn']}</td>
+                <td>{$row['fullname']}</td>
+                <td>{$row['grade_section']}</td>
+                <td>{$row['classification']}</td>
+                <td>{$row['status']}</td>
+              </tr>";
+    }
 
-        </tbody>
-    </table>
+    echo "</table>";
+}
+?>
+<script>
+document.getElementById('printButton').addEventListener('click', function() {
+    window.print();
+});
+</script>
 </body>
 </html>

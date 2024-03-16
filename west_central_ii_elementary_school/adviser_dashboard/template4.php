@@ -869,11 +869,11 @@
                     </select>
                 </div>
         </div>
-            <div class="column">
-                <div class="containers second">
-                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3><button>
-                </div>
-            </div>
+        <div class="containers second">
+    <button style="background:transparent; border: none" onclick="printPARsList()">
+        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+    </button>
+</div>
             <div class="column third-column">
     <div class="search-box">
         <input type="text" class="search-input" placeholder="Search Pupil's Name">
@@ -1095,7 +1095,29 @@
         }
     }
 </script>
+<script>
+    function printPARsList() {
+        // Gather data from the table
+        var tableData = [];
+        var tableRows = document.querySelectorAll('#pupilTable tr.sheshable');
+        tableRows.forEach(function(row) {
+            var rowData = {
+                lrn: row.cells[1].textContent,
+                fullname: row.cells[2].textContent,
+                grade_section: row.cells[4].textContent,
+                classification: row.cells[3].textContent,
+                status: row.cells[5].textContent
+            };
+            tableData.push(rowData);
+        });
 
+        // Convert data to JSON format
+        var jsonData = JSON.stringify(tableData);
+
+        // Send data to PHP script
+        window.location.href = `../../print_record/adviser_dashboard_print.php?data=${jsonData}`;
+    }
+</script>
  
 </body>
 </html>

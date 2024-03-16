@@ -752,7 +752,7 @@ if(isset($_POST['reset_password'])) {
     </div>
     
     <div class="plus-button">
-            <a href="../west_central_ii_elementary_school/create_account/Create_Executive_Committee_Account.php"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../SDO_create_account/Create_Executive_Committee_Account.php"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
     

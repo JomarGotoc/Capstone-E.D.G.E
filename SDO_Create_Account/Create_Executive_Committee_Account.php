@@ -1,5 +1,5 @@
 <?php
-include ("../../database.php");
+include ("../database.php");
 $errorMsg = "";
 $errorMsg1 = "";
 if (isset($_POST['submit'])) {

@@ -1,10 +1,10 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q3.php');
+    $currentFileName1 = basename(__FILE__,'_q4.php');
     $currentFileName1 = $currentFileName1.'.php';
     
-    $currentFileName2 = basename(__FILE__,'_q3.php');
+    $currentFileName2 = basename(__FILE__,'_q4.php');
 
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
@@ -37,6 +37,7 @@
     }
     $conn->close();
 ?>
+
 <?php
     include('../../database.php');
 
@@ -79,7 +80,7 @@
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 3 AND school = 'West Central II Elementary School'";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -100,11 +101,6 @@
 
         // Close the statement
         $stmt->close();
-    }
-?>
-<?php
-    if (isset($_GET['employment_number']) && isset($_GET['table'])) {
-        $employmentNumber = $_GET['employment_number'];
     }
 ?>
 <!DOCTYPE html>
@@ -873,11 +869,11 @@
                     </select>
                 </div>
         </div>
-            <div class="column">
-                <div class="containers second">
-                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print P.A.Rs List</h3></button>
-                </div>
-            </div>
+        <div class="containers second">
+    <button style="background:transparent; border: none" onclick="printPARsList()">
+        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+    </button>
+</div>
             <div class="column third-column">
     <div class="search-box">
         <input type="text" class="search-input" placeholder="Search Pupil's Name">
@@ -930,7 +926,7 @@
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter III</option>
+                        <option value="" disabled selected hidden>Quarter IV</option>
                         <option value="q1">Quarter I</option>
                         <option value="q2">Quarter II</option>
                         <option value="q3">Quarter III</option>
@@ -1038,7 +1034,7 @@
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                            <a href='../intervention/adviser_intervention_thirdperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}' class='updateRecordButton'>UPDATE RECORD</a>
+                            <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}' class='updateRecordButton'>UPDATE RECORD</a>
                         </th>
                       </tr>";
             }
@@ -1052,7 +1048,7 @@
 
 
         <div class="plus-button">
-        <a href="../add_student_form/<?php echo $currentFileName1?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 
@@ -1099,7 +1095,29 @@
         }
     }
 </script>
+<script>
+    function printPARsList() {
+        // Gather data from the table
+        var tableData = [];
+        var tableRows = document.querySelectorAll('#pupilTable tr.sheshable');
+        tableRows.forEach(function(row) {
+            var rowData = {
+                lrn: row.cells[1].textContent,
+                fullname: row.cells[2].textContent,
+                grade_section: row.cells[4].textContent,
+                classification: row.cells[3].textContent,
+                status: row.cells[5].textContent
+            };
+            tableData.push(rowData);
+        });
 
+        // Convert data to JSON format
+        var jsonData = JSON.stringify(tableData);
+
+        // Send data to PHP script
+        window.location.href = `../../print_record/adviser_dashboard_print.php?data=${jsonData}`;
+    }
+</script>
  
 </body>
 </html>
