@@ -33,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
-        header('location: counselor_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+        $employment_number = $_GET['employment_number'];
+        header('Location: counselor_intervention_secondperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number));
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -75,7 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         if ($validQuarter) {
-            header('location: counselor_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+            $employment_number = $_GET['employment_number'];
+            header('Location: counselor_intervention_secondperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number));
             exit();
         }
 
@@ -584,7 +586,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        <a href="../guidance_dashboard/guidance_dashboard_q2.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>

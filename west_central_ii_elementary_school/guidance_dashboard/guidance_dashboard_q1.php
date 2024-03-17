@@ -699,102 +699,29 @@ if ($result) {
             </div>
     </div>
     <table border="0">
-        <?php
+    <?php
     if ($result1->num_rows > 0) {
-    while ($row = $result1->fetch_assoc()) {
-        $rowColor = '#ffffff';
-
-        echo "<tr class='sheshable' style='background-color: $rowColor;'>
-                <th style='width:15%'>{$row['lrn']}</th>
-                <th style='width:22%'>{$row['fullname']}</th>
-                <th style='width:15%'>{$row['classification']}</th>
-                <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                <th style='width:15%'>{$row['status']}</th>
-                <th style='width:15%' class='act'>
-                <a href='../intervention/counselor_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}' class='updateRecordButton'>UPDATE RECORD</a>
-            </th>
-            </tr>";
+        while ($row = $result1->fetch_assoc()) {
+            $rowColor = 'yellow';
+            echo "<tr class='sheshable'>
+                        <th style='width:.5%; background-color: $rowColor;'></th>
+                        <th style='width:13%'>{$row['lrn']}</th>
+                        <th style='width:22%'>{$row['fullname']}</th>
+                        <th style='width:15%'>{$row['classification']}</th>
+                        <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
+                        <th style='width:15%'>{$row['status']}</th>
+                        <th style='width:15%' class='act'>
+                        <a href='../intervention/counselor_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
+                        </th>
+                      </tr>";
+        }
     }
-}
-?>
-    </table>
+    ?>
+</table>
+
     </div>
 
     <script src="adviserdashboard.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        function showPopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'flex';
-            popup.style.position = 'fixed';
-            popup.style.top = '12%';
-            popup.style.left = '50%';
-            popup.style.transform = 'translateX(-50%)';
-            popup.style.zIndex = '1';
-
-            var row = this.closest('tr');
-            var lrn = row.querySelector('th:nth-child(1)').textContent;
-            var fullname = row.querySelector('th:nth-child(2)').textContent;
-            var classification = row.querySelector('th:nth-child(3)').textContent;
-            var gradeSection = row.querySelector('th:nth-child(4)').textContent; // Assuming 4th column is for grade
-            var status = row.querySelector('th:nth-child(5)').textContent;
-            var gradeSectionParts = gradeSection.split('-');
-            var grade = gradeSectionParts[0].trim();
-            var section = gradeSectionParts[1].trim();// Assuming 5th column is for section
-
-            // Pass data to Q1 link
-            var q1Link = document.getElementById('q1Link');
-            q1Link.href = '../intervention/counselor_intervention_firstperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) + // Include the section parameter
-                '&status=' + encodeURIComponent(status);
-
-
-            // Pass data to Q2 link
-            var q2Link = document.getElementById('q2Link');
-            q2Link.href = '../intervention/counselor_intervention_secondperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-            // Pass data to Q3 link
-            var q3Link = document.getElementById('q3Link');
-            q3Link.href = '../intervention/counselor_intervention_thirdperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-
-            // Pass data to Q4 link
-            var q4Link = document.getElementById('q4Link');
-            q4Link.href = '../intervention/counselor_intervention_fourthperiod.php?lrn=' + encodeURIComponent(lrn) +
-                '&fullname=' + encodeURIComponent(fullname) +
-                '&classification=' + encodeURIComponent(classification) +
-                '&grade=' + encodeURIComponent(grade) +
-                '&section=' + encodeURIComponent(section) +
-                '&status=' + encodeURIComponent(status);
-        }
-
-        function closePopup() {
-            var popup = document.getElementById('popup');
-            popup.style.display = 'none';
-        }
-
-        var updateRecordButtons = document.querySelectorAll('.updateRecordButton');
-
-        updateRecordButtons.forEach(function (button) {
-            button.addEventListener('click', showPopup);
-        });
-
-        var closeIcon = document.querySelector('.close-icon');
-        closeIcon.addEventListener('click', closePopup);
-
-    });
-</script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>

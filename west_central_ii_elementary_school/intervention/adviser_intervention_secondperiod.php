@@ -45,7 +45,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $stmt->bind_param("ssssssss",$gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
-        header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+        $employment_number = $_GET['employment_number'];
+        $grade = $_GET['grade'];
+        $section = $_GET['section'];
+        header('Location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -87,13 +90,30 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         if ($validQuarter) {
-            header('location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn));
+            $employment_number = $_GET['employment_number'];
+            $grade = $_GET['grade'];
+            $section = $_GET['section'];
+            header('Location: adviser_intervention_secondperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
             exit();
         }
 
         $conn->close();
     }
 }
+?>
+<?php
+    if (isset($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_REFERER'])) {
+        $previous = $_SERVER['HTTP_REFERER'];
+    } 
+?>
+<?php
+    if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
+        $grade = $_GET['grade'];
+        $section = $_GET['section'];
+        $employment_number = $_GET['employment_number'];
+
+        $path = "grade_{$grade}_section_{$section}_q2.php?employment_number=$employment_number";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -595,7 +615,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>

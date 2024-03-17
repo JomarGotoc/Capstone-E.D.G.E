@@ -1,100 +1,116 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $lrn = $_POST["lrn"];
-    $fullname = $_POST["fullname"];
-    $grade = $_POST["grade"];
-    $classification = $_POST["classification"];
-    $gname = $_POST["gname"];
-    $number = $_POST["number"];
-    $notes = $_POST["notes"];
-    $intervention = $_POST["intervention"];
-    $topic = $_POST["topic"];
-    $advice = $_POST["advice"];
-    $status = $_POST["status"];
-
-    include('../../database.php');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Validate and sanitize the classification input to prevent SQL injection
-    $safeClassification = mysqli_real_escape_string($conn, $classification);
-
-    // Create a mapping for classification to table name
-    $tableMapping = array(
-        "Academic - Literacy in English" => "academic_english",
-        "Academic - Literacy in Filipino" => "academic_filipino",
-        "Academic - Numeracy" => "academic_numeracy",
-        "Behavioral" => "behavioral"
-    );
-
-    // Get the corresponding table name from the mapping
-    $tableName = $tableMapping[$safeClassification];
-
-    $sql = "UPDATE $tableName SET 
-            fullname = ?,
-            gname = ?,
-            number = ?,
-            notes = ?,
-            intervention = ?,
-            topic = ?,
-            advice = ?,
-            status = ?
-            WHERE lrn = ? AND quarter = '1' AND school = 'West Central II Elementary School'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
-    
-    if ($stmt->execute()) {
-        header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (isset($_GET['lrn'])) {
-        $lrn = $_GET['lrn'];
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+        $lrn = $_POST["lrn"];
+        $fullname = $_POST["fullname"];
+        $grade = $_POST["grade"];
+        $classification = $_POST["classification"];
+        $gname = $_POST["gname"];
+        $number = $_POST["number"];
+        $notes = $_POST["notes"];
+        $intervention = $_POST["intervention"];
+        $topic = $_POST["topic"];
+        $advice = $_POST["advice"];
+        $status = $_POST["status"];
 
         include('../../database.php');
-        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-        $validQuarter = false;
 
-        foreach ($tables as $table) {
-            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '1' AND 
-        gname IS NOT NULL AND gname <> '' AND 
-        number IS NOT NULL AND number <> '' AND 
-        notes IS NOT NULL AND notes <> '' AND 
-        intervention IS NOT NULL AND intervention <> '' AND 
-        topic IS NOT NULL AND topic <> '' AND 
-        advice IS NOT NULL AND advice <> ''AND school = 'West Central II Elementary School'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $count = $row["count"];
-
-                if ($count > 0) {
-                    $validQuarter = true;
-                    break;
-                }
-            } else {
-                echo "Error in query for table $table: " . $conn->error;
-            }
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
         }
 
-        if ($validQuarter) {
-            header('location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn));
-            exit();
+        // Validate and sanitize the classification input to prevent SQL injection
+        $safeClassification = mysqli_real_escape_string($conn, $classification);
+
+        // Create a mapping for classification to table name
+        $tableMapping = array(
+            "Academic - Literacy in English" => "academic_english",
+            "Academic - Literacy in Filipino" => "academic_filipino",
+            "Academic - Numeracy" => "academic_numeracy",
+            "Behavioral" => "behavioral"
+        );
+
+        // Get the corresponding table name from the mapping
+        $tableName = $tableMapping[$safeClassification];
+
+        $sql = "UPDATE $tableName SET 
+                fullname = ?,
+                gname = ?,
+                number = ?,
+                notes = ?,
+                intervention = ?,
+                topic = ?,
+                advice = ?,
+                status = ?
+                WHERE lrn = ? AND quarter = '1' AND school = 'West Central II Elementary School'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
+        
+        if ($stmt->execute()) {
+            $employment_number = $_GET['employment_number'];
+                $grade = $_GET['grade'];
+                $section = $_GET['section'];
+                header('Location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
+                exit();
+        } else {
+            echo "Error: " . $stmt->error;
         }
 
+        $stmt->close();
         $conn->close();
     }
-}
+?>
+<?php
+    if ($_SERVER["REQUEST_METHOD"] == "GET") {
+        if (isset($_GET['lrn'])) {
+            $lrn = $_GET['lrn'];
+
+            include('../../database.php');
+            $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+            $validQuarter = false;
+
+            foreach ($tables as $table) {
+                $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '1' AND 
+            gname IS NOT NULL AND gname <> '' AND 
+            number IS NOT NULL AND number <> '' AND 
+            notes IS NOT NULL AND notes <> '' AND 
+            intervention IS NOT NULL AND intervention <> '' AND 
+            topic IS NOT NULL AND topic <> '' AND 
+            advice IS NOT NULL AND advice <> ''AND school = 'West Central II Elementary School'";
+                $result = $conn->query($sql);
+
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    $count = $row["count"];
+
+                    if ($count > 0) {
+                        $validQuarter = true;
+                        break;
+                    }
+                } else {
+                    echo "Error in query for table $table: " . $conn->error;
+                }
+            }
+
+            if ($validQuarter) {
+                $employment_number = $_GET['employment_number'];
+                $grade = $_GET['grade'];
+                $section = $_GET['section'];
+                header('Location: adviser_intervention_firstperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
+                exit();
+            }
+
+            $conn->close();
+        }
+    }
+?>
+<?php
+    if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
+        $grade = $_GET['grade'];
+        $section = $_GET['section'];
+        $employment_number = $_GET['employment_number'];
+
+        $path = "grade_{$grade}_section_{$section}_q1.php?employment_number=$employment_number";
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -596,7 +612,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href="../adviser_dashboard/grade_III_section_Star_q1.php?" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>

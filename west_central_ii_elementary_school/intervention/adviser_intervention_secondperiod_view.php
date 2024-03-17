@@ -52,6 +52,15 @@ if (!empty($data)) {
 
 $conn->close();
 ?>
+<?php
+    if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
+        $grade = $_GET['grade'];
+        $section = $_GET['section'];
+        $employment_number = $_GET['employment_number'];
+
+        $path = "grade_{$grade}_section_{$section}_q2.php?employment_number=$employment_number";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -562,7 +571,7 @@ $conn->close();
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href="../adviser_dashboard/grade_III_section_Star_q2.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>

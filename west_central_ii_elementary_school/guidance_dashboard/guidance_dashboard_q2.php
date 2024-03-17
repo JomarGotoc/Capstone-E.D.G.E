@@ -701,18 +701,18 @@ if ($result) {
         <?php
     if ($result1->num_rows > 0) {
     while ($row = $result1->fetch_assoc()) {
-        $rowColor = '#ffffff';
-
-        echo "<tr class='sheshable' style='background-color: $rowColor;'>
-                <th style='width:15%'>{$row['lrn']}</th>
-                <th style='width:22%'>{$row['fullname']}</th>
-                <th style='width:15%'>{$row['classification']}</th>
-                <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                <th style='width:15%'>{$row['status']}</th>
-                <th style='width:15%' class='act'>
-                <a href='../intervention/counselor_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}' class='updateRecordButton'>UPDATE RECORD</a>
-            </th>
-            </tr>";
+        $rowColor = 'yellow';
+        echo "<tr class='sheshable'>
+                        <th style='width:.5%; background-color: $rowColor;'></th>
+                        <th style='width:13%'>{$row['lrn']}</th>
+                        <th style='width:22%'>{$row['fullname']}</th>
+                        <th style='width:15%'>{$row['classification']}</th>
+                        <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
+                        <th style='width:15%'>{$row['status']}</th>
+                        <th style='width:15%' class='act'>
+                        <a href='../intervention/counselor_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
+                        </th>
+                      </tr>";
     }
 }
 ?>
