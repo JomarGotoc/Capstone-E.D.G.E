@@ -59,7 +59,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: url(../img/bg.png);
             background-size: cover;
         }
         
@@ -383,7 +383,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
+                <img src="../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -401,7 +401,7 @@ $conn->close();
 
  
     <div class="login-container">
-        <a href="../../SDO_manage_account/SDO_manageaccount2.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../SDO_manage_account/SDO_manageaccount2.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Executive Committee</h2>
 

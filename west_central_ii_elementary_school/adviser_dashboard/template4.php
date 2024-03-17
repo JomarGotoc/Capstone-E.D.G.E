@@ -492,7 +492,7 @@
         .containers h3{
             color: #FFF;
         }
-        .act button {
+        .act a {
         background-color: #008705;
         color: #fff;
         padding: 10px 20px;
@@ -502,7 +502,7 @@
         transition: background-color 0.3s;
         }
 
-        .act button:hover {
+        .act a:hover {
             background-color: #CCFF00;
             color: #070000;
             font-weight: bold;
