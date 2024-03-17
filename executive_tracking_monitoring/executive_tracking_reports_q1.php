@@ -2609,7 +2609,7 @@
         }
 
         .vertical-line {
-            margin-left: 30rem;
+            margin-left: 40rem;
             height: 40px;
             width: 1px;
             background-color: #fff;
@@ -2853,6 +2853,15 @@
             font-size: 17px;
             text-align: left;
         }
+        #topdown1 {
+            padding: 2px;
+            width: 100%;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: center;
+            border: 1px solid #190572;
+            border-radius: 5px;
+        }
 
         .second{
             border-radius: 3px;
@@ -2931,7 +2940,7 @@
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 300px;
+            right: 150px;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
         }
