@@ -388,12 +388,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="grade">Grade:</label>
             <select id="grade" name="grade">
                 <option value="kinder">Kinder</option>
-                <option value="I">I</option>
-                <option value="II">II</option>
-                <option value="III">III</option>
-                <option value="IV">IV</option>
-                <option value="V">V</option>
-                <option value="VI">VI</option>
+                <option value="I">1</option>
+                <option value="II">2</option>
+                <option value="III">3</option>
+                <option value="IV">4</option>
+                <option value="V">5</option>
+                <option value="VI">6</option>
             </select>
         </div>
         <div class="form-group">
