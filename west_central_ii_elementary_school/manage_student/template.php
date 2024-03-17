@@ -20,7 +20,7 @@ $words = explode('_', $currentFileName);
 
 if (count($words) >= 4) {
     $grade = ucfirst($words[1]);
-    $section = $words[3];
+    $section = ucfirst($words[3]);
 
 }
 ?>

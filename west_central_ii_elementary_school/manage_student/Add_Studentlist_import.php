@@ -7,7 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $grade = ($_POST["grade"]);
         $section = ($_POST["section"]);
 
-        $tableName = strtolower("grade_" . $grade . "_section_" . $section);
+        $grade = strtolower($grade);
+        $section = strtolower($section);
+
+        $tableName = "grade_" . $grade . "_section_" . $section;
         $fileName = "grade_" . $grade . "_section_" . $section . ".php";
         $filePath = "grade_sections/" . $fileName;
 
