@@ -836,6 +836,47 @@ $conn->close();
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .legend-container {
+            margin-top: -2.3%;
+            display: flex;
+            justify-content:right;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px; 
+        }
+
+        .legend-item p{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .legend-color {
+            width: 13px;
+            height: 20px;
+            border-radius: 10%;
+            margin-right: 5px;
+        }
+
+        .unresolved {
+            background-color: red;
+        }
+
+        .pending {
+            background-color: blue;
+        }
+
+        .on-going {
+            background-color: yellow;
+        }
+
+        .resolved {
+            background-color: green;
+        }
+
         
     </style>
 </head>
@@ -962,6 +1003,25 @@ $conn->close();
                 </div>
             </div>
         </div>
+
+        <div class="legend-container">
+                    <div class="legend-item">
+                        <div class="legend-color unresolved"></div>
+                        <p>Unresolved</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color pending"></div>
+                        <p>Pending</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color on-going"></div>
+                        <p>On Going</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color resolved"></div>
+                        <p>Resolved</p>
+                    </div>
+                </div>
 
 
         <div class="wide-row">
