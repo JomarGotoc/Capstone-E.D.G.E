@@ -112,7 +112,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
         }
         
@@ -585,7 +585,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
             </div>
         </div>
@@ -595,7 +595,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>

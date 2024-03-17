@@ -71,7 +71,7 @@ $conn->close();
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
         }
         
@@ -554,7 +554,7 @@ $conn->close();
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
             </div>
         </div>
@@ -564,7 +564,7 @@ $conn->close();
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-            <a href=" " class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/grade_III_section_Star_q4.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>West Central II Elementary School</h3>
