@@ -67,7 +67,7 @@ $conn->close();
             width: 75px;
             height: 75px;
             margin: 0 auto 20px;
-            background-image: url('../../img/logo.png'); 
+            background-image: url('../img/logo.png'); 
             background-size: cover;
         }
         
