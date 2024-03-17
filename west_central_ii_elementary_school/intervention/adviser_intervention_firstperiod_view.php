@@ -271,7 +271,7 @@ $conn->close();
             height: 42px; 
             background-color: #0C052F7A;
             position: fixed;
-            top: 100px; 
+            top: 93px; 
             width: 97.4%;
             z-index: 99; 
             border-top-left-radius: 20px;
@@ -335,7 +335,7 @@ $conn->close();
         .main-container {
             width: 97.4%;
             height: calc(90vh - 140px);
-            margin: 130px 20px 20px; 
+            margin: 170px 50px 50px; 
             bottom: 0;
             background-color: #E2DFEE;
             opacity: 80%;
@@ -487,7 +487,7 @@ $conn->close();
         .text-container {
             position: relative;
             width: 800px; 
-            margin-left: 20px;
+            margin-left: 4px;
         }
 
         .text-container textarea {
@@ -674,7 +674,7 @@ $conn->close();
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
                     <input type="text" name="cnumber" id="cnumber" value="<?php echo ($number); ?>" placeholder=" " class="right" readonly>
-                    <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i>                </div>
+                    <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i></div>
             </div>
         </div>
 

@@ -703,8 +703,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="gname" id="gname" value="" placeholder=" ">
-                    <i class='bx bx-edit editable-icon' style=" cursor: pointer"></i>
+                    <input type="text" name="gname" id="gname" value="" placeholder=" " required>
                 </div>
             </div>
             <div class="column column-left">
@@ -714,8 +713,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="number" id="cnumber" value="" placeholder=" " class="right">
-                    <i class='bx bx-edit editable-icon' style=" cursor: pointer"></i>
+                    <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="right">
                 </div>
             </div>
         </div>
@@ -723,12 +721,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" name="notes" id="notes" placeholder="Adviser's Notes"></textarea>                
+                    <textarea class="editable-text" name="notes" id="notes" placeholder="Adviser's Notes" required></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" name="topic" id="topic" placeholder="Topic/Matter"></textarea>                
+                    <textarea class="editable-text" name="topic" id="topic" placeholder="Topic/Matter" required></textarea>                
                 </div>
             </div>
         </div>
@@ -736,12 +734,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" name="intervention" id="intervention" placeholder="Intervention"></textarea>                
+                    <textarea class="editable-text" name="intervention" id="intervention" placeholder="Intervention" required></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" name="advice" id="advice" placeholder="Advice"></textarea>                
+                    <textarea class="editable-text" name="advice" id="advice" placeholder="Advice" required></textarea>                
                 </div>
             </div>
         </div>
