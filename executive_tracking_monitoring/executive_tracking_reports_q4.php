@@ -2843,12 +2843,13 @@
 
         #topdown {
             padding: 2px;
-            width: 100%;
+            width: 435px;
             background: #FBFBFB;
             color: #190572;
-            text-align: center;
-            border: 1px solid #190572;
-            border-radius: 5px;
+            text-align: start;
+            border: none;
+            font-weight: bold;
+            font-size: 17px;
             text-align: left;
         }
 

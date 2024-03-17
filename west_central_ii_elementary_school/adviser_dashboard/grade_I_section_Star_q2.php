@@ -1,11 +1,11 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q4.php');
+    $currentFileName1 = basename(__FILE__,'_q2.php');
     $currentFileName1 = $currentFileName1.'.php';
-    
-    $currentFileName2 = basename(__FILE__,'_q4.php');
 
+    $currentFileName2 = basename(__FILE__,'_q2.php');
+    
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -37,7 +37,6 @@
     }
     $conn->close();
 ?>
-
 <?php
     include('../../database.php');
 
@@ -80,7 +79,7 @@
     } 
     function fetchTable($conn, $tableName, $grade, $section) {
         // Prepare and execute the SQL query
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4 AND school = 'West Central II Elementary School'";
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 2 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
@@ -838,6 +837,46 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .legend-container {
+            margin-top: -2.3%;
+            display: flex;
+            justify-content:right;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px; 
+        }
+
+        .legend-item p{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .legend-color {
+            width: 13px;
+            height: 20px;
+            border-radius: 10%;
+            margin-right: 5px;
+        }
+
+        .unresolved {
+            background-color: red;
+        }
+
+        .pending {
+            background-color: blue;
+        }
+
+        .on-going {
+            background-color: yellow;
+        }
+
+        .resolved {
+            background-color: green;
+        }
         
     </style>
 </head>
@@ -931,11 +970,11 @@
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter IV</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 2</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
@@ -961,6 +1000,25 @@
                 <div class="containers" style="background-color: #F3F3F3;">
                     <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
+            </div>
+        </div>
+
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-color unresolved"></div>
+                <p>Unresolved</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color pending"></div>
+                <p>Pending</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color on-going"></div>
+                <p>On Going</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color resolved"></div>
+                <p>Resolved</p>
             </div>
         </div>
 
@@ -1039,7 +1097,7 @@
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                            <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
+                            <a href='../intervention/adviser_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
                         </th>
                       </tr>";
             }
@@ -1056,9 +1114,7 @@
             <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
-
     <script src="adviserdashboard.js"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>

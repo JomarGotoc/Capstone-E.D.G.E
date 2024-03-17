@@ -115,7 +115,7 @@ if ($result1->num_rows > 0) {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
         }
         
@@ -573,7 +573,7 @@ if ($result1->num_rows > 0) {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../../../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -698,7 +698,7 @@ if ($result1->num_rows > 0) {
     <div id="popupForm" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
-            <img src="../../../img/logo.png" class="modal-logo" alt="Logo">
+            <img src="../../img/logo.png" class="modal-logo" alt="Logo">
             <h2>Add Student</h2>
             <form id="studentForm" method="post" action="" enctype="multipart/form-data">
                 <label for="name">Name:</label>

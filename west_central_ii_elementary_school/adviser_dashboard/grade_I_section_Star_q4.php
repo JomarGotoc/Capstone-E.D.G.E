@@ -1,11 +1,11 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = basename(__FILE__,'_q4.php');
     $currentFileName1 = $currentFileName1.'.php';
-
-    $currentFileName2 = basename(__FILE__,'_q1.php');
     
+    $currentFileName2 = basename(__FILE__,'_q4.php');
+
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -19,24 +19,25 @@
     } 
 ?>
 <?php
-include('../../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $count += $row['count'];
+    include('../../database.php');
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $words[1];
+    $fourthWord = $words[3];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    foreach ($tables as $table) {
+        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'West Central II Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $count += $row['count'];
+            }
         }
     }
-}
-$conn->close();
+    $conn->close();
 ?>
+
 <?php
     include('../../database.php');
 
@@ -77,14 +78,15 @@ $conn->close();
         // Close the connection
         $conn->close();
     } 
-
     function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'West Central II Elementary School'";
+        // Prepare and execute the SQL query
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 4 AND school = 'West Central II Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        // Check if there are any results
         if ($result->num_rows > 0) {
             // Return an array containing the table name and the fetched data
             $tableData = array();
@@ -836,6 +838,46 @@ $conn->close();
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .legend-container {
+            margin-top: -2.3%;
+            display: flex;
+            justify-content:right;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px; 
+        }
+
+        .legend-item p{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .legend-color {
+            width: 13px;
+            height: 20px;
+            border-radius: 10%;
+            margin-right: 5px;
+        }
+
+        .unresolved {
+            background-color: red;
+        }
+
+        .pending {
+            background-color: blue;
+        }
+
+        .on-going {
+            background-color: yellow;
+        }
+
+        .resolved {
+            background-color: green;
+        }
         
     </style>
 </head>
@@ -872,13 +914,11 @@ $conn->close();
                     </select>
                 </div>
         </div>
-        <div class="column">
         <div class="containers second">
     <button style="background: transparent; border: none;" onclick="printPARsList()">
         <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
     </button>
 </div>
-        </div>
             <div class="column third-column">
     <div class="search-box">
         <input type="text" class="search-input" placeholder="Search Pupil's Name">
@@ -931,11 +971,11 @@ $conn->close();
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter I</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 4</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
@@ -951,6 +991,7 @@ $conn->close();
             }
             ?>
 
+
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Total Students</h3>
@@ -960,6 +1001,25 @@ $conn->close();
                 <div class="containers" style="background-color: #F3F3F3;">
                     <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
+            </div>
+        </div>
+
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-color unresolved"></div>
+                <p>Unresolved</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color pending"></div>
+                <p>Pending</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color on-going"></div>
+                <p>On Going</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color resolved"></div>
+                <p>Resolved</p>
             </div>
         </div>
 
@@ -1038,7 +1098,7 @@ $conn->close();
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                            <a href='../intervention/adviser_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
+                            <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
                         </th>
                       </tr>";
             }
@@ -1052,13 +1112,12 @@ $conn->close();
 
 
         <div class="plus-button">
-        <a href="../add_student_form/<?php echo $currentFileName1?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 
-
     <script src="adviserdashboard.js"></script>
-    
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>

@@ -247,23 +247,23 @@
     $totalkinder = $kinderenglish + $kinderfilipino + $kindernumeracy + $kinderbehavioral;
 
 
-    $oneenglish = countOccurrences($conn, 'academic_english', '1');
-    $onefilipino = countOccurrences($conn, 'academic_filipino', '1');
-    $onenumeracy = countOccurrences($conn, 'academic_numeracy', '1');
-    $onebehavioral = countOccurrences($conn, 'behavioral', '1');
+    $oneenglish = countOccurrences($conn, 'academic_english', 'I');
+    $onefilipino = countOccurrences($conn, 'academic_filipino', 'I');
+    $onenumeracy = countOccurrences($conn, 'academic_numeracy', 'I');
+    $onebehavioral = countOccurrences($conn, 'behavioral', 'I');
     $totalone = $oneenglish + $onefilipino + $onenumeracy + $onebehavioral;
 
 
-    $twoenglish = countOccurrences($conn, 'academic_english', '2');
-    $twofilipino = countOccurrences($conn, 'academic_filipino', '2');
-    $twonumeracy = countOccurrences($conn, 'academic_numeracy', '2');
-    $twobehavioral = countOccurrences($conn, 'behavioral', '2');
+    $twoenglish = countOccurrences($conn, 'academic_english', 'II');
+    $twofilipino = countOccurrences($conn, 'academic_filipino', 'II');
+    $twonumeracy = countOccurrences($conn, 'academic_numeracy', 'II');
+    $twobehavioral = countOccurrences($conn, 'behavioral', 'II');
     $totaltwo = $twoenglish + $twofilipino + $twonumeracy + $twobehavioral;
 
-    $threeenglish = countOccurrences($conn, 'academic_english', '3');
-    $threefilipino = countOccurrences($conn, 'academic_filipino', '3');
-    $threenumeracy = countOccurrences($conn, 'academic_numeracy', '3');
-    $threebehavioral = countOccurrences($conn, 'behavioral', '3');
+    $threeenglish = countOccurrences($conn, 'academic_english', 'III');
+    $threefilipino = countOccurrences($conn, 'academic_filipino', 'III');
+    $threenumeracy = countOccurrences($conn, 'academic_numeracy', 'III');
+    $threebehavioral = countOccurrences($conn, 'behavioral', 'III');
     $totalthree = $threeenglish + $threefilipino + $threenumeracy + $threebehavioral;
 
     $conn->close();

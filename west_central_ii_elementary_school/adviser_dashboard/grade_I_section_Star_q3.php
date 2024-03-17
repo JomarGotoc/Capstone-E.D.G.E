@@ -842,6 +842,46 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        .legend-container {
+            margin-top: -2.3%;
+            display: flex;
+            justify-content:right;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 0 10px; 
+        }
+
+        .legend-item p{
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .legend-color {
+            width: 13px;
+            height: 20px;
+            border-radius: 10%;
+            margin-right: 5px;
+        }
+
+        .unresolved {
+            background-color: red;
+        }
+
+        .pending {
+            background-color: blue;
+        }
+
+        .on-going {
+            background-color: yellow;
+        }
+
+        .resolved {
+            background-color: green;
+        }
         
     </style>
 </head>
@@ -935,11 +975,11 @@
                 </div>
                 <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter III</option>
-                        <option value="q1">Quarter I</option>
-                        <option value="q2">Quarter II</option>
-                        <option value="q3">Quarter III</option>
-                        <option value="q4">Quarter IV</option>
+                        <option value="" disabled selected hidden>Quarter 3</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
                     </select>
                 </div>
             </div>
@@ -965,6 +1005,25 @@
                 <div class="containers" style="background-color: #F3F3F3;">
                     <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
+            </div>
+        </div>
+
+        <div class="legend-container">
+            <div class="legend-item">
+                <div class="legend-color unresolved"></div>
+                <p>Unresolved</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color pending"></div>
+                <p>Pending</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color on-going"></div>
+                <p>On Going</p>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color resolved"></div>
+                <p>Resolved</p>
             </div>
         </div>
 
