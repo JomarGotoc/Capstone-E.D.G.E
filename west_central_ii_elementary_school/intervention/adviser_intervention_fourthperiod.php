@@ -325,7 +325,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             height: 42px; 
             background-color: #0C052F7A;
             position: fixed;
-            top: 100px; 
+            top: 94px; 
             width: 97.4%;
             z-index: 99; 
             border-top-left-radius: 20px;
@@ -378,9 +378,9 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         .main-container {
-            width: 97.4%;
+            width: 100%;
             height: calc(90vh - 140px);
-            margin: 130px 20px 20px; 
+            margin: 130px 27px 30px; 
             bottom: 0;
             background-color: #E2DFEE;
             opacity: 80%;
@@ -408,7 +408,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         .wide-columns {
-            flex: 0 0 calc(40% - 10px);
+            flex: 0 0 calc(40% - 0px);
             margin-bottom: 20px;
         }
 
@@ -535,7 +535,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         }
 
         .text-container textarea {
-            width: calc(100% - 20px);
+            width: calc(100% - 5px);
             height: 200px;
             padding: 10px;
             font-size: 13px;
