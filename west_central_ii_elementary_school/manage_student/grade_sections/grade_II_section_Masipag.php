@@ -25,6 +25,37 @@ if (count($words) >= 4) {
 }
 ?>
 <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
+        // Get form data
+        $lrn = $_POST["lrn"];
+        $fullname = $_POST["fullname"];
+        $gender = $_POST["gender"];
+        $school = "West Central II Elementary School";
+
+        // Your existing code to get filename, grade, and section
+        $filename = basename($_SERVER["SCRIPT_FILENAME"]);
+        $filename = str_replace('.php', '', $filename);
+        $words = explode('_', $filename);
+
+        if (count($words) >= 4) {
+            $grade = $words[1];
+            $section = $words[3];
+        } 
+
+        include('../../../database.php');
+
+        // Prepare and execute the SQL query to insert data into the table
+        $sql = "INSERT INTO $filename (lrn, fullname, gender, grade, section, school) VALUES (?,?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssss", $lrn, $fullname, $gender, $grade, $section, $school);
+
+        if ($stmt->execute()) {
+        } else {
+        }
+        $stmt->close();
+    }
+?>
+<?php
 $errorMsg = "";
 include('../../../database.php');
 $tableNameKeyword = "grade";
@@ -685,7 +716,7 @@ if ($result1->num_rows > 0) {
         </div>
     </div>
 
-    <script src="view_studentlist2.js"></script>
+    <script src="../view_studentlist2.js"></script>
     <script>
     // Function to handle dropdown change event
     function filterStudents() {
