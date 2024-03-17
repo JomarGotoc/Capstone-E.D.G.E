@@ -1100,7 +1100,7 @@
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                        <button>  <a href='../intervention/adviser_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
+                        <button>  <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
                         </th>
                       </tr>";
             }

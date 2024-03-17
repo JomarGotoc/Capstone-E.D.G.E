@@ -458,7 +458,7 @@
             display: block;
         }
         .error-message {
-            color: green;
+            color: white;
             font-weight: bold;
             text-align: center;
             margin: 0 auto;
