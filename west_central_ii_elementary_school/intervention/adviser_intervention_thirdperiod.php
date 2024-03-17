@@ -62,6 +62,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['lrn'])) {
         $lrn = $_GET['lrn'];
+        $grade = $_GET['grade'];
+        $section = $_GET['section'];
 
         include('../../database.php');
         $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
@@ -74,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         notes IS NOT NULL AND notes <> '' AND 
         intervention IS NOT NULL AND intervention <> '' AND 
         topic IS NOT NULL AND topic <> '' AND 
-        advice IS NOT NULL AND advice <> '' AND school = 'West Central II Elementary School'";
+        advice IS NOT NULL AND advice <> '' AND school = 'West Central II Elementary School' AND grade = '$grade' AND section = '$section'";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
@@ -638,7 +640,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On-going">On-going</option>
+                        <option value="On Going">On-Going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

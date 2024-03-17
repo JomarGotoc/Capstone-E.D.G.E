@@ -6,13 +6,15 @@ if ($conn->connect_error) {
 }
 
 $lrnToDisplay = $_GET["lrn"] ?? '';
+$grade = $_GET['grade'];
+$section = $_GET['section'];
 
 // Array of tables to search for LRN
 $tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavioral'];
 $data = [];  // Array to store fetched data
 
 foreach ($tables as $table) {
-    $sql = "SELECT * FROM $table WHERE lrn = ? AND quarter = '3' AND school = 'West Central II Elementary School'";
+    $sql = "SELECT * FROM $table WHERE lrn = ? AND quarter = '3' AND school = 'West Central II Elementary School' AND grade = '$grade' AND section = '$section'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $lrnToDisplay);
     $stmt->execute();
