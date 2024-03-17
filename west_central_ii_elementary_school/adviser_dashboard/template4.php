@@ -492,7 +492,7 @@
         .containers h3{
             color: #FFF;
         }
-        .act a {
+        .act button {
         background-color: #008705;
         color: #fff;
         padding: 10px 20px;
@@ -502,7 +502,7 @@
         transition: background-color 0.3s;
         }
 
-        .act a:hover {
+        .act button:hover {
             background-color: #CCFF00;
             color: #070000;
             font-weight: bold;
@@ -914,11 +914,13 @@
                     </select>
                 </div>
         </div>
+        <div class="column">
         <div class="containers second">
     <button style="background: transparent; border: none;" onclick="printPARsList()">
         <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
     </button>
 </div>
+        </div>
             <div class="column third-column">
     <div class="search-box">
         <input type="text" class="search-input" placeholder="Search Pupil's Name">
@@ -1098,7 +1100,7 @@
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                            <a href='../intervention/adviser_intervention_fourthperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a>
+                        <button>  <a href='../intervention/adviser_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
                         </th>
                       </tr>";
             }
