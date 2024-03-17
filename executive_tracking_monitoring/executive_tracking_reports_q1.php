@@ -2540,6 +2540,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script>
+        function preventBack(){window.history.forward()};
+        setTimeout("preventBack()",0);
+        window.onunload=function(){null;}
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -2959,7 +2964,7 @@
                 <div class="dropdown">
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
-                        <a href="#">Log Out</a>
+                    <a href="../../login/Login.php">Log Out</a>
                         <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>

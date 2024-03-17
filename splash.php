@@ -118,4 +118,12 @@
             <h3><a href="login/Login.php">click to continue</h3></a>
         </div>
     </body>
+    <script>
+    window.onload = function() {
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
+      });
+    }
+  </script>
 </html>
