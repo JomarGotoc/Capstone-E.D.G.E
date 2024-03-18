@@ -19,7 +19,7 @@ $currentFileName = basename(__FILE__, '.php');
 $words = explode('_', $currentFileName);
 
 if (count($words) >= 4) {
-    $grade = ucfirst($words[1]);
+    $grade = ucwords($words[1]);
     $section = ucfirst($words[3]);
 
 }

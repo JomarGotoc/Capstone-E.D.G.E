@@ -1,4 +1,5 @@
 <?php
+$errormsg = "";
 include('../database.php');
 $sql = "SELECT * FROM sdo_admin";
 $result1 = $conn->query($sql);
@@ -16,6 +17,8 @@ if(isset($_POST['reset_password'])) {
         $update_query = "UPDATE sdo_admin SET password = '$hashed_password' WHERE id = $user_id";
 
         if ($conn->query($update_query) === TRUE) {
+            $errormsg = "Password Reset Sucessful";
+            echo "<script>setTimeout(function(){ document.getElementById('error-msg').style.display = 'none'; }, 2000);</script>";
         } else {
         }
     } else {
@@ -262,7 +265,7 @@ if(isset($_POST['reset_password'])) {
         }
 
         .bottom-inner-container2 {
-            margin-top: 20px;
+            margin-top: 10px;
             background-color: #ffffff;
             display: flex;
             align-items: center;
@@ -667,6 +670,14 @@ if(isset($_POST['reset_password'])) {
             background-color: #ddd;
             color: #190572;
         }
+
+        .errormsg{
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #130550;
+        }
         
     </style>
 </head>
@@ -700,6 +711,10 @@ if(isset($_POST['reset_password'])) {
     <div class="main-container">
         <div class="inner-container">
             <div class="middle-inner-container"><h3>SDO Administrators</h3></div>
+
+            <div class="errormsg" id="error-msg" >
+                <?php echo $errormsg; ?>
+            </div>
 
             <div class="bottom-inner-container2">
                 <div class="column"><h3>Name</h3></div>
@@ -746,7 +761,6 @@ if(isset($_POST['reset_password'])) {
 
                                     ?> 
             </table>
-            <div class="straight-line"></div>
             
         </div>
     </div>
@@ -755,6 +769,5 @@ if(isset($_POST['reset_password'])) {
             <a href="../sdo_create_account/Create_SDO_Admin_Account.php"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
-    
 </body>
 </html>

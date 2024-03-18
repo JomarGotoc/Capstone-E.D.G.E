@@ -401,8 +401,11 @@
             background: #FBFBFB;
             color: #190572;
             text-align: center;
-            border: 1px solid #190572;
-            border-radius: 5px;
+            border: none;
+            font-weight: bold;
+            font-size: 16px;
+            text-align: left;
+            letter-spacing: 1px;
         }
 
         
@@ -422,7 +425,6 @@
             border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .second h3{
@@ -560,7 +562,7 @@
 </div>
             </div>
             <div class="column full-width">
-    <div class="column third-column">
+    <div class="column third-column"style="display:none" >
     <div class="containers">
         <select id="topdown1" name="topdown" class="first" onchange="filterTable()">
             <option value="all">View All Grade Levels</option>

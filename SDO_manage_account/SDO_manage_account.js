@@ -15,3 +15,11 @@ window.onclick = function(event) {
         }
     }
 }
+
+
+setTimeout(function() {
+    var errorMessage = document.getElementById('errormess');
+    if (errorMessage) {
+        errorMessage.style.display = 'none';
+    }
+}, 1000); 

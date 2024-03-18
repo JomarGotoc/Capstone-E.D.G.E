@@ -566,12 +566,11 @@
 
         #topdown {
             padding: 2px;
-            width: 400px;
+            width: 426px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
             border: none;
-            border-radius: 5px;
             font-weight: bold;
             font-size: 17px;
         }

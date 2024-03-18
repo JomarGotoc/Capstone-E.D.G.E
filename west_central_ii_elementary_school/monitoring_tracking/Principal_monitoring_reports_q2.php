@@ -566,7 +566,7 @@
 
         #topdown {
             padding: 2px;
-            width: 400px;
+            width: 426px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;

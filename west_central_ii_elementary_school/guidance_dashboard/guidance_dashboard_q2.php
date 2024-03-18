@@ -343,17 +343,17 @@ if ($result) {
         }
 
         #topdown {
-            padding: 2px;
-            width: 100%;
+            padding: 1px;
+            width: 437px;
             background: #FBFBFB;
             color: #190572;
-            text-align: center;
-            border: 1px solid #190572;
-            border-radius: 5px;
+            text-align: start;
+            border: none;
+            font-weight: bold;
+            font-size: 16.5px;
         }
 
         .second{
-            border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
         }
@@ -675,15 +675,6 @@ if ($result) {
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Guidance Counselor</h3>
                 </div>
-                <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 2</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
-                    </select>
-                </div>
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
@@ -703,6 +694,24 @@ if ($result) {
             </div>
         </div>
 
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">Quarter</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+            <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                        <option value="" disabled selected hidden>Quarter 2</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+</div>
+        </div>
         <div class="legend-container">
                     <div class="legend-item">
                         <div class="legend-color unresolved"></div>
