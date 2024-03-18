@@ -1,67 +1,43 @@
 <?php
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+$errorMsg = "";
+$errorMsg1 = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $employmentNumber = $_POST["employment_number"];
+    $newPassword = $_POST["new_password"];
+    $repeatPassword = $_POST["repeat_password"];
 
-require '../vendor/autoload.php';
+    if ($newPassword == $repeatPassword) {
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-function sendOTP($toEmail, $otp) {
-    $mail = new PHPMailer(true);
+        include("../database.php");
 
-    try {
-        // Server settings
-        $mail->SMTPDebug = 0;
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'edge.developers1234@gmail.com'; 
-        $mail->Password = 'rlhe negz baut bnps'; 
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-        $mail->setFrom('edge.developers1234@gmail.com', 'EDGE');
-        $mail->addAddress($toEmail);
+        $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
 
-        // Content
-        $mail->isHTML(true);
-        $mail->Subject = 'Your OTP Code';
-        $mail->Body = 'Your OTP code is: ' . $otp;
+        foreach ($tables as $table) {
+            $query = "SELECT * FROM $table WHERE employment_number = '$employmentNumber'";
+            $result = $conn->query($query);
 
-        $mail->send();
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-    }
-}
-
-if (isset($_POST['continue'])) {
-    $employmentNumber = $_POST['employment_number'];
-
-    include('../../database.php');
-    $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
-
-    foreach ($tables as $table) {
-        $sql = "SELECT * FROM $table WHERE employment_number = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('s', $employmentNumber);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if ($row) {
-            $userEmail = $row['email'];
-            $otpCode = generateOTP();
-            $updateSql = "UPDATE $table SET otp = ? WHERE employment_number = ?";
-            $updateStmt = $conn->prepare($updateSql);
-            $updateStmt->bind_param('ss', $otpCode, $employmentNumber);
-            $updateStmt->execute();
-            sendOTP($userEmail, $otpCode);
-            header("location: forgot_pass_enter_otp.php");
-            break;
+            if ($result->num_rows > 0) {
+                $updateQuery = "UPDATE $table SET password = '$hashedPassword' WHERE employment_number = '$employmentNumber'";
+                if ($conn->query($updateQuery) === TRUE) {
+                  $errorMsg = "Password Updated Successfully";
+                  echo '<script>
+                            setTimeout(function() {
+                                window.location.href = "../login/Login.php";
+                            }, 2000);
+                          </script>';
+                } else {
+                    echo "Error updating password: " . $conn->error;
+                }
+                break;
+            }
         }
-    }
-    $conn->close();
-}
 
-function generateOTP() {
-    return rand(100000, 999999);
+        $conn->close();
+
+    } else {
+      $errorMsg1 = "Password Do Not Match";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -70,7 +46,7 @@ function generateOTP() {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Forgot Password</title>
+    <title>Change Password</title>
     <style>
                 body {
             font-family: Arial, sans-serif;
@@ -107,7 +83,7 @@ function generateOTP() {
             background-size: cover;
           }
 
-          .login-form input[type="number"],
+          .login-form input[type="text"],
           .login-form input[type="password"] {
             width: 90%;
             padding: 10px;
@@ -133,7 +109,13 @@ function generateOTP() {
           h2 {
             font-family: 'Goblin One', cursive;
             color: #fff;
+            text-align: left;
+            font-weight: 500;
+          }
 
+          p{
+            text-align: left;
+            font-weight: 500;
           }
 
           .login-container {
@@ -142,7 +124,7 @@ function generateOTP() {
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 300px;
-            text-align: left;
+            text-align: center;
           }
 
           a {
@@ -164,7 +146,7 @@ function generateOTP() {
         }
 
         .header.sticky {
-            border-bottom: .2rem solid rgba(255, 255, 255, 0.2);
+            border-bottom: .2rem solid rgba(185, 169, 169, 0.2);
         }
 
         h4 {
@@ -181,24 +163,6 @@ function generateOTP() {
             height: 3.5rem;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; 
-            justify-content: center;
-            width: 100%; 
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
-
-          .logs{
-            width: 3.5rem;
-            height: 3.5rem;
-          }
-
           .login-container {
               position: relative;
             }
@@ -214,32 +178,12 @@ function generateOTP() {
                   
             .back-icon i {
               margin-right: 5px;
+            } 
+            p {
+                color: #fff;
             }
 
-            .fpassword {
-            background-color: #0C052F;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            cursor: pointer;
-            margin-top: 10px;
-            }
-
-            .fpassword:hover {
-                  background-color: #DDDAE7;
-                  color: #0C052F;
-            }
-            .fpassword, .log {
-        width: 10rem;
-      }
-      .ngi{
-        color: #fff;
-        font-size: 15px;
-        text-align: left;
-      }
-
-      .login-form button[type="submit"]{
+            .login-form button[type="submit"]{
             background-color: #0C052F;
             width: 18.5rem;
             color: #fff;
@@ -254,6 +198,14 @@ function generateOTP() {
             background-color: #DDDAE7;
             color: #0C052F;
         }
+        .error-message{
+          color: green;
+          font-weight: bold;
+        }
+        .error-message1{
+          color: red;
+          font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -261,21 +213,32 @@ function generateOTP() {
   <header>
     <img src="../img/logo.png" class="logs">
     <div class="container">
-        <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
+        <h4>E.D.G.E | P.A.R Early Detection and Guidance for Education</h4>
     </div>
   </header>
 
     <div class="login-container">
-    <a href="../login/Login.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="forgot_pass_Enter_OTP.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Employee Number</h2>
-        <p class="ngi">You are one step away from resetting your password</p>
-
+        <h2>Reset Password</h2>
+        <p>Set the new password for your account so you can login and access E.D.G.E</p>
           
-        <form class="login-form" action=" " method="post">
-            <input type="number" id="employment_number" name="employment_number"  placeholder="enter your employee number " required>
-            <button type="submit" name="continue" value="continue" class="log">Continue</button>
+
+        <div class="error-message">
+            <?php echo $errorMsg; ?>
+        </div>
+        <div class="error-message1">
+            <?php echo $errorMsg1; ?>
+        </div>
+
+        <form class="login-form" action="" method="post">
+            <input type="text" id="employment_number" name="employment_number"  placeholder="Employment Number " required>
+            <input type="password" id="password" name="new_password"  placeholder="New Password " required>
+            <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " required>
+            <button type="submit" value="Login">Reset Password</button>
         </form>
+
+  
     </div>
 </body>
 </html>

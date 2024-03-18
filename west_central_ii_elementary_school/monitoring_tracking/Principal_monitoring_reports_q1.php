@@ -271,7 +271,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
+    <script>
         function preventBack(){window.history.forward()};
         setTimeout("preventBack()",0);
         window.onunload=function(){null;}
@@ -810,24 +810,7 @@
     </section>
 
     <section class="shesh" style="margin-top: 40px;">
-        <div class="row">
-            <div class="column" >
-                <div class="containers" style="background-color: #B7B7B7">
-                    <h3 style="margin-left: 7px">No. of P.A.Rs</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">Highest to Lowest</h3>
-                </div>
-            </div>
-            <div class="column">
-                <div>
-                </div>
-            </div>
-        </div>
 
-        
         <div class="row">
             <div class="column">
                 <div class="containers" style="background-color: #B7B7B7;">
@@ -917,5 +900,6 @@
         window.print();
     }
 </script>
+
 </body>
 </html>

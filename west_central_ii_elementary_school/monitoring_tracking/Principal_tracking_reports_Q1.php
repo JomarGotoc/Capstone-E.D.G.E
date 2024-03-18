@@ -716,5 +716,22 @@
         window.print();
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var table = document.getElementById("data-table");
+        var tbody = table.querySelector("tbody");
+        var rows = [].slice.call(tbody.querySelectorAll("tr"));
+
+        rows.sort(function (a, b) {
+            var gradeA = a.cells[0].textContent.trim().toLowerCase();
+            var gradeB = b.cells[0].textContent.trim().toLowerCase();
+            return gradeB.localeCompare(gradeA);
+        });
+
+        rows.forEach(function (row) {
+            tbody.appendChild(row);
+        });
+    });
+</script>
 </body>
 </html>

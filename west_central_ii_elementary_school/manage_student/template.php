@@ -19,10 +19,15 @@ $currentFileName = basename(__FILE__, '.php');
 $words = explode('_', $currentFileName);
 
 if (count($words) >= 4) {
-    $grade = ucfirst($words[1]);
+    $grade = $words[1];
     $section = ucfirst($words[3]);
 
+    // Convert $grade to uppercase if it's "i", "ii", or "iii"
+    if (in_array(strtolower($grade), ['i', 'ii', 'iii'])) {
+        $grade = strtoupper($grade);
+    }
 }
+
 ?>
 <?php
     if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
@@ -75,19 +80,25 @@ if ($result1->num_rows > 0) {
         if (count($tableWords) >= 4) {
             $fourthWord = ucfirst($tableWords[3]); // Capitalize the first letter
             $secondWord = ucfirst($tableWords[1]); // Capitalize the first letter
-
+        
             // Check if the grade is not in the list of unique grades
             if (!in_array($secondWord, $uniqueGrades)) {
+                // Check if the grade is 'i', 'ii', or 'iii' and convert to uppercase
+                $gradeOptionValue = ($secondWord == 'I' || $secondWord == 'Ii' || $secondWord == 'Iii') ? strtoupper($secondWord) : $secondWord;
+        
                 // Append the option tag to the options string
-                $gradeOptions[] = "<option value=\"$secondWord\">$secondWord</option>";
-
+                $gradeOptions[] = "<option value=\"$gradeOptionValue\">$gradeOptionValue</option>";
+        
                 // Add the grade to the list of unique grades
                 $uniqueGrades[] = $secondWord;
             }
-
+        
             // Append the option tag to the options string for section
             $sectionOptions .= "<option value=\"$fourthWord\">$fourthWord</option>";
         }
+        
+        
+        
     }
 }
 ?>
@@ -565,7 +576,11 @@ if ($result1->num_rows > 0) {
             color: #130550;
             background-color: transparent;
         }
-
+        .errorMessage {
+            text-align: center;
+            font-weight: bold;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -596,9 +611,11 @@ if ($result1->num_rows > 0) {
 
     <div class="main-container" >
         <div class="main-content">
+
         <div class="errorMessage">
         <?php echo isset($errorMsg) ? $errorMsg : ''; ?>
         </div>
+
             <div id="gradeSectionSelection">
             <div class="dropdown-container">
                 <label for="gradeDropdown">Grade:</label>
@@ -677,9 +694,7 @@ if ($result1->num_rows > 0) {
                     $counter++;
                 }
             }
-        } else {
-            echo "<tr><td colspan='3'>No female records found in the table.</td></tr>";
-        }
+        } 
         ?>
 
             </table>

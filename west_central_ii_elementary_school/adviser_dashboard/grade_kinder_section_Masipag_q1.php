@@ -413,18 +413,17 @@ $conn->close();
         }
 
         #topdown {
-            padding: 2px;
+            padding: 1px;
             width: 437px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
             border: none;
             font-weight: bold;
-            font-size: 17px;
+            font-size: 16.5px;
         }
 
         .second{
-            border-radius: 3px;
             background-color: #2206A0;
             text-align: center;
         }

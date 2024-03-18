@@ -34,7 +34,7 @@ if ($result) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
+    <script>
         function preventBack(){window.history.forward()};
         setTimeout("preventBack()",0);
         window.onunload=function(){null;}
@@ -765,25 +765,47 @@ if ($result) {
             </div>
     </div>
     <table border="0">
-        <?php
-    if ($result1->num_rows > 0) {
+<?php
+if ($result1->num_rows > 0) {
     while ($row = $result1->fetch_assoc()) {
-        $rowColor = 'yellow';
+        $status = $row['status'];
+        $rowColor = '';
+
+        // Set row color based on status
+        switch ($status) {
+            case 'Unresolved':
+                $rowColor = 'red';
+                break;
+            case 'Pending':
+                $rowColor = 'blue';
+                break;
+            case 'On Going':
+                $rowColor = 'yellow';
+                break;
+            case 'Resolved':
+                $rowColor = 'green';
+                break;
+            default:
+                $rowColor = ''; // Default color if status doesn't match above cases
+                break;
+        }
+
         echo "<tr class='sheshable'>
-                        <th style='width:.5%; background-color: $rowColor;'></th>
-                        <th style='width:13%'>{$row['lrn']}</th>
-                        <th style='width:22%'>{$row['fullname']}</th>
-                        <th style='width:15%'>{$row['classification']}</th>
-                        <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
-                        <th style='width:15%'>{$row['status']}</th>
-                        <th style='width:15%' class='act'>
-                       <buton> <a href='../intervention/counselor_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a> </button>
-                        </th>
-                      </tr>";
+                    <th style='width:.5%; background-color: $rowColor;'></th>
+                    <th style='width:13%'>{$row['lrn']}</th>
+                    <th style='width:22%'>{$row['fullname']}</th>
+                    <th style='width:15%'>{$row['classification']}</th>
+                    <th style='width:15%'>{$row['grade']} - {$row['section']}</th>
+                    <th style='width:15%'>{$row['status']}</th>
+                    <th style='width:15%' class='act'>
+                        <button><a href='../intervention/counselor_intervention_secondperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$row['status']}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
+                    </th>
+                </tr>";
     }
 }
 ?>
-    </table>
+</table>
+
     </div>
 
 

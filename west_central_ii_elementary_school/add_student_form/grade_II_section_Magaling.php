@@ -101,7 +101,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
+    <script>
         function preventBack(){window.history.forward()};
         setTimeout("preventBack()",0);
         window.onunload=function(){null;}
@@ -529,9 +529,9 @@
 
                 <div class="row">
                     <div class="column">Grade</div>
-                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php echo $grade; ?>" readonly>
+                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php echo strtoupper($grade); ?>" readonly>
                     <div class="column">Section </div>
-                    <input type="text" class="column" placeholder="Section" name="section" id="section" value="<?php echo $section; ?>" readonly>
+                    <input type="text" class="column" placeholder="Section" name="section" id="section" value="<?php echo ucfirst($section); ?>" readonly>
                     <select class="classification" name="classification">
                             <option value="Academic - Literacy in English">Academic - Literacy in English</option>
                             <option value="Academic - Literacy in Filipino">Academic - Literacy in Filipino</option>
