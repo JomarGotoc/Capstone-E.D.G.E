@@ -15,40 +15,53 @@ if (isset($_POST['submit'])) {
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
     $date = $_POST['date'];
     
-    
+    // Start a transaction
+    $conn->begin_transaction();
 
-    // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
-    $check_fullname_result = $conn->query($check_fullname_query);
+    try {
+        // Check if the fullname already exists
+        $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname' FOR UPDATE";
+        $check_fullname_result = $conn->query($check_fullname_query);
 
-    // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number'";
-    $check_employment_number_result = $conn->query($check_employment_number_query);
+        // Check if the employment_number already exists
+        $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number' FOR UPDATE";
+        $check_employment_number_result = $conn->query($check_employment_number_query);
 
-    if ($check_fullname_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Full Name already exists.";
-    } elseif ($check_employment_number_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Employment Number already exists.";
-    } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $verified = "no";
-        $school = "West Central II"; 
-        $insert_query = "INSERT INTO sdo_admin (fullname, employment_number, password, date, verified, school) 
-                 VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
-
-        if ($conn->query($insert_query) === TRUE) {
-            $errorMsg = "Account created successfully";
+        if ($check_fullname_result->num_rows > 0) {
+            $errorMsg1 = "Account with the provided Full Name already exists.";
+        } elseif ($check_employment_number_result->num_rows > 0) {
+            $errorMsg1 = "Account with the provided Employment Number already exists.";
         } else {
-            echo "Error: " . $insert_query . "<br>" . $conn->error;
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $verified = "no";
+            $school = "West Central II"; 
+            $insert_query = "INSERT INTO sdo_admin (fullname, employment_number, password, date, verified, school) 
+                     VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
+    
+            if ($conn->query($insert_query) === TRUE) {
+                $errorMsg = "Account created successfully";
+            } else {
+                throw new Exception("Error: " . $insert_query . "<br>" . $conn->error);
+            }
         }
+
+        // Commit the transaction
+        $conn->commit();
+    } catch (Exception $e) {
+        // Rollback the transaction on error
+        $conn->rollback();
+        echo $e->getMessage();
     }
 }
 
 // Close the database connection
 $conn->close();
 ?>
-
-
+<script>
+        function preventBack(){window.history.forward()};
+        setTimeout("preventBack()",0);
+        window.onunload=function(){null;}
+    </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -408,7 +421,7 @@ $conn->close();
                 <div class="dropdown">
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
-                        <a href="#">Log Out</a>
+                    <a href="../login/Login.php">Log Out</a>
                         <a href="../change_password/change_password.php">Change Password</a>
                     </div>
                 </div>
