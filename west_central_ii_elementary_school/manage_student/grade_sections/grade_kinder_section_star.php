@@ -562,14 +562,14 @@ if ($result1->num_rows > 0) {
             color: #0C052F;
         }
 
-         #gradeSectionSelection span{
-            margin-left: 10px;
+        #gradeSectionSelection span{
             padding: 5px;
-            background-color: #190572;
-            color: white;
+            background-color: transparent;
+            color: #190572;
             padding: 5px;
             border-radius: 5px;
             display: inline-block;
+            font-weight: bold;
          }
 
         .grade, .section {
@@ -580,6 +580,11 @@ if ($result1->num_rows > 0) {
             text-align: center;
             font-weight: bold;
             color: red;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .grades {
+            margin-left: auto;
         }
     </style>
 </head>
@@ -612,9 +617,7 @@ if ($result1->num_rows > 0) {
     <div class="main-container" >
         <div class="main-content">
 
-        <div class="errorMessage">
-        <?php echo isset($errorMsg) ? $errorMsg : ''; ?>
-        </div>
+       
 
             <div id="gradeSectionSelection">
             <div class="dropdown-container">
@@ -631,8 +634,11 @@ if ($result1->num_rows > 0) {
                     <?php echo $sectionOptions; ?>
                 </select>
             </div>
-            <span class="grade"><?php echo "Grade " ?></span><span style="color: white; font-weight: bold; margin-right: 20px"><?php echo $grade ?></span>
-            <span class="section"><?php echo "Section " ?></span><span style="color: white; font-weight: bold"><?php echo $section ?></span>
+            <div class="errorMessage">
+        <?php echo isset($errorMsg) ? $errorMsg : ''; ?>
+        </div>
+            <span class="grade grades">You are viewing <?php echo "Grade: " ?></span><span style="font-weight: bold; font-style:italic"><?php echo ucfirst($grade) ?></span>
+            <span class="section"><?php echo "Section: " ?></span><span style="font-weight: bold; font-style:italic"><?php echo $section ?></span>
         </div>
 
         <div id="section1Content">
