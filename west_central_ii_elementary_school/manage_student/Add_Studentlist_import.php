@@ -4,11 +4,8 @@ $errorMsg1 = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] == UPLOAD_ERR_OK) {
-        $grade = ($_POST["grade"]);
-        $section = ($_POST["section"]);
-
-        $grade = strtolower($grade);
-        $section = strtolower($section);
+        $grade = strtolower($_POST["grade"]); // Updated here
+        $section = strtolower($_POST["section"]); // Updated here
 
         $tableName = "grade_" . $grade . "_section_" . $section;
         $fileName = "grade_" . $grade . "_section_" . $section . ".php";
@@ -20,8 +17,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $conn->query($checkTableQuery);
 
         if ($result->num_rows > 0) {
-            $errorMsg1 = "Record already exists.";
+            // Table already exists, insert data into existing table
+            $file = $_FILES["file"]["tmp_name"];
+            $csvData = array_map("str_getcsv", file($file));
+            array_shift($csvData);
+
+            foreach ($csvData as $row) {
+                $lrn = $row[0];
+                $fullname = $row[1];
+                $gender = $row[2];
+                $grade = $grade;
+                $section = $section;
+                $school = "West Central II Elementary School";
+                $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section, school)
+                                VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section', '$school')";
+
+                if ($conn->query($insertQuery) === FALSE) {
+                    $errorMsg1 = "Error inserting data: " . $conn->error;
+                    break;
+                }
+            }
+
+            // Create PHP file in grade_sections folder (if needed)
+            if (!file_exists($filePath)) {
+                $templateContent = file_get_contents("template.php");
+                $templateContent = str_replace("{GRADE}", $grade, $templateContent);
+                $templateContent = str_replace("{SECTION}", $section, $templateContent);
+
+                file_put_contents($filePath, $templateContent);
+            }
+
+            $errorMsg = "Data inserted into existing table";
         } else {
+            // Table does not exist, create a new table as before
             $createTableQuery = "CREATE TABLE $tableName (
                                     id INT AUTO_INCREMENT PRIMARY KEY,
                                     lrn VARCHAR(255) NOT NULL,
@@ -35,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($conn->query($createTableQuery) === FALSE) {
                 $errorMsg1 = "Error creating table: " . $conn->error;
             } else {
+                // Insert data into the newly created table
                 $file = $_FILES["file"]["tmp_name"];
                 $csvData = array_map("str_getcsv", file($file));
                 array_shift($csvData);
@@ -45,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $gender = $row[2];
                     $grade = $grade;
                     $section = $section;
-                    $school = "West Central II Elementary School";
+                    $school = "West Central II Elementary SChool";
                     $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section, school)
                                     VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section', '$school')";
 
@@ -72,9 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

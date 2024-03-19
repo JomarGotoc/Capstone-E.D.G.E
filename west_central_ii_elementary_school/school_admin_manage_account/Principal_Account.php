@@ -1,7 +1,7 @@
 <?php
 $errormsg="";
 include('../../database.php');
-$sql = "SELECT * FROM principal";
+$sql = "SELECT * FROM principal WHERE school = 'West Central II Elementary School'";
 $result1 = $conn->query($sql);
 
 if(isset($_POST['reset_password'])) {

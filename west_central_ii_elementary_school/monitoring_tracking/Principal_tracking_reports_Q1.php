@@ -1,7 +1,7 @@
 <?php
     include('../../database.php');
     $currentFileName2 = basename(__FILE__,'_Q1.php');
-    $sql = "SELECT grade, section, fullname FROM adviser";
+    $sql = "SELECT grade, section, fullname FROM adviser WHERE school = 'West Central II Elementary School'";
     $result = $conn->query($sql);
 
     // Store the fetched data in an array
@@ -18,7 +18,7 @@
             // Display the number of LRN data found in the 3rd <th>
             $lrnCount = 0; // Initialize the count
             if ($tableExists->num_rows > 0) {
-                $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue";
+                $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue WHERE school = 'West Central II Elementary School'";
                 $lrnResult = $conn->query($countQuery);
 
                 if ($lrnResult->num_rows > 0) {

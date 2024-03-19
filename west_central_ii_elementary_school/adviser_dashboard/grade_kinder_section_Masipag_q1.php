@@ -1097,7 +1097,7 @@ $conn->close();
                         break;
                 }
 
-                $capitalizedGrade = ($row['grade']);
+                $capitalizedGrade = ucfirst($row['grade']);
                 $capitalizedSection = ucfirst($row['section']);
 
                 echo "<tr class='sheshable'>

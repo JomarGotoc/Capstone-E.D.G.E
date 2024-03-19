@@ -24,16 +24,12 @@ if (isset($_POST['submit'])) {
     $check_employment_number_query = "SELECT * FROM adviser WHERE employment_number='$employment_number'";
     $check_employment_number_result = $conn->query($check_employment_number_query);
 
-    $check_grade_section_query = "SELECT * FROM adviser WHERE grade='$grade' AND section='$section'";
-    $check_grade_section_result = $conn->query($check_grade_section_query);
 
     if ($check_fullname_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Full Name already exists.";
     } elseif ($check_employment_number_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Employment Number already exists.";
-    } elseif ($check_grade_section_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Grade and Section combination already exists.";
-    } else {
+    }else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $verified = "no";
         $school = "West Central II Elementary School"; 

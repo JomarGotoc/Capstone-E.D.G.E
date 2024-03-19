@@ -9,7 +9,7 @@ $tableExistsResult = $conn->query($tableExistsQuery);
 $result = null; // Initialize $result outside the if condition
 
 if ($tableExistsResult->num_rows > 0) {
-    $fetchQuery = "SELECT lrn, fullname, gender FROM $currentFileName";
+    $fetchQuery = "SELECT lrn, fullname, gender FROM $currentFileName WHERE school = 'West Central II Elementary School'";
     $result = $conn->query($fetchQuery);
 }
 
