@@ -28,7 +28,7 @@ if (isset($_POST['submit'])) {
     if ($check_fullname_result->num_rows > 0) {
         $errorMsg1 = "Account with the provided Full Name already exists.";
     } elseif ($check_employment_number_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Employment Number already exists.";
+        $errorMsg1 = "Account with the provided Employee Number already exists.";
     }else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         $verified = "no";
@@ -486,9 +486,6 @@ $conn->close();
                             <option value="I">1</option>
                             <option value="II">2</option>
                             <option value="III">3</option>
-                            <option value="IV">4</option>
-                            <option value="V">5</option>
-                            <option value="VI">6</option>
                         </select>
                     </div>
                     <div class="form-group">

@@ -636,7 +636,7 @@
         <div class="wide-row" style="margin-top:0">
             <div class="wide-columns">
                 <div class="containers">
-                    <h3>Grade and Section</h3>
+                    <h3>Grade & Section</h3>
                 </div>
             </div>
             <div class="wide-columns">

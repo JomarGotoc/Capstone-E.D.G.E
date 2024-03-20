@@ -571,9 +571,6 @@
             <option value="Grade 1">Grade 1</option>
             <option value="Grade 2">Grade 2</option>
             <option value="Grade 3">Grade 3</option>
-            <option value="Grade 4">Grade 4</option>
-            <option value="Grade 5">Grade 5</option>
-            <option value="Grade 6">Grade 6</option>
         </select>
     </div>
 </div>
@@ -636,7 +633,7 @@
         <div class="wide-row" style="margin-top:0">
             <div class="wide-columns">
                 <div class="containers">
-                    <h3>Grade and Section</h3>
+                    <h3>Grade & Section</h3>
                 </div>
             </div>
             <div class="wide-columns">

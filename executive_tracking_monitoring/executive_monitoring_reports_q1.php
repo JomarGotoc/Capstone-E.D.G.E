@@ -3117,56 +3117,6 @@
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        @media screen and (max-width: 600px) {
-            header{
-                height: 40px;
-            }
-            h4 {
-                font-size: 0.6rem; 
-                white-space: nowrap;
-            }
-            .logs {
-                width: 2rem;
-                height: 2rem;
-            }
-            .vertical-line {
-                display: none;
-            }
-            .header-content {
-            justify-content: center;
-             }
-            .logout-icon {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media only screen and (min-width: 601px) {
-            .vertical-line {
-                margin-left: 10rem;
-            }
-
-        }
-
-        @media only screen and (min-width: 768px) {
-            .vertical-line {
-                margin-left: 20rem;
-            }
-        }
-
-        @media only screen and (min-width: 1041px) {
-            .vertical-line {
-                margin-left: 10rem;
-            }
-        }
-
-        @media only screen and (min-width: 1200px) {
-            h4 {
-                font-size: 1.3rem; 
-            }
-            .vertical-line{
-                margin-left: 40rem;
-            }
-        }
         
     </style>
 </head>
