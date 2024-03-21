@@ -223,7 +223,7 @@
     }
 
     // Calculate total count
-    $blissltotalpar = $blissenglish + $blissfilipino + $blissnumeracy + $blissbehavioral;
+    $blisstotalpar = $blissenglish + $blissfilipino + $blissnumeracy + $blissbehavioral;
 
     $conn->close();
 ?>
