@@ -215,7 +215,7 @@
           font-weight: bold;
         }
         .errorMsg{
-          color: red;
+          color: green;
           font-weight: bold;
         }
 
