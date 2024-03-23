@@ -231,6 +231,7 @@
   </header>
 
     <div class="login-container">
+    <a href="../SDO_manage_account/SDO_manageaccount.php"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>
         <p>Enter a new password to change your password</p>

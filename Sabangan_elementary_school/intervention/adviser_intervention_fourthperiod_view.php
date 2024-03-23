@@ -1,69 +1,101 @@
 <?php
 include('../../database.php');
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// Initialize variables to store data
+$fullname = $grade = $section = $gname = $number = $status = $notes = $intervention = $topic = $advice = '';
 
-$lrnToDisplay = $_GET["lrn"] ?? '';
-$grade = $_GET['grade'];
-$section = $_GET['section'];
+// Check if lrn and classification parameters are set in the URL
+if (isset($_GET['lrn']) && isset($_GET['classification'])) {
+    // Retrieve lrn and classification values from the URL
+    $lrn = $_GET['lrn'];
+    $classification = $_GET['classification'];
 
-// Array of tables to search for LRN
-$tables = ['academic_english', 'academic_filipino','academic_numeracy', 'behavioral'];
-$data = [];  // Array to store fetched data
+    // Query to fetch data from academic_english table
+    $english_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_english WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '4' AND school = 'Sabangan Elementary School'";
 
-foreach ($tables as $table) {
-    $sql = "SELECT * FROM $table WHERE lrn = ? AND quarter = '4' AND school = 'Sabangan Elementary School' AND grade = '$grade' AND section = '$section'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $lrnToDisplay);
-    $stmt->execute();
+    // Query to fetch data from academic_filipino table
+    $filipino_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_filipino WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '4' AND school = 'Sabangan Elementary School'";
 
-    $result = $stmt->get_result();
+    // Query to fetch data from academic_numeracy table
+    $numeracy_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_numeracy WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '4' AND school = 'Sabangan Elementary School'";
 
-    if ($result->num_rows > 0) {
-        // LRN found in the current table
-        $row = $result->fetch_assoc();
-        
-        // Merge the data into the $data array
-        $data = array_merge($data, $row);
+    // Query to fetch data from behavioral table
+    $behavioral_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM behavioral WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '4' AND school = 'Sabangan Elementary School'";
+
+    // Execute the queries
+    $english_result = $conn->query($english_query);
+    $filipino_result = $conn->query($filipino_query);
+    $numeracy_result = $conn->query($numeracy_query);
+    $behavioral_result = $conn->query($behavioral_query);
+
+    // Check if any of the queries returned results
+    if ($english_result->num_rows > 0) {
+        // Store data for academic_english table
+        $english_row = $english_result->fetch_assoc();
+        $fullname = $english_row["fullname"];
+        $grade = $english_row["grade"];
+        $section = $english_row["section"];
+        $gname = $english_row["gname"];
+        $number = $english_row["number"];
+        $status = $english_row["status"];
+        $notes = $english_row["notes"];
+        $intervention = $english_row["intervention"];
+        $topic = $english_row["topic"];
+        $advice = $english_row["advice"];
+    } elseif ($filipino_result->num_rows > 0) {
+        // Store data for academic_filipino table
+        $filipino_row = $filipino_result->fetch_assoc();
+        $fullname = $filipino_row["fullname"];
+        $grade = $filipino_row["grade"];
+        $section = $filipino_row["section"];
+        $gname = $filipino_row["gname"];
+        $number = $filipino_row["number"];
+        $status = $filipino_row["status"];
+        $notes = $filipino_row["notes"];
+        $intervention = $filipino_row["intervention"];
+        $topic = $filipino_row["topic"];
+        $advice = $filipino_row["advice"];
+    } elseif ($numeracy_result->num_rows > 0) {
+        // Store data for academic_numeracy table
+        $numeracy_row = $numeracy_result->fetch_assoc();
+        $fullname = $numeracy_row["fullname"];
+        $grade = $numeracy_row["grade"];
+        $section = $numeracy_row["section"];
+        $gname = $numeracy_row["gname"];
+        $number = $numeracy_row["number"];
+        $status = $numeracy_row["status"];
+        $notes = $numeracy_row["notes"];
+        $intervention = $numeracy_row["intervention"];
+        $topic = $numeracy_row["topic"];
+        $advice = $numeracy_row["advice"];
+    } elseif ($behavioral_result->num_rows > 0) {
+        // Store data for behavioral table
+        $behavioral_row = $behavioral_result->fetch_assoc();
+        $fullname = $behavioral_row["fullname"];
+        $grade = $behavioral_row["grade"];
+        $section = $behavioral_row["section"];
+        $gname = $behavioral_row["gname"];
+        $number = $behavioral_row["number"];
+        $status = $behavioral_row["status"];
+        $notes = $behavioral_row["notes"];
+        $intervention = $behavioral_row["intervention"];
+        $topic = $behavioral_row["topic"];
+        $advice = $behavioral_row["advice"];
     }
-
-    $stmt->close();
-}
-
-// Check if any data was found
-if (!empty($data)) {
-    // Output data from the fetched rows
-    $lrn = $data['lrn'];
-    $fullname = ucwords($data['fullname']);
-    $gname = ucwords($data['gname']);
-    $number = $data['number'];
-    $grade = ucfirst($data['grade']);
-    $section = ucfirst($data['section']);
-    $classification = $data['classification'];
-    $status = $data['status'];
-    $advice = $data['advice'];
-    $topic = $data['topic'];
-    $notes = $data['notes'];
-    $intervention = $data['intervention'];
-} else {
-    // LRN not found in any table
-    echo "LRN not found in the specified tables.";
 }
 
 $conn->close();
 ?>
+
+
 <?php
-    if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
+    if (isset($_GET['grade']) && isset($_GET['section'])) {
         $grade = $_GET['grade'];
         $section = $_GET['section'];
-        $employment_number = $_GET['employment_number'];
 
-        $path = "grade_{$grade}_section_{$section}_q4.php?employment_number=$employment_number";
+        $path = "grade_{$grade}_section_{$section}_q4.php?employment_number={$_GET['employment_number']}";
     }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -493,7 +525,7 @@ $conn->close();
         .text-container {
             position: relative;
             width: 800px; 
-            margin-left: 20px;
+            margin-left: 4px;
         }
 
         .text-container textarea {
@@ -574,7 +606,7 @@ $conn->close();
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-        <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $path ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>Sabangan Elementary School</h3>
@@ -601,12 +633,9 @@ $conn->close();
                 </div>
             </div>
             <div class="column half-width">
-                <select id="topdown" name="school-year" class="containers first" disabled>
-                    <option value="Pending" <?php echo ($status === 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                    <option value="On-going" <?php echo ($status === 'On-going') ? 'selected' : ''; ?>>On-going</option>
-                    <option value="Resolved" <?php echo ($status === 'Resolved') ? 'selected' : ''; ?>>Resolved</option>
-                    <option value="Unresolved" <?php echo ($status === 'Unresolved') ? 'selected' : ''; ?>>Unresolved</option>
-                </select>
+                <div class="containers" style="background-color: #F3F3F3;">
+                    <input type="text" name="identification" id="identification" value="<?php echo $status ?>" placeholder=" " class="right" readonly>
+                </div>
             </div>
 
         </div>
@@ -620,7 +649,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="lrn" id="lrn" value="<?php echo htmlspecialchars($lrn); ?>" placeholder=" " readonly>
+                    <input type="text" name="lrn" id="lrn" value="<?php echo $lrn ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -630,7 +659,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                    <input type="text" name="grade&section" id="grade&section" value="<?php echo ($grade. " - " .$section); ?>" placeholder="" class="right" readonly>
+                    <input type="text" name="grade&section" id="grade&section" value="<?php echo $grade.' - '. $section ?>" placeholder="" class="right" readonly>
                 </div>
             </div>
         </div>
@@ -644,7 +673,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="name" id="name" value="<?php echo ($fullname); ?>" placeholder=" " readonly>
+                    <input type="text" name="name" id="name" value="<?php echo $fullname ?>" placeholder=" " readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -654,7 +683,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <input type="text" name="identification" id="identification" value="<?php echo ($classification); ?>" placeholder=" " class="right" readonly>
+                    <input type="text" name="identification" id="identification" value="<?php echo $classification ?>" placeholder=" " class="right" readonly>
                 </div>
             </div>
         </div>
@@ -668,7 +697,7 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="gname" id="gname" value="<?php echo ($gname); ?>" placeholder=" "readonly>
+                    <input type="text" name="gname" id="gname" value="<?php echo $gname ?>" placeholder=" "readonly>
                     <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i>                
                 </div>
             </div>
@@ -679,20 +708,20 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers editable-container" style="background-color: #F3F3F3;">
-                    <input type="text" name="cnumber" id="cnumber" value="<?php echo ($number); ?>" placeholder=" " class="right" readonly>
-                    <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i>                </div>
+                    <input type="text" name="cnumber" id="cnumber" value="<?php echo $number ?>" placeholder=" " class="right" readonly>
+                    <i class='bx bx bx-check editable-icon' style=" cursor: pointer"></i></div>
             </div>
         </div>
 
         <div class="row ints">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="notes" placeholder="Adviser's Notes" readonly><?php echo ($notes); ?></textarea >                
+                    <textarea class="editable-text" id="notes" placeholder="Adviser's Notes" readonly><?php echo $notes ?></textarea >                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly><?php echo ($topic); ?></textarea >                
+                    <textarea class="editable-text" id="topic" placeholder="Topic/Matter" readonly><?php echo $topic ?></textarea >                
                 </div>
             </div>
         </div>
@@ -700,12 +729,12 @@ $conn->close();
         <div class="row ">
             <div class="column">
                 <div class="text-container">
-                    <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly><?php echo ($intervention); ?></textarea>                
+                    <textarea class="editable-text" id="intervention" placeholder="Intervention" readonly><?php echo $intervention ?></textarea>                
                 </div>
             </div>
             <div class="column wide-columns">
                 <div class="text-container">
-                    <textarea class="editable-text" id="advice" placeholder="Advice" readonly><?php echo ($advice); ?></textarea >                
+                    <textarea class="editable-text" id="advice" placeholder="Advice" readonly><?php echo $advice ?></textarea >                
                 </div>
             </div>
         </div>

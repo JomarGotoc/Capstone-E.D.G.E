@@ -588,12 +588,9 @@ $conn->close();
                 </div>
             </div>
             <div class="column half-width">
-                <select id="topdown" name="school-year" class="containers first" disabled>
-                    <option value="Pending" <?php echo ($status === 'Pending') ? 'selected' : ''; ?>>Pending</option>
-                    <option value="On-going" <?php echo ($status === 'On-going') ? 'selected' : ''; ?>>On-going</option>
-                    <option value="Resolved" <?php echo ($status === 'Resolved') ? 'selected' : ''; ?>>Resolved</option>
-                    <option value="Unresolved" <?php echo ($status === 'Unresolved') ? 'selected' : ''; ?>>Unresolved</option>
-                </select>
+                <div class="containers" style="background-color: #F3F3F3; ">
+                <input type="text" name="grade&section" id="grade&section" value="<?php echo htmlspecialchars($status); ?>" placeholder="" class="right" readonly>
+                </div>
             </div>
         </div>
 

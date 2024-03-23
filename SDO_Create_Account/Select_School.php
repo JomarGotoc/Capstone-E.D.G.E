@@ -4,7 +4,11 @@
         // Retrieve the input value and store it in $schoolname
         $schoolname = $_POST['schoolName'];
 
-        header("Location: create_account_school_admin.php?schoolname=$schoolname");
+        $schoolname = isset($_GET['schoolname']) ? $_GET['schoolname'] : 'default_value';
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: create_account_school_admin.php?schoolname=$schoolname&employment_number=$employment_number");
+        exit; 
+        
     }
     ?>
 <!DOCTYPE html>
@@ -327,7 +331,7 @@
     </header>
 
     <div class="form-container">
-        <a href="../SDO_manage_account/SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../SDO_manage_account/SDO_manageaccount3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Select School</h2>
 

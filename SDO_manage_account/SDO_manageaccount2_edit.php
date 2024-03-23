@@ -380,7 +380,7 @@ $conn->close();
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="#">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -389,7 +389,7 @@ $conn->close();
 
  
     <div class="login-container">
-        <a href="SDO_manageaccount2.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="SDO_manageaccount2.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Executive Committee</h2>
 

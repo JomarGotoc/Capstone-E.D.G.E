@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $gender = $row[2];
                     $grade = $grade;
                     $section = $section;
-                    $school = "West Central II Elementary SChool";
+                    $school = "Sabangan Elementary School";
                     $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section, school)
                                     VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section', '$school')";
 
@@ -386,7 +386,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -395,7 +395,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
  
     <div class="login-container">
-        <a href="../manage_student/School_Admin_Studentlist.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../manage_student/School_Admin_Studentlist.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h3>Import Data File</h3>
 

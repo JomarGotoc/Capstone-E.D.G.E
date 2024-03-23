@@ -229,7 +229,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -241,8 +241,8 @@
         <h2>Welcome to E.D.G.E<br><p>Select your Agenda for Today</p></h2>
 
         <div class="buttons">
-            <a href="../school_admin_manage_account/Adviser_Account.php"><button class="button">Manage Accounts</button></a>
-            <a href="../manage_student/School_Admin_Studentlist.php"><button class="button">Manage Students Lists</button></a>
+            <a href="../school_admin_manage_account/Adviser_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="button">Manage Accounts</button></a>
+            <a href="../manage_student/School_Admin_Studentlist.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="button">Manage Students Lists</button></a>
         </div>
     </div>
 

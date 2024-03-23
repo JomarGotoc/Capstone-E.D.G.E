@@ -429,7 +429,7 @@ $conn->close();
 
  
     <div class="login-container">
-    <a href="select_school.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="select_school.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>School Administrator</h2>
 

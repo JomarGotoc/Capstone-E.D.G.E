@@ -199,7 +199,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -212,9 +212,9 @@
         <h3>Select the Person you’d like to manage:</h3>
 
         <div class="buttons">
-            <a href="../create_account/Create_SDO_Admin_Account.php"><button class="button">SDO Administrator</button></a>
-            <a href="../create_account/Create_Executive_Committee_Account.php"><button class="button">Executive Committee</button></a>
-            <a href="../create_account/Select_School.php"><button class="button">School Administrator</button></a>
+            <a href="../create_account/Create_SDO_Admin_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="button">SDO Administrator</button></a>
+            <a href="../create_account/Create_Executive_Committee_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="button">Executive Committee</button></a>
+            <a href="../create_account/Select_School.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="button">School Administrator</button></a>
         </div>
     </div>
 

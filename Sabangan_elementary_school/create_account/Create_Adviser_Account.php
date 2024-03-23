@@ -427,7 +427,7 @@ $conn->close();
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -437,7 +437,7 @@ $conn->close();
 
  
     <div class="login-container">
-    <a href="../school_admin_manage_account/Adviser_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../school_admin_manage_account/Adviser_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Adviser</h2>
 
@@ -449,7 +449,7 @@ $conn->close();
         </div>
 
 
-        <form class="login-form" action="Create_adviser_Account.php" method="post">
+        <form class="login-form" action="Create_adviser_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" method="post">
             <div class="row">
                 <div class="columns">
                     <div class="form-group">

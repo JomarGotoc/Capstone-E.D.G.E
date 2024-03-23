@@ -699,7 +699,7 @@ if(isset($_POST['reset_password'])) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -707,11 +707,11 @@ if(isset($_POST['reset_password'])) {
     </header>
 
     <div class="navbar">
-        <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+        <a href="../button_options/School_Admin_Create_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <nav>
-            <a href="../school_admin_manage_account/Principal_Account.php" style="background:#F3F3F3; color:#130550" id="school-admin">Principal</a>
-            <a href="../school_admin_manage_account/Adviser_Account.php" id="school2-admin">Advisers</a>
-            <a href="../school_admin_manage_account/Counselor_Account.php" id="school3-admin">Guidance Counselor</a>
+            <a href="../school_admin_manage_account/Principal_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" id="school-admin">Principal</a>
+            <a href="../school_admin_manage_account/Adviser_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" id="school2-admin">Advisers</a>
+            <a href="../school_admin_manage_account/Counselor_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" id="school3-admin">Guidance Counselor</a>
         </nav>
     </div>
 
@@ -750,7 +750,7 @@ if(isset($_POST['reset_password'])) {
                 <td class="rows"><?php echo $row['date']; ?></td>
                 <td class="rows">
                     <div class="button-container">
-                        <a href="principal_account_edit.php?id=<?php echo $row['id']; ?>"><button class="edit-button">Edit</button></a>
+                    <a href="principal_account_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
                         <form method="post" action="Principal_Account.php">
                             <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
                             <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
@@ -771,7 +771,7 @@ if(isset($_POST['reset_password'])) {
     <script src="school_admin_manage_account.js"></script>
 
     <div class="plus-button">
-            <a href="../create_account/Create_Principal_Account.php"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../create_account/Create_Principal_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 </body>

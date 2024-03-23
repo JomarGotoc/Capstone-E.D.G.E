@@ -2,16 +2,16 @@
 $errorMsg = "";
 if (isset($_POST['students'])) {
     $gradeSectionPath = 'grade_sections/';
-
     // Check if the folder exists
     if (is_dir($gradeSectionPath)) {
-        // Get the list of PHP files in the folder
         $phpFiles = glob($gradeSectionPath . '*.php');
-
+        
         // Check if there are PHP files
         if (!empty($phpFiles)) {
-            // Redirect to the first PHP file
-            header("Location: " . $phpFiles[0]);
+            // Extract employment_number from the URL
+            $employmentNumber = isset($_GET['employment_number']) ? $_GET['employment_number'] : '';
+            $url = $phpFiles[0] . '?employment_number=' . urlencode($employmentNumber);
+            header("Location: " . $url);
             exit();
         } else {
             $errorMsg = "No Lists of Students to View";
@@ -19,9 +19,10 @@ if (isset($_POST['students'])) {
     } 
 }
 
-if (isset($_POST['add'])) {
-    // Redirect to the 'Add_Studentlist_import.php' file
-    header("Location: Add_Studentlist_import.php");
+
+if (isset($_POST['add']) && isset($_GET['employment_number'])) {
+    $employmentNumber = $_GET['employment_number'];
+    header("Location: Add_Studentlist_import.php?employment_number=$employmentNumber");
     exit();
 }
 ?>
@@ -273,7 +274,7 @@ if (isset($_POST['add'])) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -281,7 +282,7 @@ if (isset($_POST['add'])) {
     </header>
  
     <div class="login-container">
-        <a href="../button_options/School_Admin_Create_Account.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../button_options/School_Admin_Create_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Welcome to E.D.G.E<br><p>Select your Agenda for Today</p></h2>
 

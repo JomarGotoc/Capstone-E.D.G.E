@@ -22,16 +22,14 @@ if (isset($_POST['submit'])) {
             $row = $result->fetch_assoc();
             $hashedPasswordInDB = $row['password'];
             $verifiedStatus = $row['verified'];
-            $schoolField = $row['school'];
 
             if (password_verify($password, $hashedPasswordInDB)) {
                 switch ($table) {
                     case 'adviser':
                         if ($verifiedStatus == 'yes') {
-                            // Extract grade and section fields
                             $grade = $row['grade'];
                             $section = $row['section'];
-                            $school = str_replace(' ', '_', $schoolField);
+                            $school = str_replace(' ', '_', $row['school']);
                             header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
@@ -42,7 +40,7 @@ if (isset($_POST['submit'])) {
 
                     case 'principal':
                         if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $schoolField);
+                            $school = str_replace(' ', '_', $row['school']);
                             header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
@@ -53,7 +51,7 @@ if (isset($_POST['submit'])) {
 
                     case 'counselor':
                         if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $schoolField);
+                            $school = str_replace(' ', '_', $row['school']);
                             header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
                             exit();
                         } else {
@@ -64,7 +62,7 @@ if (isset($_POST['submit'])) {
 
                     case 'school_admin':
                         if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $schoolField);
+                            $school = str_replace(' ', '_', $row['school']);
                             header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
                             exit();
                         } else {
@@ -75,7 +73,6 @@ if (isset($_POST['submit'])) {
 
                     case 'sdo_admin':
                         if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $schoolField);
                             header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
                             exit();
                         } else {
@@ -95,7 +92,6 @@ if (isset($_POST['submit'])) {
                         break;
 
                     default:
-                        echo "User found in table: $table";
                         break;
                 }
             }
@@ -107,6 +103,7 @@ if (isset($_POST['submit'])) {
     $conn->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
