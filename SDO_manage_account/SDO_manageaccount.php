@@ -698,7 +698,7 @@ if(isset($_POST['reset_password'])) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
-                        <a href="../change_password/sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
+                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -707,7 +707,7 @@ if(isset($_POST['reset_password'])) {
 
     <div class="navbar">
         <nav>
-            <a href="SDO_manageaccount.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" id="deped-admin">SDO Administrators</a>
+            <a href="" style="background:#F3F3F3; color:#130550" id="deped-admin">SDO Administrators</a>
             <a href="SDO_manageaccount2.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" id="division-admin">Executive Committee</a>
             <a href="SDO_manageaccount3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" id="deped-admin">School Administrators</a>
         </nav>
@@ -751,8 +751,8 @@ if(isset($_POST['reset_password'])) {
                 <td class="rows"><?php echo $row['date']; ?></td>
                     <td class="rows">
                         <div class="button-container">
-                        <a href="SDO_manageaccount_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
-                        <form method="post" action="SDO_manageaccount.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">
+                        <a href="sdo_manageaccount_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
+                        <form method="post" action="SDO_manageaccount.php">
                             <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
                             <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
                         </form>
@@ -771,7 +771,7 @@ if(isset($_POST['reset_password'])) {
     </div>
 
     <div class="plus-button">
-            <a href="../SDO_Create_Account/Create_SDO_Admin_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../sdo_create_account/Create_SDO_Admin_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 </body>
