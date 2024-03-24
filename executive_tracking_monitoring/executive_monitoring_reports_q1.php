@@ -2734,7 +2734,7 @@
 ?>
 <?php $currentFileName2 = basename(__FILE__,'_q1.php'); ?>
 <?php
-    $path = $_SERVER['REQUEST_URI'];
+$filename = basename($_SERVER['PHP_SELF']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -3135,7 +3135,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&path=<?php echo $path ?>">Change Password</a>
+                        <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
                     </div>
                 </div>
             </div>

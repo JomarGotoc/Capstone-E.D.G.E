@@ -231,7 +231,7 @@
   </header>
 
     <div class="login-container">
-    <a href="../SDO_manage_account/SDO_manageaccount.php"><i class='bx bx-chevron-left'></i></a>
+    <a href="SDO_manageaccount.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>
         <p>Enter a new password to change your password</p>

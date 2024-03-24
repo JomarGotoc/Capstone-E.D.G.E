@@ -1,32 +1,35 @@
 <?php
-$errormsg = "";
-include('../database.php');
-$sql = "SELECT * FROM sdo_admin";
-$result1 = $conn->query($sql);
+    $errormsg = "";
+    include('../database.php');
+    $sql = "SELECT * FROM sdo_admin";
+    $result1 = $conn->query($sql);
 
-if(isset($_POST['reset_password'])) {
-    // Get user ID from the form
-    $user_id = $_POST['user_id'];
-    $query = "SELECT * FROM sdo_admin WHERE id = $user_id";
-    $result = $conn->query($query);
+    if(isset($_POST['reset_password'])) {
+        // Get user ID from the form
+        $user_id = $_POST['user_id'];
+        $query = "SELECT * FROM sdo_admin WHERE id = $user_id";
+        $result = $conn->query($query);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $employment_number = $row['employment_number'];
-        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
-        $update_query = "UPDATE sdo_admin SET password = '$hashed_password' WHERE id = $user_id";
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $employment_number = $row['employment_number'];
+            $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+            $update_query = "UPDATE sdo_admin SET password = '$hashed_password' WHERE id = $user_id";
 
-        if ($conn->query($update_query) === TRUE) {
-            $errormsg = "Password Reset Sucessful";
-            echo "<script>setTimeout(function(){ document.getElementById('error-msg').style.display = 'none'; }, 2000);</script>";
+            if ($conn->query($update_query) === TRUE) {
+                $errormsg = "Password Reset Sucessful";
+                echo "<script>setTimeout(function(){ document.getElementById('error-msg').style.display = 'none'; }, 2000);</script>";
+            } else {
+            }
         } else {
+            echo "User not found";
         }
-    } else {
-        echo "User not found";
+        $conn->close();
     }
-    $conn->close();
-}
 ?> 
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -698,7 +701,7 @@ if(isset($_POST['reset_password'])) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
+                        <a href="sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
                     </div>
                 </div>
             </div>
