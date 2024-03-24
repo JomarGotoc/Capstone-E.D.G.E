@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
                     case 'principal':
                         if ($verifiedStatus == 'yes') {
                             $school = str_replace(' ', '_', $row['school']);
-                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employment_number");
+                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employment_number");
                             exit();
                         } else {
                             header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");

@@ -72,14 +72,14 @@
     // Iterate through tables and count rows with 'lrn' field and 'status' field
     foreach ($tables as $table) {
         // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL AND quarter = 1 AND school = 'Sabangan Elementary School'";
+        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL  AND school = 'Sabangan Elementary School'";
         $resultPars = $conn->query($sqlPars);
 
         if ($resultPars->num_rows > 0) {
             $rowPars = $resultPars->fetch_assoc();
             $totalpars += $rowPars['count'];
         }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved' AND quarter = 1 AND school = 'Sabangan Elementary School'";
+        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved'  AND school = 'Sabangan Elementary School'";
         $resultResolved = $conn->query($sqlResolved);
 
         if ($resultResolved->num_rows > 0) {
@@ -589,7 +589,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
+                    <h3 style="margin-left: 7px">Sabangan Elementary School</h3>
                 </div>
             </div>
             <div class="column column-left">

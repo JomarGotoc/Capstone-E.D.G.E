@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($tableName === 'counselor') {
                     header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'principal') {
-                    header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_q1.php?employment_number=$employmentNumber");
+                    header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'school_admin') {
                     header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employmentNumber");
                 }

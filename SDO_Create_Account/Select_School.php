@@ -6,7 +6,7 @@
 
         $schoolname = isset($_GET['schoolname']) ? $_GET['schoolname'] : 'default_value';
         $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-        header("Location: create_account_school_admin.php?schoolname=$schoolname&employment_number=$employment_number");
+        header("Location: Create_Account_School_Admin.php?schoolname=$schoolname&employment_number=$employment_number");
         exit; 
         
     }
@@ -323,7 +323,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../change_password/sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
