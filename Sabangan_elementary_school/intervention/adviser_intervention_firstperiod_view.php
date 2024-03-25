@@ -1,93 +1,91 @@
 <?php
-include('../../database.php');
+    include('../../database.php');
 
-// Initialize variables to store data
-$fullname = $grade = $section = $gname = $number = $status = $notes = $intervention = $topic = $advice = '';
+    // Initialize variables to store data
+    $fullname = $grade = $section = $gname = $number = $status = $notes = $intervention = $topic = $advice = '';
 
-// Check if lrn and classification parameters are set in the URL
-if (isset($_GET['lrn']) && isset($_GET['classification'])) {
-    // Retrieve lrn and classification values from the URL
-    $lrn = $_GET['lrn'];
-    $classification = $_GET['classification'];
+    // Check if lrn and classification parameters are set in the URL
+    if (isset($_GET['lrn']) && isset($_GET['classification'])) {
+        // Retrieve lrn and classification values from the URL
+        $lrn = $_GET['lrn'];
+        $classification = $_GET['classification'];
 
-    // Query to fetch data from academic_english table
-    $english_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_english WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
+        // Query to fetch data from academic_english table
+        $english_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_english WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
 
-    // Query to fetch data from academic_filipino table
-    $filipino_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_filipino WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
+        // Query to fetch data from academic_filipino table
+        $filipino_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_filipino WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
 
-    // Query to fetch data from academic_numeracy table
-    $numeracy_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_numeracy WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
+        // Query to fetch data from academic_numeracy table
+        $numeracy_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM academic_numeracy WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
 
-    // Query to fetch data from behavioral table
-    $behavioral_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM behavioral WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
+        // Query to fetch data from behavioral table
+        $behavioral_query = "SELECT fullname, grade, section, gname, number, status, notes, intervention, topic, advice FROM behavioral WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '1' AND school = 'Sabangan Elementary School'";
 
-    // Execute the queries
-    $english_result = $conn->query($english_query);
-    $filipino_result = $conn->query($filipino_query);
-    $numeracy_result = $conn->query($numeracy_query);
-    $behavioral_result = $conn->query($behavioral_query);
+        // Execute the queries
+        $english_result = $conn->query($english_query);
+        $filipino_result = $conn->query($filipino_query);
+        $numeracy_result = $conn->query($numeracy_query);
+        $behavioral_result = $conn->query($behavioral_query);
 
-    // Check if any of the queries returned results
-    if ($english_result->num_rows > 0) {
-        // Store data for academic_english table
-        $english_row = $english_result->fetch_assoc();
-        $fullname = $english_row["fullname"];
-        $grade = $english_row["grade"];
-        $section = $english_row["section"];
-        $gname = $english_row["gname"];
-        $number = $english_row["number"];
-        $status = $english_row["status"];
-        $notes = $english_row["notes"];
-        $intervention = $english_row["intervention"];
-        $topic = $english_row["topic"];
-        $advice = $english_row["advice"];
-    } elseif ($filipino_result->num_rows > 0) {
-        // Store data for academic_filipino table
-        $filipino_row = $filipino_result->fetch_assoc();
-        $fullname = $filipino_row["fullname"];
-        $grade = $filipino_row["grade"];
-        $section = $filipino_row["section"];
-        $gname = $filipino_row["gname"];
-        $number = $filipino_row["number"];
-        $status = $filipino_row["status"];
-        $notes = $filipino_row["notes"];
-        $intervention = $filipino_row["intervention"];
-        $topic = $filipino_row["topic"];
-        $advice = $filipino_row["advice"];
-    } elseif ($numeracy_result->num_rows > 0) {
-        // Store data for academic_numeracy table
-        $numeracy_row = $numeracy_result->fetch_assoc();
-        $fullname = $numeracy_row["fullname"];
-        $grade = $numeracy_row["grade"];
-        $section = $numeracy_row["section"];
-        $gname = $numeracy_row["gname"];
-        $number = $numeracy_row["number"];
-        $status = $numeracy_row["status"];
-        $notes = $numeracy_row["notes"];
-        $intervention = $numeracy_row["intervention"];
-        $topic = $numeracy_row["topic"];
-        $advice = $numeracy_row["advice"];
-    } elseif ($behavioral_result->num_rows > 0) {
-        // Store data for behavioral table
-        $behavioral_row = $behavioral_result->fetch_assoc();
-        $fullname = $behavioral_row["fullname"];
-        $grade = $behavioral_row["grade"];
-        $section = $behavioral_row["section"];
-        $gname = $behavioral_row["gname"];
-        $number = $behavioral_row["number"];
-        $status = $behavioral_row["status"];
-        $notes = $behavioral_row["notes"];
-        $intervention = $behavioral_row["intervention"];
-        $topic = $behavioral_row["topic"];
-        $advice = $behavioral_row["advice"];
+        // Check if any of the queries returned results
+        if ($english_result->num_rows > 0) {
+            // Store data for academic_english table
+            $english_row = $english_result->fetch_assoc();
+            $fullname = $english_row["fullname"];
+            $grade = $english_row["grade"];
+            $section = $english_row["section"];
+            $gname = $english_row["gname"];
+            $number = $english_row["number"];
+            $status = $english_row["status"];
+            $notes = $english_row["notes"];
+            $intervention = $english_row["intervention"];
+            $topic = $english_row["topic"];
+            $advice = $english_row["advice"];
+        } elseif ($filipino_result->num_rows > 0) {
+            // Store data for academic_filipino table
+            $filipino_row = $filipino_result->fetch_assoc();
+            $fullname = $filipino_row["fullname"];
+            $grade = $filipino_row["grade"];
+            $section = $filipino_row["section"];
+            $gname = $filipino_row["gname"];
+            $number = $filipino_row["number"];
+            $status = $filipino_row["status"];
+            $notes = $filipino_row["notes"];
+            $intervention = $filipino_row["intervention"];
+            $topic = $filipino_row["topic"];
+            $advice = $filipino_row["advice"];
+        } elseif ($numeracy_result->num_rows > 0) {
+            // Store data for academic_numeracy table
+            $numeracy_row = $numeracy_result->fetch_assoc();
+            $fullname = $numeracy_row["fullname"];
+            $grade = $numeracy_row["grade"];
+            $section = $numeracy_row["section"];
+            $gname = $numeracy_row["gname"];
+            $number = $numeracy_row["number"];
+            $status = $numeracy_row["status"];
+            $notes = $numeracy_row["notes"];
+            $intervention = $numeracy_row["intervention"];
+            $topic = $numeracy_row["topic"];
+            $advice = $numeracy_row["advice"];
+        } elseif ($behavioral_result->num_rows > 0) {
+            // Store data for behavioral table
+            $behavioral_row = $behavioral_result->fetch_assoc();
+            $fullname = $behavioral_row["fullname"];
+            $grade = $behavioral_row["grade"];
+            $section = $behavioral_row["section"];
+            $gname = $behavioral_row["gname"];
+            $number = $behavioral_row["number"];
+            $status = $behavioral_row["status"];
+            $notes = $behavioral_row["notes"];
+            $intervention = $behavioral_row["intervention"];
+            $topic = $behavioral_row["topic"];
+            $advice = $behavioral_row["advice"];
+        }
     }
-}
 
-$conn->close();
+    $conn->close();
 ?>
-
-
 <?php
     if (isset($_GET['grade']) && isset($_GET['section'])) {
         $grade = strtolower($_GET['grade']);
@@ -95,6 +93,23 @@ $conn->close();
 
         $path = "grade_{$grade}_section_{$section}_q1.php?employment_number={$_GET['employment_number']}";
     }
+?>
+<?php
+if(isset($_POST['print'])) {
+    $filename = basename($_SERVER['PHP_SELF']);
+    $words = explode('_', $filename);
+        
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        $lrn = isset($_GET['lrn']) ? $_GET['lrn'] : 'default_value';
+        $classification = isset($_GET['classification']) ? $_GET['classification'] : 'default_value';
+        $filename1 = basename($_SERVER['PHP_SELF']);
+        
+        $redirect_url = "../../print_record/adviser_intervention_print.php?classification=$classification&lrn=$lrn&employment_number=$employment_number&filename=$filename1&quarter=1";
+        
+        header("Location: $redirect_url");
+        exit();
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -621,11 +636,13 @@ $conn->close();
                 </div>
             </div>
             <div class="column">
-            <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+            <form method="post">
+        <div class="containers second">
+            <button style="background: transparent; border: none;" name="print">
+                <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+            </button>
+        </div>
+        </form>
             </div>
             <div class="column column-left">
                 <div class="containers third" style="background-color: #190572;">

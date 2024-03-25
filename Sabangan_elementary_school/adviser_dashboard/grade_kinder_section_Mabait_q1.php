@@ -104,6 +104,25 @@ $conn->close();
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
+<?php
+if(isset($_POST['print'])) {
+    $filename = basename($_SERVER['PHP_SELF']);
+    $words = explode('_', $filename);
+    
+    if(count($words) >= 4) {
+        $grade = $words[1];
+        $section = $words[3];
+        
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        $filename1 = basename($_SERVER['PHP_SELF']);
+        
+        $redirect_url = "../../print_record/adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1";
+        
+        header("Location: $redirect_url");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -917,11 +936,13 @@ $conn->close();
                 </div>
         </div>
         <div class="column">
+            <form method="post">
         <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+            <button style="background: transparent; border: none;" name="print">
+                <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+            </button>
+        </div>
+        </form>
         </div>
             <div class="column third-column">
     <div class="search-box">
@@ -1171,11 +1192,6 @@ $conn->close();
             // Redirect to the selected quarter's PHP file
             window.location.href = redirectURL;
         }
-    }
-</script>
-<script>
-    function printPARsList() {
-        window.print();
     }
 </script>
  
