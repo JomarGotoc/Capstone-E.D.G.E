@@ -4,7 +4,7 @@
         // Retrieve the input value and store it in $schoolname
         $schoolname = $_POST['schoolName'];
         $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-        header("Location: create_account_school_admin.php?schoolname=$schoolname&employment_number=$employment_number");
+        header("Location: Create_Account_School_Admin.php?schoolname=$schoolname&employment_number=$employment_number");
         exit; 
         
     }

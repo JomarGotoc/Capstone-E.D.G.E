@@ -53,7 +53,7 @@ if (isset($_POST['continue'])) {
             $updateStmt->bind_param('ss', $otpCode, $employmentNumber);
             $updateStmt->execute();
             sendOTP($userEmail, $otpCode);
-            header("location: forgot_pass_enter_otp.php");
+            header("location: forgot_pass_Enter_OTP.php");
             break;
         }
     }

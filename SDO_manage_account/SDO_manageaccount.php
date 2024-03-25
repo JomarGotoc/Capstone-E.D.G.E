@@ -754,7 +754,7 @@
                 <td class="rows"><?php echo $row['date']; ?></td>
                     <td class="rows">
                         <div class="button-container">
-                        <a href="sdo_manageaccount_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
+                        <a href="SDO_manageaccount_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
                         <form method="post" action="SDO_manageaccount.php">
                             <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
                             <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
@@ -774,7 +774,7 @@
     </div>
 
     <div class="plus-button">
-            <a href="../sdo_create_account/Create_SDO_Admin_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../SDO_Create_Account/Create_SDO_Admin_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 </body>

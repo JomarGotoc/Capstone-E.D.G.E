@@ -678,8 +678,8 @@
 
     <div class="navbar">
         <nav>
-            <a href="Principal_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Quarterly Reports</a>
-            <a href="Principal_monitoring_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550">Report Summary</a>
+            <a href="Principal_tracking_reports_Q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Quarterly Reports</a>
+            <a href="Principal_monitoring_reports_q2.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550">Report Summary</a>
         </nav>
     </div>
 

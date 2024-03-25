@@ -316,7 +316,7 @@ if (isset($_POST['submit'])) {
 </header>
 
 <div class="login-container">
-    <a href="../splash.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../index.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
     <div class="logo"></div>
     <h2>Sign in to E.D.G.E.</h2>
 
@@ -330,7 +330,7 @@ if (isset($_POST['submit'])) {
         <button type="submit" name="submit" >Log In</button>
     </form>
     
-    <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="forgot">Forgot Password</button></a>
+    <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="">Forgot Password</button></a>
 
 </div>
 </body>

@@ -750,7 +750,7 @@ if(isset($_POST['reset_password'])) {
                 <td class="rows">
                     <div class="button-container">
                     <a href="counselor_account_edit.php?id=<?php echo $row['id']; ?>&employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><button class="edit-button">Edit</button></a>
-                        <form method="post" action="counselor_Account.php">
+                        <form method="post" action="Counselor_Account.php">
                             <input type="hidden" name="user_id" value="<?php echo $row['id']; ?>">
                             <button type="submit" class="delete-button" name="reset_password">Reset Password</button>
                         </form>

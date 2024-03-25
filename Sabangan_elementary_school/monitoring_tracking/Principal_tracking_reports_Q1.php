@@ -542,7 +542,7 @@
 
     <div class="navbar">
         <nav>
-        <a href="Principal_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" >Quarterly Reports</a>
+        <a href="Principal_tracking_reports_Q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" >Quarterly Reports</a>
         <a href="Principal_monitoring_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Report Summary</a>
         </nav>
     </div>
@@ -617,10 +617,10 @@
             <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
                         <option value="" disabled selected hidden>Quarter 1</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="Q1">Quarter 1</option>
+                        <option value="Q2">Quarter 2</option>
+                        <option value="Q3">Quarter 3</option>
+                        <option value="Q4">Quarter 4</option>
                     </select>
                 </div>
 </div>
