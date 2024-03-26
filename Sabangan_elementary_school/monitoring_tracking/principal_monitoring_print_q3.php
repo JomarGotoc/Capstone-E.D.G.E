@@ -475,6 +475,7 @@ $conn->close();
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
+    <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
     </div>
@@ -607,5 +608,10 @@ $conn->close();
                     </tr>
         </tbody>
     </table>
+    <script>
+    function printContent() {
+        window.print();
+    }
+</script>
 </body>
 </html>

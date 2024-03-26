@@ -8,7 +8,7 @@ $quarter = $_GET['quarter'] ?? '';
 // Check if LRN, classification, and employment_number are provided
 if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
     // Establish a connection to your database
-    include('../database.php');
+    include('../../database.php');
 
     // Escape inputs to prevent SQL injection
     $lrn = $conn->real_escape_string($lrn);
