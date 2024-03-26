@@ -2732,893 +2732,494 @@
 
     $conn->close();
 ?>
-<?php $currentFileName2 = basename(__FILE__,'_q4.php'); ?>
-<?php
-$filename = basename($_SERVER['PHP_SELF']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-        function preventBack(){window.history.forward()};
-        setTimeout("preventBack()",0);
-        window.onunload=function(){null;}
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Executive Committee</title>
+    <title>PRINT</title>
     <style>
-                body {
+        body {
+            background-color: white;
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url(../img/bg.png);
-            background-size: cover;
         }
-        
-        .logo {
-            width: 75px;
-            height: 75px;
-            margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
-            background-size: cover;
-        }
-        
-        h2 {
-            font-family: 'Darker Grotesque', sans-serif;
-            color: #fff;
-        }
-        
-        h2 p{
-            margin-top: 5px;
-            font-size: 18px;
-        }
-
-        .login-container {
-            background-color: rgba(25, 5, 114, 0.80); 
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-        }
-        
-        a {
-            color: #fff;
-            text-decoration: none;
-        }
-        
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: .1rem 5%;
-            background: #130550;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            height: 55px;
-        }
-
-        .vertical-line {
-            margin-left: 40rem;
-            height: 40px;
-            width: 1px;
-            background-color: #fff;
-        }
-
-        .logout-icon {
-            color: #fff; 
-            font-size: 1.5rem;
-            cursor: pointer; 
-            margin-left: 15px;
-        }
-
-        .header.sticky {
-            border-bottom: .2rem solid rgba(255, 255, 255, 0.2);
-        }
-
-        h4 {
-            color: #fff;
-            font-family: 'Darker Grotesque', sans-serif;
-            font-weight: 300;
-            font-size: 1.3rem;
-            margin-left: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .logs {
-            width: 3.5rem;
-            height: 3.5rem;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; 
-            justify-content: center;
-            width: 100%; 
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar {
-            background-color: #190572;;
-            opacity: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            width: 100%;
-            position: fixed;
-            top: 57px; 
-        }
-
-        .back-icon {
-            margin-right: auto;
-            font-size: 3rem;
-        }
-        
-        .navbar a {
-            display: inline-block;
-            padding: 14px 20px;
-            text-decoration: none;
-            color: #FFFFFF;
-            opacity: 100%;
-        }
-        
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .navbar {
             background-color: #190572;
-            opacity: 80%;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            height: 50px;
-            width: 100%;
-            position: fixed;
-            top: 57px;
-        }
-
-        .back-icon {
-            font-size: 3rem;
-        }
-
-        .navbar a {
-            display: inline-block;
-            text-decoration: none;
-            color: #FFFFFF;
-            opacity: 100%;
-        }
-
-        nav {
-            flex: 1; 
-            text-align: center;
-        }
-
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .back-icon:hover::after {
-            content: "Back";
-            position: absolute;
-            left: 30px;
-            top: 80%;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 14px;
-        }
-
-        h3{
-        color: #fff;
-        }
-        
-        .buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-        }
-        
-        a .button {
-        background-color: #0C052F;
-        color: #fff;
-        padding: 10px 20px;
-        margin: 0 10px;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        width: 90%;
-        }
-        
-        .button:hover {
-        background-color: #ddd;
-        border: 1px solid #0C052F;
-        color: #190572;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        ::-webkit-scrollbar-thumb {
-            background-color: #190572;
-            border-radius: 20px;
-        }
-    
-        ::-webkit-scrollbar-track {
-            background-color: #E2DFEE;
-            border-radius: 20px;
-        }
-
-        .main-container {
-            width: 100%;
-            height: calc(90vh - 140px);
-            margin: 20px;
-            margin-top: 125px;
-            bottom: 0;
-            background-color: #E2DFEE;
-            opacity: 80%;
-            overflow: auto;
-            padding: 20px;
-            border-radius: 20px;
-        }
-
-        .shesh {
-            background-color: transparent;
-            border-radius: 5px;
-            border: 2px solid #919097;
-            background: rgba(251, 251, 251, 0.25);
-            box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.25) inset, 0px 7px 7px 0px rgba(0, 0, 0, 0.25);
             padding: 10px;
-            padding-top: 15px;
-            margin-bottom: 20px;  
-        }
-
-        .row {
+            color: white;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
         }
-
-        .column {
-            flex: 0 0 calc(16.6667%);
-            margin-bottom: 5px;
+        header img {
+            margin-right: 10px;
         }
-
-        .column-right {
-            flex: 0 0 calc(30%);
-            margin-right: auto; 
-        }
-
-        .column-left {
-            flex: 0 0 calc(15%);
-            margin-left: 0;
-            margin-right: auto; 
-        }
-
-        .row .column:not(:last-child),
-        .wide-row .column:not(:last-child) {
-            margin-right: 0;
-        }
-
-        .row:first-child .column:last-child{
-            margin-left: auto;
-        }
-
-        .containers {
-            background-color: #3498db;
-            padding: .5px;
-        }
-
-        .select-wrapper {
-            background: #FBFBFB;
-            color: #190572;
-        }
-
-        #topdown {
-            padding: 2px;
-            width: 428px;
-            background: #FBFBFB;
-            color: #190572;
-            text-align: start;
-            border: none;
-            font-weight: bold;
-            font-size: 17px;
-            text-align: left;
-        }
-        #topdown1 {
-            padding: 2px;
-            width: 100%;
-            background: #FBFBFB;
-            color: #190572;
-            text-align: center;
-            border: 1px solid #190572;
-            border-radius: 5px;
-        }
-
-        .second{
-            border-radius: 3px;
-            background-color: #2206A0;
-            text-align: center;
-        }
-
-        .second h3{
-            color: #FFF;
-            letter-spacing: 3px;
-        }
-
-        h3 {
-            color: #190572;
-            margin-left: 10px;
-            margin: 0;
-        }
-
-        table{
-            width:100%; 
-            border-collapse: collapse;
+        .update{
             margin-top: 20px;
+            width: 550px;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2px;
         }
-
-        .table-header th {
-            background-color: #190572;
-            color: #fff;
-            font-size: 15px;
-            padding: 5px;
+        .details{
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 5px;
+            margin-top: -20px;
         }
-
-        tr:nth-child(even){
-            background-color: rgb(242, 242, 244);
+        .update-record,
+        .update-record2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 550px;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2px;
         }
-
-        tr:nth-child(odd){
-            background-color: #b7b7b7;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #130550;
-            min-width: 100px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            right: 150px;
-            border-bottom-left-radius: 7px;
-            border-bottom-right-radius: 7px;
-        }
-
-        .dropdown-content a {
-            color: rgb(255, 253, 253);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #F3F3F3;
+        .label {
+            background-color: #B7B7B7;
             color: #190572;
-            opacity: 80%;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            grid-column: 1;
+            width: 200px;
+            text-align: left;
+            font-weight: bold;
         }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
+        .response {
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #F3F3F3;
+            border: none;
+            grid-column: 2;
+            width: 300px;
+            color: #190572;
         }
-        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+        th {
+            background-color: #190572;
+            color: #FFFFFF;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(odd) {
+            background-color: transparent;
+        }
+        .line {
+            width: 100%;
+            height: 2px;
+            background-color: #190572;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="container">
-            <div class="header-content">
-                <img src="../img/logo.png" class="logs">
-                <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
-                <i class="vertical-line"></i>
-                <div class="dropdown">
-                <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
-                    <div class="dropdown-content" id="dropdownContent">
-                    <a href="../login/Login.php">Log Out</a>
-                    <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <img src="../img/logo.png" alt="Logo" width="70" height="70">
+        <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
-
-    <div class="navbar">
-        <nav>
-            <a href="executive_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Quarterly Reports</a>
-            <a href="" style="background:#F3F3F3; color:#130550">Report Summary</a>
-        </nav>
+    <div class="update">
+    <button class="print-button" onclick="printContent()">Print Content</button>
+        <p class="label">School Year</p>
+        <input class="response" type="text" value=" ">
     </div>
-
-    
-    <div class="main-container">
-        <div class="row">
-            <div class="column">
-                <div class="select-wrapper">
-                    <select id="topdown1" name="school-year" class="containers first">
-                        <option value="school-year">S.Y. 2023 - 2024</option>
-                    </select>
-                </div>
-        </div>
-            <div class="column column-left">
-            <div class="containers second">
-                <a href="executive_monitoring_print_q4.php">
-                    <button style="background: transparent; border: none;">
-                        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-                    </button>
-                </a>
-            </div>
-            </div>
-            <div class="column full-width">
-                <div class="column third-column">
-                    <div class="search-box">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="shesh">
-        <div class="row">
-            <div class="column" >
-                <div class="containers" style="background-color: #B7B7B7">
-                    <h3 style="margin-left: 7px">Division</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
-                </div>
-            </div>
-            <div class="column">
-                <div>
-                </div>
-            </div>
-        </div>
-
-        
-     <!--   <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Quarter</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>I</h3>
-                </div>
-            </div>
-        </div> -->
-
-        <table border="0">
-            <thead class="table-header">
-                <tr>
-                    <th style="width:10%">P.A.R. Identification</th>
-                    <th style="width:9%">Q1</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q2</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q3</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q4</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Total P.A.R.s</th>
-                    <th style="width:9%">Total Resolved</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <tr>
-                        <th style="width:10%">Academic - Literacy in English</th>
-                        <th style="width:9%"><?php echo $q1english ?></th>
-                        <th style="width:9%"><?php echo $q1englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q2english ?></th>
-                        <th style="width:9%"><?php echo $q2englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q3english ?></th>
-                        <th style="width:9%"><?php echo $q3englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q4english ?></th>
-                        <th style="width:9%"><?php echo $q4englishresolved ?></th>
-                        <th style="width:9%"><?php echo $totalEnglish ?></th>
-                        <th style="width:9%"><?php echo $totalEnglishResolved ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:10%">Academic - Literacy in Filipino</th>
-                        <th style="width:9%"><?php echo $q1filipino ?></th>
-                        <th style="width:9%"><?php echo $q1filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q2filipino ?></th>
-                        <th style="width:9%"><?php echo $q2filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q3filipino ?></th>
-                        <th style="width:9%"><?php echo $q3filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q4filipino ?></th>
-                        <th style="width:9%"><?php echo $q4filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $totalFilipino ?></th>
-                        <th style="width:9%"><?php echo $totalFilipinoResolved ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:10%">Academic - Numeracy</th>
-                        <th style="width:9%"><?php echo $q1numeracy ?></th>
-                        <th style="width:9%"><?php echo $q1numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q2numeracy ?></th>
-                        <th style="width:9%"><?php echo $q2numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q3numeracy ?></th>
-                        <th style="width:9%"><?php echo $q3numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q4numeracy ?></th>
-                        <th style="width:9%"><?php echo $q4numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $totalNumeracy ?></th>
-                        <th style="width:9%"><?php echo $totalNumeracyResolved ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:10%">Behavioral</th>
-                        <th style="width:9%"><?php echo $q1behavioral ?></th>
-                        <th style="width:9%"><?php echo $q1behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q2behavioral ?></th>
-                        <th style="width:9%"><?php echo $q2behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q3behavioral ?></th>
-                        <th style="width:9%"><?php echo $q3behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q4behavioral ?></th>
-                        <th style="width:9%"><?php echo $q4behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $totalBehavioral ?></th>
-                        <th style="width:9%"><?php echo $totalBehavioralResolved ?></th>
-                    </tr>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="shesh">
-
-        
-        <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #B7B7B7;">
-                    <h3 style="margin-left: 7px">Quarter</h3>
-                </div>
-            </div>
-            <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 4</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
-                    </select>
-                </div>
-        </div>
-
-        <table border="0">
-            <thead class="table-header">
-                <tr>
-                    <th style="width:40%">School Name</th>
-                    <th style="width:15%">Academic - Literacy in English</th>
-                    <th style="width:15%">Academic - Literacy in Filipino</th>
-                    <th style="width:15%">Academic - Numeracy</th>
-                    <th style="width:15%">Behavioral</th>
-                    <th style="width:15%">Total P.A.R.s</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>  
-                        <th style="width:12%"><?php echo $bucayaoenglish ?></th>
-                        <th style="width:12%"><?php echo $bucayaofilipino ?></th>
-                        <th style="width:12%"><?php echo $bucayaonumeracy ?></th>
-                        <th style="width:12%"><?php echo $bucayaobehavioral ?></th>
-                        <th style="width:12%"><?php echo $bucayaoltotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Bliss Elementary School</th>
-                        <th style="width:12%"><?php echo $blissenglish ?></th>
-                        <th style="width:12%"><?php echo $blissfilipino ?></th>
-                        <th style="width:12%"><?php echo $blissnumeracy ?></th>
-                        <th style="width:12%"><?php echo $blissbehavioral ?></th>
-                        <th style="width:12%"><?php echo $blisstotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Bolosan Elementary School</th>
-                        <th style="width:12%"><?php echo $bolosanenglish ?></th>
-                        <th style="width:12%"><?php echo $bolosanfilipino ?></th>
-                        <th style="width:12%"><?php echo $bolosannumeracy ?></th>
-                        <th style="width:12%"><?php echo $bolosanbehavioral ?></th>
-                        <th style="width:12%"><?php echo $bolosantotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Bonuan Boquig Elementary School</th>
-                        <th style="width:12%"><?php echo $bonuanenglish ?></th>
-                        <th style="width:12%"><?php echo $bonuanfilipino ?></th>
-                        <th style="width:12%"><?php echo $bonuannumeracy ?></th>
-                        <th style="width:12%"><?php echo $bonuanbehavioral ?></th>
-                        <th style="width:12%"><?php echo $bonuantotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Calmay Elementary School</th>
-                        <th style="width:12%"><?php echo $calmayenglish ?></th>
-                        <th style="width:12%"><?php echo $calmayfilipino ?></th>
-                        <th style="width:12%"><?php echo $calmaynumeracy ?></th>
-                        <th style="width:12%"><?php echo $calmaybehavioral ?></th>
-                        <th style="width:12%"><?php echo $calmaytotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Carael Elementary School<</th>
-                        <th style="width:12%"><?php echo $caraelenglish ?></th>
-                        <th style="width:12%"><?php echo $caraelfilipino ?></th>
-                        <th style="width:12%"><?php echo $caraelnumeracy ?></th>
-                        <th style="width:12%"><?php echo $caraelbehavioral ?></th>
-                        <th style="width:12%"><?php echo $caraeltotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Caranglaan Elementary School</th>
-                        <th style="width:12%"><?php echo $caranglaanenglish ?></th>
-                        <th style="width:12%"><?php echo $caranglaanfilipino ?></th>
-                        <th style="width:12%"><?php echo $caranglaannumeracy ?></th>
-                        <th style="width:12%"><?php echo $caranglaanbehavioral ?></th>
-                        <th style="width:12%"><?php echo $caranglaantotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">East Central Integrated School</th>
-                        <th style="width:12%"><?php echo $eastenglish ?></th>
-                        <th style="width:12%"><?php echo $eastfilipino ?></th>
-                        <th style="width:12%"><?php echo $eastnumeracy ?></th>
-                        <th style="width:12%"><?php echo $eastbehavioral ?></th>
-                        <th style="width:12%"><?php echo $easttotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Federico N. Ceralde School Integrated School</th>
-                        <th style="width:12%"><?php echo $federicoenglish ?></th>
-                        <th style="width:12%"><?php echo $federicofilipino ?></th>
-                        <th style="width:12%"><?php echo $federiconumeracy ?></th>
-                        <th style="width:12%"><?php echo $federicobehavioral ?></th>
-                        <th style="width:12%"><?php echo $federicototalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Gen. Gregorio Del Pilar Elementary School</th>
-                        <th style="width:12%"><?php echo $genenglish ?></th>
-                        <th style="width:12%"><?php echo $genfilipino ?></th>
-                        <th style="width:12%"><?php echo $gennumeracy ?></th>
-                        <th style="width:12%"><?php echo $genbehavioral ?></th>
-                        <th style="width:12%"><?php echo $gentotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Juan L. Siapno Elementary School</th>
-                        <th style="width:12%"><?php echo $juanlenglish ?></th>
-                        <th style="width:12%"><?php echo $juanlfilipino ?></th>
-                        <th style="width:12%"><?php echo $juanlnumeracy ?></th>
-                        <th style="width:12%"><?php echo $juanlbehavioral ?></th>
-                        <th style="width:12%"><?php echo $juanltotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Juan P. Guadiz Elementary School</th>
-                        <th style="width:12%"><?php echo $juanpenglish ?></th>
-                        <th style="width:12%"><?php echo $juanpfilipino ?></th>
-                        <th style="width:12%"><?php echo $juanpnumeracy ?></th>
-                        <th style="width:12%"><?php echo $juanpbehavioral ?></th>
-                        <th style="width:12%"><?php echo $juanptotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Lasip Grande Elementary School</th>
-                        <th style="width:12%"><?php echo $lasipenglish ?></th>
-                        <th style="width:12%"><?php echo $lasipfilipino ?></th>
-                        <th style="width:12%"><?php echo $lasipnumeracy ?></th>
-                        <th style="width:12%"><?php echo $lasipbehavioral ?></th>
-                        <th style="width:12%"><?php echo $lasiptotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Leon-Francisco Elementary School</th>
-                        <th style="width:12%"><?php echo $leonenglish ?></th>
-                        <th style="width:12%"><?php echo $leonfilipino ?></th>
-                        <th style="width:12%"><?php echo $leonnumeracy ?></th>
-                        <th style="width:12%"><?php echo $leonbehavioral ?></th>
-                        <th style="width:12%"><?php echo $leontotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Lomboy Elementary School</th>
-                        <th style="width:12%"><?php echo $lomboyenglish ?></th>
-                        <th style="width:12%"><?php echo $lomboyfilipino ?></th>
-                        <th style="width:12%"><?php echo $lomboynumeracy ?></th>
-                        <th style="width:12%"><?php echo $lomboybehavioral ?></th>
-                        <th style="width:12%"><?php echo $lomboytotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Lucao Elementary School</th>
-                        <th style="width:12%"><?php echo $lucaoenglish ?></th>
-                        <th style="width:12%"><?php echo $lucaofilipino ?></th>
-                        <th style="width:12%"><?php echo $lucaonumeracy ?></th>
-                        <th style="width:12%"><?php echo $lucaobehavioral ?></th>
-                        <th style="width:12%"><?php echo $lucaototalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Malued Sur Elementary School</th>
-                        <th style="width:12%"><?php echo $maluedenglish ?></th>
-                        <th style="width:12%"><?php echo $maluedfilipino ?></th>
-                        <th style="width:12%"><?php echo $maluednumeracy ?></th>
-                        <th style="width:12%"><?php echo $maluedbehavioral ?></th>
-                        <th style="width:12%"><?php echo $maluedtotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Mamalingling Elementary School</th>
-                        <th style="width:12%"><?php echo $mamalinglingenglish ?></th>
-                        <th style="width:12%"><?php echo $mamalinglingfilipino ?></th>
-                        <th style="width:12%"><?php echo $mamalinglingnumeracy ?></th>
-                        <th style="width:12%"><?php echo $mamalinglingbehavioral ?></th>
-                        <th style="width:12%"><?php echo $mamalinglingtotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Mangin-Tebeng Elementary School</th>
-                        <th style="width:12%"><?php echo $manginenglish ?></th>
-                        <th style="width:12%"><?php echo $manginfilipino ?></th>
-                        <th style="width:12%"><?php echo $manginnumeracy ?></th>
-                        <th style="width:12%"><?php echo $manginbehavioral ?></th>
-                        <th style="width:12%"><?php echo $mangintotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">North Central Elementary School</th>
-                        <th style="width:12%"><?php echo $northenglish ?></th>
-                        <th style="width:12%"><?php echo $northfilipino ?></th>
-                        <th style="width:12%"><?php echo $northnumeracy ?></th>
-                        <th style="width:12%"><?php echo $northbehavioral ?></th>
-                        <th style="width:12%"><?php echo $northtotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Pantal Elementary School</th>
-                        <th style="width:12%"><?php echo $pantalenglish ?></th>
-                        <th style="width:12%"><?php echo $pantalfilipino ?></th>
-                        <th style="width:12%"><?php echo $pantalnumeracy ?></th>
-                        <th style="width:12%"><?php echo $pantalbehavioral ?></th>
-                        <th style="width:12%"><?php echo $pantaltotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Pascuala G. Villamil Elementary School</th>
-                        <th style="width:12%"><?php echo $pascualaenglish ?></th>
-                        <th style="width:12%"><?php echo $pascualafilipino ?></th>
-                        <th style="width:12%"><?php echo $pascualanumeracy ?></th>
-                        <th style="width:12%"><?php echo $pascualabehavioral ?></th>
-                        <th style="width:12%"><?php echo $pascualatotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Pogo-Lasip Elementary School</th>
-                        <th style="width:12%"><?php echo $pogoenglish ?></th>
-                        <th style="width:12%"><?php echo $pogofilipino ?></th>
-                        <th style="width:12%"><?php echo $pogonumeracy ?></th>
-                        <th style="width:12%"><?php echo $pogobehavioral ?></th>
-                        <th style="width:12%"><?php echo $pogototalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Pugaro Integrated School</th>
-                        <th style="width:12%"><?php echo $pugaroenglish ?></th>
-                        <th style="width:12%"><?php echo $pugarofilipino ?></th>
-                        <th style="width:12%"><?php echo $pugaronumeracy ?></th>
-                        <th style="width:12%"><?php echo $pugarobehavioral ?></th>
-                        <th style="width:12%"><?php echo $pugarototalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Sabangan Elementary School</th>
-                        <th style="width:12%"><?php echo $sabanganenglish ?></th>
-                        <th style="width:12%"><?php echo $sabanganfilipino ?></th>
-                        <th style="width:12%"><?php echo $sabangannumeracy ?></th>
-                        <th style="width:12%"><?php echo $sabanganbehavioral ?></th>
-                        <th style="width:12%"><?php echo $sabangantotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Salapingao Elementary School</th>
-                        <th style="width:12%"><?php echo $salapingaoenglish ?></th>
-                        <th style="width:12%"><?php echo $salapingaofilipino ?></th>
-                        <th style="width:12%"><?php echo $salapingaonumeracy ?></th>
-                        <th style="width:12%"><?php echo $salapingaobehavioral ?></th>
-                        <th style="width:12%"><?php echo $salapingaototalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Salisay Elementary School</th>
-                        <th style="width:12%"><?php echo $salisayenglish ?></th>
-                        <th style="width:12%"><?php echo $salisayfilipino ?></th>
-                        <th style="width:12%"><?php echo $salisaynumeracy ?></th>
-                        <th style="width:12%"><?php echo $salisaybehavioral ?></th>
-                        <th style="width:12%"><?php echo $salisaytotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Suit Elementary School</th>
-                        <th style="width:12%"><?php echo $suitenglish ?></th>
-                        <th style="width:12%"><?php echo $suitfilipino ?></th>
-                        <th style="width:12%"><?php echo $suitnumeracy ?></th>
-                        <th style="width:12%"><?php echo $suitbehavioral ?></th>
-                        <th style="width:12%"><?php echo $suittotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">T. Ayson Rosario Elementary School</th>
-                        <th style="width:12%"><?php echo $aysonenglish ?></th>
-                        <th style="width:12%"><?php echo $aysonfilipino ?></th>
-                        <th style="width:12%"><?php echo $aysonnumeracy ?></th>
-                        <th style="width:12%"><?php echo $aysonbehavioral ?></th>
-                        <th style="width:12%"><?php echo $aysontotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Tambac Elementary School</th>
-                        <th style="width:12%"><?php echo $tambacenglish ?></th>
-                        <th style="width:12%"><?php echo $tambacfilipino ?></th>
-                        <th style="width:12%"><?php echo $tambacnumeracy ?></th>
-                        <th style="width:12%"><?php echo $tambacbehavioral ?></th>
-                        <th style="width:12%"><?php echo $tambactotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Tebeng Elementary School</th>
-                        <th style="width:12%"><?php echo $tebengenglish ?></th>
-                        <th style="width:12%"><?php echo $tebengfilipino ?></th>
-                        <th style="width:12%"><?php echo $tebengnumeracy ?></th>
-                        <th style="width:12%"><?php echo $tebengbehavioral ?></th>
-                        <th style="width:12%"><?php echo $tebengtotalpar ?></th>
-                    </tr>
-
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Victoria Q. Zarate Elementary School</th>
-                        <th style="width:12%"><?php echo $victoriaenglish ?></th>
-                        <th style="width:12%"><?php echo $victoriafilipino ?></th>
-                        <th style="width:12%"><?php echo $victorianumeracy ?></th>
-                        <th style="width:12%"><?php echo $victoriabehavioral ?></th>
-                        <th style="width:12%"><?php echo $victoriatotalpar ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%; text-align: left; padding-left: 10px">West Central II Elementary School</th>
-                        <th style="width:12%"><?php echo $westcentralenglish?></th>
-                        <th style="width:12%"><?php echo $westcentralfilipino?></th>
-                        <th style="width:12%"><?php echo $westcentralnumeracy?></th>
-                        <th style="width:12%"><?php echo $westcentralbehavioral?></th>
-                        <th style="width:12%"><?php echo $westcentraltotalpar?></th>
-                    </tr>
-
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="details">
+    <div class="update-record">
+        <p class="label">Division</p>
+        <input class="response" type="text" value=" ">
     </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>P.A.R. Identification</td>
+                <td>Q1</td>
+                <td>Resolved</td>
+                <td>Q2</td>
+                <td>Resolved</td>
+                <td>Q3</td>
+                <td>Resolved</td>
+                <td>Q4</td>
+                <td>Resolved</td>
+                <td>Total P.A.R.s</td>
+                <td>Total Resolved</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <tr>
+                        <td>Academic - Literacy in English</td>
+                        <td><?php echo $q1english ?></td>
+                        <td><?php echo $q1englishresolved ?></td>
+                        <td><?php echo $q2english ?></td>
+                        <td><?php echo $q2englishresolved ?></td>
+                        <td><?php echo $q3english ?></td>
+                        <td><?php echo $q3englishresolved ?></td>
+                        <td><?php echo $q4english ?></td>
+                        <td><?php echo $q4englishresolved ?></td>
+                        <td><?php echo $totalEnglish ?></td>
+                        <td><?php echo $totalEnglishResolved ?></td>
+                    </tr>
+                    <tr>
+                        <td>Academic - Literacy in Filipino</td>
+                        <td><?php echo $q1filipino ?></td>
+                        <td><?php echo $q1filipinoresolved ?></td>
+                        <td><?php echo $q2filipino ?></td>
+                        <td><?php echo $q2filipinoresolved ?></td>
+                        <td><?php echo $q3filipino ?></td>
+                        <td><?php echo $q3filipinoresolved ?></td>
+                        <td><?php echo $q4filipino ?></td>
+                        <td><?php echo $q4filipinoresolved ?></td>
+                        <td><?php echo $totalFilipino ?></td>
+                        <td><?php echo $totalFilipinoResolved ?></td>
+                    </tr>
+                    <tr>
+                        <td>Academic - Numeracy</td>
+                        <td><?php echo $q1numeracy ?></td>
+                        <td><?php echo $q1numeracyresolved ?></td>
+                        <td><?php echo $q2numeracy ?></td>
+                        <td><?php echo $q2numeracyresolved ?></td>
+                        <td><?php echo $q3numeracy ?></td>
+                        <td><?php echo $q3numeracyresolved ?></td>
+                        <td><?php echo $q4numeracy ?></td>
+                        <td><?php echo $q4numeracyresolved ?></td>
+                        <td><?php echo $totalNumeracy ?></td>
+                        <td><?php echo $totalNumeracyResolved ?></td>
+                    </tr>
+                    <tr>
+                        <td>Behavioral</td>
+                        <td><?php echo $q1behavioral ?></td>
+                        <td><?php echo $q1behavioralresolved ?></td>
+                        <td><?php echo $q2behavioral ?></td>
+                        <td><?php echo $q2behavioralresolved ?></td>
+                        <td><?php echo $q3behavioral ?></td>
+                        <td><?php echo $q3behavioralresolved ?></td>
+                        <td><?php echo $q4behavioral ?></td>
+                        <td><?php echo $q4behavioralresolved ?></td>
+                        <td><?php echo $totalBehavioral ?></td>
+                        <td><?php echo $totalBehavioralResolved ?></td>
+                    </tr>
+        </tbody>
+    </table>
+    <div class="line"></div>
+    <div class="details" >
+    <div class="update-record2">
+        <p class="label">Quarter</p>
+        <input class="response" type="text" value="4" readonly>
+    </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td>School Name</td>
+                <td>Academic - Literacy in English</td>
+                <td>Academic - Literacy in Filipino</td>
+                <td>Academic - Numeracy</td>
+                <td>Behavioral</td>
+                <td>Total P.A.R.s</td>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+                        <td>Bacayao Sur Elementary School</td>  
+                        <td><?php echo $bucayaoenglish ?></td>
+                        <td><?php echo $bucayaofilipino ?></td>
+                        <td><?php echo $bucayaonumeracy ?></td>
+                        <td><?php echo $bucayaobehavioral ?></td>
+                        <td><?php echo $bucayaoltotalpar ?></td>
+                    </tr>
 
-    <script src="monitoring_tracking.js"></script>
+                    <tr>
+                        <td>Bliss Elementary School</td>
+                        <td><?php echo $blissenglish ?></td>
+                        <td><?php echo $blissfilipino ?></td>
+                        <td><?php echo $blissnumeracy ?></td>
+                        <td><?php echo $blissbehavioral ?></td>
+                        <td><?php echo $blisstotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Bolosan Elementary School</td>
+                        <td><?php echo $bolosanenglish ?></td>
+                        <td><?php echo $bolosanfilipino ?></td>
+                        <td><?php echo $bolosannumeracy ?></td>
+                        <td><?php echo $bolosanbehavioral ?></td>
+                        <td><?php echo $bolosantotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Bonuan Boquig Elementary School</td>
+                        <td><?php echo $bonuanenglish ?></td>
+                        <td><?php echo $bonuanfilipino ?></td>
+                        <td><?php echo $bonuannumeracy ?></td>
+                        <td><?php echo $bonuanbehavioral ?></td>
+                        <td><?php echo $bonuantotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Calmay Elementary School</td>
+                        <td><?php echo $calmayenglish ?></td>
+                        <td><?php echo $calmayfilipino ?></td>
+                        <td><?php echo $calmaynumeracy ?></td>
+                        <td><?php echo $calmaybehavioral ?></td>
+                        <td><?php echo $calmaytotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Carael Elementary School<</td>
+                        <td><?php echo $caraelenglish ?></td>
+                        <td><?php echo $caraelfilipino ?></td>
+                        <td><?php echo $caraelnumeracy ?></td>
+                        <td><?php echo $caraelbehavioral ?></td>
+                        <td><?php echo $caraeltotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Caranglaan Elementary School</td>
+                        <td><?php echo $caranglaanenglish ?></td>
+                        <td><?php echo $caranglaanfilipino ?></td>
+                        <td><?php echo $caranglaannumeracy ?></td>
+                        <td><?php echo $caranglaanbehavioral ?></td>
+                        <td><?php echo $caranglaantotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>East Central Integrated School</td>
+                        <td><?php echo $eastenglish ?></td>
+                        <td><?php echo $eastfilipino ?></td>
+                        <td><?php echo $eastnumeracy ?></td>
+                        <td><?php echo $eastbehavioral ?></td>
+                        <td><?php echo $easttotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Federico N. Ceralde School Integrated School</td>
+                        <td><?php echo $federicoenglish ?></td>
+                        <td><?php echo $federicofilipino ?></td>
+                        <td><?php echo $federiconumeracy ?></td>
+                        <td><?php echo $federicobehavioral ?></td>
+                        <td><?php echo $federicototalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Gen. Gregorio Del Pilar Elementary School</td>
+                        <td><?php echo $genenglish ?></td>
+                        <td><?php echo $genfilipino ?></td>
+                        <td><?php echo $gennumeracy ?></td>
+                        <td><?php echo $genbehavioral ?></td>
+                        <td><?php echo $gentotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Juan L. Siapno Elementary School</td>
+                        <td><?php echo $juanlenglish ?></td>
+                        <td><?php echo $juanlfilipino ?></td>
+                        <td><?php echo $juanlnumeracy ?></td>
+                        <td><?php echo $juanlbehavioral ?></td>
+                        <td><?php echo $juanltotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Juan P. Guadiz Elementary School</td>
+                        <td><?php echo $juanpenglish ?></td>
+                        <td><?php echo $juanpfilipino ?></td>
+                        <td><?php echo $juanpnumeracy ?></td>
+                        <td><?php echo $juanpbehavioral ?></td>
+                        <td><?php echo $juanptotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Lasip Grande Elementary School</td>
+                        <td><?php echo $lasipenglish ?></td>
+                        <td><?php echo $lasipfilipino ?></td>
+                        <td><?php echo $lasipnumeracy ?></td>
+                        <td><?php echo $lasipbehavioral ?></td>
+                        <td><?php echo $lasiptotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Leon-Francisco Elementary School</td>
+                        <td><?php echo $leonenglish ?></td>
+                        <td><?php echo $leonfilipino ?></td>
+                        <td><?php echo $leonnumeracy ?></td>
+                        <td><?php echo $leonbehavioral ?></td>
+                        <td><?php echo $leontotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Lomboy Elementary School</td>
+                        <td><?php echo $lomboyenglish ?></td>
+                        <td><?php echo $lomboyfilipino ?></td>
+                        <td><?php echo $lomboynumeracy ?></td>
+                        <td><?php echo $lomboybehavioral ?></td>
+                        <td><?php echo $lomboytotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Lucao Elementary School</td>
+                        <td><?php echo $lucaoenglish ?></td>
+                        <td><?php echo $lucaofilipino ?></td>
+                        <td><?php echo $lucaonumeracy ?></td>
+                        <td><?php echo $lucaobehavioral ?></td>
+                        <td><?php echo $lucaototalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Malued Sur Elementary School</td>
+                        <td><?php echo $maluedenglish ?></td>
+                        <td><?php echo $maluedfilipino ?></td>
+                        <td><?php echo $maluednumeracy ?></td>
+                        <td><?php echo $maluedbehavioral ?></td>
+                        <td><?php echo $maluedtotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Mamalingling Elementary School</td>
+                        <td><?php echo $mamalinglingenglish ?></td>
+                        <td><?php echo $mamalinglingfilipino ?></td>
+                        <td><?php echo $mamalinglingnumeracy ?></td>
+                        <td><?php echo $mamalinglingbehavioral ?></td>
+                        <td><?php echo $mamalinglingtotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Mangin-Tebeng Elementary School</td>
+                        <td><?php echo $manginenglish ?></td>
+                        <td><?php echo $manginfilipino ?></td>
+                        <td><?php echo $manginnumeracy ?></td>
+                        <td><?php echo $manginbehavioral ?></td>
+                        <td><?php echo $mangintotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>North Central Elementary School</td>
+                        <td><?php echo $northenglish ?></td>
+                        <td><?php echo $northfilipino ?></td>
+                        <td><?php echo $northnumeracy ?></td>
+                        <td><?php echo $northbehavioral ?></td>
+                        <td><?php echo $northtotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Pantal Elementary School</td>
+                        <td><?php echo $pantalenglish ?></td>
+                        <td><?php echo $pantalfilipino ?></td>
+                        <td><?php echo $pantalnumeracy ?></td>
+                        <td><?php echo $pantalbehavioral ?></td>
+                        <td><?php echo $pantaltotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Pascuala G. Villamil Elementary School</td>
+                        <td><?php echo $pascualaenglish ?></td>
+                        <td><?php echo $pascualafilipino ?></td>
+                        <td><?php echo $pascualanumeracy ?></td>
+                        <td><?php echo $pascualabehavioral ?></td>
+                        <td><?php echo $pascualatotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Pogo-Lasip Elementary School</td>
+                        <td><?php echo $pogoenglish ?></td>
+                        <td><?php echo $pogofilipino ?></td>
+                        <td><?php echo $pogonumeracy ?></td>
+                        <td><?php echo $pogobehavioral ?></td>
+                        <td><?php echo $pogototalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Pugaro Integrated School</td>
+                        <td><?php echo $pugaroenglish ?></td>
+                        <td><?php echo $pugarofilipino ?></td>
+                        <td><?php echo $pugaronumeracy ?></td>
+                        <td><?php echo $pugarobehavioral ?></td>
+                        <td><?php echo $pugarototalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Sabangan Elementary School</td>
+                        <td><?php echo $sabanganenglish ?></td>
+                        <td><?php echo $sabanganfilipino ?></td>
+                        <td><?php echo $sabangannumeracy ?></td>
+                        <td><?php echo $sabanganbehavioral ?></td>
+                        <td><?php echo $sabangantotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Salapingao Elementary School</td>
+                        <td><?php echo $salapingaoenglish ?></td>
+                        <td><?php echo $salapingaofilipino ?></td>
+                        <td><?php echo $salapingaonumeracy ?></td>
+                        <td><?php echo $salapingaobehavioral ?></td>
+                        <td><?php echo $salapingaototalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Salisay Elementary School</td>
+                        <td><?php echo $salisayenglish ?></td>
+                        <td><?php echo $salisayfilipino ?></td>
+                        <td><?php echo $salisaynumeracy ?></td>
+                        <td><?php echo $salisaybehavioral ?></td>
+                        <td><?php echo $salisaytotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Suit Elementary School</td>
+                        <td><?php echo $suitenglish ?></td>
+                        <td><?php echo $suitfilipino ?></td>
+                        <td><?php echo $suitnumeracy ?></td>
+                        <td><?php echo $suitbehavioral ?></td>
+                        <td><?php echo $suittotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>T. Ayson Rosario Elementary School</td>
+                        <td><?php echo $aysonenglish ?></td>
+                        <td><?php echo $aysonfilipino ?></td>
+                        <td><?php echo $aysonnumeracy ?></td>
+                        <td><?php echo $aysonbehavioral ?></td>
+                        <td><?php echo $aysontotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Tambac Elementary School</td>
+                        <td><?php echo $tambacenglish ?></td>
+                        <td><?php echo $tambacfilipino ?></td>
+                        <td><?php echo $tambacnumeracy ?></td>
+                        <td><?php echo $tambacbehavioral ?></td>
+                        <td><?php echo $tambactotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>Tebeng Elementary School</td>
+                        <td><?php echo $tebengenglish ?></td>
+                        <td><?php echo $tebengfilipino ?></td>
+                        <td><?php echo $tebengnumeracy ?></td>
+                        <td><?php echo $tebengbehavioral ?></td>
+                        <td><?php echo $tebengtotalpar ?></td>
+                    </tr>
+
+                    <tr>
+                        <td>Victoria Q. Zarate Elementary School</td>
+                        <td><?php echo $victoriaenglish ?></td>
+                        <td><?php echo $victoriafilipino ?></td>
+                        <td><?php echo $victorianumeracy ?></td>
+                        <td><?php echo $victoriabehavioral ?></td>
+                        <td><?php echo $victoriatotalpar ?></td>
+                    </tr>
+                    <tr>
+                        <td>West Central II Elementary School</td>
+                        <td><?php echo $westcentralenglish?></td>
+                        <td><?php echo $westcentralfilipino?></td>
+                        <td><?php echo $westcentralnumeracy?></td>
+                        <td><?php echo $westcentralbehavioral?></td>
+                        <td><?php echo $westcentraltotalpar?></td>
+                    </tr>
+        </tbody>
+    </table>
     <script>
-    function redirectToQuarter() {
-        // Get the selected value from the dropdown
-        var selectedQuarter = document.getElementById("topdown").value;
-
-        // Check if a quarter is selected
-        if (selectedQuarter !== "") {
-            // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
-
-            // Redirect to the selected quarter's PHP file
-            window.location.href = redirectURL;
-        }
-    }
-</script>
-<script>
-    function printPARsList() {
+    function printContent() {
         window.print();
     }
 </script>

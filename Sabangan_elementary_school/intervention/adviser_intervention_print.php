@@ -55,8 +55,6 @@ if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
 
     // Close the database connection
     $conn->close();
-} else {
-    echo "LRN, classification, and employment_number parameters are required.";
 }
 ?>
 

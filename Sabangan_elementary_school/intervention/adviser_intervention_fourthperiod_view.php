@@ -106,7 +106,7 @@ if(isset($_POST['print'])) {
         $classification = isset($_GET['classification']) ? $_GET['classification'] : 'default_value';
         $filename1 = basename($_SERVER['PHP_SELF']);
         
-        $redirect_url = "../../print_record/adviser_intervention_print.php?classification=$classification&lrn=$lrn&employment_number=$employment_number&filename=$filename1&quarter=4";
+        $redirect_url = "adviser_intervention_print.php?classification=$classification&lrn=$lrn&employment_number=$employment_number&filename=$filename1&quarter=4";
         
         header("Location: $redirect_url");
         exit();

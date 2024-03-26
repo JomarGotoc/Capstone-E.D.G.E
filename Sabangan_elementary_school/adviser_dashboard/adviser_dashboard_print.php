@@ -1,27 +1,28 @@
 <?php
-    include('../database.php');
+    include('../../database.php');
     // Check if the grade and section parameters are present in the URL
     if (isset($_GET['grade']) && isset($_GET['section'])) {
         // Retrieve the grade and section values from the URL
         $grade = ucfirst($_GET['grade']);
         $section = $_GET['section'];
+        $quarter = $_GET['quarter'];
 
         // Prepare SQL statements for each table to fetch data
-        $sql_english = "SELECT lrn, fullname, classification, grade, section, status FROM academic_english WHERE grade = ? AND section = ?";
-        $sql_filipino = "SELECT lrn, fullname, classification, grade, section, status FROM academic_filipino WHERE grade = ? AND section = ?";
-        $sql_numeracy = "SELECT lrn, fullname, classification, grade, section, status FROM academic_numeracy WHERE grade = ? AND section = ?";
-        $sql_behavioral = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE grade = ? AND section = ?";
+        $sql_english = "SELECT lrn, fullname, classification, grade, section, status FROM academic_english WHERE grade = ? AND section = ? AND quarter = ?";
+        $sql_filipino = "SELECT lrn, fullname, classification, grade, section, status FROM academic_filipino WHERE grade = ? AND section = ? AND quarter = ?";
+        $sql_numeracy = "SELECT lrn, fullname, classification, grade, section, status FROM academic_numeracy WHERE grade = ? AND section = ? AND quarter = ?";
+        $sql_behavioral = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE grade = ? AND section = ? AND quarter = ?";
         $sql_adviser = "SELECT fullname, employment_number FROM adviser WHERE grade = ? AND section = ?";
 
         // Prepare and bind parameters
         $stmt_english = $conn->prepare($sql_english);
-        $stmt_english->bind_param("ss", $grade, $section);
+        $stmt_english->bind_param("sss", $grade, $section, $quarter);
         $stmt_filipino = $conn->prepare($sql_filipino);
-        $stmt_filipino->bind_param("ss", $grade, $section);
+        $stmt_filipino->bind_param("sss", $grade, $section, $quarter);
         $stmt_numeracy = $conn->prepare($sql_numeracy);
-        $stmt_numeracy->bind_param("ss", $grade, $section);
+        $stmt_numeracy->bind_param("sss", $grade, $section, $quarter);
         $stmt_behavioral = $conn->prepare($sql_behavioral);
-        $stmt_behavioral->bind_param("ss", $grade, $section);
+        $stmt_behavioral->bind_param("sss", $grade, $section, $quarter);
         $stmt_adviser = $conn->prepare($sql_adviser);
         $stmt_adviser->bind_param("ss", $grade, $section);
 

@@ -73,15 +73,26 @@
             text-align: center;
             padding: 8px;
         }
+        td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
         th {
-            background-color: #B7B7B7;
-            color: #190572;
+            background-color: #190572;
+            color: #FFFFFF;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
         tr:nth-child(odd) {
             background-color: transparent;
+        }
+        .line {
+            width: 100%;
+            height: 2px;
+            background-color: #190572;
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
     </style>
 </head>
@@ -96,49 +107,139 @@
     </div>
     <div class="details">
     <div class="update-record">
-        <p class="label">Division</p>
-        <input class="response" type="text" value=" ">
-        
-        <p class="label">Quarter</p>
+        <p class="label">School Name</p>
         <input class="response" type="text" value=" ">
     </div>
     <div class="update-record2">
-        <p class="label">Total P.A.Rs</p>
-        <input class="response" type="text" value=" ">
-        <p class="label">Resolved Cases</p>
+        <p class="label">Quarter</p>
         <input class="response" type="text" value=" ">
     </div>
     </div>
     <table>
         <thead>
             <tr>
-                <th>Elementary School's Name</th>
-                <th># of Students</th>
-                <th># of P.A.R</th>
-                <th>A - Literacy (E)</th>
-                <th>A - Literacy (F)</th>
-                <th>A - Numeracy</th>
-                <th>Behavioral</th>
+                <th>P.A.R. Identification</th>
+                <th>Q1</th>
+                <th>Resolved</th>
+                <th>Q2</th>
+                <th>Resolved</th>
+                <th>Q3</th>
+                <th>Resolved</th>
+                <th>Q4</th>
+                <th>Resolved</th>
+                <th>Total P.A.R.s</th>
+                <th>Total Resolved</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>chowchowchow</td>
+                <td>Academic - Literacy in English</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>
                 <td>2</td>
                 <td>3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
                 <td>1</td>
             </tr>
             <tr>
-                <td>chowchowchow</td>
+                <td>Academic - Literacy in Filipino</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>
                 <td>2</td>
                 <td>3</td>
                 <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Academic - Numeracy</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>Behavioral</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="line"></div>
+    <div class="details" >
+    <div class="update-record">
+        <p class="label">No. of P.A.Rs</p>
+        <input class="response" type="text" value="Highest to Lowest">
+    </div>
+    <div class="update-record2">
+        <p class="label">Quarter</p>
+        <input class="response" type="text" value=" ">
+    </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Grade level</th>
+                <th>Academic - Literacy in English</th>
+                <th>Academic - Literacy in Filipino</th>
+                <th>Academic - Numeracy</th>
+                <th>Behavioral</th>
+                <th>Total P.A.R.s</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Grade 1</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Grade 2</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Grade 3</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>Kinder ngay</td>
+                <td>11</td>
+                <td>10</td>
+                <td>4</td>
+                <td>2</td>
+                <td>3</td>
             </tr>
         </tbody>
     </table>

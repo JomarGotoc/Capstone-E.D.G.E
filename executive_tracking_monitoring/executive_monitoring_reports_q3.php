@@ -3160,10 +3160,12 @@ $filename = basename($_SERVER['PHP_SELF']);
         </div>
             <div class="column column-left">
             <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+                <a href="executive_monitoring_print_q3.php">
+                    <button style="background: transparent; border: none;">
+                        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+                    </button>
+                </a>
+            </div>
             </div>
             <div class="column full-width">
                 <div class="column third-column">

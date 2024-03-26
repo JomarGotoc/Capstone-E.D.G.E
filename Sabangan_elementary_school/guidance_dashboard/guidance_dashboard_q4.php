@@ -33,6 +33,12 @@ if ($result) {
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
+<?php
+if(isset($_POST['print'])) {
+    $employment_number = $_GET['employment_number'];
+    header("Location: guidance_dashboard_print.php?employment_number=$employment_number&quarter=4");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -632,11 +638,13 @@ if ($result) {
                 </div>
         </div>
             <div class="column">
-            <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+            <form method="post">
+        <div class="containers second">
+            <button style="background: transparent; border: none;" name="print">
+                <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+            </button>
+        </div>
+        </form>
             </div>
             <div class="column full-width">
                 <div class="column third-column">

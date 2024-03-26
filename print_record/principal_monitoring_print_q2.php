@@ -107,7 +107,7 @@
     </div>
     <div class="details">
     <div class="update-record">
-        <p class="label">Division</p>
+        <p class="label">School Name</p>
         <input class="response" type="text" value=" ">
     </div>
     <div class="update-record2">
@@ -200,7 +200,7 @@
     <table>
         <thead>
             <tr>
-                <th>School Name</th>
+                <th>Grade level</th>
                 <th>Academic - Literacy in English</th>
                 <th>Academic - Literacy in Filipino</th>
                 <th>Academic - Numeracy</th>
@@ -210,7 +210,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Gen. Gregorio Del Pilar Elementary School</td>
+                <td>Grade 1</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>
@@ -218,7 +218,7 @@
                 <td>3</td>
             </tr>
             <tr>
-                <td>Gen. Gregorio Del Pilar Elementary School</td>
+                <td>Grade 2</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>
@@ -226,7 +226,7 @@
                 <td>3</td>
             </tr>
             <tr>
-                <td>Gen. Gregorio Del Pilar Elementary School</td>
+                <td>Grade 3</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>
@@ -234,7 +234,7 @@
                 <td>3</td>
             </tr>
             <tr>
-                <td>Gen. Gregorio Del Pilar Elementary School</td>
+                <td>Kinder ngay</td>
                 <td>11</td>
                 <td>10</td>
                 <td>4</td>

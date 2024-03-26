@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     
     if ($stmt->execute()) {
         $employment_number = $_GET['employment_number'];
-        header('Location: counselor_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number));
+        header('Location: counselor_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number). '&classification=' . urlencode($classification));
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -77,7 +77,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
         if ($validQuarter) {
             $employment_number = $_GET['employment_number'];
-            header('Location: counselor_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number));
+            $classification = $_GET['classification'];
+            header('Location: counselor_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number). '&classification=' . urlencode($classification));
             exit();
         }
 

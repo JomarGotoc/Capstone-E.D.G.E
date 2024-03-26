@@ -118,7 +118,7 @@ if(isset($_POST['print'])) {
         $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
         $filename1 = basename($_SERVER['PHP_SELF']);
         
-        $redirect_url = "../../print_record/adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1";
+        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=2";
         
         header("Location: $redirect_url");
         exit();

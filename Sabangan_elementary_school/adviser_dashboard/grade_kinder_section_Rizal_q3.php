@@ -1,11 +1,12 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = basename(__FILE__,'_q3.php');
     $currentFileName1 = $currentFileName1 . '.php?employment_number=' . $_GET['employment_number'];
 
-    $currentFileName2 = basename(__FILE__,'_q1.php');
     
+    $currentFileName2 = basename(__FILE__,'_q3.php');
+
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -19,23 +20,23 @@
     } 
 ?>
 <?php
-include('../../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-foreach ($tables as $table) {
-    $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Sabangan Elementary School'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $count += $row['count'];
+    include('../../database.php');
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $words[1];
+    $fourthWord = $words[3];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    foreach ($tables as $table) {
+        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Sabangan Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $count += $row['count'];
+            }
         }
     }
-}
-$conn->close();
+    $conn->close();
 ?>
 <?php
     include('../../database.php');
@@ -77,14 +78,15 @@ $conn->close();
         // Close the connection
         $conn->close();
     } 
-
     function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Sabangan Elementary School'";
+        // Prepare and execute the SQL query
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 3 AND school = 'Sabangan Elementary School'";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $grade, $section);
         $stmt->execute();
         $result = $stmt->get_result();
+
+        // Check if there are any results
         if ($result->num_rows > 0) {
             // Return an array containing the table name and the fetched data
             $tableData = array();
@@ -116,7 +118,7 @@ if(isset($_POST['print'])) {
         $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
         $filename1 = basename($_SERVER['PHP_SELF']);
         
-        $redirect_url = "../../print_record/adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1";
+        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=3";
         
         header("Location: $redirect_url");
         exit();
@@ -433,7 +435,6 @@ if(isset($_POST['print'])) {
             background: #FBFBFB;
             color: #190572;
         }
-
         #topdown {
             padding: 1px;
             width: 437px;
@@ -898,7 +899,6 @@ if(isset($_POST['print'])) {
         .resolved {
             background-color: green;
         }
-
         
     </style>
 </head>
@@ -914,7 +914,7 @@ if(isset($_POST['print'])) {
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="adviser_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
+                    <a href="adviser_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -936,7 +936,7 @@ if(isset($_POST['print'])) {
                 </div>
         </div>
         <div class="column">
-            <form method="post">
+        <form method="post">
         <div class="containers second">
             <button style="background: transparent; border: none;" name="print">
                 <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
@@ -994,7 +994,6 @@ if(isset($_POST['print'])) {
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Adviser</h3>
                 </div>
-
             </div>
             <?php
             if ($result2->num_rows > 0) {
@@ -1007,6 +1006,7 @@ if(isset($_POST['print'])) {
             </div>";
             }
             ?>
+
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1029,7 +1029,7 @@ if(isset($_POST['print'])) {
             <div class="column column-right">
             <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="" disabled selected hidden>Quarter 3</option>
                         <option value="q1">Quarter 1</option>
                         <option value="q2">Quarter 2</option>
                         <option value="q3">Quarter 3</option>
@@ -1132,7 +1132,7 @@ if(isset($_POST['print'])) {
                         <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
                         <th style='width:15%'>{$status}</th>
                         <th style='width:15%' class='act'>
-                        <button><a href='../intervention/adviser_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
+                        <button>  <a href='../intervention/adviser_intervention_thirdperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a> </button>
                         </th>
                       </tr>";
             }
@@ -1146,13 +1146,12 @@ if(isset($_POST['print'])) {
 
 
         <div class="plus-button">
-        <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+            <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
         </div>
 
 
-
     <script src="adviserdashboard.js"></script>
-    
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
@@ -1194,6 +1193,5 @@ if(isset($_POST['print'])) {
         }
     }
 </script>
- 
 </body>
 </html>

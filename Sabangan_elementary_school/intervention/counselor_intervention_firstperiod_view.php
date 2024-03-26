@@ -38,6 +38,7 @@ if (!empty($data)) {
     $gname = $data['gname'];
     $number = $data['number'];
     $grade = $data['grade'];
+    $section = $data['section'];
     $classification = $data['classification'];
     $status = $data['status'];
     $advice = $data['advice'];
@@ -50,6 +51,20 @@ if (!empty($data)) {
 }
 
 $conn->close();
+?>
+<?php
+if(isset($_POST['print'])) {
+        
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        $lrn = isset($_GET['lrn']) ? $_GET['lrn'] : 'default_value';
+        $classification = isset($_GET['classification']) ? $_GET['classification'] : 'default_value';
+        
+        $redirect_url = "guidance_intervention_print.php?classification=$classification&lrn=$lrn&employment_number=$employment_number&quarter=1";
+        
+        header("Location: $redirect_url");
+        exit();
+    
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -576,11 +591,13 @@ $conn->close();
                 </div>
             </div>
             <div class="column">
-            <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+            <form method="post">
+        <div class="containers second">
+            <button style="background: transparent; border: none;" name="print">
+                <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+            </button>
+        </div>
+        </form>
             </div>
             <div class="column column-left">
                 <div class="containers third" style="background-color: #190572;">
@@ -613,7 +630,7 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade&section" id="grade&section" value="<?php echo htmlspecialchars($grade); ?>" placeholder="" class="right" readonly>
+                <input type="text" name="grade&section" id="grade&section" value="<?php echo htmlspecialchars($grade . ' - ' . $section); ?>" placeholder="" class="right" readonly>
                 </div>
             </div>
         </div>
@@ -692,10 +709,5 @@ $conn->close();
         </div>
     </div>
     </form>
-    <script>
-    function printPARsList() {
-        window.print();
-    }
-</script>
 </body>
 </html>

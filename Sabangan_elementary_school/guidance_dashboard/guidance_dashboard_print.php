@@ -1,3 +1,37 @@
+<?php
+include('../../database.php');
+
+// Get the employment_number from the URL using GET
+if (isset($_GET['employment_number'])) {
+    $employment_number = $_GET['employment_number'];
+
+    // Prepare and execute the SQL query to fetch counselor's fullname
+    $sql_counselor = "SELECT fullname FROM counselor WHERE employment_number = '$employment_number'";
+    $result_counselor = $conn->query($sql_counselor);
+
+    if ($result_counselor->num_rows > 0) {
+        // Fetch the fullname and store it as $fullname
+        $row_counselor = $result_counselor->fetch_assoc();
+        $fullname = $row_counselor['fullname'];
+
+        // Prepare and execute the SQL query for behavioral data
+        $quarter = $_GET['quarter'];
+        $school = 'Sabangan Elementary School';
+        $sql_behavioral = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE quarter = $quarter AND school = '$school'";
+        $result = $conn->query($sql_behavioral);
+
+        // Check if the query was successful
+        if ($result) {
+            // Count the number of LRNs
+            $total = $result->num_rows;
+        } 
+    } 
+} 
+
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,10 +133,10 @@
     <div class="details">
     <div class="update-record">
         <p class="label">Employee Number</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="<?php echo $employment_number ?>">
         
         <p class="label">Guidance Counselor</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="<?php echo $fullname ?>">
     </div>
     <div class="update-record2">
         
@@ -110,35 +144,34 @@
         <input class="response" type="text" value=" ">
         
         <p class="label">Total Students</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="<?php echo $total ?>">
     </div>
     </div>
-    <table>
-        <thead>
+    <?php
+if ($result->num_rows > 0) {
+    // Display the results in a table with centered text
+    echo "<table border='1'>
             <tr>
-                <th>LRN</th>
-                <th>Pupil's Name</th>
-                <th>P.A.R. Identification</th>
-                <th>Grade & Section</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>123456789012</td>
-                <td>John Doe</td>
-                <td>Par ID1</td>
-                <td>Grade 1 - Mabait</td>
-                <td>Resolved</td>
-            </tr>
-            <tr>
-                <td>123456789012</td>
-                <td>Jane Doe</td>
-                <td>Par ID2</td>
-                <td>Grade 2 - Medyo Mabait</td>
-                <td>Unresolved</td>
-            </tr>
-        </tbody>
-    </table>
+                <th style='text-align: center;'>LRN</th>
+                <th style='text-align: center;'>Full Name</th>
+                <th style='text-align: center;'>Classification</th>
+                <th style='text-align: center;'>Grade</th>
+                <th style='text-align: center;'>Section</th>
+                <th style='text-align: center;'>Status</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>
+                <td style='text-align: center;'>{$row['lrn']}</td>
+                <td style='text-align: center;'>{$row['fullname']}</td>
+                <td style='text-align: center;'>{$row['classification']}</td>
+                <td style='text-align: center;'>{$row['grade']}</td>
+                <td style='text-align: center;'>{$row['section']}</td>
+                <td style='text-align: center;'>{$row['status']}</td>
+            </tr>";
+    }
+    echo "</table>";
+} 
+?>
+
 </body>
 </html>
