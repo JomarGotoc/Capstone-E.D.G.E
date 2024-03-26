@@ -179,7 +179,7 @@
 ?>
 <?php
 
-$currentFileName1 = basename(__FILE__,'_q3.php');
+$currentFileName1 = basename(__FILE__,'_q1.php');
 include('../../database.php');
 
 // Count the total rows in each table
@@ -371,644 +371,241 @@ $conn->close();
 
     mysqli_close($conn);
 ?>
-<?php
-    $filename = basename($_SERVER['PHP_SELF']);
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-        function preventBack(){window.history.forward()};
-        setTimeout("preventBack()",0);
-        window.onunload=function(){null;}
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>Principal</title>
+    <title>PRINT</title>
     <style>
-                body {
+        body {
+            background-color: white;
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url(../../img/bg.png);
-            background-size: cover;
         }
-        
-        .logo {
-            width: 75px;
-            height: 75px;
-            margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
-            background-size: cover;
-        }
-        
-        h2 {
-            font-family: 'Darker Grotesque', sans-serif;
-            color: #fff;
-        }
-        
-        h2 p{
-            margin-top: 5px;
-            font-size: 18px;
-        }
-
-        .login-container {
-            background-color: rgba(25, 5, 114, 0.80); 
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
-        }
-        
-        a {
-            color: #fff;
-            text-decoration: none;
-        }
-        
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: .1rem 5%;
-            background: #130550;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            height: 55px;
-        }
-
-        .vertical-line {
-            margin-left: 40rem;
-            height: 40px;
-            width: 1px;
-            background-color: #fff;
-        }
-
-        .logout-icon {
-            color: #fff; 
-            font-size: 1.5rem;
-            cursor: pointer; 
-            margin-left: 15px;
-        }
-
-        .header.sticky {
-            border-bottom: .2rem solid rgba(255, 255, 255, 0.2);
-        }
-
-        h4 {
-            color: #fff;
-            font-family: 'Darker Grotesque', sans-serif;
-            font-weight: 300;
-            font-size: 1.3rem;
-            margin-left: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .logs {
-            width: 3.5rem;
-            height: 3.5rem;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start; 
-            justify-content: center;
-            width: 100%; 
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
-
-        .navbar {
-            background-color: #190572;;
-            opacity: 80%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-            width: 100%;
-            position: fixed;
-            top: 57px; 
-        }
-
-        .back-icon {
-            margin-right: auto;
-            font-size: 3rem;
-        }
-        
-        .navbar a {
-            display: inline-block;
-            padding: 14px 20px;
-            text-decoration: none;
-            color: #FFFFFF;
-            opacity: 100%;
-        }
-        
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .navbar {
             background-color: #190572;
-            opacity: 80%;
-            display: flex;
-            justify-content: space-between; 
-            align-items: center;
-            height: 50px;
-            width: 100%;
-            position: fixed;
-            top: 57px;
-        }
-
-        .back-icon {
-            font-size: 3rem;
-        }
-
-        .navbar a {
-            display: inline-block;
-            text-decoration: none;
-            color: #FFFFFF;
-            opacity: 100%;
-        }
-
-        nav {
-            flex: 1; 
-            text-align: center;
-        }
-
-        nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-
-        .back-icon:hover::after {
-            content: "Back";
-            position: absolute;
-            left: 30px;
-            top: 80%;
-            transform: translateY(-50%);
-            color: #fff;
-            font-size: 14px;
-        }
-
-        h3{
-        color: #fff;
-        }
-        
-        .buttons {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 10px;
-        }
-        
-        a .button {
-        background-color: #0C052F;
-        color: #fff;
-        padding: 10px 20px;
-        margin: 0 10px;
-        border: 1px solid #fff;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        width: 90%;
-        }
-        
-        .button:hover {
-        background-color: #ddd;
-        border: 1px solid #0C052F;
-        color: #190572;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-    
-        ::-webkit-scrollbar-thumb {
-            background-color: #190572;
-            border-radius: 20px;
-        }
-    
-        ::-webkit-scrollbar-track {
-            background-color: #E2DFEE;
-            border-radius: 20px;
-        }
-
-        .main-container {
-            width: 100%;
-            height: calc(90vh - 140px);
-            margin: 20px;
-            margin-top: 125px;
-            bottom: 0;
-            background-color: #E2DFEE;
-            opacity: 80%;
-            overflow: auto;
-            padding: 20px;
-            border-radius: 20px;
-        }
-
-        .shesh {
-            background-color: transparent;
-            border-radius: 5px;
-            border: 3px solid #919097;
-            background: rgba(251, 251, 251, 0.25);
-            box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.25) inset, 0px 7px 7px 0px rgba(0, 0, 0, 0.25);
             padding: 10px;
-            padding-top: 15px;
-            margin-bottom: 20px;  
-        }
-
-        .row {
+            color: white;
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
+            justify-content: flex-start;
         }
-
-        .column {
-            flex: 0 0 calc(16.6667%);
-            margin-bottom: 5px;
+        header img {
+            margin-right: 10px;
         }
-
-        .column-right {
-            flex: 0 0 calc(30%);
-            margin-right: auto; 
-        }
-
-        .column-left {
-            flex: 0 0 calc(15%);
-            margin-left: 0;
-            margin-right: auto; 
-        }
-
-        .row .column:not(:last-child),
-        .wide-row .column:not(:last-child) {
-            margin-right: 0;
-        }
-
-        .row:first-child .column:last-child{
-            margin-left: auto;
-        }
-
-        .containers {
-            background-color: #3498db;
-            padding: .5px;
-        }
-
-        .select-wrapper {
-            background: #FBFBFB;
-            color: #190572;
-        }
-
-        #topdown {
-            padding: 2px;
-            width: 426px;
-            background: #FBFBFB;
-            color: #190572;
-            text-align: start;
-            border: none;
-            border-radius: 5px;
-            font-weight: bold;
-            font-size: 17px;
-        }
-        #topdown1 {
-            padding: 2px;
-            width: 100%;
-            background: #FBFBFB;
-            color: #190572;
-            text-align: center;
-            border: 1px solid #190572;
-            border-radius: 5px;
-        }
-
-        .second{
-            border-radius: 3px;
-            background-color: #2206A0;
-            text-align: center;
-        }
-
-        .second h3{
-            color: #FFF;
-            letter-spacing: 3px;
-        }
-
-        h3 {
-            color: #190572;
-            margin-left: 10px;
-            margin: 0;
-        }
-
-        table{
-            width:100%; 
-            border-collapse: collapse;
+        .update{
             margin-top: 20px;
+            width: 550px;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2px;
         }
-
-        .table-header th {
-            background-color: #190572;
-            color: #fff;
-            font-size: 15px;
-            padding: 5px;
+        .details{
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 5px;
+            margin-top: -20px;
         }
-
-        tr:nth-child(even){
-            background-color: rgb(242, 242, 244);
+        .update-record,
+        .update-record2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            width: 550px;
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 2px;
         }
-
-        tr:nth-child(odd){
-            background-color: #b7b7b7;
-        }
-        
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #130550;
-            min-width: 100px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            right: 150px;
-            border-bottom-left-radius: 7px;
-            border-bottom-right-radius: 7px;
-        }
-
-        .dropdown-content a {
-            color: rgb(255, 253, 253);
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #F3F3F3;
+        .label {
+            background-color: #B7B7B7;
             color: #190572;
-            opacity: 80%;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px 0;
+            grid-column: 1;
+            width: 200px;
+            text-align: left;
+            font-weight: bold;
         }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
+        .response {
+            margin: 5px 0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #F3F3F3;
+            border: none;
+            grid-column: 2;
+            width: 300px;
+            color: #190572;
         }
-        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 8px;
+        }
+        td:first-child {
+            text-align: left;
+            font-weight: bold;
+        }
+        th {
+            background-color: #190572;
+            color: #FFFFFF;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(odd) {
+            background-color: transparent;
+        }
+        .line {
+            width: 100%;
+            height: 2px;
+            background-color: #190572;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="container">
-            <div class="header-content">
-                <img src="../../img/logo.png" class="logs">
-                <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
-                <i class="vertical-line"></i>
-                <div class="dropdown">
-                <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
-                    <div class="dropdown-content" id="dropdownContent">
-                    <a href="../../login/Login.php">Log Out</a>
-                        <a href="principal_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <img src="../img/logo.png" alt="Logo" width="70" height="70">
+        <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
-
-    <div class="navbar">
-        <nav>
-            <a href="Principal_tracking_reports_Q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Quarterly Reports</a>
-            <a href="Principal_monitoring_reports_q3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550">Report Summary</a>
-        </nav>
+    <div class="update">
+        <p class="label">School Year</p>
+        <input class="response" type="text" value=" ">
     </div>
-
-    
-    <div class="main-container">
-        <div class="row">
-            <div class="column">
-                <div class="select-wrapper">
-                    <select id="topdown1" name="school-year" class="containers first">
-                        <option value="school-year">S.Y. 2023 - 2024</option>
-                    </select>
-                </div>
-        </div>
-            <div class="column column-left">
-            <div class="containers second">
-                <a href="principal_monitoring_print_q3.php">
-                    <button style="background: transparent; border: none;">
-                        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-                    </button>
-                </a>
-            </div>
-            </div>
-            <div class="column full-width">
-                <div class="column third-column">
-                    <div class="search-box">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <section class="shesh">
-        <div class="row">
-            <div class="column" >
-                <div class="containers" style="background-color: #B7B7B7; ">
-                    <h3 style="margin-left: 7px">Division</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
-                </div>
-            </div>
-            <div class="column">
-                <div>
-                </div>
-            </div>
-        </div>
-
-        
-      <!--  <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Quarter</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>I</h3>
-                </div>
-            </div>
-        </div> -->
-
-        <table border="0">
-            <thead class="table-header">
-                <tr>
-                    <th style="width:10%">P.A.R. Identification</th>
-                    <th style="width:9%">Q1</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q2</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q3</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Q4</th>
-                    <th style="width:9%">Resolved</th>
-                    <th style="width:9%">Total P.A.R.s</th>
-                    <th style="width:9%">Total Resolved</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <tr>
-                        <th style="width:10%">Academic - Literacy in English</th>
-                        <th style="width:9%"><?php echo $q1english ?></th>
-                        <th style="width:9%"><?php echo $q1englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q2english ?></th>
-                        <th style="width:9%"><?php echo $q2englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q3english ?></th>
-                        <th style="width:9%"><?php echo $q3englishresolved ?></th>
-                        <th style="width:9%"><?php echo $q4english ?></th>
-                        <th style="width:9%"><?php echo $q4englishresolved ?></th>
-                        <th style="width:9%"><?php echo $totalEnglish ?></th>
-                        <th style="width:9%"><?php echo $totalEnglishResolved ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:10%">Academic - Literacy in Filipino</th>
-                        <th style="width:9%"><?php echo $q1filipino ?></th>
-                        <th style="width:9%"><?php echo $q1filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q2filipino ?></th>
-                        <th style="width:9%"><?php echo $q2filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q3filipino ?></th>
-                        <th style="width:9%"><?php echo $q3filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $q4filipino ?></th>
-                        <th style="width:9%"><?php echo $q4filipinoresolved ?></th>
-                        <th style="width:9%"><?php echo $totalFilipino ?></th>
-                        <th style="width:9%"><?php echo $totalFilipinoResolved ?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:10%">Academic - Numeracy</th>
-                        <th style="width:9%"><?php echo $q1numeracy ?></th>
-                        <th style="width:9%"><?php echo $q1numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q2numeracy ?></th>
-                        <th style="width:9%"><?php echo $q2numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q3numeracy ?></th>
-                        <th style="width:9%"><?php echo $q3numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $q4numeracy ?></th>
-                        <th style="width:9%"><?php echo $q4numeracyresolved ?></th>
-                        <th style="width:9%"><?php echo $totalNumeracy ?></th>
-                        <th style="width:9%"><?php echo $totalNumeracyResolved ?></th>
-                    <tr>
-                        <th style="width:10%">Behavioral</th>
-                        <th style="width:9%"><?php echo $q1behavioral ?></th>
-                        <th style="width:9%"><?php echo $q1behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q2behavioral ?></th>
-                        <th style="width:9%"><?php echo $q2behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q3behavioral ?></th>
-                        <th style="width:9%"><?php echo $q3behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $q4behavioral ?></th>
-                        <th style="width:9%"><?php echo $q4behavioralresolved ?></th>
-                        <th style="width:9%"><?php echo $totalBehavioral ?></th>
-                        <th style="width:9%"><?php echo $totalBehavioralResolved ?></th>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <section class="shesh" style="margin-top: 40px;">
-
-        
-        <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #B7B7B7;">
-                    <h3 style="margin-left: 7px">Quarter</h3>
-                </div>
-            </div>
-            <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Quarter 3</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
-                    </select>
-                </div>
-        </div>
-
-        <table border="0">
-            <thead class="table-header">
-                <tr>
-                    <th style="width:40%">Grade Level</th>
-                    <th style="width:15%">Academic - Literacy in English</th>
-                    <th style="width:15%">Academic - Literacy in Filipino</th>
-                    <th style="width:15%">Academic - Numeracy</th>
-                    <th style="width:15%">Behavioral</th>
-                    <th style="width:15%">Total P.A.R.s</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <tr>
-                        <th style="width:40%">Kinder</th>
-                        <th style="width:15%"><?php echo $kinderenglish?></th>
-                        <th style="width:15%"><?php echo $kinderfilipino?></th>
-                        <th style="width:15%"><?php echo $kindernumeracy?></th>
-                        <th style="width:15%"><?php echo $kinderbehavioral?></th>
-                        <th style="width:15%"><?php echo $totalkinder?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%">Grade 1</th>
-                        <th style="width:15%"><?php echo $oneenglish?></th>
-                        <th style="width:15%"><?php echo $onefilipino?></th>
-                        <th style="width:15%"><?php echo $onenumeracy?></th>
-                        <th style="width:15%"><?php echo $onebehavioral?></th>
-                        <th style="width:15%"><?php echo $totalone?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%">Grade 2</th>
-                        <th style="width:15%"><?php echo $twoenglish?></th>
-                        <th style="width:15%"><?php echo $twofilipino?></th>
-                        <th style="width:15%"><?php echo $twonumeracy?></th>
-                        <th style="width:15%"><?php echo $twobehavioral?></th>
-                        <th style="width:15%"><?php echo $totaltwo?></th>
-                    </tr>
-                    <tr>
-                        <th style="width:40%">Grade 3</th>
-                        <th style="width:15%"><?php echo $threeenglish?></th>
-                        <th style="width:15%"><?php echo $threefilipino?></th>
-                        <th style="width:15%"><?php echo $threenumeracy?></th>
-                        <th style="width:15%"><?php echo $threebehavioral?></th>
-                        <th style="width:15%"><?php echo $totalthree?></th>
-                    </tr>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="details">
+    <div class="update-record">
+        <p class="label">School Name</p>
+        <input class="response" type="text" value="Sabangan Elementary School">
     </div>
-
-    <script src="monitoring_tracking.js"></script>
-    <script>
-    function redirectToQuarter() {
-        // Get the selected value from the dropdown
-        var selectedQuarter = document.getElementById("topdown").value;
-
-        // Check if a quarter is selected
-        if (selectedQuarter !== "") {
-            // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName1.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
-
-            // Redirect to the selected quarter's PHP file
-            window.location.href = redirectURL;
-        }
-    }
-</script>
-<script>
-    function printPARsList() {
-        window.print();
-    }
-</script>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>P.A.R. Identification</th>
+                <th>Q1</th>
+                <th>Resolved</th>
+                <th>Q2</th>
+                <th>Resolved</th>
+                <th>Q3</th>
+                <th>Resolved</th>
+                <th>Q4</th>
+                <th>Resolved</th>
+                <th>Total P.A.R.s</th>
+                <th>Total Resolved</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+                        <td>Academic - Literacy in English</td>
+                        <td><?php echo $q1english ?></td>
+                        <td><?php echo $q1englishresolved ?></td>
+                        <td><?php echo $q2english ?></td>
+                        <td><?php echo $q2englishresolved ?></td>
+                        <td><?php echo $q3english ?></td>
+                        <td><?php echo $q3englishresolved ?></td>
+                        <td><?php echo $q4english ?></td>
+                        <td><?php echo $q4englishresolved ?></td>
+                        <td><?php echo $totalEnglish ?></td>
+                        <td><?php echo $totalEnglishResolved ?></td>
+                    </tr>
+                    <tr>
+                        <td>Academic - Literacy in Filipino</td>
+                        <td><?php echo $q1filipino ?></td>
+                        <td><?php echo $q1filipinoresolved ?></td>
+                        <td><?php echo $q2filipino ?></td>
+                        <td><?php echo $q2filipinoresolved ?></td>
+                        <td><?php echo $q3filipino ?></td>
+                        <td><?php echo $q3filipinoresolved ?></td>
+                        <td><?php echo $q4filipino ?></td>
+                        <td><?php echo $q4filipinoresolved ?></td>
+                        <td><?php echo $totalFilipino ?></td>
+                        <td><?php echo $totalFilipinoResolved ?></td>
+                    </tr>
+                    <tr>
+                        <td>Academic - Numeracy</td>
+                        <td><?php echo $q1numeracy ?></td>
+                        <td><?php echo $q1numeracyresolved ?></td>
+                        <td><?php echo $q2numeracy ?></td>
+                        <td><?php echo $q2numeracyresolved ?></td>
+                        <td><?php echo $q3numeracy ?></td>
+                        <td><?php echo $q3numeracyresolved ?></td>
+                        <td><?php echo $q4numeracy ?></td>
+                        <td><?php echo $q4numeracyresolved ?></td>
+                        <td><?php echo $totalNumeracy ?></td>
+                        <td><?php echo $totalNumeracyResolved ?></td>
+                    <tr>
+                        <td>Behavioral</td>
+                        <td><?php echo $q1behavioral ?></td>
+                        <td><?php echo $q1behavioralresolved ?></td>
+                        <td><?php echo $q2behavioral ?></td>
+                        <td><?php echo $q2behavioralresolved ?></td>
+                        <td><?php echo $q3behavioral ?></td>
+                        <td><?php echo $q3behavioralresolved ?></td>
+                        <td><?php echo $q4behavioral ?></td>
+                        <td><?php echo $q4behavioralresolved ?></td>
+                        <td><?php echo $totalBehavioral ?></td>
+                        <td><?php echo $totalBehavioralResolved ?></td>
+                </tr>
+        </tbody>
+    </table>
+    <div class="line"></div>
+    <div class="details" >
+    <div class="update-record2">
+        <p class="label">Quarter</p>
+        <input class="response" type="text" value="3">
+    </div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Grade level</th>
+                <th>Academic - Literacy in English</th>
+                <th>Academic - Literacy in Filipino</th>
+                <th>Academic - Numeracy</th>
+                <th>Behavioral</th>
+                <th>Total P.A.R.s</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+                        <td>Kinder</td>
+                        <td><?php echo $kinderenglish?></td>
+                        <td><?php echo $kinderfilipino?></td>
+                        <td><?php echo $kindernumeracy?></td>
+                        <td><?php echo $kinderbehavioral?></td>
+                        <td><?php echo $totalkinder?></td>
+                    </tr>
+                    <tr>
+                        <td>Grade 1</td>
+                        <td><?php echo $oneenglish?></td>
+                        <td><?php echo $onefilipino?></td>
+                        <td><?php echo $onenumeracy?></td>
+                        <td><?php echo $onebehavioral?></td>
+                        <td><?php echo $totalone?></td>
+                    </tr>
+                    <tr>
+                        <td>Grade 2</td>
+                        <td><?php echo $twoenglish?></td>
+                        <td><?php echo $twofilipino?></td>
+                        <td><?php echo $twonumeracy?></td>
+                        <td><?php echo $twobehavioral?></td>
+                        <td><?php echo $totaltwo?></td>
+                    </tr>
+                    <tr>
+                        <td>Grade 3</td>
+                        <td><?php echo $threeenglish?></td>
+                        <td><?php echo $threefilipino?></td>
+                        <td><?php echo $threenumeracy?></td>
+                        <td><?php echo $threebehavioral?></td>
+                        <td><?php echo $totalthree?></td>
+                    </tr>
+        </tbody>
+    </table>
 </body>
 </html>
