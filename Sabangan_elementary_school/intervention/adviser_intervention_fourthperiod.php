@@ -1,106 +1,71 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $lrn = $_POST["lrn"];
-    $fullname = $_POST["fullname"];
-    $grade = $_POST["grade"];
-    $classification = $_POST["classification"];
-    $gname = $_POST["gname"];
-    $number = $_POST["number"];
-    $notes = $_POST["notes"];
-    $intervention = $_POST["intervention"];
-    $topic = $_POST["topic"];
-    $advice = $_POST["advice"];
-    $status = $_POST["status"];
-
-    include('../../database.php');
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Validate and sanitize the classification input to prevent SQL injection
-    $safeClassification = mysqli_real_escape_string($conn, $classification);
-
-    // Create a mapping for classification to table name
-    $tableMapping = array(
-        "Academic - Literacy in English" => "academic_english",
-        "Academic - Literacy in Filipino" => "academic_filipino",
-        "Academic - Numeracy" => "academic_numeracy",
-        "Behavioral" => "behavioral"
-    );
-
-    // Get the corresponding table name from the mapping
-    $tableName = $tableMapping[$safeClassification];
-
-    $sql = "UPDATE $tableName SET 
-            gname = ?,
-            number = ?,
-            notes = ?,
-            intervention = ?,
-            topic = ?,
-            advice = ?,
-            status = ?
-            WHERE lrn = ? AND quarter = '4' AND school = 'Sabangan Elementary School'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss",$gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
-    
-    if ($stmt->execute()) {
-        $employment_number = $_GET['employment_number'];
+    // Check if the required parameters are present in the URL
+    if (isset($_GET['lrn']) && isset($_GET['fullname']) && isset($_GET['status']) && isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['classification'])) {
+        // Retrieve the values from the URL
+        $lrn = $_GET['lrn'];
+        $fullname = $_GET['fullname'];
+        $status = $_GET['status'];
         $grade = $_GET['grade'];
         $section = $_GET['section'];
-        header('Location: adviser_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
+        $classification = $_GET['classification'];
+    }
+?>
+<?php
+// Check if the form is submitted and the update button is clicked
+if (isset($_POST['update'])) {
+    include('../../database.php');
+
+    // Get the classification value from the form
+    $classification = $_POST['classification'];
+
+    // Define the table name based on the classification
+    $table = '';
+    switch ($classification) {
+        case 'Academic - Literacy in English':
+            $table = 'academic_english';
+            break;
+        case 'Academic - Literacy in Filipino':
+            $table = 'academic_filipino';
+            break;
+        case 'Academic - Literacy in Numeracy':
+            $table = 'academic_numeracy';
+            break;
+        case 'Behavioral':
+            $table = 'behavioral';
+            break;
+        default:
+            // Handle other cases or invalid input
+            break;
+    }
+
+    // Assuming you have form fields for status, gname, number, notes, intervention, topic, advice
+    $status = $_POST['status'];
+    $gname = $_POST['gname'];
+    $number = $_POST['number'];
+    $notes = $_POST['notes'];
+    $intervention = $_POST['intervention'];
+    $topic = $_POST['topic'];
+    $advice = $_POST['advice'];
+
+    // Prepare and execute the SQL statement to update the table
+    $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '4' AND school = 'Sabangan Elementary School'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
+
+    // Assuming lrn is a field in your table to identify the record to update
+    $lrn = $_POST['lrn'];
+
+    if ($stmt->execute()) {
+        // Redirect to the specified page after successful update
+        header("Location: adviser_intervention_fourthperiod_view.php?lrn=$lrn&classification=$classification&quarter=$quarter&table=$table&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
+        exit(); // Make sure to exit after the header redirect
     } else {
-        echo "Error: " . $stmt->error;
+        // Handle error if update fails
+        echo "Error updating record: " . $stmt->error;
     }
 
     $stmt->close();
     $conn->close();
-}
-?>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    if (isset($_GET['lrn'])) {
-        $lrn = $_GET['lrn'];
-        $grade = $_GET['grade'];
-        $section = $_GET['section'];
-
-        include('../../database.php');
-        $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-        $validQuarter = false;
-
-        foreach ($tables as $table) {
-            $sql = "SELECT COUNT(*) as count FROM $table WHERE lrn = '$lrn' AND quarter = '4' AND 
-        gname IS NOT NULL AND gname <> '' AND 
-        number IS NOT NULL AND number <> '' AND 
-        notes IS NOT NULL AND notes <> '' AND 
-        intervention IS NOT NULL AND intervention <> '' AND 
-        topic IS NOT NULL AND topic <> '' AND 
-        advice IS NOT NULL AND advice <> '' AND school = 'Sabangan Elementary School' AND grade = '$grade' AND section = '$section'";
-            $result = $conn->query($sql);
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $count = $row["count"];
-
-                if ($count > 0) {
-                    $validQuarter = true;
-                    break;
-                }
-            } else {
-                echo "Error in query for table $table: " . $conn->error;
-            }
-        }
-
-        if ($validQuarter) {
-            $employment_number = $_GET['employment_number'];
-                $grade = $_GET['grade'];
-                $section = $_GET['section'];
-                header('Location: adviser_intervention_fourthperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number) . '&grade=' . urlencode($grade) . '&section=' . urlencode($section));
-            exit();
-        }
-
-        $conn->close();
-    }
 }
 ?>
 <?php
@@ -112,6 +77,46 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $path = "grade_{$grade}_section_{$section}_q4.php?employment_number=$employment_number";
     }
 ?>
+<?php
+include('../../database.php');
+
+// Function to sanitize input data
+function sanitize_input($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+
+// Check if 'lrn' and 'classification' parameters are present in the URL
+if (isset($_GET['lrn']) && isset($_GET['classification'])) {
+    // Sanitize the inputs
+    $lrn = sanitize_input($_GET['lrn']);
+    $classification = sanitize_input($_GET['classification']);
+
+    // Check tables for non-empty 'gname' and 'number' columns
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    foreach ($tables as $table) {
+        $query = "SELECT gname, number, grade, section FROM $table WHERE lrn = '$lrn' AND classification = '$classification' AND quarter = '4' AND school = 'Sabangan Elementary School'";
+        $result = $conn->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            if (!empty($row['gname'])) {
+                $grade = sanitize_input($row['grade']);
+                $section = sanitize_input($row['section']);
+                header("Location: adviser_intervention_fourthperiod_view.php?lrn=$lrn&classification=$classification&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
+                exit(); 
+            }
+        }
+    }
+} 
+
+// Close the database connection
+$conn->close();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -612,7 +617,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     <form action="" method="POST" class="form-container">
     <div class="top-container">
         <div class="back-button">
-        <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="../adviser_dashboard/<?php echo $path?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <div class="school">
             <h3>Sabangan Elementary School</h3>
@@ -628,7 +633,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column">
                 <div class="containers second">
-                <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Reports</h3></button>
+                    <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Reports</h3></button>
                 </div>
             </div>
             <div class="column column-left">
@@ -655,7 +660,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="lrn" id="lrn" value="<?= isset($lrn) ? htmlspecialchars($lrn) : ''; ?>" readonly>
+                <input type="text" name="lrn" id="lrn" value="<?php echo $lrn ?>" readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -665,7 +670,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade" class="right" id="grade" value="<?= isset($grade) ? htmlspecialchars($grade . ' - ' . $section) : ''; ?>" readonly>
+                <input type="text" name="grade" class="right" id="grade" value="<?php echo $grade .' - ' .$section ?>" readonly>
                 </div>
             </div>
         </div>
@@ -679,7 +684,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="fullname" id="fullname" value="<?= isset($fullname) ? htmlspecialchars($fullname) : ''; ?>" readonly>
+                <input type="text" name="fullname" id="fullname" value="<?php echo $fullname ?>" readonly>
                 </div>
             </div>
             <div class="column column-left">
@@ -689,7 +694,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <input type="text" name="classification" id="classification" class="right" value="<?= isset($classification) ? htmlspecialchars($classification) : ''; ?>" readonly>
+                <input type="text" name="classification" id="classification" class="right" value="<?php echo $classification ?>" readonly>
                 </div>
             </div>
         </div>
@@ -747,46 +752,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     </form>
 
     <script src="adviser_intervention.js"></script>
-    <!-- Add this script at the end of your HTML body -->
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Function to get URL parameter by name
-        function getUrlParameter(name) {
-            name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            var results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-        }
-
-        // Fetch parameters from URL
-        var lrnFromURL = getUrlParameter('lrn');
-        var fullnameFromURL = getUrlParameter('fullname');
-        var classificationFromURL = getUrlParameter('classification');
-        var gradeFromURL = getUrlParameter('grade');
-        var sectionFromURL = getUrlParameter('section');
-
-        // Set values in their respective input fields
-        if (lrnFromURL) {
-            var lrnInput = document.getElementById('lrn');
-            lrnInput.value = lrnFromURL;
-        }
-
-        if (fullnameFromURL) {
-            var fullnameInput = document.getElementById('fullname');
-            fullnameInput.value = fullnameFromURL;
-        }
-
-        if (classificationFromURL) {
-            var classificationInput = document.getElementById('classification');
-            classificationInput.value = classificationFromURL.trim(); // Remove leading and trailing spaces
-        }
-
-        if (gradeFromURL || sectionFromURL) {
-            var gradeSectionInput = document.getElementById('grade');
-            var combinedGradeSection = (gradeFromURL ? gradeFromURL : '') + (sectionFromURL ? ' - ' + sectionFromURL : '');
-            gradeSectionInput.value = combinedGradeSection.trim(); // Remove leading and trailing spaces
-        }
-    });
-</script>
 </body>
 </html>

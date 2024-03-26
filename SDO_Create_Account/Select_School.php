@@ -3,8 +3,10 @@
     if (isset($_POST['submit'])) {
         // Retrieve the input value and store it in $schoolname
         $schoolname = $_POST['schoolName'];
-
-        header("Location: create_account_school_admin.php?schoolname=$schoolname");
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: Create_Account_School_Admin.php?schoolname=$schoolname&employment_number=$employment_number");
+        exit; 
+        
     }
     ?>
 <!DOCTYPE html>
@@ -319,7 +321,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php">Change Password</a>
+                        <a href="../SDO_manage_account/sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -327,7 +329,7 @@
     </header>
 
     <div class="form-container">
-        <a href="../SDO_manage_account/SDO_manageaccount3.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../SDO_manage_account/SDO_manageaccount3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Select School</h2>
 

@@ -4,28 +4,14 @@ require '../vendor/autoload.php'; // Include PHPMailer
 // Database connection
 include("../database.php");
 
-// Function to verify OTP
-function verifyOTP($conn, $otp) {
-    $tables = ['adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee'];
-
-    foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE otp = '$otp'";
-        $result = $conn->query($query);
-
-        if ($result->num_rows > 0) {
-            return true;
-        }
-    }
-
-    return false; // OTP is not valid
-}
+include("functions.php");
 
 // Process user input
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $otp = $_POST["otp"];
 
     if (verifyOTP($conn, $otp)) {
-        header("Location: ../forgot_Password/Forgot_pass_Reset_Pass.php");
+        header("Location: Forgot_pass_Reset_Pass.php");
     } else {
         echo "Invalid OTP. Please try again.";
     }
@@ -247,7 +233,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </header>
   
-  <form action="Forgot_pass_enter_otp.php" method="post">
+  <form action="forgot_pass_Enter_OTP.php" method="post">
     <div class="login-container">
     <a href="employee_number_Forgot_Pass.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>

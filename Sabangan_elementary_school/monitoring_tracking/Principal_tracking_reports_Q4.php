@@ -72,14 +72,14 @@
     // Iterate through tables and count rows with 'lrn' field and 'status' field
     foreach ($tables as $table) {
         // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL AND quarter = 4 AND school = 'Sabangan Elementary School'";
+        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL AND school = 'Sabangan Elementary School'";
         $resultPars = $conn->query($sqlPars);
 
         if ($resultPars->num_rows > 0) {
             $rowPars = $resultPars->fetch_assoc();
             $totalpars += $rowPars['count'];
         }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved' AND quarter = 4 AND school = 'Sabangan Elementary School'";
+        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
         $resultResolved = $conn->query($sqlResolved);
 
         if ($resultResolved->num_rows > 0) {
@@ -90,7 +90,9 @@
     $conn->close();
 ?>
 
-
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -530,7 +532,7 @@
                 <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="../change_password/change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
+                        <a href="principal_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -539,7 +541,7 @@
 
     <div class="navbar">
         <nav>
-        <a href="Principal_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" >Quarterly Reports</a>
+        <a href="Principal_tracking_reports_Q4.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="background:#F3F3F3; color:#130550" >Quarterly Reports</a>
         <a href="Principal_monitoring_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Report Summary</a>
         </nav>
     </div>
@@ -588,7 +590,7 @@
             </div>
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">Dagupan City Division Elementary Schools</h3>
+                    <h3 style="margin-left: 7px">Sabangan Elementary School</h3>
                 </div>
             </div>
             <div class="column column-left">
@@ -614,10 +616,10 @@
             <div class="select-wrapper1">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
                         <option value="" disabled selected hidden>Quarter 4</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                        <option value="Q1">Quarter 1</option>
+                        <option value="Q2">Quarter 2</option>
+                        <option value="Q3">Quarter 3</option>
+                        <option value="Q4">Quarter 4</option>
                     </select>
                 </div>
 </div>
