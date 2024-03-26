@@ -132,7 +132,6 @@ $conn->close();
           }
 
           h2 {
-            font-family: 'Goblin One', cursive;
             color: #fff;
 
           }
@@ -269,7 +268,7 @@ $conn->close();
     <div class="login-container">
     <a href="../login/Login.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <h2>Enter Your Email</h2>
+        <h2>Enter Your Email Address</h2>
         <p class="ngi">To ensure a seamless experience, please provide your email address below to access your account and unlock the full potential of E.D.G.E.</p>
 
           
