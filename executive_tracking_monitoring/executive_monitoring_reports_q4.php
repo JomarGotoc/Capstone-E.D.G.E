@@ -179,50 +179,50 @@
 ?>
 <?php
 
-    include('../database.php');
+include('../database.php');
 
-    // Count the total rows in each table
-    $sqlEnglish = "SELECT COUNT(*) AS total FROM academic_english";
-    $resultEnglish = $conn->query($sqlEnglish);
-    $rowEnglish = $resultEnglish->fetch_assoc();
-    $totalEnglish = $rowEnglish['total'];
+// Count the total rows in each table
+$sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english";
+$resultEnglish = $conn->query($sqlEnglish);
+$rowEnglish = $resultEnglish->fetch_assoc();
+$totalEnglish = $rowEnglish['total'];
 
-    $sqlFilipino = "SELECT COUNT(*) AS total FROM academic_filipino";
-    $resultFilipino = $conn->query($sqlFilipino);
-    $rowFilipino = $resultFilipino->fetch_assoc();
-    $totalFilipino = $rowFilipino['total'];
+$sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino";
+$resultFilipino = $conn->query($sqlFilipino);
+$rowFilipino = $resultFilipino->fetch_assoc();
+$totalFilipino = $rowFilipino['total'];
 
-    $sqlNumeracy = "SELECT COUNT(*) AS total FROM academic_numeracy";
-    $resultNumeracy = $conn->query($sqlNumeracy);
-    $rowNumeracy = $resultNumeracy->fetch_assoc();
-    $totalNumeracy = $rowNumeracy['total'];
+$sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy";
+$resultNumeracy = $conn->query($sqlNumeracy);
+$rowNumeracy = $resultNumeracy->fetch_assoc();
+$totalNumeracy = $rowNumeracy['total'];
 
-    $sqlBehavioral = "SELECT COUNT(*) AS total FROM behavioral";
-    $resultBehavioral = $conn->query($sqlBehavioral);
-    $rowBehavioral = $resultBehavioral->fetch_assoc();
-    $totalBehavioral = $rowBehavioral['total'];
+$sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral";
+$resultBehavioral = $conn->query($sqlBehavioral);
+$rowBehavioral = $resultBehavioral->fetch_assoc();
+$totalBehavioral = $rowBehavioral['total'];
 
-    $sqlEnglishResolved = "SELECT COUNT(*) AS total FROM academic_english WHERE status = 'resolved'";
-    $resultEnglishResolved = $conn->query($sqlEnglishResolved);
-    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-    $totalEnglishResolved = $rowEnglishResolved['total'];
+$sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved'";
+$resultEnglishResolved = $conn->query($sqlEnglishResolved);
+$rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+$totalEnglishResolved = $rowEnglishResolved['total'];
 
-    $sqlFilipinoResolved = "SELECT COUNT(*) AS total FROM academic_filipino WHERE status = 'resolved'";
-    $resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
-    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-    $totalFilipinoResolved = $rowFilipinoResolved['total'];
+$sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'";
+$resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
+$rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+$totalFilipinoResolved = $rowFilipinoResolved['total'];
 
-    $sqlNumeracyResolved = "SELECT COUNT(*) AS total FROM academic_numeracy WHERE status = 'resolved'";
-    $resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
-    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-    $totalNumeracyResolved = $rowNumeracyResolved['total'];
+$sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved'";
+$resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
+$rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+$totalNumeracyResolved = $rowNumeracyResolved['total'];
 
-    $sqlBehavioralResolved = "SELECT COUNT(*) AS total FROM behavioral WHERE status = 'resolved'";
-    $resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
-    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-    $totalBehavioralResolved = $rowBehavioralResolved['total'];
+$sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved'";
+$resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
+$rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+$totalBehavioralResolved = $rowBehavioralResolved['total'];
 
-    $conn->close();
+$conn->close();
 ?>
 <?php
     include('../database.php');
