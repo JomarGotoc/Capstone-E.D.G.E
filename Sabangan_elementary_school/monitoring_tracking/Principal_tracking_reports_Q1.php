@@ -58,36 +58,6 @@
     }
     $conn->close();
 ?>
-<?php
-    include('../../database.php');
-
-    // Define the tables
-    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
-
-    // Initialize LRN array to store unique LRNs
-    $lrnTotalArray = array();
-
-    // Iterate through tables and count unique LRNs
-    foreach ($tables as $table) {
-        // Select distinct LRNs from each table
-        $sql = "SELECT DISTINCT LRN FROM $table WHERE school = 'Sabangan Elementary School'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                // Check if LRN already exists in $lrnTotalArray, if not, add it
-                if (!in_array($row['LRN'], $lrnTotalArray)) {
-                    $lrnTotalArray[] = $row['LRN'];
-                }
-            }
-        }
-    }
-
-    // Calculate total count of unique LRNs
-    $total = count($lrnTotalArray);
-
-    $conn->close();
-?>
 
 <?php
     include('../../database.php');
