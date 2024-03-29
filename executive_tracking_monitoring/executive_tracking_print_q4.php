@@ -1,4 +1,895 @@
 <?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalSabangan = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Sabangan Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalSabangan++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalbliss = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Bliss Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalbliss++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalbolosan = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Bolosan Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalbolosan++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalbonuan = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Bonuan Boquig Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalbonuan++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalcalmay = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Calmay Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalcalmay++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalcarael = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Carael Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalcarael++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalcaranglaan = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Caranglaan Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalcaranglaan++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totaleast = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'East Central Integrated School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totaleast++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalfederico = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalfederico++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalgen = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalgen++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totaljuanl = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Juan L. Siapno Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totaljuanl++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totallasip = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Lasip Grande Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totallasip++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalleon = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Leon-Francisco Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalleon++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totallomboy = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Lomboy Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totallomboy++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totallucao = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Lucao Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totallucao++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalmalued = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Malued Sur Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalmalued++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalmamalingling = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Mamalingling Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalmamalingling++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalmangin = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalmangin++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalnorth = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'North Central Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalnorth++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalpantal = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Pantal Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalpantal++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalpaascuala = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalpaascuala++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalpogo = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Pogo-Lasip Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalpogo++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totaljuanp = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Juan P. Guadiz Elementary School	' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totaljuanp++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalpugaro = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Pugaro-Lasip Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalpugaro++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalsalipangao = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Salapingao Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalsalipangao++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalsalisay = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Salisay Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalsalisay++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalsuit = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Suit Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalsuit++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalayson = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalayson++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totaltambac = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Tambac Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totaltambac++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totaltebeng = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Tebeng Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totaltebeng++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalvictoria = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalvictoria++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalwest = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'West Central II Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalwest++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalbacayao = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'Bacayao Sur Elementary School' AND quarter = '4'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalbacayao++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
     include('../database.php');
     $tables = array();
 
@@ -2663,7 +3554,7 @@
         <tr>
                 <td>Bacayao Sur Elementary School</td>
                 <td><?php echo $bucayaostudents ?></td>
-                <td><?php echo $bucayaoltotalpar ?></td>
+                <td><?php echo $totalbacayao ?></td>
                 <td><?php echo $bucayaoenglish ?></td>
                 <td><?php echo $bucayaofilipino ?></td>
                 <td><?php echo $bucayaonumeracy ?></td>
@@ -2672,7 +3563,7 @@
             <tr>
                 <td>Bliss Elementary School</td>
                 <td><?php echo $blissstudents ?></td>
-                <td><?php echo $blisstotalpar ?></td>
+                <td><?php echo $totalbliss ?></td>
                 <td><?php echo $blissenglish ?></td>
                 <td><?php echo $blissfilipino ?></td>
                 <td><?php echo $blissnumeracy ?></td>
@@ -2681,7 +3572,7 @@
             <tr>
                 <td>Bolosan Elementary School</td>
                 <td><?php echo $bolosanstudents ?></td>
-                <td><?php echo $bolosantotalpar ?></td>
+                <td><?php echo $totalbolosan ?></td>
                 <td><?php echo $bolosanenglish ?></td>
                 <td><?php echo $bolosanfilipino ?></td>
                 <td><?php echo $bolosannumeracy ?></td>
@@ -2690,7 +3581,7 @@
             <tr>
                 <td>Bonuan Boquig Elementary School</td>
                 <td><?php echo $bonuanstudents ?></td>
-                <td><?php echo $bonuantotalpar ?></td>
+                <td><?php echo $totalbonuan ?></td>
                 <td><?php echo $bonuanenglish ?></td>
                 <td><?php echo $bonuanfilipino ?></td>
                 <td><?php echo $bonuannumeracy ?></td>
@@ -2699,7 +3590,7 @@
             <tr>
                 <td>Calmay Elementary School</td>
                 <td><?php echo $calmaystudents ?></td>
-                <td><?php echo $calmaytotalpar ?></td>
+                <td><?php echo $totalcalmay ?></td>
                 <td><?php echo $calmayenglish ?></td>
                 <td><?php echo $calmayfilipino ?></td>
                 <td><?php echo $calmaynumeracy ?></td>
@@ -2708,7 +3599,7 @@
             <tr>
                 <td>Carael Elementary School</td>
                 <td><?php echo $caraelstudents ?></td>
-                <td><?php echo $caraeltotalpar ?></td>
+                <td><?php echo $totalcarael ?></td>
                 <td><?php echo $caraelenglish ?></td>
                 <td><?php echo $caraelfilipino ?></td>
                 <td><?php echo $caraelnumeracy ?></td>
@@ -2717,7 +3608,7 @@
             <tr>
                 <td>Caranglaan Elementary School</td>
                 <td><?php echo $caranglaanstudents ?></td>
-                <td><?php echo $caranglaantotalpar ?></td>
+                <td><?php echo $totalcaranglaan?></td>
                 <td><?php echo $caranglaanenglish ?></td>
                 <td><?php echo $caranglaanfilipino ?></td>
                 <td><?php echo $caranglaannumeracy ?></td>
@@ -2726,7 +3617,7 @@
             <tr>
                 <td>East Central Integrated School</td>
                 <td><?php echo $eaststudents ?></td>
-                <td><?php echo $easttotalpar ?></td>
+                <td><?php echo $totaleast?></td>
                 <td><?php echo $eastenglish ?></td>
                 <td><?php echo $eastfilipino ?></td>
                 <td><?php echo $eastnumeracy ?></td>
@@ -2735,7 +3626,7 @@
             <tr>
                 <td>Federico N. Ceralde School Integrated School</td>
                 <td><?php echo $federicostudents ?></td>
-                <td><?php echo $federicototalpar ?></td>
+                <td><?php echo $totalfederico?></td>
                 <td><?php echo $federicoenglish ?></td>
                 <td><?php echo $federicofilipino ?></td>
                 <td><?php echo $federiconumeracy ?></td>
@@ -2744,7 +3635,7 @@
             <tr>
                 <td>Gen. Gregorio Del Pilar Elementary School</td>
                 <td><?php echo $genstudents ?></td>
-                <td><?php echo $gentotalpar ?></td>
+                <td><?php echo $totalgen?></td>
                 <td><?php echo $genenglish ?></td>
                 <td><?php echo $genfilipino ?></td>
                 <td><?php echo $gennumeracy ?></td>
@@ -2753,7 +3644,7 @@
             <tr>
                 <td>Juan L. Siapno Elementary School</td>
                 <td><?php echo $juanlstudents ?></td>
-                <td><?php echo $juanltotalpar ?></td>
+                <td><?php echo $totaljuanl ?></td>
                 <td><?php echo $juanlenglish ?></td>
                 <td><?php echo $juanlfilipino ?></td>
                 <td><?php echo $juanlnumeracy ?></td>
@@ -2762,7 +3653,7 @@
             <tr>
                 <td>Juan P. Guadiz Elementary School</td>
                 <td><?php echo $juanpstudents ?></td>
-                <td><?php echo $juanptotalpar ?></td>
+                <td><?php echo $totaljuanp?></td>
                 <td><?php echo $juanpenglish ?></td>
                 <td><?php echo $juanpfilipino ?></td>
                 <td><?php echo $juanpnumeracy ?></td>
@@ -2771,7 +3662,7 @@
             <tr>
                 <td>Lasip Grande Elementary School</td>
                 <td><?php echo $lasipstudents ?></td>
-                <td><?php echo $lasiptotalpar ?></td>
+                <td><?php echo $totallasip ?></td>
                 <td><?php echo $lasipenglish ?></td>
                 <td><?php echo $lasipfilipino ?></td>
                 <td><?php echo $lasipnumeracy ?></td>
@@ -2780,7 +3671,7 @@
             <tr>
                 <td>Leon-Francisco Elementary School</td>
                 <td><?php echo $leonstudents ?></td>
-                <td><?php echo $leontotalpar ?></td>
+                <td><?php echo $totalleon ?></td>
                 <td><?php echo $leonenglish ?></td>
                 <td><?php echo $leonfilipino ?></td>
                 <td><?php echo $leonnumeracy ?></td>
@@ -2789,7 +3680,7 @@
             <tr>
                 <td>Lomboy Elementary School</td>
                 <td><?php echo $lomboystudents ?></td>
-                <td><?php echo $lomboytotalpar ?></td>
+                <td><?php echo $totallomboy ?></td>
                 <td><?php echo $lomboyenglish ?></td>
                 <td><?php echo $lomboyfilipino ?></td>
                 <td><?php echo $lomboynumeracy ?></td>
@@ -2798,7 +3689,7 @@
             <tr>
                 <td>Lucao Elementary School</td>
                 <td><?php echo $lucaostudents ?></td>
-                <td><?php echo $lucaototalpar ?></td>
+                <td><?php echo $totallucao?></td>
                 <td><?php echo $lucaoenglish ?></td>
                 <td><?php echo $lucaofilipino ?></td>
                 <td><?php echo $lucaonumeracy ?></td>
@@ -2807,7 +3698,7 @@
             <tr>
                 <td>Malued Sur Elementary School</td>
                 <td><?php echo $maluedstudents ?></td>
-                <td><?php echo $maluedtotalpar ?></td>
+                <td><?php echo $totalmalued ?></td>
                 <td><?php echo $maluedenglish ?></td>
                 <td><?php echo $maluedfilipino ?></td>
                 <td><?php echo $maluednumeracy ?></td>
@@ -2816,7 +3707,7 @@
             <tr>
                 <td>Mamalingling Elementary School</td>
                 <td><?php echo $mamalinglingstudents ?></td>
-                <td><?php echo $mamalinglingtotalpar ?></td>
+                <td><?php echo $totalmamalingling?></td>
                 <td><?php echo $mamalinglingenglish ?></td>
                 <td><?php echo $mamalinglingfilipino ?></td>
                 <td><?php echo $mamalinglingnumeracy ?></td>
@@ -2825,7 +3716,7 @@
             <tr>
                 <td>Mangin-Tebeng Elementary School</td>
                 <td><?php echo $manginstudents ?></td>
-                <td><?php echo $mangintotalpar ?></td>
+                <td><?php echo $totalmangin?></td>
                 <td><?php echo $manginenglish ?></td>
                 <td><?php echo $manginfilipino ?></td>
                 <td><?php echo $manginnumeracy ?></td>
@@ -2834,7 +3725,7 @@
             <tr>
                 <td>North Central Elementary School</td>
                 <td><?php echo $northstudents ?></td>
-                <td><?php echo $northtotalpar ?></td>
+                <td><?php echo $totalnorth?></td>
                 <td><?php echo $northenglish ?></td>
                 <td><?php echo $northfilipino ?></td>
                 <td><?php echo $northnumeracy ?></td>
@@ -2843,7 +3734,7 @@
             <tr>
                 <td>Pantal Elementary School</td>
                 <td><?php echo $pantalstudents ?></td>
-                <td><?php echo $pantaltotalpar ?></td>
+                <td><?php echo $totalpantal ?></td>
                 <td><?php echo $pantalenglish ?></td>
                 <td><?php echo $pantalfilipino ?></td>
                 <td><?php echo $pantalnumeracy ?></td>
@@ -2853,7 +3744,7 @@
             <tr>
                 <td>Pascuala G. Villamil Elementary School</td>
                 <td><?php echo $pascualastudents ?></td>
-                <td><?php echo $pascualatotalpar ?></td>
+                <td><?php echo $totalpaascuala?></td>
                 <td><?php echo $pascualaenglish ?></td>
                 <td><?php echo $pascualafilipino ?></td>
                 <td><?php echo $pascualanumeracy ?></td>
@@ -2862,7 +3753,7 @@
             <tr>
                 <td>Pogo-Lasip Elementary School</td>
                 <td><?php echo $pogostudents ?></td>
-                <td><?php echo $pogototalpar ?></td>
+                <td><?php echo $totalpogo?></td>
                 <td><?php echo $pogoenglish ?></td>
                 <td><?php echo $pogofilipino ?></td>
                 <td><?php echo $pogonumeracy ?></td>
@@ -2871,7 +3762,7 @@
             <tr>
                 <td>Pugaro Integrated School</td>
                 <td><?php echo $pugarostudents ?></td>
-                <td><?php echo $pugarototalpar ?></td>
+                <td><?php echo $totalpugaro?></td>
                 <td><?php echo $pugaroenglish ?></td>
                 <td><?php echo $pugarofilipino ?></td>
                 <td><?php echo $pugaronumeracy ?></td>
@@ -2880,7 +3771,7 @@
             <tr>
                 <td>Sabangan Elementary School</td>
                 <td><?php echo $sabanganstudents ?></td>
-                <td><?php echo $sabangantotalpar ?></td>
+                <td><?php echo $totalSabangan?></td>
                 <td><?php echo $sabanganenglish ?></td>
                 <td><?php echo $sabanganfilipino ?></td>
                 <td><?php echo $sabangannumeracy ?></td>
@@ -2889,7 +3780,7 @@
             <tr>
                 <td>Salapingao Elementary School</td>
                 <td><?php echo $salapingaostudents ?></td>
-                <td><?php echo $salapingaototalpar ?></td>
+                <td><?php echo $totalsalipangao?></td>
                 <td><?php echo $salapingaoenglish ?></td>
                 <td><?php echo $salapingaofilipino ?></td>
                 <td><?php echo $salapingaonumeracy ?></td>
@@ -2898,7 +3789,7 @@
             <tr>
                 <td>Salisay Elementary School</td>
                 <td><?php echo $salisaystudents ?></td>
-                <td><?php echo $salisaytotalpar ?></td>
+                <td><?php echo $totalsalisay?></td>
                 <td><?php echo $salisayenglish ?></td>
                 <td><?php echo $salisayfilipino ?></td>
                 <td><?php echo $salisaynumeracy ?></td>
@@ -2907,7 +3798,7 @@
             <tr>
                 <td>Suit Elementary School</td>
                 <td><?php echo $suitstudents ?></td>
-                <td><?php echo $suittotalpar ?></td>
+                <td><?php echo $totalsuit?></td>
                 <td><?php echo $suitenglish ?></td>
                 <td><?php echo $suitfilipino ?></td>
                 <td><?php echo $suitnumeracy ?></td>
@@ -2916,7 +3807,7 @@
             <tr>
                 <td>T. Ayson Rosario Elementary School</td>
                 <td><?php echo $aysonstudents ?></td>
-                <td><?php echo $aysontotalpar ?></td>
+                <td><?php echo $totalayson ?></td>
                 <td><?php echo $aysonenglish ?></td>
                 <td><?php echo $aysonfilipino ?></td>
                 <td><?php echo $aysonnumeracy ?></td>
@@ -2925,7 +3816,7 @@
             <tr>
                 <td>Tambac Elementary School</td>
                 <td><?php echo $tambacstudents ?></td>
-                <td><?php echo $tambactotalpar ?></td>
+                <td><?php echo $totaltambac ?></td>
                 <td><?php echo $tambacenglish ?></td>
                 <td><?php echo $tambacfilipino ?></td>
                 <td><?php echo $tambacnumeracy ?></td>
@@ -2934,7 +3825,7 @@
             <tr>
                 <td>Tebeng Elementary School</td>
                 <td><?php echo $tebengstudents ?></td>
-                <td><?php echo $tebengtotalpar ?></td>
+                <td><?php echo $totaltebeng ?></td>
                 <td><?php echo $tebengenglish ?></td>
                 <td><?php echo $tebengfilipino ?></td>
                 <td><?php echo $tebengnumeracy ?></td>
@@ -2943,7 +3834,7 @@
             <tr>
                 <td>Victoria Q. Zarate Elementary School</td>
                 <td><?php echo $victoriastudents ?></td>
-                <td><?php echo $victoriatotalpar ?></td>
+                <td><?php echo $totalvictoria?></td>
                 <td><?php echo $victoriaenglish ?></td>
                 <td><?php echo $victoriafilipino ?></td>
                 <td><?php echo $victorianumeracy ?></td>
@@ -2952,7 +3843,7 @@
             <tr>
                 <td>West Central II Elementary School</td>
                 <td><?php echo $westcentralstudents?></td>
-                <td><?php echo $westcentraltotalpar?></td>
+                <td><?php echo $totalwest?></td>
                 <td><?php echo $westcentralenglish?></td>
                 <td><?php echo $westcentralfilipino?></td>
                 <td><?php echo $westcentralnumeracy?></td>

@@ -1,5 +1,6 @@
 <?php
   $errorMsg = "";
+  $errorMsg1 = "";
   if (isset($_POST['submit'])) {
       $old_password = isset($_POST['old_password']) ? $_POST['old_password'] : '';
       $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
@@ -36,18 +37,18 @@
                           $errorMsg = "Password updated successfully.";
                           break;
                       } else {
-                        $errorMsg = "Old password is incorrect.";
+                        $errorMsg1 = "Old password is incorrect.";
                       }
                   }
               }
 
               if (empty($found_tables)) {
-                $errorMsg = "Employment Number not found in any table.";
+                $errorMsg1 = "Employment Number not found in any table.";
               }
 
               $conn->close();
           } else {
-            $errorMsg = "Password do not match.";
+            $errorMsg1 = "Password do not match.";
           }
       }
   }
@@ -69,7 +70,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
           }
 
@@ -91,7 +92,7 @@
             width: 75px;
             height: 75px;
             margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
+            background-image: url('../../img/logo.png'); 
             background-size: cover;
           }
 
@@ -218,13 +219,17 @@
           color: green;
           font-weight: bold;
         }
+        .errorMsg1{
+          color: red;
+          font-weight: bold;
+        }
 
     </style>
 </head>
 <body>
 
   <header>
-    <img src="../img/logo.png" class="logs">
+    <img src="../../img/logo.png" class="logs">
     <div class="container">
         <h4>E.D.G.E | P.A.R Early Detection and Guidance for Education</h4>
     </div>
@@ -239,6 +244,9 @@
 
         <div class="errorMsg">
           <?php echo $errorMsg ?>
+        </div>
+        <div class="errorMsg1">
+          <?php echo $errorMsg1 ?>
         </div>
 
         <form class="login-form" action="" method="post">

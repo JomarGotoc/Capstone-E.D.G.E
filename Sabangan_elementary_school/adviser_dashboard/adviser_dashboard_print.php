@@ -152,7 +152,7 @@
 </head>
 <body>
     <header>
-        <img src="../img/logo.png" alt="Logo" width="70" height="70">
+        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">

@@ -27,7 +27,7 @@ if (isset($_POST['update'])) {
         case 'Academic - Literacy in Filipino':
             $table = 'academic_filipino';
             break;
-        case 'Academic - Literacy in Numeracy':
+        case 'Academic - Numeracy':
             $table = 'academic_numeracy';
             break;
         case 'Behavioral':
@@ -47,7 +47,6 @@ if (isset($_POST['update'])) {
     $topic = $_POST['topic'];
     $advice = $_POST['advice'];
 
-    // Prepare and execute the SQL statement to update the table
     $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '1' AND school = 'Sabangan Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
