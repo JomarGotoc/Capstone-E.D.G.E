@@ -5,19 +5,29 @@
     $result1 = $conn->query($sql);
 ?>
 <?php
-    include('../../database.php');
-    $sql = "SELECT fullname, employment_number, school FROM counselor";
-    $result = $conn->query($sql);
+include('../../database.php');
 
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            $fullname = $row["fullname"];
-            $employment_number = $row["employment_number"];
-            $school = $row["school"];
-        }
-    }
+if(isset($_GET['employment_number'])) {
+    $employment_number = $conn->real_escape_string($_GET['employment_number']);
+    
+    $sql = "SELECT fullname, school, employment_number FROM counselor WHERE employment_number = '$employment_number'";
+    
+    $result = $conn->query($sql);
+    
+    if($result) {
+        if($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            
+            // Store data in variables
+            $fullname = $row['fullname'];
+            $school = $row['school'];
+            $employment_number = $row['employment_number'];
+        } 
+    } 
+    $conn->close();
+} 
 ?>
+
 <?php
 include('../../database.php');
 $sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != '' AND school = 'Sabangan Elementary School'";
