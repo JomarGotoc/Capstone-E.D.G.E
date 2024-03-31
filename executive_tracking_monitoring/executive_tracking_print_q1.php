@@ -3511,15 +3511,52 @@ $conn->close();
         tr:nth-child(odd) {
             background-color: transparent;
         }
+        button{
+            background-color: transparent;
+            border: none;
+        }
+
+        .back-icon {
+            left: 10px;
+            font-size: 30px;
+            color:#190572;
+            text-decoration: none;
+        }
+
+        .back-icon i {
+            margin-right: 5px;
+        }
+
+        .back-icon:hover::after {
+            content: "Back";
+            position: absolute;
+            left: 30px;
+            transform: translateY(-50%);
+            color:#190572;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .print-button {
+            background-color: #190572;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+}
+        .print-button:hover {
+            background-color: #0c044c;
+}
     </style>
 </head>
 <body>
     <header>
         <img src="../img/logo.png" alt="Logo" width="70" height="70">
-        <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
+        <h2>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h2>
     </header>
     <div class="update">
-    <a href="executive_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="print-button">Go Back</button></a>
+    <a href="executive_tracking_reports_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">

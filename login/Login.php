@@ -312,7 +312,7 @@ if (isset($_POST['submit'])) {
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 5px;
+            right: 15px;
             transform: translateY(-50%);
             cursor: pointer;
         }

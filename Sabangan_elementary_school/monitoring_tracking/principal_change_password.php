@@ -245,7 +245,7 @@
         .password-toggle {
             position: absolute;
             top: 50%;
-            right: 5px;
+            right: 15px;
             transform: translateY(-50%);
             cursor: pointer;
         }
@@ -274,24 +274,24 @@
 
         <form class="login-form" action="" method="post">
             
-            <div class="password-container">
-            <input type="password" id="password" name="password" placeholder="Old Password">
-            <div class="password-toggle" onclick="togglePasswordVisibility()">
-                <i id="eye-icon" class='bx bx-show'></i>
+        <div class="password-container">
+          <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
+              <div class="password-toggle" onclick="togglePasswordVisibility()">
+                  <i id="eye-icon" class='bx bx-show'></i>
+              </div>
+          </div>
+
+          <div class="password-container">
+          <input type="password" id="password1" name="new_password"  placeholder="New Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility1()">
+                <i id="eye-icon1" class='bx bx-show'></i>
             </div>
         </div>
 
         <div class="password-container">
-            <input type="password" id="password" name="password" placeholder="New Password">
-            <div class="password-toggle" onclick="togglePasswordVisibility()">
-                <i id="eye-icon" class='bx bx-show'></i>
-            </div>
-        </div>
-
-        <div class="password-container">
-            <input type="password" id="password" name="password" placeholder="Confirm Password">
-            <div class="password-toggle" onclick="togglePasswordVisibility()">
-                <i id="eye-icon" class='bx bx-show'></i>
+        <input type="password" id="password2" name="repeat_password" placeholder="Confirm Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility2()">
+                <i id="eye-icon2" class='bx bx-show'></i>
             </div>
         </div>
             <button type="submit" value="Login" name="submit">Change Password</button>
@@ -299,11 +299,40 @@
 
   
     </div>
-
     <script>
     function togglePasswordVisibility() {
         var passwordField = document.getElementById("password");
         var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bx-show");
+            eyeIcon.classList.add("bx-hide");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bx-hide");
+            eyeIcon.classList.add("bx-show");
+        }
+    }
+
+    function togglePasswordVisibility1() {
+        var passwordField = document.getElementById("password1");
+        var eyeIcon = document.getElementById("eye-icon1");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bx-show");
+            eyeIcon.classList.add("bx-hide");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bx-hide");
+            eyeIcon.classList.add("bx-show");
+        }
+    }
+
+    function togglePasswordVisibility2() {
+        var passwordField = document.getElementById("password2");
+        var eyeIcon = document.getElementById("eye-icon2");
 
         if (passwordField.type === "password") {
             passwordField.type = "text";
