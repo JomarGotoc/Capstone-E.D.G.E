@@ -1,62 +1,92 @@
 <?php
-    include('../../database.php');
-    $currentFileName2 = basename(__FILE__,'_Q1.php');
-    $sql = "SELECT grade, section, fullname FROM adviser WHERE school = 'Sabangan Elementary School'";
-    $result = $conn->query($sql);
+include('../../database.php');
+$currentFileName2 = basename(__FILE__,'_Q1.php');
+// Initialize an array to store results
+$resultsArray = array();
 
-    // Store the fetched data in an array
-    $dataArray = array();
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            // Concatenate "grade_" and "section_" to the values and store in $newvalue
-            $newvalue = 'grade_' . $row['grade'] . '_section_' . $row['section'];
+// Query to retrieve data from the adviser table
+$sql_adviser = "SELECT grade, section, fullname FROM adviser WHERE school = 'Sabangan Elementary School'";
+$result_adviser = mysqli_query($conn, $sql_adviser);
 
-            include('../../database.php');
-            $checkTableSql = "SHOW TABLES LIKE '$newvalue'";
-            $tableExists = $conn->query($checkTableSql);
+if (mysqli_num_rows($result_adviser) > 0) {
+    // Fetch each adviser row
+    while ($row_adviser = mysqli_fetch_assoc($result_adviser)) {
+        $uniqueLRNs = array();
 
-            // Display the number of LRN data found in the 3rd <th>
-            $lrnCount = 0; // Initialize the count
-            if ($tableExists->num_rows > 0) {
-                $countQuery = "SELECT COUNT(*) AS lrn_count FROM $newvalue WHERE school = 'Sabangan Elementary School'";
-                $lrnResult = $conn->query($countQuery);
+        // Tables to count LRNs from
+        $tables = array('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral');
 
-                if ($lrnResult->num_rows > 0) {
-                    $lrnCountRow = $lrnResult->fetch_assoc();
-                    $lrnCount = $lrnCountRow['lrn_count'];
+        // Iterate through each table to fetch unique LRNs
+        foreach ($tables as $table) {
+            $sql = "SELECT DISTINCT lrn FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 1";
+            $result = mysqli_query($conn, $sql);
+
+            // Check if the query was successful
+            if ($result) {
+                // Fetch each row and add LRN to the uniqueLRNs array
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $uniqueLRNs[$row['lrn']] = true; // Using LRN as key to ensure uniqueness
                 }
+                // Free result set
+                mysqli_free_result($result);
+            } else {
+                echo "Error executing query: " . mysqli_error($conn);
             }
-
-            // Check matches in classifications table (in the 'classification' database)
-            include('../../database.php'); // Include the connection to the 'classification' database
-
-            $academicEnglishQuery = "SELECT COUNT(*) AS academic_english_count FROM academic_english WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'Sabangan Elementary School'";
-            $academicFilipinoQuery = "SELECT COUNT(*) AS academic_filipino_count FROM academic_filipino WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'Sabangan Elementary School'";
-            $academicNumeracyQuery = "SELECT COUNT(*) AS academic_numeracy_count FROM academic_numeracy WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'Sabangan Elementary School'";
-            $behavioralQuery = "SELECT COUNT(*) AS behavioral_count FROM behavioral WHERE grade = '{$row['grade']}' AND section = '{$row['section']}' AND quarter = 1 AND school = 'Sabangan Elementary School'";
-
-            $academicEnglishResult = $conn->query($academicEnglishQuery);
-            $academicFilipinoResult = $conn->query($academicFilipinoQuery);
-            $academicNumeracyResult = $conn->query($academicNumeracyQuery);
-            $behavioralResult = $conn->query($behavioralQuery);
-
-            $academicEnglishCount = ($academicEnglishResult->num_rows > 0) ? $academicEnglishResult->fetch_assoc()['academic_english_count'] : 0;
-            $academicFilipinoCount = ($academicFilipinoResult->num_rows > 0) ? $academicFilipinoResult->fetch_assoc()['academic_filipino_count'] : 0;
-            $academicNumeracyCount = ($academicNumeracyResult->num_rows > 0) ? $academicNumeracyResult->fetch_assoc()['academic_numeracy_count'] : 0;
-            $behavioralCount = ($behavioralResult->num_rows > 0) ? $behavioralResult->fetch_assoc()['behavioral_count'] : 0;
-
-            // Add counts to the row
-            $row['newvalue'] = $newvalue;
-            $row['lrn_count'] = $lrnCount;
-            $row['academic_english_count'] = $academicEnglishCount;
-            $row['academic_filipino_count'] = $academicFilipinoCount;
-            $row['academic_numeracy_count'] = $academicNumeracyCount;
-            $row['behavioral_count'] = $behavioralCount;
-
-            $dataArray[] = $row;
         }
+
+        // Count the number of unique LRNs
+        $totalstudentpar = count($uniqueLRNs);
+
+        // Count LRNs in each table for the current grade and section
+        $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 1";
+        $result_english_non_distinct = mysqli_query($conn, $sql_english_non_distinct);
+        $row_english_non_distinct = mysqli_fetch_assoc($result_english_non_distinct);
+        $english_count_non_distinct = $row_english_non_distinct['english_count_non_distinct'];
+
+        // Store $newvalue based on grade and section
+        $grade = $row_adviser['grade'];
+        $section = $row_adviser['section'];
+        $newvalue = "grade_$grade" . "_section_$section";
+
+        // Count all LRNs in $newvalue table and store as $totalstud
+        $sql_totalstud = "SELECT COUNT(lrn) AS totalstud FROM $newvalue";
+        $result_totalstud = mysqli_query($conn, $sql_totalstud);
+        $row_totalstud = mysqli_fetch_assoc($result_totalstud);
+        $totalstud = $row_totalstud['totalstud'];
+
+        $sql_filipino_non_distinct = "SELECT COUNT(lrn) AS filipino_count_non_distinct FROM academic_filipino WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 1";
+        $result_filipino_non_distinct = mysqli_query($conn, $sql_filipino_non_distinct);
+        $row_filipino_non_distinct = mysqli_fetch_assoc($result_filipino_non_distinct);
+        $filipino_count_non_distinct = $row_filipino_non_distinct['filipino_count_non_distinct'];
+
+        $sql_numeracy_non_distinct = "SELECT COUNT(lrn) AS numeracy_count_non_distinct FROM academic_numeracy WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 1";
+        $result_numeracy_non_distinct = mysqli_query($conn, $sql_numeracy_non_distinct);
+        $row_numeracy_non_distinct = mysqli_fetch_assoc($result_numeracy_non_distinct);
+        $numeracy_count_non_distinct = $row_numeracy_non_distinct['numeracy_count_non_distinct'];
+
+        $sql_behavioral_non_distinct = "SELECT COUNT(lrn) AS behavioral_count_non_distinct FROM behavioral WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 1";
+        $result_behavioral_non_distinct = mysqli_query($conn, $sql_behavioral_non_distinct);
+        $row_behavioral_non_distinct = mysqli_fetch_assoc($result_behavioral_non_distinct);
+        $behavioral_count_non_distinct = $row_behavioral_non_distinct['behavioral_count_non_distinct'];
+
+        // Add results to the results array
+        $resultsArray[] = array(
+            'grade' => $grade,
+            'section' => $section,
+            'fullname' => $row_adviser['fullname'],
+            'totalstudentpar' => $totalstudentpar,
+            'english_count_non_distinct' => $english_count_non_distinct,
+            'totalstud' => $totalstud,
+            'filipino_count_non_distinct' => $filipino_count_non_distinct,
+            'numeracy_count_non_distinct' => $numeracy_count_non_distinct,
+            'behavioral_count_non_distinct' => $behavioral_count_non_distinct
+        );
     }
-    $conn->close();
+}
+
+// Close the connection
+mysqli_close($conn);
+
 ?>
 
 <?php
@@ -569,10 +599,12 @@
         </div>
             <div class="column">
             <div class="containers second">
-    <button style="background: transparent; border: none;" onclick="printPARsList()">
-        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-    </button>
-</div>
+                <a href="principal_tracking_print_q1.php">
+                    <button style="background: transparent; border: none;">
+                        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+                    </button>
+                </a>
+            </div>
             </div>
             <div class="column full-width">
     <div class="column third-column" style="display:none">
@@ -689,20 +721,18 @@
         </div>
 
         <table border="0" id="data-table">
-        <?php foreach ($dataArray as $data) : ?>
+        <?php foreach ($resultsArray as $result) { ?>
         <tr>
-            <th style="width:14.5%"><?php echo ucfirst($data['grade']). '&nbsp;&nbsp;' . ucfirst($data['section']); ?></th>
-            <th style="width:14.5%"><?php echo ucwords($data['fullname']); ?></th>
-            <th style="width:11.5%"><?php echo $data['lrn_count']; ?></th>
-            <th style="width:11.5%"><?php echo $data['academic_english_count'] + $data['academic_filipino_count'] + $data['academic_numeracy_count'] + $data['behavioral_count']; ?></th>
-            <th style="width:11.5%"><?php echo $data['academic_english_count']; ?></th>
-            <th style="width:11.5%"><?php echo $data['academic_filipino_count']; ?></th>
-            <th style="width:11.5%"><?php echo $data['academic_numeracy_count']; ?></th>
-            <th style="width:11.5%"><?php echo $data['behavioral_count']; ?></th>
+            <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo $result['section']; ?></th>
+            <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
+            <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
+            <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
+            <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
         </tr>
-    <?php endforeach; ?>
-
-            
+        <?php } ?>
         </table>
     </div>
 

@@ -1,373 +1,89 @@
 <?php
-    include('../../database.php');
-
-    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1 AND school = 'Sabangan Elementary School'";
-    $resultEnglish = $conn->query($queryEnglish);
-    $rowEnglish = $resultEnglish->fetch_assoc();
-    $q1english = $rowEnglish['q1english'];
-
-    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1 AND school = 'Sabangan Elementary School'";
-    $resultFilipino = $conn->query($queryFilipino);
-    $rowFilipino = $resultFilipino->fetch_assoc();
-    $q1filipino = $rowFilipino['q1filipino'];
-
-    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1 AND school = 'Sabangan Elementary School'";
-    $resultNumeracy = $conn->query($queryNumeracy);
-    $rowNumeracy = $resultNumeracy->fetch_assoc();
-    $q1numeracy = $rowNumeracy['q1numeracy'];
-
-    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1 AND school = 'Sabangan Elementary School'";
-    $resultBehavioral = $conn->query($queryBehavioral);
-    $rowBehavioral = $resultBehavioral->fetch_assoc();
-    $q1behavioral = $rowBehavioral['q1behavioral'];
-
-    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultEnglishResolved = $conn->query($queryEnglishResolved);
-    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-    $q1englishresolved = $rowEnglishResolved['q1englishresolved'];
-
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
-    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-    $q1filipinoresolved = $rowFilipinoResolved['q1filipinoresolved'];
-
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
-    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-    $q1numeracyresolved = $rowNumeracyResolved['q1numeracyresolved'];
-
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
-    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-    $q1behavioralresolved = $rowBehavioralResolved['q1behavioralresolved'];
-    $conn->close();
-?>
-<?php
-    include('../../database.php');
-
-    $queryEnglish = "SELECT COUNT(*) AS q2english FROM academic_english WHERE quarter = 2 AND school = 'Sabangan Elementary School'";
-    $resultEnglish = $conn->query($queryEnglish);
-    $rowEnglish = $resultEnglish->fetch_assoc();
-    $q2english = $rowEnglish['q2english'];
-
-    $queryFilipino = "SELECT COUNT(*) AS q2filipino FROM academic_filipino WHERE quarter = 2 AND school = 'Sabangan Elementary School'";
-    $resultFilipino = $conn->query($queryFilipino);
-    $rowFilipino = $resultFilipino->fetch_assoc();
-    $q2filipino = $rowFilipino['q2filipino'];
-
-    $queryNumeracy = "SELECT COUNT(*) AS q2numeracy FROM academic_numeracy WHERE quarter = 2 AND school = 'Sabangan Elementary School'";
-    $resultNumeracy = $conn->query($queryNumeracy);
-    $rowNumeracy = $resultNumeracy->fetch_assoc();
-    $q2numeracy = $rowNumeracy['q2numeracy'];
-
-    $queryBehavioral = "SELECT COUNT(*) AS q2behavioral FROM behavioral WHERE quarter = 2 AND school = 'Sabangan Elementary School'";
-    $resultBehavioral = $conn->query($queryBehavioral);
-    $rowBehavioral = $resultBehavioral->fetch_assoc();
-    $q2behavioral = $rowBehavioral['q2behavioral'];
-
-    $queryEnglishResolved = "SELECT COUNT(*) AS q2englishresolved FROM academic_english WHERE quarter = 2 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultEnglishResolved = $conn->query($queryEnglishResolved);
-    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-    $q2englishresolved = $rowEnglishResolved['q2englishresolved'];
-
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q2filipinoresolved FROM academic_filipino WHERE quarter = 2 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
-    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-    $q2filipinoresolved = $rowFilipinoResolved['q2filipinoresolved'];
-
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q2numeracyresolved FROM academic_numeracy WHERE quarter = 2 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
-    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-    $q2numeracyresolved = $rowNumeracyResolved['q2numeracyresolved'];
-
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q2behavioralresolved FROM behavioral WHERE quarter = 2 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
-    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-    $q2behavioralresolved = $rowBehavioralResolved['q2behavioralresolved'];
-
-    $conn->close();
-?>
-<?php
-    include('../../database.php');
-
-    $queryEnglish = "SELECT COUNT(*) AS q3english FROM academic_english WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND school = 'Sabangan Elementary School'";
-    $resultEnglish = $conn->query($queryEnglish);
-    $rowEnglish = $resultEnglish->fetch_assoc();
-    $q3english = $rowEnglish['q3english'];
-
-    $queryFilipino = "SELECT COUNT(*) AS q3filipino FROM academic_filipino WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND school = 'Sabangan Elementary School'";
-    $resultFilipino = $conn->query($queryFilipino);
-    $rowFilipino = $resultFilipino->fetch_assoc();
-    $q3filipino = $rowFilipino['q3filipino'];
-
-    $queryNumeracy = "SELECT COUNT(*) AS q3numeracy FROM academic_numeracy WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND school = 'Sabangan Elementary School'";
-    $resultNumeracy = $conn->query($queryNumeracy);
-    $rowNumeracy = $resultNumeracy->fetch_assoc();
-    $q3numeracy = $rowNumeracy['q3numeracy'];
-
-    $queryBehavioral = "SELECT COUNT(*) AS q3behavioral FROM behavioral WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND school = 'Sabangan Elementary School'";
-    $resultBehavioral = $conn->query($queryBehavioral);
-    $rowBehavioral = $resultBehavioral->fetch_assoc();
-    $q3behavioral = $rowBehavioral['q3behavioral'];
-
-    $queryEnglishResolved = "SELECT COUNT(*) AS q3englishresolved FROM academic_english WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultEnglishResolved = $conn->query($queryEnglishResolved);
-    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-    $q3englishresolved = $rowEnglishResolved['q3englishresolved'];
-
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q3filipinoresolved FROM academic_filipino WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
-    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-    $q3filipinoresolved = $rowFilipinoResolved['q3filipinoresolved'];
-
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q3numeracyresolved FROM academic_numeracy WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
-    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-    $q3numeracyresolved = $rowNumeracyResolved['q3numeracyresolved'];
-
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q3behavioralresolved FROM behavioral WHERE quarter = 4  AND school = 'Sabangan Elementary School' AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
-    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-    $q3behavioralresolved = $rowBehavioralResolved['q3behavioralresolved'];
-
-    $conn->close();
-?>
-<?php
-    include('../../database.php');
-
-    $queryEnglish = "SELECT COUNT(*) AS q4english FROM academic_english WHERE quarter = 4 AND school = 'Sabangan Elementary School'";
-    $resultEnglish = $conn->query($queryEnglish);
-    $rowEnglish = $resultEnglish->fetch_assoc();
-    $q4english = $rowEnglish['q4english'];
-
-    $queryFilipino = "SELECT COUNT(*) AS q4filipino FROM academic_filipino WHERE quarter = 4 AND school = 'Sabangan Elementary School'";
-    $resultFilipino = $conn->query($queryFilipino);
-    $rowFilipino = $resultFilipino->fetch_assoc();
-    $q4filipino = $rowFilipino['q4filipino'];
-
-    $queryNumeracy = "SELECT COUNT(*) AS q4numeracy FROM academic_numeracy WHERE quarter = 4 AND school = 'Sabangan Elementary School'";
-    $resultNumeracy = $conn->query($queryNumeracy);
-    $rowNumeracy = $resultNumeracy->fetch_assoc();
-    $q4numeracy = $rowNumeracy['q4numeracy'];
-
-    $queryBehavioral = "SELECT COUNT(*) AS q4behavioral FROM behavioral WHERE quarter = 4 AND school = 'Sabangan Elementary School'";
-    $resultBehavioral = $conn->query($queryBehavioral);
-    $rowBehavioral = $resultBehavioral->fetch_assoc();
-    $q4behavioral = $rowBehavioral['q4behavioral'];
-
-    $queryEnglishResolved = "SELECT COUNT(*) AS q4englishresolved FROM academic_english WHERE quarter = 4 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultEnglishResolved = $conn->query($queryEnglishResolved);
-    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-    $q4englishresolved = $rowEnglishResolved['q4englishresolved'];
-
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q4filipinoresolved FROM academic_filipino WHERE quarter = 4 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
-    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-    $q4filipinoresolved = $rowFilipinoResolved['q4filipinoresolved'];
-
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q4numeracyresolved FROM academic_numeracy WHERE quarter = 4 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
-    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-    $q4numeracyresolved = $rowNumeracyResolved['q4numeracyresolved'];
-
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q4behavioralresolved FROM behavioral WHERE quarter = 4 AND status = 'resolved' AND school = 'Sabangan Elementary School'";
-    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
-    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-    $q4behavioralresolved = $rowBehavioralResolved['q4behavioralresolved'];
-
-    $conn->close();
-?>
-<?php
-
-$currentFileName1 = basename(__FILE__,'_q1.php');
 include('../../database.php');
+// Initialize an array to store results
+$resultsArray = array();
 
-// Count the total rows in each table
-$sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE school = 'Sabangan Elementary School'";
-$resultEnglish = $conn->query($sqlEnglish);
-$rowEnglish = $resultEnglish->fetch_assoc();
-$totalEnglish = $rowEnglish['total'];
+// Query to retrieve data from the adviser table
+$sql_adviser = "SELECT grade, section, fullname FROM adviser WHERE school = 'Sabangan Elementary School'";
+$result_adviser = mysqli_query($conn, $sql_adviser);
 
+if (mysqli_num_rows($result_adviser) > 0) {
+    // Fetch each adviser row
+    while ($row_adviser = mysqli_fetch_assoc($result_adviser)) {
+        $uniqueLRNs = array();
 
-$sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE  school = 'Sabangan Elementary School'";
-$resultFilipino = $conn->query($sqlFilipino);
-$rowFilipino = $resultFilipino->fetch_assoc();
-$totalFilipino = $rowFilipino['total'];
+        // Tables to count LRNs from
+        $tables = array('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral');
 
-$sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE  school = 'Sabangan Elementary School'";
-$resultNumeracy = $conn->query($sqlNumeracy);
-$rowNumeracy = $resultNumeracy->fetch_assoc();
-$totalNumeracy = $rowNumeracy['total'];
+        // Iterate through each table to fetch unique LRNs
+        foreach ($tables as $table) {
+            $sql = "SELECT DISTINCT lrn FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 3";
+            $result = mysqli_query($conn, $sql);
 
-$sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE  school = 'Sabangan Elementary School'";
-$resultBehavioral = $conn->query($sqlBehavioral);
-$rowBehavioral = $resultBehavioral->fetch_assoc();
-$totalBehavioral = $rowBehavioral['total'];
+            // Check if the query was successful
+            if ($result) {
+                // Fetch each row and add LRN to the uniqueLRNs array
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $uniqueLRNs[$row['lrn']] = true; // Using LRN as key to ensure uniqueness
+                }
+                // Free result set
+                mysqli_free_result($result);
+            } else {
+                echo "Error executing query: " . mysqli_error($conn);
+            }
+        }
 
-$sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultEnglishResolved = $conn->query($sqlEnglishResolved);
-$rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-$totalEnglishResolved = $rowEnglishResolved['total'];
+        // Count the number of unique LRNs
+        $totalstudentpar = count($uniqueLRNs);
 
-$sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'AND school = 'Sabangan Elementary School' ";
-$resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
-$rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-$totalFilipinoResolved = $rowFilipinoResolved['total'];
+        // Count LRNs in each table for the current grade and section
+        $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 3";
+        $result_english_non_distinct = mysqli_query($conn, $sql_english_non_distinct);
+        $row_english_non_distinct = mysqli_fetch_assoc($result_english_non_distinct);
+        $english_count_non_distinct = $row_english_non_distinct['english_count_non_distinct'];
 
-$sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
-$rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-$totalNumeracyResolved = $rowNumeracyResolved['total'];
+        // Store $newvalue based on grade and section
+        $grade = $row_adviser['grade'];
+        $section = $row_adviser['section'];
+        $newvalue = "grade_$grade" . "_section_$section";
 
-$sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
-$rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-$totalBehavioralResolved = $rowBehavioralResolved['total'];
+        // Count all LRNs in $newvalue table and store as $totalstud
+        $sql_totalstud = "SELECT COUNT(lrn) AS totalstud FROM $newvalue";
+        $result_totalstud = mysqli_query($conn, $sql_totalstud);
+        $row_totalstud = mysqli_fetch_assoc($result_totalstud);
+        $totalstud = $row_totalstud['totalstud'];
 
-$conn->close();
-?>
-<?php
-    include('../../database.php');
+        $sql_filipino_non_distinct = "SELECT COUNT(lrn) AS filipino_count_non_distinct FROM academic_filipino WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 3";
+        $result_filipino_non_distinct = mysqli_query($conn, $sql_filipino_non_distinct);
+        $row_filipino_non_distinct = mysqli_fetch_assoc($result_filipino_non_distinct);
+        $filipino_count_non_distinct = $row_filipino_non_distinct['filipino_count_non_distinct'];
 
-    // SQL query to count unique occurrences of "lrn" in the specified tables for kinder, I, II, and III grades
-    $sql = "SELECT
-                (SELECT COUNT(DISTINCT lrn) FROM (
-                    SELECT lrn FROM academic_english WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_filipino WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_numeracy WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM behavioral WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                ) AS kinder_lrns) AS totalkinder,
-                (SELECT COUNT(DISTINCT lrn) FROM (
-                    SELECT lrn FROM academic_english WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_filipino WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_numeracy WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM behavioral WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                ) AS gradeone_lrns) AS totalone,
-                (SELECT COUNT(DISTINCT lrn) FROM (
-                    SELECT lrn FROM academic_english WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_filipino WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_numeracy WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM behavioral WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                ) AS gradetwo_lrns) AS totaltwo,
-                (SELECT COUNT(DISTINCT lrn) FROM (
-                    SELECT lrn FROM academic_english WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_filipino WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM academic_numeracy WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                    UNION
-                    SELECT lrn FROM behavioral WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'
-                ) AS gradethree_lrns) AS totalthree";
+        $sql_numeracy_non_distinct = "SELECT COUNT(lrn) AS numeracy_count_non_distinct FROM academic_numeracy WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 3";
+        $result_numeracy_non_distinct = mysqli_query($conn, $sql_numeracy_non_distinct);
+        $row_numeracy_non_distinct = mysqli_fetch_assoc($result_numeracy_non_distinct);
+        $numeracy_count_non_distinct = $row_numeracy_non_distinct['numeracy_count_non_distinct'];
 
-    $result = $conn->query($sql);
+        $sql_behavioral_non_distinct = "SELECT COUNT(lrn) AS behavioral_count_non_distinct FROM behavioral WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 3";
+        $result_behavioral_non_distinct = mysqli_query($conn, $sql_behavioral_non_distinct);
+        $row_behavioral_non_distinct = mysqli_fetch_assoc($result_behavioral_non_distinct);
+        $behavioral_count_non_distinct = $row_behavioral_non_distinct['behavioral_count_non_distinct'];
 
-    if ($result->num_rows > 0) {
-        // Fetch the total counts and store them in variables
-        $row = $result->fetch_assoc();
-        $totalkinder = $row['totalkinder'];
-        $totalone = $row['totalone'];
-        $totaltwo = $row['totaltwo'];
-        $totalthree = $row['totalthree'];
+        // Add results to the results array
+        $resultsArray[] = array(
+            'grade' => $grade,
+            'section' => $section,
+            'fullname' => $row_adviser['fullname'],
+            'totalstudentpar' => $totalstudentpar,
+            'english_count_non_distinct' => $english_count_non_distinct,
+            'totalstud' => $totalstud,
+            'filipino_count_non_distinct' => $filipino_count_non_distinct,
+            'numeracy_count_non_distinct' => $numeracy_count_non_distinct,
+            'behavioral_count_non_distinct' => $behavioral_count_non_distinct
+        );
     }
+}
 
-    // Close connection
-    $conn->close();
-?>
-<?php
-    include('../../database.php');
+// Close the connection
+mysqli_close($conn);
 
-    // Query and variable names for Kinder grade and quarter 1
-    $sqlKinderEnglish = "SELECT COUNT(LRN) AS count_kinder_english FROM academic_english WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultKinderEnglish = mysqli_query($conn, $sqlKinderEnglish);
-    $rowKinderEnglish = mysqli_fetch_assoc($resultKinderEnglish);
-    $kinderenglish = $rowKinderEnglish['count_kinder_english'];
-
-    $sqlKinderFilipino = "SELECT COUNT(LRN) AS count_kinder_filipino FROM academic_filipino WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultKinderFilipino = mysqli_query($conn, $sqlKinderFilipino);
-    $rowKinderFilipino = mysqli_fetch_assoc($resultKinderFilipino);
-    $kinderfilipino = $rowKinderFilipino['count_kinder_filipino'];
-
-    $sqlKinderNumeracy = "SELECT COUNT(LRN) AS count_kinder_numeracy FROM academic_numeracy WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultKinderNumeracy = mysqli_query($conn, $sqlKinderNumeracy);
-    $rowKinderNumeracy = mysqli_fetch_assoc($resultKinderNumeracy);
-    $kindernumeracy = $rowKinderNumeracy['count_kinder_numeracy'];
-
-    $sqlKinderBehavioral = "SELECT COUNT(LRN) AS count_kinder_behavioral FROM behavioral WHERE grade = 'kinder' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultKinderBehavioral = mysqli_query($conn, $sqlKinderBehavioral);
-    $rowKinderBehavioral = mysqli_fetch_assoc($resultKinderBehavioral);
-    $kinderbehavioral = $rowKinderBehavioral['count_kinder_behavioral'];
-
-    // Query and variable names for Grade I and quarter 1
-    $sqlGradeIEnglish = "SELECT COUNT(LRN) AS count_grade_i_english FROM academic_english WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIEnglish = mysqli_query($conn, $sqlGradeIEnglish);
-    $rowGradeIEnglish = mysqli_fetch_assoc($resultGradeIEnglish);
-    $oneenglish = $rowGradeIEnglish['count_grade_i_english'];
-
-    $sqlGradeIFilipino = "SELECT COUNT(LRN) AS count_grade_i_filipino FROM academic_filipino WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIFilipino = mysqli_query($conn, $sqlGradeIFilipino);
-    $rowGradeIFilipino = mysqli_fetch_assoc($resultGradeIFilipino);
-    $onefilipino = $rowGradeIFilipino['count_grade_i_filipino'];
-
-    $sqlGradeINumeracy = "SELECT COUNT(LRN) AS count_grade_i_numeracy FROM academic_numeracy WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeINumeracy = mysqli_query($conn, $sqlGradeINumeracy);
-    $rowGradeINumeracy = mysqli_fetch_assoc($resultGradeINumeracy);
-    $onenumeracy = $rowGradeINumeracy['count_grade_i_numeracy'];
-
-    $sqlGradeIBehavioral = "SELECT COUNT(LRN) AS count_grade_i_behavioral FROM behavioral WHERE grade = 'I' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIBehavioral = mysqli_query($conn, $sqlGradeIBehavioral);
-    $rowGradeIBehavioral = mysqli_fetch_assoc($resultGradeIBehavioral);
-    $onebehavioral = $rowGradeIBehavioral['count_grade_i_behavioral'];
-
-    // Query and variable names for Grade II and quarter 1
-    $sqlGradeIIEnglish = "SELECT COUNT(LRN) AS count_grade_ii_english FROM academic_english WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIEnglish = mysqli_query($conn, $sqlGradeIIEnglish);
-    $rowGradeIIEnglish = mysqli_fetch_assoc($resultGradeIIEnglish);
-    $twoenglish = $rowGradeIIEnglish['count_grade_ii_english'];
-
-    $sqlGradeIIFilipino = "SELECT COUNT(LRN) AS count_grade_ii_filipino FROM academic_filipino WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIFilipino = mysqli_query($conn, $sqlGradeIIFilipino);
-    $rowGradeIIFilipino = mysqli_fetch_assoc($resultGradeIIFilipino);
-    $twofilipino = $rowGradeIIFilipino['count_grade_ii_filipino'];
-
-    $sqlGradeIINumeracy = "SELECT COUNT(LRN) AS count_grade_ii_numeracy FROM academic_numeracy WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIINumeracy = mysqli_query($conn, $sqlGradeIINumeracy);
-    $rowGradeIINumeracy = mysqli_fetch_assoc($resultGradeIINumeracy);
-    $twonumeracy = $rowGradeIINumeracy['count_grade_ii_numeracy'];
-
-    $sqlGradeIIBehavioral = "SELECT COUNT(LRN) AS count_grade_ii_behavioral FROM behavioral WHERE grade = 'II' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIBehavioral = mysqli_query($conn, $sqlGradeIIBehavioral);
-    $rowGradeIIBehavioral = mysqli_fetch_assoc($resultGradeIIBehavioral);
-    $twobehavioral = $rowGradeIIBehavioral['count_grade_ii_behavioral'];
-
-    // Query and variable names for Grade III and quarter 1
-    $sqlGradeIIIEnglish = "SELECT COUNT(LRN) AS count_grade_iii_english FROM academic_english WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIIEnglish = mysqli_query($conn, $sqlGradeIIIEnglish);
-    $rowGradeIIIEnglish = mysqli_fetch_assoc($resultGradeIIIEnglish);
-    $threeenglish = $rowGradeIIIEnglish['count_grade_iii_english'];
-
-    $sqlGradeIIIFilipino = "SELECT COUNT(LRN) AS count_grade_iii_filipino FROM academic_filipino WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIIFilipino = mysqli_query($conn, $sqlGradeIIIFilipino);
-    $rowGradeIIIFilipino = mysqli_fetch_assoc($resultGradeIIIFilipino);
-    $threefilipino = $rowGradeIIIFilipino['count_grade_iii_filipino'];
-
-    $sqlGradeIIINumeracy = "SELECT COUNT(LRN) AS count_grade_iii_numeracy FROM academic_numeracy WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIINumeracy = mysqli_query($conn, $sqlGradeIIINumeracy);
-    $rowGradeIIINumeracy = mysqli_fetch_assoc($resultGradeIIINumeracy);
-    $threenumeracy = $rowGradeIIINumeracy['count_grade_iii_numeracy'];
-
-    $sqlGradeIIIBehavioral = "SELECT COUNT(LRN) AS count_grade_iii_behavioral FROM behavioral WHERE grade = 'III' AND quarter = 4  AND school = 'Sabangan Elementary School'";
-    $resultGradeIIIBehavioral = mysqli_query($conn, $sqlGradeIIIBehavioral);
-    $rowGradeIIIBehavioral = mysqli_fetch_assoc($resultGradeIIIBehavioral);
-    $threebehavioral = $rowGradeIIIBehavioral['count_grade_iii_behavioral'];
-
-    mysqli_close($conn);
 ?>
