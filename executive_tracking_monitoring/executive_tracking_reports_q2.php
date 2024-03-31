@@ -3895,7 +3895,7 @@ $filename = basename($_SERVER['PHP_SELF']);
         </div>
             <div class="column">
             <div class="containers second">
-                <a href="executive_tracking_print_q2.php">
+                <a href="executive_tracking_print_q2.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">
                     <button style="background: transparent; border: none;">
                         <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
                     </button>
