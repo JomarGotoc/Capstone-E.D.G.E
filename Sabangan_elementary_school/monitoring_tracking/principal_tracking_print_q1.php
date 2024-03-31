@@ -245,9 +245,9 @@ mysqli_close($conn);
         <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
-    <div class="update">
-        <a href="" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
+    <div class="update"> <a href="" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
         <button class="print-button" onclick="printContent()">Print Content</button>
+       
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
     </div>

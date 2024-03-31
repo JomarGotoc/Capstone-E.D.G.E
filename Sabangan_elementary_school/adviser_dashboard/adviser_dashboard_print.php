@@ -162,6 +162,40 @@
     .print-button:hover {
         background-color: #0c0437; /* Darken the color on hover if needed */
     }
+
+    button{
+            background-color: transparent;
+            border: none;
+        }
+
+
+        .back-icon {
+            left: 10px;
+            font-size: 30px;
+            color:#190572;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-icon i {
+            margin-right: 5px;
+        }
+
+        .print-button {
+            width: fit-content;
+            background-color: #190572;
+            letter-spacing: 1.2px;
+            font-size: 15px;
+            color: white;
+            border: none;
+            padding: 10px 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: -180px;
+}
+        .print-button:hover {
+            background-color: #0c044c;
+        }
     </style>
 </head>
 <body>
@@ -170,7 +204,7 @@
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
-    <a href="grade_kinder_section_Rizal_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button class="print-buttons">Go Back</button> </a>
+    <a href="grade_kinder_section_Rizal_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
