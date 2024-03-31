@@ -163,8 +163,8 @@ mysqli_close($conn);
             gap: 2px;
         }
         .label {
-            background-color: #B7B7B7;
-            color: #190572;
+            background-color: #190572;
+            color: #FFFFFF;
             padding: 5px 10px;
             border-radius: 5px;
             margin: 5px 0;
@@ -244,7 +244,7 @@ mysqli_close($conn);
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
-        <a href="" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
+    <a href="Principal_tracking_reports_Q3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
         <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
@@ -259,9 +259,9 @@ mysqli_close($conn);
     </div>
     <div class="update-record2">
         <p class="label">Total P.A.Rs</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="<?php echo $totalpars ?>">
         <p class="label">Resolved Cases</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="<?php echo $totalresolved ?>/<?php echo $totalpars ?>">
     </div>
     </div>
     <table>
@@ -293,4 +293,9 @@ mysqli_close($conn);
         </tbody>
     </table>
 </body>
+<script>
+    function printContent() {
+        window.print();
+    }
+</script>
 </html>
