@@ -223,6 +223,18 @@ if (isset($_GET['filename'])) {
           color: green;
           font-weight: bold;
         }
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -250,28 +262,27 @@ if (isset($_GET['filename'])) {
         </div>
 
         <form class="login-form" action="" method="post">
-
-        <div class="password-container">
-        <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
+            
+            <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Old Password">
             <div class="password-toggle" onclick="togglePasswordVisibility()">
                 <i id="eye-icon" class='bx bx-show'></i>
             </div>
         </div>
 
         <div class="password-container">
-        <input type="password" id="password" name="new_password"  placeholder="New Password " >
+            <input type="password" id="password" name="password" placeholder="New Password">
             <div class="password-toggle" onclick="togglePasswordVisibility()">
                 <i id="eye-icon" class='bx bx-show'></i>
             </div>
         </div>
 
         <div class="password-container">
-        <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " >
+            <input type="password" id="password" name="password" placeholder="Confirm Password">
             <div class="password-toggle" onclick="togglePasswordVisibility()">
                 <i id="eye-icon" class='bx bx-show'></i>
             </div>
         </div>
-        
             <button type="submit" value="Login" name="submit">Change Password</button>
         </form>
 
