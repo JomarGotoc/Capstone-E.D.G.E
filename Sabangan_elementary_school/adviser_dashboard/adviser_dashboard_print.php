@@ -170,7 +170,7 @@
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
-    <button class="print-buttons" onclick="printContent()">Back</button>
+    <a href="grade_kinder_section_Rizal_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button class="print-buttons">Go Back</button> </a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
