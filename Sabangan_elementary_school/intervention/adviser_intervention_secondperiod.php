@@ -27,7 +27,7 @@ if (isset($_POST['update'])) {
         case 'Academic - Literacy in Filipino':
             $table = 'academic_filipino';
             break;
-        case 'Academic - Literacy in Numeracy':
+        case 'Academic - Numeracy':
             $table = 'academic_numeracy';
             break;
         case 'Behavioral':

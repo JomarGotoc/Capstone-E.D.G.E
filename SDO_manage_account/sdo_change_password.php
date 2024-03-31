@@ -1,5 +1,6 @@
 <?php
   $errorMsg = "";
+  $errorMsg1 = "";
   if (isset($_POST['submit'])) {
       $old_password = isset($_POST['old_password']) ? $_POST['old_password'] : '';
       $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
@@ -36,18 +37,18 @@
                           $errorMsg = "Password updated successfully.";
                           break;
                       } else {
-                        $errorMsg = "Old password is incorrect.";
+                        $errorMsg1 = "Old password is incorrect.";
                       }
                   }
               }
 
               if (empty($found_tables)) {
-                $errorMsg = "Employment Number not found in any table.";
+                $errorMsg1 = "Employment Number not found in any table.";
               }
 
               $conn->close();
           } else {
-            $errorMsg = "Password do not match.";
+            $errorMsg1 = "Password do not match.";
           }
       }
   }
@@ -216,6 +217,10 @@
           color: green;
           font-weight: bold;
         }
+        .errorMsg1{
+          color: red;
+          font-weight: bold;
+        }
 
     </style>
 </head>
@@ -237,6 +242,9 @@
 
         <div class="errorMsg">
           <?php echo $errorMsg ?>
+        </div>
+        <div class="errorMsg1">
+          <?php echo $errorMsg1 ?>
         </div>
 
         <form class="login-form" action="" method="post">
