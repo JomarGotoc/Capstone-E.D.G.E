@@ -193,8 +193,8 @@ mysqli_close($conn);
             padding: 8px;
         }
         th {
-            background-color: #B7B7B7;
-            color: #190572;
+            background-color: #190572;
+            color: #FFFFFF;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
@@ -202,14 +202,50 @@ mysqli_close($conn);
         tr:nth-child(odd) {
             background-color: transparent;
         }
+
+        button{
+            background-color: transparent;
+            border: none;
+        }
+
+
+        .back-icon {
+            left: 10px;
+            font-size: 30px;
+            color:#190572;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-icon i {
+            margin-right: 5px;
+        }
+
+        .print-button {
+            width: fit-content;
+            background-color: #190572;
+            letter-spacing: 1.2px;
+            font-size: 15px;
+            color: white;
+            border: none;
+            padding: 10px 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: -180px;
+}
+        .print-button:hover {
+            background-color: #0c044c;
+        }
     </style>
 </head>
 <body>
     <header>
-        <img src="../img/logo.png" alt="Logo" width="70" height="70">
+        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
+        <a href="" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
+        <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">
     </div>

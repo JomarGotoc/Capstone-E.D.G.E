@@ -3625,9 +3625,6 @@ $conn->close();
     $conn->close();
 ?>
 
-}
-$conn->close();
-?>
 <?php
 include('../database.php');
 if ($conn->connect_error) {
@@ -7107,12 +7104,12 @@ $conn->close();
     <table>
         <thead>
             <tr>
-                <td>School Name</td>
-                <td>Academic - Literacy in English</td>
-                <td>Academic - Literacy in Filipino</td>
-                <td>Academic - Numeracy</td>
-                <td>Behavioral</td>
-                <td>Total P.A.R.s</td>
+                <th>School Name</th>
+                <th>Academic - Literacy in English</th>
+                <th>Academic - Literacy in Filipino</th>
+                <th>Academic - Numeracy</th>
+                <th>Behavioral</th>
+                <th>Total P.A.R.s</th>
             </tr>
         </thead>
         <tbody>

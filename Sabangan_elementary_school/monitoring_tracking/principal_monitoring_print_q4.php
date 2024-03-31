@@ -472,39 +472,34 @@ $conn->close();
             border: none;
         }
 
+
         .back-icon {
             left: 10px;
             font-size: 30px;
             color:#190572;
             text-decoration: none;
-            margin-right: 10px;
+            cursor: pointer;
         }
 
         .back-icon i {
             margin-right: 5px;
         }
 
-        .back-icon:hover::after {
-            content: "Back";
-            position: absolute;
-            left: 30px;
-            transform: translateY(-50%);
-            color:#190572;
-            font-size: 14px;
-            cursor: pointer;
-        }
         .print-button {
+            width: fit-content;
             background-color: #190572;
+            letter-spacing: 1.2px;
+            font-size: 15px;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: -180px;
 }
         .print-button:hover {
             background-color: #0c044c;
-}
+        }
     </style>
 </head>
 <body>

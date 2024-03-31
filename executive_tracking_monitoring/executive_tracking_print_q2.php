@@ -3501,9 +3501,10 @@ $conn->close();
             text-align: center;
             padding: 8px;
         }
+
         th {
-            background-color: #B7B7B7;
-            color: #190572;
+            background-color: #190572;
+            color: #FFFFFF;
         }
         tr:nth-child(even) {
             background-color: #f2f2f2;
