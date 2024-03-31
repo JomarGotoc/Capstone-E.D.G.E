@@ -3678,6 +3678,8 @@ $conn->close();
             width: 200px;
             text-align: left;
             font-weight: bold;
+            background-color: #190572;
+            color: #FFFFFF;
         }
         .response {
             margin: 5px 0;

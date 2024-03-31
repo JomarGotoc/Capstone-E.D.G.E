@@ -6920,8 +6920,8 @@ $conn->close();
             gap: 2px;
         }
         .label {
-            background-color: #B7B7B7;
-            color: #190572;
+            background-color: #190572;
+            color: #FFFFFF;
             padding: 5px 10px;
             border-radius: 5px;
             margin: 5px 0;
