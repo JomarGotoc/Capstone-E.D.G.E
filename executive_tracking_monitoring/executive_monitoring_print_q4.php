@@ -3729,33 +3729,28 @@ $conn->close();
             font-size: 30px;
             color:#190572;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .back-icon i {
             margin-right: 5px;
         }
 
-        .back-icon:hover::after {
-            content: "Back";
-            position: absolute;
-            left: 30px;
-            transform: translateY(-50%);
-            color:#190572;
-            font-size: 14px;
-            cursor: pointer;
-        }
         .print-button {
+            width: fit-content;
             background-color: #190572;
+            letter-spacing: 1.2px;
+            font-size: 15px;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: -180px;
 }
         .print-button:hover {
             background-color: #0c044c;
-}
+        }
     </style>
 </head>
 <body>
@@ -3778,17 +3773,17 @@ $conn->close();
     <table>
         <thead>
             <tr>
-                <td>P.A.R. Identification</td>
-                <td>Q1</td>
-                <td>Resolved</td>
-                <td>Q2</td>
-                <td>Resolved</td>
-                <td>Q3</td>
-                <td>Resolved</td>
-                <td>Q4</td>
-                <td>Resolved</td>
-                <td>Total P.A.R.s</td>
-                <td>Total Resolved</td>
+                <th>P.A.R. Identification</th>
+                <th>Q1</th>
+                <th>Resolved</th>
+                <th>Q2</th>
+                <th>Resolved</th>
+                <th>Q3</th>
+                <th>Resolved</th>
+                <th>Q4</th>
+                <th>Resolved</th>
+                <th>Total P.A.R.s</th>
+                <th>Total Resolved</th>
             </tr>
         </thead>
         <tbody>
