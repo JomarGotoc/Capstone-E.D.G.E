@@ -365,6 +365,10 @@ $conn->close();
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
+        input[type="email"]{
+            background-color:azure;
+        }
         
     </style>
 </head>

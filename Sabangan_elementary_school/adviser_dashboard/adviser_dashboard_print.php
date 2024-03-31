@@ -148,14 +148,29 @@
         tr:nth-child(odd) {
             background-color: transparent;
         }
+        .print-button {
+        background-color: #190572; /* Add this line to set the background color */
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .print-button:hover {
+        background-color: #0c0437; /* Darken the color on hover if needed */
+    }
     </style>
 </head>
 <body>
     <header>
-        <img src="../img/logo.png" alt="Logo" width="70" height="70">
+        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
+    <button class="print-buttons" onclick="printContent()">Back</button>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">

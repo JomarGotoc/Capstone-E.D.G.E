@@ -131,7 +131,6 @@ function generateOTP() {
           }
 
           h2 {
-            font-family: 'Goblin One', cursive;
             color: #fff;
 
           }

@@ -2868,6 +2868,7 @@ $filename = basename($_SERVER['PHP_SELF']);
         .second{
             border-radius: 3px;
             background-color: #2206A0;
+            text-align: center;
         }
 
         .second h3{
@@ -3001,7 +3002,8 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <option value="school-year">S.Y. 2023 - 2024</option>
                     </select>
                 </div>
-        </div>
+            </div>
+            
             <div class="column">
             <div class="containers second">
                 <a href="executive_tracking_print_q1.php">

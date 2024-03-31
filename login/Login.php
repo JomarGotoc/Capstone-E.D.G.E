@@ -304,6 +304,19 @@ if (isset($_POST['submit'])) {
             }
         }
 
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
@@ -326,13 +339,37 @@ if (isset($_POST['submit'])) {
 
     <form class="login-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
         <input type="text" id="idnum" name="employment_number" placeholder="Enter Employee Number ">
-        <input type="password" id="password" name="password" placeholder="Enter Password ">
+        
+        <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Enter Password">
+            <div class="password-toggle" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class='bx bx-show'></i>
+            </div>
+        </div>
+
         <button type="submit" name="submit" >Log In</button>
     </form>
     
     <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="">Forgot Password</button></a>
 
 </div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bx-show");
+            eyeIcon.classList.add("bx-hide");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bx-hide");
+            eyeIcon.classList.add("bx-show");
+        }
+    }
+</script>
 </body>
 
 </html>

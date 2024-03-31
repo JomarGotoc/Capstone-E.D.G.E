@@ -91,6 +91,7 @@ if (isset($_GET['filename'])) {
             padding: 20px;
             width: 300px;
             text-align: center;
+            position: relative;
           }
 
           .logo {
@@ -124,11 +125,23 @@ if (isset($_GET['filename'])) {
             color: #0C052F;
           }
 
+          .back-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+          }
+                
+          .back-icon i {
+             margin-right: 5px;
+          } 
+
           h2 {
-            font-family: 'Goblin One', cursive;
+            font-family: 'Darker Grotesque', sans-serif;
             color: #fff;
             text-align: left;
-            font-weight: 500;
           }
 
           p{
@@ -143,6 +156,7 @@ if (isset($_GET['filename'])) {
             padding: 20px;
             width: 300px;
             text-align: center;
+            position: relative;
           }
 
           a {
@@ -237,7 +251,7 @@ if (isset($_GET['filename'])) {
   </header>
 
     <div class="login-container">
-    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><i class='bx bx-chevron-left'></i></a>
+    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>
         <p>Enter a new password to change your password</p>

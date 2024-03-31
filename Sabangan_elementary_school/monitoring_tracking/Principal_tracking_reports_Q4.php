@@ -410,6 +410,16 @@
             letter-spacing: 1px;
         }
 
+        #topdown1 {
+            padding: 2px;
+            width: 100%;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: center;
+            border: 1px solid #190572;
+            border-radius: 5px;
+        }
+
         
         #topdowns {
             padding: 2px;

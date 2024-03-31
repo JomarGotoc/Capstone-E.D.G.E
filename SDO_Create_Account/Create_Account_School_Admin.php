@@ -89,7 +89,6 @@ $conn->close();
         h2 {
             font-family: 'Darker Grotesque', sans-serif;
             color: #fff;
-        
         }
 
         .back-icon {

@@ -74,7 +74,7 @@ if (isset($_GET['filename'])) {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: url(../../img/bg.png);
             background-size: cover;
           }
 
@@ -96,7 +96,7 @@ if (isset($_GET['filename'])) {
             width: 75px;
             height: 75px;
             margin: 0 auto 20px;
-            background-image: url('../img/logo.png'); 
+            background-image: url('../../img/logo.png'); 
             background-size: cover;
           }
 
@@ -124,10 +124,8 @@ if (isset($_GET['filename'])) {
           }
 
           h2 {
-            font-family: 'Goblin One', cursive;
             color: #fff;
             text-align: left;
-            font-weight: 500;
           }
 
           p{
@@ -142,6 +140,7 @@ if (isset($_GET['filename'])) {
             padding: 20px;
             width: 300px;
             text-align: center;
+            position: relative;
           }
 
           a {
@@ -224,19 +223,45 @@ if (isset($_GET['filename'])) {
           font-weight: bold;
         }
 
+        .back-icon {
+              position: absolute;
+              top: 10px;
+              left: 10px;
+              font-size: 30px;
+              color: #fff;
+              text-decoration: none;
+            }
+                  
+            .back-icon i {
+              margin-right: 5px;
+            } 
+
+            .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
     </style>
 </head>
 <body>
 
   <header>
-    <img src="../img/logo.png" class="logs">
+    <img src="../../img/logo.png" class="logs">
     <div class="container">
         <h4>E.D.G.E | P.A.R Early Detection and Guidance for Education</h4>
     </div>
   </header>
 
     <div class="login-container">
-    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"><i class='bx bx-chevron-left'></i></a>
+    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>
         <p>Enter a new password to change your password</p>
@@ -247,13 +272,49 @@ if (isset($_GET['filename'])) {
         </div>
 
         <form class="login-form" action="" method="post">
-            <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
-            <input type="password" id="password" name="new_password"  placeholder="New Password " >
-            <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " >
+
+        <div class="password-container">
+        <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
+            <div class="password-toggle" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class='bx bx-show'></i>
+            </div>
+        </div>
+
+        <div class="password-container">
+        <input type="password" id="password" name="new_password"  placeholder="New Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class='bx bx-show'></i>
+            </div>
+        </div>
+
+        <div class="password-container">
+        <input type="password" id="password" name="repeat_password" placeholder="Confirm Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class='bx bx-show'></i>
+            </div>
+        </div>
+        
             <button type="submit" value="Login" name="submit">Change Password</button>
         </form>
 
   
     </div>
+
+    <script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bx-show");
+            eyeIcon.classList.add("bx-hide");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bx-hide");
+            eyeIcon.classList.add("bx-show");
+        }
+    }
+</script>
 </body>
 </html>

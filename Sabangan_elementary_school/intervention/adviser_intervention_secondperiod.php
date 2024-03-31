@@ -632,7 +632,7 @@ $conn->close();
                 </div>
             </div>
             <div class="column">
-                <div class="containers second">
+                <div class="containers second" style="display: none;">
                     <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Reports</h3></button>
                 </div>
             </div>
