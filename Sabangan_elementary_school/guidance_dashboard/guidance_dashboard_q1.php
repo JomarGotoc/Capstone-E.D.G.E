@@ -27,7 +27,6 @@ if(isset($_GET['employment_number'])) {
     $conn->close();
 } 
 ?>
-
 <?php
 include('../../database.php');
 $sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != '' AND school = 'Sabangan Elementary School'";
