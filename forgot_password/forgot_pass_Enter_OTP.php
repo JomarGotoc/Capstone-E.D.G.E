@@ -241,8 +241,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <input type="number" id="otp" name="otp"  placeholder="enter your otp " required >
             <button type="submit" name="verify_otp" class="cont">Continue</button>
-            <p style="cursor:pointer" class="shesh">Didn't recieve a mail? Resend Mail</p>
-        
         
     </div>
     </form>

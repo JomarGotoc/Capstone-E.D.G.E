@@ -247,14 +247,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="employment_number" name="employment_number"  placeholder="Employment Number " required>
 
             <div class="password-container">
-          <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
+          <input type="password" id="password" name="new_password"  placeholder="New Password" required>
               <div class="password-toggle" onclick="togglePasswordVisibility()">
                   <i id="eye-icon" class='bx bx-show'></i>
               </div>
           </div>
 
           <div class="password-container">
-          <input type="password" id="password1" name="new_password"  placeholder="New Password " >
+          <input type="password" id="password1" name="repeat_password"  placeholder="Confirm Password" >
             <div class="password-toggle" onclick="togglePasswordVisibility1()">
                 <i id="eye-icon1" class='bx bx-show'></i>
             </div>
@@ -296,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             eyeIcon.classList.add("bx-show");
         }
     }
-    
+
       </script>
 
 </body>
