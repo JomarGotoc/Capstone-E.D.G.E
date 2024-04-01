@@ -3994,6 +3994,14 @@ $filename = basename($_SERVER['PHP_SELF']);
             background-color: #b7b7b7;
         }
 
+        .school:nth-child(even){
+            background-color: white;
+        }
+
+        .school:nth-child(odd){
+            background-color: white;
+        }
+
         .school th{
             border-top: 1px solid #0C052F;
             border-bottom: 1px solid #0C052F;
