@@ -678,12 +678,13 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Grade & Section</h3>
+                    <h3 style="margin-left:7px">Total Students</h3>
                 </div>
             </div>
+
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px">Overall</h3>
+                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
             </div>
         </div>
@@ -698,17 +699,6 @@ if(isset($_POST['print'])) {
             <div class="column column-right">
                 <div class="containers" style="background-color: #F3F3F3;">
                     <h3 style="color: #190572; margin-left:7px"><?php echo $fullname; ?></h3>
-                </div>
-            </div>
-            <div class="column column-left">
-                <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left:7px">Total Students</h3>
-                </div>
-            </div>
-
-            <div class="column half-width">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
             </div>
         </div>
