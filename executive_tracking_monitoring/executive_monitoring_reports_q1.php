@@ -3931,8 +3931,17 @@ $filename = basename($_SERVER['PHP_SELF']);
             padding: 5px;
         }
 
-        tr, th{
-            border: 1px solid #190572;
+        tr:nth-child(even){
+            background-color: rgb(242, 242, 244);
+        }
+
+        tr:nth-child(odd){
+            background-color: #b7b7b7;
+        }
+
+        .school th{
+            border-top: 1px solid #0C052F;
+            border-bottom: 1px solid #0C052F;
             background-color: rgb(242, 242, 244);
         }
         
@@ -4161,7 +4170,7 @@ $filename = basename($_SERVER['PHP_SELF']);
             </thead>
             <tbody>
                 <tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>  
                         <th style="width:12%"><?php echo $bucayaoenglish ?></th>
                         <th style="width:12%"><?php echo $bucayaofilipino ?></th>
@@ -4170,7 +4179,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalbacayao ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Bliss Elementary School</th>
                         <th style="width:12%"><?php echo $blissenglish ?></th>
                         <th style="width:12%"><?php echo $blissfilipino ?></th>
@@ -4179,7 +4188,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalbliss ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Bolosan Elementary School</th>
                         <th style="width:12%"><?php echo $bolosanenglish ?></th>
                         <th style="width:12%"><?php echo $bolosanfilipino ?></th>
@@ -4188,7 +4197,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalbolosan ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Bonuan Boquig Elementary School</th>
                         <th style="width:12%"><?php echo $bonuanenglish ?></th>
                         <th style="width:12%"><?php echo $bonuanfilipino ?></th>
@@ -4197,7 +4206,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalbonuan ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Calmay Elementary School</th>
                         <th style="width:12%"><?php echo $calmayenglish ?></th>
                         <th style="width:12%"><?php echo $calmayfilipino ?></th>
@@ -4206,7 +4215,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalcalmay ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Carael Elementary School<</th>
                         <th style="width:12%"><?php echo $caraelenglish ?></th>
                         <th style="width:12%"><?php echo $caraelfilipino ?></th>
@@ -4215,7 +4224,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalcarael ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Caranglaan Elementary School</th>
                         <th style="width:12%"><?php echo $caranglaanenglish ?></th>
                         <th style="width:12%"><?php echo $caranglaanfilipino ?></th>
@@ -4224,7 +4233,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalcaranglaan ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school"> 
                         <th style="width:40%; text-align: left; padding-left: 10px">East Central Integrated School</th>
                         <th style="width:12%"><?php echo $eastenglish ?></th>
                         <th style="width:12%"><?php echo $eastfilipino ?></th>
@@ -4233,7 +4242,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totaleast ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Federico N. Ceralde School Integrated School</th>
                         <th style="width:12%"><?php echo $federicoenglish ?></th>
                         <th style="width:12%"><?php echo $federicofilipino ?></th>
@@ -4242,7 +4251,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalfederico ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Gen. Gregorio Del Pilar Elementary School</th>
                         <th style="width:12%"><?php echo $genenglish ?></th>
                         <th style="width:12%"><?php echo $genfilipino ?></th>
@@ -4251,7 +4260,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalgen ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Juan L. Siapno Elementary School</th>
                         <th style="width:12%"><?php echo $juanlenglish ?></th>
                         <th style="width:12%"><?php echo $juanlfilipino ?></th>
@@ -4260,7 +4269,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totaljuanl ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Juan P. Guadiz Elementary School</th>
                         <th style="width:12%"><?php echo $juanpenglish ?></th>
                         <th style="width:12%"><?php echo $juanpfilipino ?></th>
@@ -4269,7 +4278,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totaljuanp ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Lasip Grande Elementary School</th>
                         <th style="width:12%"><?php echo $lasipenglish ?></th>
                         <th style="width:12%"><?php echo $lasipfilipino ?></th>
@@ -4278,7 +4287,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totallasip ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Leon-Francisco Elementary School</th>
                         <th style="width:12%"><?php echo $leonenglish ?></th>
                         <th style="width:12%"><?php echo $leonfilipino ?></th>
@@ -4286,7 +4295,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $leonbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalleon?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Lomboy Elementary School</th>
                         <th style="width:12%"><?php echo $lomboyenglish ?></th>
                         <th style="width:12%"><?php echo $lomboyfilipino ?></th>
@@ -4294,7 +4303,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $lomboybehavioral ?></th>
                         <th style="width:12%"><?php echo $totallomboy ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Lucao Elementary School</th>
                         <th style="width:12%"><?php echo $lucaoenglish ?></th>
                         <th style="width:12%"><?php echo $lucaofilipino ?></th>
@@ -4302,7 +4311,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $lucaobehavioral ?></th>
                         <th style="width:12%"><?php echo $totallucao ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Malued Sur Elementary School</th>
                         <th style="width:12%"><?php echo $maluedenglish ?></th>
                         <th style="width:12%"><?php echo $maluedfilipino ?></th>
@@ -4310,7 +4319,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $maluedbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalmalued ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Mamalingling Elementary School</th>
                         <th style="width:12%"><?php echo $mamalinglingenglish ?></th>
                         <th style="width:12%"><?php echo $mamalinglingfilipino ?></th>
@@ -4318,7 +4327,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $mamalinglingbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalmamalingling ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Mangin-Tebeng Elementary School</th>
                         <th style="width:12%"><?php echo $manginenglish ?></th>
                         <th style="width:12%"><?php echo $manginfilipino ?></th>
@@ -4326,7 +4335,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $manginbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalmangin ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">North Central Elementary School</th>
                         <th style="width:12%"><?php echo $northenglish ?></th>
                         <th style="width:12%"><?php echo $northfilipino ?></th>
@@ -4334,7 +4343,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $northbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalnorth ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Pantal Elementary School</th>
                         <th style="width:12%"><?php echo $pantalenglish ?></th>
                         <th style="width:12%"><?php echo $pantalfilipino ?></th>
@@ -4342,7 +4351,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $pantalbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalpantal ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Pascuala G. Villamil Elementary School</th>
                         <th style="width:12%"><?php echo $pascualaenglish ?></th>
                         <th style="width:12%"><?php echo $pascualafilipino ?></th>
@@ -4350,7 +4359,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $pascualabehavioral ?></th>
                         <th style="width:12%"><?php echo $totalpascuala ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Pogo-Lasip Elementary School</th>
                         <th style="width:12%"><?php echo $pogoenglish ?></th>
                         <th style="width:12%"><?php echo $pogofilipino ?></th>
@@ -4358,7 +4367,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $pogobehavioral ?></th>
                         <th style="width:12%"><?php echo $totalpogo ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Pugaro Integrated School</th>
                         <th style="width:12%"><?php echo $pugaroenglish ?></th>
                         <th style="width:12%"><?php echo $pugarofilipino ?></th>
@@ -4366,7 +4375,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $pugarobehavioral ?></th>
                         <th style="width:12%"><?php echo $totalpugaro ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Sabangan Elementary School</th>
                         <th style="width:12%"><?php echo $sabanganenglish ?></th>
                         <th style="width:12%"><?php echo $sabanganfilipino ?></th>
@@ -4374,7 +4383,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $sabanganbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalSabangan ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Salapingao Elementary School</th>
                         <th style="width:12%"><?php echo $salapingaoenglish ?></th>
                         <th style="width:12%"><?php echo $salapingaofilipino ?></th>
@@ -4382,7 +4391,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $salapingaobehavioral ?></th>
                         <th style="width:12%"><?php echo $totalsalipangao ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Salisay Elementary School</th>
                         <th style="width:12%"><?php echo $salisayenglish ?></th>
                         <th style="width:12%"><?php echo $salisayfilipino ?></th>
@@ -4391,7 +4400,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totalsalisay ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Suit Elementary School</th>
                         <th style="width:12%"><?php echo $suitenglish ?></th>
                         <th style="width:12%"><?php echo $suitfilipino ?></th>
@@ -4399,7 +4408,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $suitbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalsuit ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">T. Ayson Rosario Elementary School</th>
                         <th style="width:12%"><?php echo $aysonenglish ?></th>
                         <th style="width:12%"><?php echo $aysonfilipino ?></th>
@@ -4407,7 +4416,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $aysonbehavioral ?></th>
                         <th style="width:12%"><?php echo $totalayson ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Tambac Elementary School</th>
                         <th style="width:12%"><?php echo $tambacenglish ?></th>
                         <th style="width:12%"><?php echo $tambacfilipino ?></th>
@@ -4415,7 +4424,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $tambacbehavioral ?></th>
                         <th style="width:12%"><?php echo $totaltambac ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Tebeng Elementary School</th>
                         <th style="width:12%"><?php echo $tebengenglish ?></th>
                         <th style="width:12%"><?php echo $tebengfilipino ?></th>
@@ -4424,7 +4433,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $totaltebeng ?></th>
                     </tr>
 
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">Victoria Q. Zarate Elementary School</th>
                         <th style="width:12%"><?php echo $victoriaenglish ?></th>
                         <th style="width:12%"><?php echo $victoriafilipino ?></th>
@@ -4432,7 +4441,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $victoriabehavioral ?></th>
                         <th style="width:12%"><?php echo $totalvictoria ?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%; text-align: left; padding-left: 10px">West Central II Elementary School</th>
                         <th style="width:12%"><?php echo $westcentralenglish?></th>
                         <th style="width:12%"><?php echo $westcentralfilipino?></th>
