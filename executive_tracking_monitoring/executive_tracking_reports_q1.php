@@ -4013,7 +4013,7 @@ $filename = basename($_SERVER['PHP_SELF']);
 
         <table border="0" id="schoolTable">
         <tr>
-        <tr <?php if ($totalbacayao > 0) echo 'style="background-color: #90EE90;"'; ?>>
+        <tr <?php if ($totalbacayao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bacayao Sur Elementary School</th>
                 <th style="width:12%"><?php echo $bucayaostudents ?></th>
                 <th style="width:12%"><?php echo $totalbacayao ?></th>
@@ -4022,7 +4022,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bucayaonumeracy ?></th>
                 <th style="width:12%"><?php echo $bucayaobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalbliss > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalbliss > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bliss Elementary School</th>
                 <th style="width:12%"><?php echo $blissstudents ?></th>
                 <th style="width:12%"><?php echo $totalbliss ?></th>
@@ -4031,7 +4031,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $blissnumeracy ?></th>
                 <th style="width:12%"><?php echo $blissbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalbolosan > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalbolosan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bolosan Elementary School</th>
                 <th style="width:12%"><?php echo $bolosanstudents ?></th>
                 <th style="width:12%"><?php echo $totalbolosan ?></th>
@@ -4040,7 +4040,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bolosannumeracy ?></th>
                 <th style="width:12%"><?php echo $bolosanbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalbonuan > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalbonuan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bonuan Boquig Elementary School</th>
                 <th style="width:12%"><?php echo $bonuanstudents ?></th>
                 <th style="width:12%"><?php echo $totalbonuan ?></th>
@@ -4049,7 +4049,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bonuannumeracy ?></th>
                 <th style="width:12%"><?php echo $bonuanbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalcalmay > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalcalmay > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Calmay Elementary School</th>
                 <th style="width:12%"><?php echo $calmaystudents ?></th>
                 <th style="width:12%"><?php echo $totalcalmay ?></th>
@@ -4058,7 +4058,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $calmaynumeracy ?></th>
                 <th style="width:12%"><?php echo $calmaybehavioral ?></th>
             </tr>
-            <tr <?php if ($totalcarael > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalcarael > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Carael Elementary School</th>
                 <th style="width:12%"><?php echo $caraelstudents ?></th>
                 <th style="width:12%"><?php echo $totalcarael ?></th>
@@ -4067,7 +4067,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $caraelnumeracy ?></th>
                 <th style="width:12%"><?php echo $caraelbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalcaranglaan > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalcaranglaan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Caranglaan Elementary School</th>
                 <th style="width:12%"><?php echo $caranglaanstudents ?></th>
                 <th style="width:12%"><?php echo $totalcaranglaan?></th>
@@ -4076,7 +4076,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $caranglaannumeracy ?></th>
                 <th style="width:12%"><?php echo $caranglaanbehavioral ?></th>
             </tr>
-            <tr <?php if ($totaleast > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totaleast > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">East Central Integrated School</th>
                 <th style="width:12%"><?php echo $eaststudents ?></th>
                 <th style="width:12%"><?php echo $totaleast?></th>
@@ -4085,7 +4085,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $eastnumeracy ?></th>
                 <th style="width:12%"><?php echo $eastbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalfederico > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalfederico > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Federico N. Ceralde School Integrated School</th>
                 <th style="width:12%"><?php echo $federicostudents ?></th>
                 <th style="width:12%"><?php echo $totalfederico?></th>
@@ -4094,7 +4094,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $federiconumeracy ?></th>
                 <th style="width:12%"><?php echo $federicobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalgen > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalgen > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Gen. Gregorio Del Pilar Elementary School</th>
                 <th style="width:12%"><?php echo $genstudents ?></th>
                 <th style="width:12%"><?php echo $totalgen?></th>
@@ -4103,7 +4103,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $gennumeracy ?></th>
                 <th style="width:12%"><?php echo $genbehavioral ?></th>
             </tr>
-            <tr <?php if ($totaljuanl > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totaljuanl > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Juan L. Siapno Elementary School</th>
                 <th style="width:12%"><?php echo $juanlstudents ?></th>
                 <th style="width:12%"><?php echo $totaljuanl ?></th>
@@ -4112,7 +4112,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $juanlnumeracy ?></th>
                 <th style="width:12%"><?php echo $juanlbehavioral ?></th>
             </tr>
-            <tr <?php if ($totaljuanp > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totaljuanp > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Juan P. Guadiz Elementary School</th>
                 <th style="width:12%"><?php echo $juanpstudents ?></th>
                 <th style="width:12%"><?php echo $totaljuanp?></th>
@@ -4121,7 +4121,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $juanpnumeracy ?></th>
                 <th style="width:12%"><?php echo $juanpbehavioral ?></th>
             </tr>
-            <tr <?php if ($totallasip > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totallasip > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lasip Grande Elementary School</th>
                 <th style="width:12%"><?php echo $lasipstudents ?></th>
                 <th style="width:12%"><?php echo $totallasip ?></th>
@@ -4130,7 +4130,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lasipnumeracy ?></th>
                 <th style="width:12%"><?php echo $lasipbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalleon > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalleon > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Leon-Francisco Elementary School</th>
                 <th style="width:12%"><?php echo $leonstudents ?></th>
                 <th style="width:12%"><?php echo $totalleon ?></th>
@@ -4139,7 +4139,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $leonnumeracy ?></th>
                 <th style="width:12%"><?php echo $leonbehavioral ?></th>
             </tr>
-            <tr <?php if ($totallomboy > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totallomboy > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lomboy Elementary School</th>
                 <th style="width:12%"><?php echo $lomboystudents ?></th>
                 <th style="width:12%"><?php echo $totallomboy ?></th>
@@ -4148,7 +4148,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lomboynumeracy ?></th>
                 <th style="width:12%"><?php echo $lomboybehavioral ?></th>
             </tr>
-            <tr <?php if ($totallucao > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totallucao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lucao Elementary School</th>
                 <th style="width:12%"><?php echo $lucaostudents ?></th>
                 <th style="width:12%"><?php echo $totallucao?></th>
@@ -4157,7 +4157,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lucaonumeracy ?></th>
                 <th style="width:12%"><?php echo $lucaobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalmalued > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalmalued > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Malued Sur Elementary School</th>
                 <th style="width:12%"><?php echo $maluedstudents ?></th>
                 <th style="width:12%"><?php echo $totalmalued ?></th>
@@ -4166,7 +4166,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $maluednumeracy ?></th>
                 <th style="width:12%"><?php echo $maluedbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalmamalingling > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalmamalingling > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Mamalingling Elementary School</th>
                 <th style="width:12%"><?php echo $mamalinglingstudents ?></th>
                 <th style="width:12%"><?php echo $totalmamalingling?></th>
@@ -4175,7 +4175,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $mamalinglingnumeracy ?></th>
                 <th style="width:12%"><?php echo $mamalinglingbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalmangin > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalmangin > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Mangin-Tebeng Elementary School</th>
                 <th style="width:12%"><?php echo $manginstudents ?></th>
                 <th style="width:12%"><?php echo $totalmangin?></th>
@@ -4184,7 +4184,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $manginnumeracy ?></th>
                 <th style="width:12%"><?php echo $manginbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalnorth > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalnorth > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">North Central Elementary School</th>
                 <th style="width:12%"><?php echo $northstudents ?></th>
                 <th style="width:12%"><?php echo $totalnorth?></th>
@@ -4193,7 +4193,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $northnumeracy ?></th>
                 <th style="width:12%"><?php echo $northbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalpantal > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalpantal > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pantal Elementary School</th>
                 <th style="width:12%"><?php echo $pantalstudents ?></th>
                 <th style="width:12%"><?php echo $totalpantal ?></th>
@@ -4203,7 +4203,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pantalbehavioral ?></th>
             </tr>
 
-            <tr <?php if ($totalpaascuala > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalpaascuala > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pascuala G. Villamil Elementary School</th>
                 <th style="width:12%"><?php echo $pascualastudents ?></th>
                 <th style="width:12%"><?php echo $totalpaascuala?></th>
@@ -4212,7 +4212,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pascualanumeracy ?></th>
                 <th style="width:12%"><?php echo $pascualabehavioral ?></th>
             </tr>
-            <tr <?php if ($totalpogo > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalpogo > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pogo-Lasip Elementary School</th>
                 <th style="width:12%"><?php echo $pogostudents ?></th>
                 <th style="width:12%"><?php echo $totalpogo?></th>
@@ -4221,7 +4221,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pogonumeracy ?></th>
                 <th style="width:12%"><?php echo $pogobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalpugaro > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalpugaro > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pugaro Integrated School</th>
                 <th style="width:12%"><?php echo $pugarostudents ?></th>
                 <th style="width:12%"><?php echo $totalpugaro?></th>
@@ -4230,7 +4230,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pugaronumeracy ?></th>
                 <th style="width:12%"><?php echo $pugarobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalSabangan > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalSabangan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Sabangan Elementary School</th>
                 <th style="width:12%"><?php echo $sabanganstudents ?></th>
                 <th style="width:12%"><?php echo $totalSabangan?></th>
@@ -4240,7 +4240,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $sabanganbehavioral ?></th>
             </tr>
 
-            <tr <?php if ($totalsalipangao > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalsalipangao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Salapingao Elementary School</th>
                 <th style="width:12%"><?php echo $salapingaostudents ?></th>
                 <th style="width:12%"><?php echo $totalsalipangao?></th>
@@ -4249,7 +4249,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $salapingaonumeracy ?></th>
                 <th style="width:12%"><?php echo $salapingaobehavioral ?></th>
             </tr>
-            <tr <?php if ($totalsalisay > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalsalisay > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Salisay Elementary School</th>
                 <th style="width:12%"><?php echo $salisaystudents ?></th>
                 <th style="width:12%"><?php echo $totalsalisay?></th>
@@ -4258,7 +4258,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $salisaynumeracy ?></th>
                 <th style="width:12%"><?php echo $salisaybehavioral ?></th>
             </tr>
-            <tr <?php if ($totalsuit > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalsuit > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Suit Elementary School</th>
                 <th style="width:12%"><?php echo $suitstudents ?></th>
                 <th style="width:12%"><?php echo $totalsuit?></th>
@@ -4267,7 +4267,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $suitnumeracy ?></th>
                 <th style="width:12%"><?php echo $suitbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalayson > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalayson > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">T. Ayson Rosario Elementary School</th>
                 <th style="width:12%"><?php echo $aysonstudents ?></th>
                 <th style="width:12%"><?php echo $totalayson ?></th>
@@ -4276,7 +4276,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $aysonnumeracy ?></th>
                 <th style="width:12%"><?php echo $aysonbehavioral ?></th>
             </tr>
-            <tr <?php if ($totaltambac > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totaltambac > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Tambac Elementary School</th>
                 <th style="width:12%"><?php echo $tambacstudents ?></th>
                 <th style="width:12%"><?php echo $totaltambac ?></th>
@@ -4285,7 +4285,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $tambacnumeracy ?></th>
                 <th style="width:12%"><?php echo $tambacbehavioral ?></th>
             </tr>
-            <tr <?php if ($totaltebeng > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totaltebeng > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Tebeng Elementary School</th>
                 <th style="width:12%"><?php echo $tebengstudents ?></th>
                 <th style="width:12%"><?php echo $totaltebeng ?></th>
@@ -4294,7 +4294,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $tebengnumeracy ?></th>
                 <th style="width:12%"><?php echo $tebengbehavioral ?></th>
             </tr>
-            <tr <?php if ($totalvictoria > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalvictoria > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Victoria Q. Zarate Elementary School</th>
                 <th style="width:12%"><?php echo $victoriastudents ?></th>
                 <th style="width:12%"><?php echo $totalvictoria?></th>
@@ -4303,7 +4303,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $victorianumeracy ?></th>
                 <th style="width:12%"><?php echo $victoriabehavioral ?></th>
             </tr>
-            <tr <?php if ($totalwest > 0) echo 'style="background-color: #90EE90;"'; ?>>
+            <tr <?php if ($totalwest > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">West Central II Elementary School</th>
                 <th style="width:12%"><?php echo $westcentralstudents?></th>
                 <th style="width:12%"><?php echo $totalwest?></th>
