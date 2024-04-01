@@ -3931,12 +3931,9 @@ $filename = basename($_SERVER['PHP_SELF']);
             padding: 5px;
         }
 
-        tr:nth-child(even){
+        tr, th{
+            border: 1px solid #190572;
             background-color: rgb(242, 242, 244);
-        }
-
-        tr:nth-child(odd){
-            background-color: #b7b7b7;
         }
         
         .dropdown-content {

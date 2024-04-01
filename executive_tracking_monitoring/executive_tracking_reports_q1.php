@@ -3814,12 +3814,9 @@ $filename = basename($_SERVER['PHP_SELF']);
             
         }
 
-        tr:nth-child(odd){
+        tr, th{
+            border: 1px solid #190572;
             background-color: rgb(242, 242, 244);
-        }
-
-        tr:nth-child(even){
-            background-color: #b7b7b7;
         }
 
         table tr th:first-child{
