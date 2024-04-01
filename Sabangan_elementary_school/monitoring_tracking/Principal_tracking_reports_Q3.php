@@ -520,9 +520,12 @@ mysqli_close($conn);
             
         }
 
-        tr, th{
-            border: 1px solid #190572;
+        tr:nth-child(odd){
             background-color: rgb(242, 242, 244);
+        }
+
+        tr:nth-child(even){
+            background-color: #b7b7b7;
         }
         
         .dropdown-content {
