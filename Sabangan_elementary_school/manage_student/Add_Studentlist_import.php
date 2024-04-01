@@ -420,9 +420,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <option value="I">1</option>
                 <option value="II">2</option>
                 <option value="III">3</option>
-                <option value="IV">4</option>
-                <option value="V">5</option>
-                <option value="VI">6</option>
             </select>
         </div>
         <div class="form-group">
