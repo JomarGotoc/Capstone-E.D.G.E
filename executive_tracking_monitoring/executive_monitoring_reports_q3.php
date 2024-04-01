@@ -3997,7 +3997,6 @@ $filename = basename($_SERVER['PHP_SELF']);
         .school th{
             border-top: 1px solid #0C052F;
             border-bottom: 1px solid #0C052F;
-            background-color: rgb(242, 242, 244);
         }
         
         .dropdown-content {
