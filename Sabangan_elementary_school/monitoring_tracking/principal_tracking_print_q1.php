@@ -45,7 +45,7 @@ if (mysqli_num_rows($result_adviser) > 0) {
 
         // Store $newvalue based on grade and section
         $grade = $row_adviser['grade'];
-        $section = $row_adviser['section'];
+        $section = strtolower($row_adviser['section']);
         $newvalue = "grade_$grade" . "_section_$section";
 
         // Count all LRNs in $newvalue table and store as $totalstud

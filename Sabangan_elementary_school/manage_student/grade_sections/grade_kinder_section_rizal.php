@@ -741,30 +741,31 @@ if ($result1->num_rows > 0) {
     <script>
     // Function to handle dropdown change event
     function filterStudents() {
-        // Get selected grade and section values
-        var selectedGrade = document.getElementById("gradeDropdown").value;
-        var selectedSection = document.getElementById("sectionDropdown").value;
+    // Get selected grade and section values
+    var selectedGrade = document.getElementById("gradeDropdown").value.toLowerCase();
+    var selectedSection = document.getElementById("sectionDropdown").value.toLowerCase();
 
-        // Construct the PHP file URL
-        var phpFileUrl = "grade_" + selectedGrade + "_section_" + selectedSection + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
+    // Construct the PHP file URL
+    var phpFileUrl = "grade_" + selectedGrade + "_section_" + selectedSection + ".php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>";
 
-        // Check if the PHP file exists before navigating
-        fetch(phpFileUrl)
-            .then(response => {
-                if (response.ok) {
-                    // PHP file exists, navigate to the corresponding URL
-                    window.location.href = phpFileUrl;
-                } else {
-                    // PHP file not found, show an error message
-                    showError("Grade and Section Doesn't Exist");
-                }
-            })
-            .catch(error => {
-                console.error("Error checking PHP file:", error);
-                // Handle other errors if needed
-                showError("An error occurred. Please try again later.");
-            });
-    }
+    // Check if the PHP file exists before navigating
+    fetch(phpFileUrl)
+        .then(response => {
+            if (response.ok) {
+                // PHP file exists, navigate to the corresponding URL
+                window.location.href = phpFileUrl;
+            } else {
+                // PHP file not found, show an error message
+                showError("Grade and Section Doesn't Exist");
+            }
+        })
+        .catch(error => {
+            console.error("Error checking PHP file:", error);
+            // Handle other errors if needed
+            showError("An error occurred. Please try again later.");
+        });
+}
+
 
     // Function to display error message
     function showError(message) {

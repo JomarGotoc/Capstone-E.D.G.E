@@ -60,6 +60,11 @@
         $conn->close();
     } 
 ?>
+<?php
+if(isset($_GET['filename'])) {
+    $filename = $_GET['filename'];
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -204,7 +209,7 @@
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
-    <a href="grade_kinder_section_Rizal_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
+    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>"> <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
         <input class="response" type="text" value=" ">

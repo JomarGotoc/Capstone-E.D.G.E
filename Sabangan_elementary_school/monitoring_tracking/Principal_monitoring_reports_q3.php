@@ -810,7 +810,7 @@ $conn->close();
         </div>
             <div class="column column-left">
             <div class="containers second">
-                <a href="principal_monitoring_print_q3.php">
+                <a href="principal_monitoring_print_q3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">
                     <button style="background: transparent; border: none;">
                         <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
                     </button>

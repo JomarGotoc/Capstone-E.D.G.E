@@ -70,13 +70,14 @@ if (isset($_POST['update'])) {
 ?>
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
-        $grade = $_GET['grade'];
+        $grade = strtolower($_GET['grade']);
         $section = $_GET['section'];
         $employment_number = $_GET['employment_number'];
 
-        $path = "grade_{$grade}_section_{$section}_q4.php?employment_number=$employment_number";
+        $path = "grade_{$grade}_section_{$section}_q1.php?employment_number=$employment_number";
     }
 ?>
+
 <?php
 include('../../database.php');
 
