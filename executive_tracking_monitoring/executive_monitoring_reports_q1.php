@@ -3939,11 +3939,11 @@ $filename = basename($_SERVER['PHP_SELF']);
             background-color: #b7b7b7;
         }
 
-        .baba:nth-child(even){
+        .school:nth-child(even){
             background-color: white;
         }
 
-        .baba:nth-child(odd){
+        .school:nth-child(odd){
             background-color: white;
         }
 
@@ -4087,7 +4087,7 @@ $filename = basename($_SERVER['PHP_SELF']);
             </thead>
             <tbody>
                 <tr>
-                    <tr class="baba">
+                    <tr >
                         <th style="width:10%">Academic - Literacy in English</th>
                         <th style="width:9%"><?php echo $q1english ?></th>
                         <th style="width:9%"><?php echo $q1englishresolved ?></th>
@@ -4100,7 +4100,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:9%"><?php echo $totalEnglish ?></th>
                         <th style="width:9%"><?php echo $totalEnglishResolved ?></th>
                     </tr>
-                    <tr class="baba">
+                    <tr >
                         <th style="width:10%">Academic - Literacy in Filipino</th>
                         <th style="width:9%"><?php echo $q1filipino ?></th>
                         <th style="width:9%"><?php echo $q1filipinoresolved ?></th>
@@ -4113,7 +4113,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:9%"><?php echo $totalFilipino ?></th>
                         <th style="width:9%"><?php echo $totalFilipinoResolved ?></th>
                     </tr>
-                    <tr class="baba">
+                    <tr >
                         <th style="width:10%">Academic - Numeracy</th>
                         <th style="width:9%"><?php echo $q1numeracy ?></th>
                         <th style="width:9%"><?php echo $q1numeracyresolved ?></th>
@@ -4126,7 +4126,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:9%"><?php echo $totalNumeracy ?></th>
                         <th style="width:9%"><?php echo $totalNumeracyResolved ?></th>
                     </tr>
-                    <tr class="baba">
+                    <tr>
                         <th style="width:10%">Behavioral</th>
                         <th style="width:9%"><?php echo $q1behavioral ?></th>
                         <th style="width:9%"><?php echo $q1behavioralresolved ?></th>
