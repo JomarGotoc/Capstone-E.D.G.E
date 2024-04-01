@@ -107,10 +107,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           }
 
           h2 {
-            font-family: 'Goblin One', cursive;
             color: #fff;
             text-align: left;
-            font-weight: 500;
+            font-weight: bold;
+
           }
 
           p{
