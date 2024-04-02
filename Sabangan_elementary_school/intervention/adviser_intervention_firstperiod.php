@@ -11,14 +11,9 @@
     }
 ?>
 <?php
-// Check if the form is submitted and the update button is clicked
 if (isset($_POST['update'])) {
     include('../../database.php');
-
-    // Get the classification value from the form
     $classification = $_POST['classification'];
-
-    // Define the table name based on the classification
     $table = '';
     switch ($classification) {
         case 'Academic - Literacy in English':
@@ -34,11 +29,9 @@ if (isset($_POST['update'])) {
             $table = 'behavioral';
             break;
         default:
-            // Handle other cases or invalid input
             break;
     }
 
-    // Assuming you have form fields for status, gname, number, notes, intervention, topic, advice
     $status = $_POST['status'];
     $gname = $_POST['gname'];
     $number = $_POST['number'];
@@ -47,19 +40,27 @@ if (isset($_POST['update'])) {
     $topic = $_POST['topic'];
     $advice = $_POST['advice'];
 
+    $lrn = $_POST['lrn'];
+
+    if ($status == 'Resolved') {
+        $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter IN ('2', '3', '4') AND school = 'Sabangan Elementary School'";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("s", $lrn);
+        if (!$stmt_delete->execute()) {
+            echo "Error deleting records: " . $stmt_delete->error;
+            exit();
+        }
+        $stmt_delete->close();
+    }
+
     $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '1' AND school = 'Sabangan Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
 
-    // Assuming lrn is a field in your table to identify the record to update
-    $lrn = $_POST['lrn'];
-
     if ($stmt->execute()) {
-        // Redirect to the specified page after successful update
         header("Location: adviser_intervention_firstperiod_view.php?lrn=$lrn&classification=$classification&quarter=$quarter&table=$table&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
-        exit(); // Make sure to exit after the header redirect
+        exit(); 
     } else {
-        // Handle error if update fails
         echo "Error updating record: " . $stmt->error;
     }
 
@@ -67,6 +68,7 @@ if (isset($_POST['update'])) {
     $conn->close();
 }
 ?>
+
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
         $grade = strtolower($_GET['grade']);

@@ -47,27 +47,38 @@ if (isset($_POST['update'])) {
     $topic = $_POST['topic'];
     $advice = $_POST['advice'];
 
-    // Prepare and execute the SQL statement to update the table
-    $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '2' AND school = 'Sabangan Elementary School'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
-
     // Assuming lrn is a field in your table to identify the record to update
     $lrn = $_POST['lrn'];
 
-    if ($stmt->execute()) {
+    // Check if status is 'Resolved' and delete records for quarters 3 and 4
+    if ($status === 'Resolved') {
+        // Prepare and execute the SQL statement to delete records for quarters 3 and 4
+        $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter IN ('3', '4') AND school = 'Sabangan Elementary School'";
+        $stmt_delete = $conn->prepare($sql_delete);
+        $stmt_delete->bind_param("s", $lrn);
+        $stmt_delete->execute();
+        $stmt_delete->close();
+    }
+
+    // Prepare and execute the SQL statement to update the table
+    $sql_update = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '2' AND school = 'Sabangan Elementary School'";
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
+
+    if ($stmt_update->execute()) {
         // Redirect to the specified page after successful update
         header("Location: adviser_intervention_secondperiod_view.php?lrn=$lrn&classification=$classification&quarter=$quarter&table=$table&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
         exit(); // Make sure to exit after the header redirect
     } else {
         // Handle error if update fails
-        echo "Error updating record: " . $stmt->error;
+        echo "Error updating record: " . $stmt_update->error;
     }
 
-    $stmt->close();
+    $stmt_update->close();
     $conn->close();
 }
 ?>
+
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
         $grade = strtolower($_GET['grade']);

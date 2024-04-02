@@ -56,6 +56,15 @@ if (isset($_POST['update'])) {
     $lrn = $_POST['lrn'];
 
     if ($stmt->execute()) {
+        // If the status is Resolved, delete the data for the LRN and classification in quarter 4
+        if ($status === 'Resolved') {
+            $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter = '4'";
+            $stmt_delete = $conn->prepare($sql_delete);
+            $stmt_delete->bind_param("s", $lrn);
+            $stmt_delete->execute();
+            $stmt_delete->close();
+        }
+
         // Redirect to the specified page after successful update
         header("Location: adviser_intervention_thirdperiod_view.php?lrn=$lrn&classification=$classification&quarter=$quarter&table=$table&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
         exit(); // Make sure to exit after the header redirect
@@ -68,6 +77,7 @@ if (isset($_POST['update'])) {
     $conn->close();
 }
 ?>
+
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
         $grade = strtolower($_GET['grade']);

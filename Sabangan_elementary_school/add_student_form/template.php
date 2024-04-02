@@ -49,55 +49,79 @@
     $conn->close();
 ?>
 <?php
-    $errorMsg ="";
-    if(isset($_POST['submit2'])){
-        $lrn = $_POST['lrn'];
-        $fullname = $_POST['fullname'];
-        $grade = $_POST['grade'];
-        $section = $_POST['section'];
-        $date = $_POST['date'];
-        $quarter = $_POST['quarter'];
-        $classification = $_POST['classification'];
-        $school = "Sabangan Elementary School";
+include('../../database.php');
+$errorMsg="";
+if(isset($_POST['submit2'])) {
+    // Retrieve form data
+    $lrn = $_POST['lrn'];
+    $fullname = $_POST['fullname'];
+    $grade = $_POST['grade'];
+    $section = $_POST['section'];
+    $date = $_POST['date'];
+    $quarter = $_POST['quarter'];
+    $classification = $_POST['classification'];
+    $school = "Sabangan Elementary School";
+    $status = "Pending";
 
-        include('../../database.php');
-        $status = 'Pending'; // Set the default status
-
-        switch ($classification) {
-            case 'Academic - Literacy in English':
-                $sql = "INSERT INTO academic_english (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-                break;
-
-            case 'Academic - Literacy in Filipino':
-                $sql = "INSERT INTO academic_filipino (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-                break;
-
-            case 'Academic - Numeracy':
-                $sql = "INSERT INTO academic_numeracy (lrn, fullname, grade, section, date, quarter, classification, status, school)
-                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-                break;
-
-            case 'Behavioral':
-                $sql = "INSERT INTO behavioral (lrn, fullname, grade, section, date, quarter, classification, status,school)
-                        VALUES ('$lrn', '$fullname', '$grade', '$section', '$date', '$quarter', '$classification', '$status','$school')";
-                break;
-
-            default:
-                echo "Invalid classification";
-                break;
-        }
-
-        if ($conn->query($sql) === TRUE) {
-            $errorMsg =" Recorded Successfully";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        $conn->close();
+    // Determine the appropriate table based on classification
+    switch($classification) {
+        case 'Academic - Literacy in English':
+            $table = 'academic_english';
+            break;
+        case 'Academic - Literacy in Filipino':
+            $table = 'academic_filipino';
+            break;
+        case 'Academic - Numeracy':
+            $table = 'academic_numeracy';
+            break;
+        case 'Behavioral':
+            $table = 'behavioral';
+            break;
+        default:
+            // Handle default case
+            break;
     }
+
+    // Insert data into the appropriate table for each quarter
+    $quarters = [];
+    switch ($quarter) {
+        case 1:
+            $quarters = [1, 2, 3, 4];
+            break;
+        case 2:
+            $quarters = [2, 3, 4];
+            break;
+        case 3:
+            $quarters = [3, 4];
+            break;
+        case 4:
+            $quarters = [4];
+            break;
+        default:
+            // Handle default case
+            break;
+    }
+
+    foreach ($quarters as $qtr) {
+        // Insert data into the appropriate table
+        $sql = "INSERT INTO $table (lrn, fullname, grade, section, date, quarter, classification, school, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssssss", $lrn, $fullname, $grade, $section, $date, $qtr, $classification, $school, $status);
+        $stmt->execute();
+
+        // Check if insertion was successful
+        if($stmt->affected_rows > 0) {
+            $errorMsg="Recorded Successfully";
+        }
+    }
+}
+
+// Close connection
+$conn->close();
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

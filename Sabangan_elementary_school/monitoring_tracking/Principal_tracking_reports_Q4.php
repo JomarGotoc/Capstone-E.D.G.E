@@ -88,36 +88,40 @@ mysqli_close($conn);
 
 ?>
 <?php
-    include('../../database.php');
+include('../../database.php');
+$tables = ["academic_english", "academic_filipino", "academic_numeracy", "behavioral"];
+$lrnsCounted = [];
+$totalpars = 0;
+$totalresolved = 0; // Initialize total resolved count
 
-    // Define the tables
-    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+foreach ($tables as $table) {
+    $sql = "SELECT DISTINCT lrn FROM $table WHERE school = 'Sabangan Elementary School'";
+    
+    $result = $conn->query($sql);
 
-    // Initialize total count
-    $totalpars = 0;
-    $totalresolved = 0;
-
-    // Iterate through tables and count rows with 'lrn' field and 'status' field
-    foreach ($tables as $table) {
-        // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL AND school = 'Sabangan Elementary School'";
-        $resultPars = $conn->query($sqlPars);
-
-        if ($resultPars->num_rows > 0) {
-            $rowPars = $resultPars->fetch_assoc();
-            $totalpars += $rowPars['count'];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrnsCounted)) {
+                // Increment total count
+                $totalpars++;
+                // Mark LRN as counted
+                $lrnsCounted[] = $lrn;
+                // Check if LRN is resolved
+                $resolvedSql = "SELECT lrn FROM $table WHERE lrn = '$lrn' AND status = 'Resolved' AND school = 'Sabangan Elementary School'";
+                $resolvedResult = $conn->query($resolvedSql);
+                if ($resolvedResult && $resolvedResult->num_rows > 0) {
+                    // Increment resolved count
+                    $totalresolved++;
+                }
+            }
         }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-        $resultResolved = $conn->query($sqlResolved);
-
-        if ($resultResolved->num_rows > 0) {
-            $rowResolved = $resultResolved->fetch_assoc();
-            $totalresolved += $rowResolved['count'];
-        }
+    } else {
+        echo "Error in table $table: " . $conn->error;
     }
-    $conn->close();
+}
+$conn->close();
 ?>
-
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
