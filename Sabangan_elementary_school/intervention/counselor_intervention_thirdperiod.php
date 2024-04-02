@@ -33,6 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
     if ($stmt->execute()) {
+        if ($status == "Resolved") {
+            $sql_delete = "DELETE FROM behavioral WHERE lrn = ? AND quarter = '4' AND classification = ? AND school = Sabangan Elementary School";
+            $stmt_delete = $conn->prepare($sql_delete);
+            $stmt_delete->bind_param("ss", $lrn, $classification);
+            $stmt_delete->execute();
+            $stmt_delete->close();
+        }
+        
         $employment_number = $_GET['employment_number'];
         header('Location: counselor_intervention_thirdperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number). '&classification=' . urlencode($classification));
     } else {
@@ -43,6 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $conn->close();
 }
 ?>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if (isset($_GET['lrn'])) {

@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-
-    $sql = "UPDATE behavioral SET 
+    // Update existing record
+    $sql_update = "UPDATE behavioral SET 
             fullname = ?,
             gname = ?,
             number = ?,
@@ -29,17 +29,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
             advice = ?,
             status = ?
             WHERE lrn = ? AND quarter = '2' AND school = 'Sabangan Elementary School'";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
+    $stmt_update = $conn->prepare($sql_update);
+    $stmt_update->bind_param("sssssssss", $fullname,  $gname, $number, $notes, $intervention, $topic, $advice, $status, $lrn);
     
-    if ($stmt->execute()) {
+    if ($stmt_update->execute()) {
+        // Check if status is resolved
+        if ($status === 'Resolved') {
+            // Delete records for quarters 3 and 4 with the same lrn and classification
+            $sql_delete = "DELETE FROM behavioral WHERE lrn = ? AND quarter IN ('3', '4') AND classification = ? AND school = Sabangan Elementary School";
+            $stmt_delete = $conn->prepare($sql_delete);
+            $stmt_delete->bind_param("ss", $lrn, $classification);
+            $stmt_delete->execute();
+            $stmt_delete->close();
+        }
+
         $employment_number = $_GET['employment_number'];
         header('Location: counselor_intervention_secondperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number). '&classification=' . urlencode($classification));
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $stmt_update->error;
     }
 
-    $stmt->close();
+    $stmt_update->close();
     $conn->close();
 }
 ?>

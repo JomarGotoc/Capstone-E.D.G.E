@@ -3409,19 +3409,24 @@ $conn->close();
 
     $totalpar = 0; 
     $resolved = 0;
+    $encounteredLRNs = array(); // Array to store LRNs encountered
 
     // Loop through each table
     foreach ($tables as $table) {
-        $sql = "SELECT COUNT(*) AS count, SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) AS resolved_count FROM $table";
+        $sql = "SELECT lrn, COUNT(DISTINCT lrn) AS count, SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) AS resolved_count FROM $table GROUP BY lrn";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $totalpar += $row["count"];
-                $resolved += $row["resolved_count"];
+                $lrn = $row["lrn"];
+                // Check if LRN has been encountered before
+                if (!in_array($lrn, $encounteredLRNs)) {
+                    $totalpar += $row["count"];
+                    $resolved += $row["resolved_count"];
+                    // Add LRN to encountered list
+                    $encounteredLRNs[] = $lrn;
+                }
             }
-        } else {
-            echo "0 results for table $table";
         }
     }
 

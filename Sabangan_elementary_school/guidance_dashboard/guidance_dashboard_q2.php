@@ -29,7 +29,7 @@ if(isset($_GET['employment_number'])) {
 ?>
 <?php
 include('../../database.php');
-$sql = "SELECT COUNT(*) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != '' AND school = 'Sabangan Elementary School'";
+$sql = "SELECT COUNT(DISTINCT lrn) AS count FROM behavioral WHERE lrn IS NOT NULL AND lrn != '' AND school = 'Sabangan Elementary School'";
 
 $result = $conn->query($sql);
 

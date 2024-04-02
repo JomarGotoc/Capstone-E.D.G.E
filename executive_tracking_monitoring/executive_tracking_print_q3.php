@@ -3408,19 +3408,24 @@ $conn->close();
 
     $totalpar = 0; 
     $resolved = 0;
+    $encounteredLRNs = array(); // Array to store LRNs encountered
 
     // Loop through each table
     foreach ($tables as $table) {
-        $sql = "SELECT COUNT(*) AS count, SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) AS resolved_count FROM $table";
+        $sql = "SELECT lrn, COUNT(DISTINCT lrn) AS count, SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) AS resolved_count FROM $table GROUP BY lrn";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
             while($row = $result->fetch_assoc()) {
-                $totalpar += $row["count"];
-                $resolved += $row["resolved_count"];
+                $lrn = $row["lrn"];
+                // Check if LRN has been encountered before
+                if (!in_array($lrn, $encounteredLRNs)) {
+                    $totalpar += $row["count"];
+                    $resolved += $row["resolved_count"];
+                    // Add LRN to encountered list
+                    $encounteredLRNs[] = $lrn;
+                }
             }
-        } else {
-            echo "0 results for table $table";
         }
     }
 
@@ -3557,12 +3562,12 @@ $conn->close();
     <a href="executive_tracking_reports_q3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="S.Y. 2023 - 2024" readonly>
     </div>
     <div class="details">
     <div class="update-record">
         <p class="label">Division</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="Dagupan City Division Elementary Schools" readonly>
         
         <p class="label">Quarter</p>
         <input class="response" type="text" value="3" readonly>

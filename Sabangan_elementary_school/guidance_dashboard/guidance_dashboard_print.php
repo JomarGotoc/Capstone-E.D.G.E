@@ -163,7 +163,7 @@ $conn->close();
         <a href="guidance_dashboard_q1.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
         <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="S.Y. 2023 - 2024" readonly>
     </div>
     <div class="details">
     <div class="update-record">

@@ -90,34 +90,39 @@ mysqli_close($conn);
 ?>
 
 <?php
-    include('../../database.php');
+include('../../database.php');
+$tables = ["academic_english", "academic_filipino", "academic_numeracy", "behavioral"];
+$lrnsCounted = [];
+$totalpars = 0;
+$totalresolved = 0; // Initialize total resolved count
 
-    // Define the tables
-    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+foreach ($tables as $table) {
+    $sql = "SELECT DISTINCT lrn FROM $table WHERE school = 'Sabangan Elementary School'";
+    
+    $result = $conn->query($sql);
 
-    // Initialize total count
-    $totalpars = 0;
-    $totalresolved = 0;
-
-    // Iterate through tables and count rows with 'lrn' field and 'status' field
-    foreach ($tables as $table) {
-        // Count rows with 'lrn' field
-        $sqlPars = "SELECT COUNT(*) as count FROM $table WHERE lrn IS NOT NULL  AND school = 'Sabangan Elementary School'";
-        $resultPars = $conn->query($sqlPars);
-
-        if ($resultPars->num_rows > 0) {
-            $rowPars = $resultPars->fetch_assoc();
-            $totalpars += $rowPars['count'];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrnsCounted)) {
+                // Increment total count
+                $totalpars++;
+                // Mark LRN as counted
+                $lrnsCounted[] = $lrn;
+                // Check if LRN is resolved
+                $resolvedSql = "SELECT lrn FROM $table WHERE lrn = '$lrn' AND status = 'Resolved' AND school = 'Sabangan Elementary School'";
+                $resolvedResult = $conn->query($resolvedSql);
+                if ($resolvedResult && $resolvedResult->num_rows > 0) {
+                    // Increment resolved count
+                    $totalresolved++;
+                }
+            }
         }
-        $sqlResolved = "SELECT COUNT(*) as count FROM $table WHERE status = 'resolved'  AND school = 'Sabangan Elementary School'";
-        $resultResolved = $conn->query($sqlResolved);
-
-        if ($resultResolved->num_rows > 0) {
-            $rowResolved = $resultResolved->fetch_assoc();
-            $totalresolved += $rowResolved['count'];
-        }
+    } else {
+        echo "Error in table $table: " . $conn->error;
     }
-    $conn->close();
+}
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -251,21 +256,21 @@ mysqli_close($conn);
         <button class="print-button" onclick="printContent()">Print Content</button>
        
         <p class="label">School Year</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="S.Y. 2023 - 2024" readonly>
     </div>
     <div class="details">
     <div class="update-record">
         <p class="label">School Name</p>
-        <input class="response" type="text" value="Sabangan Elementary School">
+        <input class="response" type="text" value="Sabangan Elementary School"readonly>
         
         <p class="label">Quarter</p>
-        <input class="response" type="text" value="1">
+        <input class="response" type="text" value="1"readonly>
     </div>
     <div class="update-record2">
         <p class="label">Total P.A.Rs</p>
-        <input class="response" type="text" value="<?php echo $totalpars ?>">
+        <input class="response" type="text" value="<?php echo $totalpars ?>"readonly>
         <p class="label">Resolved Cases</p>
-        <input class="response" type="text" value="<?php echo $totalresolved ?>/<?php echo $totalpars ?>">
+        <input class="response" type="text" value="<?php echo $totalresolved ?>/<?php echo $totalpars ?>"readonly>
     </div>
     </div>
     <table>

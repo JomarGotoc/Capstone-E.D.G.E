@@ -3764,12 +3764,12 @@ $conn->close();
     <a href="executive_monitoring_reports_q3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" > <button class="back-icon"><i class='bx bxs-chevron-left'></i></button></a>
     <button class="print-button" onclick="printContent()">Print Content</button>
         <p class="label">School Year</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="S.Y. 2023 - 2024" readonly>
     </div>
     <div class="details">
     <div class="update-record">
         <p class="label">Division</p>
-        <input class="response" type="text" value=" ">
+        <input class="response" type="text" value="Dagupan City Division Elementary Schools" readonly>
     </div>
     </div>
     <table>

@@ -20,23 +20,30 @@
     } 
 ?>
 <?php
-    include('../../database.php');
-    $filename = basename(__FILE__, '.php');
-    $words = explode('_', $filename);
-    $secondWord = $words[1];
-    $fourthWord = $words[3];
-    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-    $count = 0;
-    foreach ($tables as $table) {
-        $sql = "SELECT COUNT(*) AS count FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Sabangan Elementary School'";
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $count += $row['count'];
+include('../../database.php');
+$filename = basename(__FILE__, '.php');
+$words = explode('_', $filename);
+$secondWord = $words[1];
+$fourthWord = $words[3];
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+$count = 0;
+$lrnCounted = array(); // Array to keep track of LRNs already counted
+
+foreach ($tables as $table) {
+    $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Sabangan Elementary School'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrnCounted)) {
+                // If LRN not already counted, add it to the count and mark as counted
+                $count++;
+                $lrnCounted[] = $lrn;
             }
         }
     }
-    $conn->close();
+}
+$conn->close();
 ?>
 <?php
     include('../../database.php');
