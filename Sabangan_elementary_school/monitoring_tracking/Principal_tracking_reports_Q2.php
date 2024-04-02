@@ -724,7 +724,7 @@ mysqli_close($conn);
 
         <table border="0" id="data-table">
         <?php foreach ($resultsArray as $result) { ?>
-        <tr>
+            <tr <?php if ($result['totalstudentpar'] > 0) echo 'style="background-color: lightgreen;"'; ?>>
             <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo $result['section']; ?></th>
             <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
             <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
