@@ -43,7 +43,7 @@ if (count($words) >= 4) {
         $words = explode('_', $filename);
 
         if (count($words) >= 4) {
-            $grade = ucwords($words[1]);
+            $grade = $words[1];
             $section = $words[3];
         } 
 
@@ -762,7 +762,7 @@ if ($result1->num_rows > 0) {
         .catch(error => {
             console.error("Error checking PHP file:", error);
             // Handle other errors if needed
-            showError("An error occurred. Please try again later.");
+            showError("");
         });
 }
 

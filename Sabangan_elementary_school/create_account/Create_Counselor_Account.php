@@ -432,7 +432,7 @@ $conn->close();
             <?php echo $errorMsg1; ?>
         </div>
 
-        <form class="login-form" action="Create_counselor_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" method="post">
+        <form class="login-form" action="Create_Counselor_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" method="post">
         <div class="row">
                 <div class="columns">
                 <div class="form-group">

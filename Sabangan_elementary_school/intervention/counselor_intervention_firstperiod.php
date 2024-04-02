@@ -34,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     
     if ($stmt->execute()) {
         if ($status == "Resolved") {
-            // Delete records for quarters 2, 3, and 4
-            $delete_sql = "DELETE FROM behavioral WHERE lrn = ? AND quarter IN ('2', '3', '4') AND classification = ? AND school = Sabangan Elementary School";
+            $school = "Sabangan Elementary School";
+            $delete_sql = "DELETE FROM behavioral WHERE lrn = ? AND quarter IN ('2', '3', '4') AND classification = ? AND school = ?";
             $delete_stmt = $conn->prepare($delete_sql);
-            $delete_stmt->bind_param("ss", $lrn, $classification);
+            $delete_stmt->bind_param("sss", $lrn, $classification, $school);
             $delete_stmt->execute();
             $delete_stmt->close();
         }

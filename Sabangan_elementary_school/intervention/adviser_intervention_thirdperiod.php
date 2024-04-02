@@ -58,9 +58,10 @@ if (isset($_POST['update'])) {
     if ($stmt->execute()) {
         // If the status is Resolved, delete the data for the LRN and classification in quarter 4
         if ($status === 'Resolved') {
-            $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter = '4' AND school = Sabangan Elementary School";
+            $school = "Sabangan Elementary School";
+            $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter = '4' AND school = ?";
             $stmt_delete = $conn->prepare($sql_delete);
-            $stmt_delete->bind_param("s", $lrn);
+            $stmt_delete->bind_param("ss", $lrn, $school);
             $stmt_delete->execute();
             $stmt_delete->close();
         }

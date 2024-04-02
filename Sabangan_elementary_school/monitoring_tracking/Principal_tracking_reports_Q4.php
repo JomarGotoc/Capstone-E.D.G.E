@@ -43,7 +43,7 @@ if (mysqli_num_rows($result_adviser) > 0) {
         $english_count_non_distinct = $row_english_non_distinct['english_count_non_distinct'];
 
         // Store $newvalue based on grade and section
-        $grade = $row_adviser['grade'];
+        $grade = strtolower($row_adviser['grade']);
         $section = strtolower($row_adviser['section']);
         $newvalue = "grade_$grade" . "_section_$section";
 
