@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 12:10 PM
+-- Generation Time: Apr 02, 2024 at 06:33 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -231,13 +231,6 @@ CREATE TABLE `sdo_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `sdo_admin`
---
-
-INSERT INTO `sdo_admin` (`id`, `fullname`, `employment_number`, `email`, `password`, `date`, `otp`, `verified`) VALUES
-(1, 'Vivienne  Lapena Mendez ', '1234567', 'viviennemendez@gmail.com', '$2y$10$C3h0gobi5Q3MleuRhoSa2On5cf5UEPL1h9.mjr42Jq2iCfRD0NdDO', '2024-03-18', 445129, 'yes');
-
---
 -- Indexes for dumped tables
 --
 
@@ -367,7 +360,7 @@ ALTER TABLE `school_admin`
 -- AUTO_INCREMENT for table `sdo_admin`
 --
 ALTER TABLE `sdo_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
