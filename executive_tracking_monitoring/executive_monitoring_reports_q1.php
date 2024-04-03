@@ -3882,7 +3882,7 @@ $filename = basename($_SERVER['PHP_SELF']);
 
         #topdown {
             padding: 2px;
-            width: 428px;
+            width: 160px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -3979,6 +3979,90 @@ $filename = basename($_SERVER['PHP_SELF']);
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+        @media screen and (max-width: 600px) {
+            body{
+                display: flex;
+            }
+            header{
+                height: 40px;
+            }
+            .vertical-line {
+                margin-left: 40px;
+                margin-right: auto;
+                height: 15px;
+                width: 1px;
+            }
+
+            .logout-icon {
+                font-size: 1rem;
+            }
+            h4{
+                font-size: 0.6rem;
+            }
+            tbody tr tr th{
+                font-size: 0.2rem;
+            }
+            .logs{
+                width: 2rem;
+                height: 2rem;
+            }
+            .bottom-inner-container2{
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .column  h3{
+                font-size: 0.7rem;
+            }
+            #topdown1 {
+                padding: 1px;
+                width: 150px;
+                background: #FBFBFB;
+                color: #190572;
+                text-align: center;
+                border: 1px solid #190572;
+                border-radius: 5px;
+                font-size: 0.6rem;
+            }
+            .second{
+                border-radius: 3px;
+                background-color: #2206A0;
+                text-align: center;
+                width: 150px;
+            }
+            .second h3{
+                color: #FFF;
+                letter-spacing: 3px;
+            }
+            table{
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                padding: 1px;
+            }
+            .table-header th {
+                background-color: #190572;
+                color: #FFF;
+                font-size: 0.6rem;
+                padding: 5px;
+            }
+            .table-body{
+                font-size: 0.6rem;
+            }
+            .containers{
+                font-size: 0.3rem;
+                white-space: nowrap;
+            }
+            .school{
+                font-size: 0.6rem;
+            }
+            #topdown{
+                font-size: 0.6rem;
+            }
+            .navbar{
+                font-size: 0.6rem;
+                margin-top: -14px;
+                height: 39px;
+            }
         }
         
     </style>
@@ -4085,7 +4169,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     <th style="width:9%">Total Resolved</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
                 <tr>
                     <tr >
                         <th style="width:10%">Academic - Literacy in English</th>
@@ -4153,7 +4237,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     <h3 style="margin-left: 7px">Quarter</h3>
                 </div>
             </div>
-            <div class="select-wrapper1">
+            <div class="select-wrapper">
                     <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
                         <option value="" disabled selected hidden>Quarter 1</option>
                         <option value="q1">Quarter 1</option>
@@ -4175,7 +4259,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     <th style="width:15%">Total P.A.R.s</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="school">
                 <tr>
                     <tr class="school" <?php if ($totalbacayao > 0) echo 'style="background-color:#90A3D1;"'; ?>>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>  
