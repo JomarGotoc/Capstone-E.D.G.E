@@ -457,7 +457,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" required>
+                        <input type="date" id="date-added" name="date" readonly>
                     </div>
                 </div>
             </div>
@@ -466,6 +466,18 @@ $conn->close();
             </div>
         </form>
     </div>
+
+    <script>
+    var currentDate = new Date();
+
+    var year = currentDate.getFullYear();
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+    var day = String(currentDate.getDate()).padStart(2, '0');
+
+    document.getElementById('date-added').value = `${year}-${month}-${day}`;
+
+    document.getElementById('date-added').disabled = true;
+    </script>
 
     <script src="create_account.js"></script>
 

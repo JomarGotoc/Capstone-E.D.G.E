@@ -473,7 +473,7 @@ $conn->close();
                 <div class="columns">
                 <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" required >
+                        <input type="date" id="date-added" name="date" readonly >
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
@@ -486,9 +486,6 @@ $conn->close();
                             <option value="I">1</option>
                             <option value="II">2</option>
                             <option value="III">3</option>
-                            <option value="IV">4</option>
-                            <option value="V">5</option>
-                            <option value="VI">6</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -500,6 +497,18 @@ $conn->close();
             <button type="submit" name="submit" id="add-btn">Create Account</button>
         </form>
     </div>
+
+    <script>
+    var currentDate = new Date();
+
+    var year = currentDate.getFullYear();
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+    var day = String(currentDate.getDate()).padStart(2, '0');
+
+    document.getElementById('date-added').value = `${year}-${month}-${day}`;
+
+    document.getElementById('date-added').disabled = true;
+    </script>
 
     <script src="create_account.js"></script>
 

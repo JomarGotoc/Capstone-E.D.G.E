@@ -536,7 +536,7 @@ $conn->close();
 
                     </div>
                     <div class="column">Date Added</div>
-                    <input type="date" class="date" name="date">
+                    <input type="date" class="date" id="date-added" name="date" readonly>
                 </div>
 
                 <div class="row">
@@ -566,6 +566,18 @@ $conn->close();
 
                 <button class="add-button" name="submit2">Add Pupil At-Risk</button>
       </form>
+
+      <script>
+        var currentDate = new Date();
+
+        var year = currentDate.getFullYear();
+        var month = String(currentDate.getMonth() + 1).padStart(2, '0'); 
+        var day = String(currentDate.getDate()).padStart(2, '0');
+
+        document.getElementById('date-added').value = `${year}-${month}-${day}`;
+
+        document.getElementById('date-added').disabled = true;
+    </script>
 
     <script src="add_par.js"></script>
 
