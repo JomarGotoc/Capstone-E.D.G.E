@@ -115,6 +115,7 @@
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap; 
         }
 
         .logs {

@@ -1,107 +1,4 @@
-<?php
-include('../../../database.php');
 
-$currentFileName = basename(__FILE__, '.php');
-
-$tableExistsQuery = "SHOW TABLES LIKE '$currentFileName'";
-$tableExistsResult = $conn->query($tableExistsQuery);
-
-$result = null; // Initialize $result outside the if condition
-
-if ($tableExistsResult->num_rows > 0) {
-    $fetchQuery = "SELECT lrn, fullname, gender FROM $currentFileName WHERE school = 'Sabangan Elementary School'";
-    $result = $conn->query($fetchQuery);
-}
-
-?>
-<?php
-$currentFileName = basename(__FILE__, '.php');
-$words = explode('_', $currentFileName);
-
-if (count($words) >= 4) {
-    $grade = $words[1];
-    $section = ucfirst($words[3]);
-
-    // Convert $grade to uppercase if it's "i", "ii", or "iii"
-    if (in_array(strtolower($grade), ['i', 'ii', 'iii'])) {
-        $grade = strtoupper($grade);
-    }
-}
-
-?>
-<?php
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
-        // Get form data
-        $lrn = $_POST["lrn"];
-        $fullname = $_POST["fullname"];
-        $gender = $_POST["gender"];
-        $school = "Sabangan Elementary School";
-
-        // Your existing code to get filename, grade, and section
-        $filename = basename($_SERVER["SCRIPT_FILENAME"]);
-        $filename = str_replace('.php', '', $filename);
-        $words = explode('_', $filename);
-
-        if (count($words) >= 4) {
-            $grade = $words[1];
-            $section = $words[3];
-        } 
-
-        include('../../../database.php');
-
-        // Prepare and execute the SQL query to insert data into the table
-        $sql = "INSERT INTO $filename (lrn, fullname, gender, grade, section, school) VALUES (?,?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssss", $lrn, $fullname, $gender, $grade, $section, $school);
-
-        if ($stmt->execute()) {
-        } else {
-        }
-        $stmt->close();
-    }
-?>
-<?php
-$errorMsg = "";
-include('../../../database.php');
-$tableNameKeyword = "grade";
-$sectionKeyword = "section";
-
-$sql = "SHOW TABLES LIKE '%$tableNameKeyword%$sectionKeyword%'";
-$result1 = $conn->query($sql);
-$sectionOptions = '';
-$gradeOptions = [];
-$uniqueGrades = [];
-
-if ($result1->num_rows > 0) { 
-    while ($row = $result1->fetch_assoc()) { 
-        $tableName = reset($row);
-
-        $tableWords = explode('_', $tableName); 
-        if (count($tableWords) >= 4) {
-            $fourthWord = ucfirst($tableWords[3]); // Capitalize the first letter
-            $secondWord = ucfirst($tableWords[1]); // Capitalize the first letter
-        
-            // Check if the grade is not in the list of unique grades
-            if (!in_array($secondWord, $uniqueGrades)) {
-                // Check if the grade is 'i', 'ii', or 'iii' and convert to uppercase
-                $gradeOptionValue = ($secondWord == 'I' || $secondWord == 'Ii' || $secondWord == 'Iii') ? strtoupper($secondWord) : $secondWord;
-        
-                // Append the option tag to the options string
-                $gradeOptions[] = "<option value=\"$gradeOptionValue\">$gradeOptionValue</option>";
-        
-                // Add the grade to the list of unique grades
-                $uniqueGrades[] = $secondWord;
-            }
-        
-            // Append the option tag to the options string for section
-            $sectionOptions .= "<option value=\"$fourthWord\">$fourthWord</option>";
-        }
-        
-        
-        
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -208,6 +105,7 @@ if ($result1->num_rows > 0) {
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap; 
         }
 
         .logs {
