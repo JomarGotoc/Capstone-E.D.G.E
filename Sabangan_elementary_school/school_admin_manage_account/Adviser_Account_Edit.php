@@ -123,18 +123,27 @@ $conn->close();
             height: 55px;
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            width: 94%;
+        }
+
         .vertical-line {
-            margin-left: 40rem;
+            margin-right: 10px;
             height: 40px;
             width: 1px;
             background-color: #fff;
+            margin-left: auto;
         }
 
         .logout-icon {
-            color: #fff; 
+            margin-right: 0;
+            margin-left: auto;
+            color: #fff;
             font-size: 1.5rem;
-            cursor: pointer; 
-            margin-left: 15px;
+            cursor: pointer;
         }
 
         .header.sticky {
@@ -163,12 +172,6 @@ $conn->close();
             justify-content: center;
             width: 100%; 
         }
-
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
-
 
             .navbar {
             background-color: #190572;;
@@ -351,9 +354,14 @@ $conn->close();
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 150px;
+            right: 0; 
+            top: 100%;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
+        }
+
+        .dropdown {
+            position: relative; 
         }
 
         .dropdown-content a {

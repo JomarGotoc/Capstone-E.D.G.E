@@ -161,18 +161,27 @@ $conn->close();
             height: 55px;
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            width: 94%;
+        }
+
         .vertical-line {
-            margin-left: 40rem;
+            margin-right: 10px;
             height: 40px;
             width: 1px;
             background-color: #fff;
+            margin-left: auto;
         }
-        
+
         .logout-icon {
-            color: #fff; 
+            margin-right: 0;
+            margin-left: auto;
+            color: #fff;
             font-size: 1.5rem;
-            cursor: pointer; 
-            margin-left: 15px;
+            cursor: pointer;
         }
 
         .header.sticky {
@@ -205,10 +214,6 @@ $conn->close();
             width: 100%; 
         }
 
-        .header-content {
-            display: flex;
-            align-items: center;
-        }
 
         .back-icon:hover::after {
             content: "Back";
@@ -460,9 +465,14 @@ $conn->close();
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 150px;
+            right: 0; 
+            top: 100%;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
+        }
+
+        .dropdown {
+            position: relative; 
         }
 
         .dropdown-content a {
@@ -493,6 +503,35 @@ $conn->close();
             text-align: center;
             margin: 0 auto;
         }
+
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .vertical-line{
+                height: 30px;
+            }
+
+            .logout-icon {
+                font-size: 1rem;
+            }
+
+            .dropdown-content a{
+                font-size: .6rem;
+                padding: 10px 10px;
+            }
+        }
+
+
     </style>
 </head>
 <body>

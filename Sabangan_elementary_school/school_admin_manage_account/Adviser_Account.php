@@ -99,17 +99,30 @@ if(isset($_POST['reset_password'])) {
             height: 55px;
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            width: 94%;
+        }
+
         .vertical-line {
-            margin-left: 40rem;
+            margin-right: 10px;
             height: 40px;
             width: 1px;
             background-color: #fff;
+            margin-left: auto;
         }
 
         .logout-icon {
-            color: #fff; 
+            margin-right: 0;
+            margin-left: auto;
+            color: #fff;
             font-size: 1.5rem;
             cursor: pointer; 
+            cursor: pointer; 
+            margin-left: 15px;
+            cursor: pointer;
             margin-left: 15px;
         }
 
@@ -124,6 +137,7 @@ if(isset($_POST['reset_password'])) {
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         .logs {
@@ -137,11 +151,6 @@ if(isset($_POST['reset_password'])) {
             align-items: flex-start; 
             justify-content: center;
             width: 100%; 
-        }
-
-        .header-content {
-            display: flex;
-            align-items: center;
         }
 
         .navbar {
@@ -629,9 +638,14 @@ if(isset($_POST['reset_password'])) {
             min-width: 100px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
-            right: 150px;
+            right: 0; 
+            top: 100%;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
+        }
+
+        .dropdown {
+            position: relative; 
         }
 
         .dropdown-content a {
@@ -683,6 +697,34 @@ if(isset($_POST['reset_password'])) {
             font-weight: bold;
             color: #130550;
         }
+
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .vertical-line{
+                height: 30px;
+            }
+
+            .logout-icon {
+                font-size: 1rem;
+            }
+
+            .dropdown-content a{
+                font-size: .6rem;
+                padding: 10px 10px;
+            }
+        }
+
         
     </style>
 </head>
@@ -693,14 +735,14 @@ if(isset($_POST['reset_password'])) {
             <div class="header-content">
                 <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
-                <i class="vertical-line"></i>
-                <div class="dropdown">
-                <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
-                    <div class="dropdown-content" id="dropdownContent">
-                    <a href="../../login/Login.php">Log Out</a>
-                        <a href="../button_options/school_admin_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
+                    <i class="vertical-line"></i>
+                    <div class="dropdown">
+                    <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
+                        <div class="dropdown-content" id="dropdownContent">
+                            <a href="../../login/Login.php">Log Out</a>
+                            <a href="../button_options/school_admin_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Change Password</a>
+                        </div>
                     </div>
-                </div>
             </div>
         </div>
     </header>
