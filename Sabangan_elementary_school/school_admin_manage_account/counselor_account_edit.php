@@ -148,6 +148,7 @@ $conn->close();
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         .logs {
@@ -374,6 +375,34 @@ $conn->close();
 
         input[type="email"]{
             background-color:azure;
+        }
+
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            h2{
+                font-size: 1.2rem;
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .forgot,
+            .login-form button{
+                width: 97%;
+            }
+
         }
         
     </style>
