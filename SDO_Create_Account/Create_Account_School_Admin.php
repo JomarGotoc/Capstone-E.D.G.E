@@ -1,57 +1,4 @@
-<?php
-include ("../database.php");
-$errorMsg = "";
-$errorMsg1 = "";
 
-// Retrieve schoolname from URL using GET
-if(isset($_GET['schoolname'])) {
-    $schoolname = $_GET['schoolname'];
-} 
-
-if (isset($_POST['submit'])) {
-    $employment_number = $_POST['employment_number'];
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $lastname = $_POST['lastname'];
-    $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
-    $firstThreeLetters = substr($firstname, 0, 3);
-    $firstTwoLettersLastName = substr($lastname, 0, 2);
-    $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
-    $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
-    $date = $_POST['date'];
-
-    // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
-    $check_fullname_result = $conn->query($check_fullname_query);
-
-    // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number'";
-    $check_employment_number_result = $conn->query($check_employment_number_query);
-
-    if ($check_fullname_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Full Name already exists.";
-    } elseif ($check_employment_number_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Employment Number already exists.";
-    } else {
-            
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $verified = "no";
-        $school = $schoolname; 
-        $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date, verified, school) 
-                 VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
-
-        if ($conn->query($insert_query) === TRUE) {
-            $errorMsg = "Account created successfully";
-        } else {
-            echo "Error: " . $insert_query . "<br>" . $conn->error;
-        }
-    }
-}
-
-// Close the database connection
-$conn->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,6 +104,7 @@ $conn->close();
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         .logs {
@@ -400,6 +348,39 @@ $conn->close();
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .log,
+            .login-form button,
+            .login-form button[type="submit"]{
+                width: 100%;
+            }
+
+            h2{
+              font-size: 1.1rem;
+            }
+
+            p{
+              font-size: 0.8rem;
+            }
+
         }
         
     </style>

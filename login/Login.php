@@ -271,7 +271,7 @@ if (isset($_POST['submit'])) {
             text-align: center;
           }
 
-          @media screen and (max-width: 600px) {
+          @media screen and (max-width: 800px) {
             header{
                 height: 40px;
             }
@@ -292,15 +292,9 @@ if (isset($_POST['submit'])) {
             .login-form button{
                 width: 97%;
             }
-        }
 
-        @media screen and (min-width: 1200px) {
-            h4 {
-                font-size: 1.3rem; 
-            }
-
-            .login-container {
-                max-width: 500px; 
+            .password-toggle{
+                display: none;
             }
         }
 
@@ -347,11 +341,10 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-        <button type="submit" name="submit" >Log In</button>
+        <button type="submit" name="submit">Log In</button>
     </form>
     
     <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="">Forgot Password</button></a>
-
 </div>
 
 <script>

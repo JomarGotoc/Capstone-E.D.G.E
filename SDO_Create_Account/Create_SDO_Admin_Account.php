@@ -162,6 +162,7 @@ $conn->close();
             font-size: 1.3rem;
             margin-left: 1rem;
             letter-spacing: 2px;
+            white-space: nowrap;
         }
 
         .logs {
@@ -405,6 +406,39 @@ $conn->close();
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .log,
+            .login-form button,
+            .login-form button[type="submit"]{
+                width: 97%;
+            }
+
+            h2{
+              font-size: 1.1rem;
+            }
+
+            p{
+              font-size: 0.8rem;
+            }
+
         }
         
     </style>

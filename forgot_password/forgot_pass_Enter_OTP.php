@@ -222,6 +222,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           text-align: left;
           font-size: smaller;
         }
+
+        @media screen and (max-width: 600px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .forgot,
+            .login-form button{
+                width: 97%;
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            h4 {
+                font-size: 1.3rem; 
+            }
+
+            .login-container {
+                max-width: 500px; 
+            }
+        }
     </style>
 </head>
 <body>
@@ -237,7 +270,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="login-container">
     <a href="employee_number_Forgot_Pass.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
-        <p>Enter the code that was sent to your email address to reset your password.</p>
+        <p>Enter the code that was sent to your email address to reset your password</p>
 
           <input type="number" id="otp" name="otp"  placeholder="enter your otp " required >
             <button type="submit" name="verify_otp" class="cont">Continue</button>
