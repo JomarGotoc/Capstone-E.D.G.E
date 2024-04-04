@@ -236,6 +236,42 @@
             cursor: pointer;
         }
 
+        @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .forgot,
+            .login-form button,
+            .login-form button[type="submit"]{
+                width: 97%;
+            }
+
+            .password-toggle{
+                display: none;
+            }
+
+            h2{
+              font-size: 1.1rem;
+            }
+
+            p{
+              font-size: 0.8rem;
+            }
+        }
+
     </style>
 </head>
 <body>
