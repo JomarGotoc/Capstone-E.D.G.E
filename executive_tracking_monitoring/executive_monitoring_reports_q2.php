@@ -5824,15 +5824,17 @@ $filename = basename($_SERVER['PHP_SELF']);
             header{
                 height: 40px;
             }
-            .vertical-line {
-                margin-left: 40px;
-                margin-right: auto;
-                height: 15px;
-                width: 1px;
+            .vertical-line{
+                height: 30px;
             }
 
             .logout-icon {
                 font-size: 1rem;
+            }
+
+            .dropdown-content a{
+                font-size: .6rem;
+                padding: 10px 10px;
             }
             h4{
                 font-size: 0.6rem;

@@ -723,6 +723,12 @@
                 font-size: .6rem;
                 padding: 10px 10px;
             }
+
+            .navbar{
+                font-size: 0.6rem;
+                margin-top: -14px;
+                height: 39px;
+            }
         }
         
         
