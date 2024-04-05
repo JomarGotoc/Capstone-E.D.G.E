@@ -5668,12 +5668,16 @@ $filename = basename($_SERVER['PHP_SELF']);
                 height: 39px;
             }
             .vertical-line{
-                margin-left: 40px;
-                margin-right: auto;
-                height: 39px;
+                height: 30px;
             }
-            .logout-icon{
+
+            .logout-icon {
                 font-size: 1rem;
+            }
+
+            .dropdown-content a{
+                font-size: .6rem;
+                padding: 10px 10px;
             }
             .main-container{
                 margin: 10px;
