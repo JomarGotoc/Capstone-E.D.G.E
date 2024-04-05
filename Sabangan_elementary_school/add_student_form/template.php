@@ -57,7 +57,7 @@ if(isset($_POST['submit2'])) {
     $fullname = $_POST['fullname'];
     $grade = $_POST['grade'];
     $section = $_POST['section'];
-    $date = $_POST['date'];
+    $date = date('Y-m-d');
     $quarter = $_POST['quarter'];
     $classification = $_POST['classification'];
     $school = "Sabangan Elementary School";
@@ -576,7 +576,7 @@ $conn->close();
 
                     </div>
                     <div class="column">Date Added</div>
-                    <input type="date" class="date" id="date-added" name="date" readonly>
+                    <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                 </div>
 
                 <div class="row">

@@ -1,14 +1,41 @@
 <?php
-    // Check if the required parameters are present in the URL
-    if (isset($_GET['lrn']) && isset($_GET['fullname']) && isset($_GET['status']) && isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['classification'])) {
-        // Retrieve the values from the URL
-        $lrn = $_GET['lrn'];
-        $fullname = $_GET['fullname'];
-        $status = $_GET['status'];
-        $grade = $_GET['grade'];
-        $section = $_GET['section'];
-        $classification = $_GET['classification'];
+// Check if the required parameters are present in the URL
+if (isset($_GET['lrn']) && isset($_GET['fullname']) && isset($_GET['status']) && isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['classification'])) {
+    // Retrieve the values from the URL
+    $lrn = $_GET['lrn'];
+    $fullname = $_GET['fullname'];
+    $status = $_GET['status'];
+    $grade = $_GET['grade'];
+    $section = $_GET['section'];
+    $classification = $_GET['classification'];
+
+    include('../../database.php');
+    switch ($classification) {
+        case 'Academic - Literacy in English':
+            $table = "academic_english";
+            break;
+        case 'Academic - Literacy in Filipino':
+            $table = "academic_filipino";
+            break;
+        case 'Academic - Numeracy':
+            $table = "academic_numeracy";
+            break;
+        case 'Behavioral':
+            $table = "behavioral";
+            break;
+        default:
+            break;
     }
+    $sql = "SELECT gname, number FROM $table WHERE lrn = '$lrn' AND quarter = 1 AND school = 'Sabangan Elementary School' LIMIT 1";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $gname = $row['gname'];
+        $number = $row['number'];
+    }
+    $conn->close();
+}
 ?>
 <?php
 // Check if the form is submitted and the update button is clicked

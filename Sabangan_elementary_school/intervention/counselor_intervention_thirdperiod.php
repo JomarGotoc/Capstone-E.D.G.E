@@ -1,4 +1,43 @@
 <?php
+include('../../database.php');
+if (isset($_GET['classification']) && isset($_GET['lrn'])) {
+    $classification = $_GET['classification'];
+    $lrn = $_GET['lrn'];
+
+    switch ($classification) {
+        case 'Academic - Literacy in English':
+            $table = 'academic_english';
+            break;
+        case 'Academic - Literacy in Filipino':
+            $table = 'academic_filipino';
+            break;
+        case 'Academic - Numeracy':
+            $table = 'academic_numeracy';
+            break;
+        case 'Behavioral':
+            $table = 'behavioral';
+            break;
+        default:
+            die("Invalid classification");
+    }
+
+    $sql = "SELECT gname, number FROM $table WHERE lrn = ? AND quarter = 1 AND school = 'Sabangan Elementary School'";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $lrn);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $gname = $row['gname'];
+        $number = $row['number'];
+    }
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<?php
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
     $lrn = $_POST["lrn"];
     $fullname = $_POST["fullname"];
