@@ -376,187 +376,198 @@
 ?>
 <?php
 
-    include('../../database.php');
+include('../../database.php');
 
-    // Initialize total count
-    $updated = 0;
-    $total = 0;
+// Initialize total count
+$updated = 0;
+$total = 0;
 
-    // Define the tables to query
-    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+// Define the tables to query
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
 
-    // Loop through each table
-    foreach ($tables as $table) {
-        // Construct SQL query
-        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'Kinder' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
-        $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'Kinder' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
-        // Execute query
-        $result = mysqli_query($conn, $sql);
-        $result1 = mysqli_query($conn, $sql1);
+// Loop through each table
+foreach ($tables as $table) {
+    // Construct SQL queries
+    $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'Kinder' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+    $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'Kinder' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+    
+    // Exclude LRNs that have been counted in previous tables
+    if ($table !== $tables[0]) {
+        $sql .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'Kinder' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+        $sql1 .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'Kinder' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+    }
+
+    // Execute queries
+    $result = mysqli_query($conn, $sql);
+    $result1 = mysqli_query($conn, $sql1);
+    
+    // Check if queries were successful
+    if ($result && $result1) {
+        // Fetch the result rows
+        $row = mysqli_fetch_assoc($result);
+        $row1 = mysqli_fetch_assoc($result1);
         
-        // Check if query was successful
-        if ($result) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result);
-            
-            // Add the count to total
-            $updated += $row['total'];
-        } 
-        if ($result1) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result1);
-            
-            // Add the count to total
-            $total += $row['total1'];
-        } 
-    }
+        // Add the counts to total
+        $updated += $row['total'];
+        $total += $row1['total1'];
+    } 
+}
 
-    mysqli_close($conn);
+mysqli_close($conn);
 
-    if ($total != 0) {
-        $percentage = ($updated / $total) * 100;
-        $percentage = round($percentage); 
-    } else {
-        $percentage = 0;
-    }
+if ($total != 0) {
+    $percentage = ($updated / $total) * 100;
+    $percentage = round($percentage); 
+} else {
+    $percentage = 0;
+}
 
 ?>
 <?php
-    include('../../database.php');
 
-    // Initialize total count
-    $updated = 0;
-    $total = 0;
+include('../../database.php');
 
-    // Define the tables to query
-    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+// Initialize total count
+$updated = 0;
+$total = 0;
 
-    // Loop through each table
-    foreach ($tables as $table) {
-        // Construct SQL query
-        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'I' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
-        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'I' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
-        // Execute query
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
+// Define the tables to query
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+// Loop through each table
+foreach ($tables as $table) {
+    // Construct SQL queries
+    $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'I' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+    $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'I' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+    
+    // Exclude LRNs that have been counted in previous tables
+    if ($table !== $tables[0]) {
+        $sql .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'I' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+        $sql1 .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'I' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+    }
+
+    // Execute queries
+    $result = mysqli_query($conn, $sql);
+    $result1 = mysqli_query($conn, $sql1);
+    
+    // Check if queries were successful
+    if ($result && $result1) {
+        // Fetch the result rows
+        $row = mysqli_fetch_assoc($result);
+        $row1 = mysqli_fetch_assoc($result1);
         
-        // Check if query was successful
-        if ($result) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result);
-            
-            // Add the count to total
-            $updated += $row['total'];
-        } 
-        if ($result2) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result2);
-            
-            // Add the count to total
-            $total += $row['total2'];
-        } 
-    }
+        // Add the counts to total
+        $updated += $row['total'];
+        $total += $row1['total1'];
+    } 
+}
 
-    mysqli_close($conn);
+mysqli_close($conn);
 
-    if ($total != 0) {
-        $percentage2 = ($updated / $total) * 200;
-        $percentage2 = round($percentage2); 
-    } else {
-        $percentage2 = 0;
-    }
+if ($total != 0) {
+    $percentageI = ($updated / $total) * 100;
+    $percentageI = round($percentageI); 
+} else {
+    $percentageI = 0;
+}
 
 ?>
 <?php
-    include('../../database.php');
 
-    // Initialize total count
-    $updated = 0;
-    $total = 0;
+include('../../database.php');
 
-    // Define the tables to query
-    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+// Initialize total count
+$updated = 0;
+$total = 0;
 
-    // Loop through each table
-    foreach ($tables as $table) {
-        // Construct SQL query
-        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'II' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
-        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'II' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
-        // Execute query
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
+// Define the tables to query
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+// Loop through each table
+foreach ($tables as $table) {
+    // Construct SQL queries
+    $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'II' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+    $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'II' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+    
+    // Exclude LRNs that have been counted in previous tables
+    if ($table !== $tables[0]) {
+        $sql .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'II' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+        $sql1 .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'II' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+    }
+
+    // Execute queries
+    $result = mysqli_query($conn, $sql);
+    $result1 = mysqli_query($conn, $sql1);
+    
+    // Check if queries were successful
+    if ($result && $result1) {
+        // Fetch the result rows
+        $row = mysqli_fetch_assoc($result);
+        $row1 = mysqli_fetch_assoc($result1);
         
-        // Check if query was successful
-        if ($result) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result);
-            
-            // Add the count to total
-            $updated += $row['total'];
-        } 
-        if ($result2) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result2);
-            
-            // Add the count to total
-            $total += $row['total2'];
-        } 
-    }
+        // Add the counts to total
+        $updated += $row['total'];
+        $total += $row1['total1'];
+    } 
+}
 
-    mysqli_close($conn);
+mysqli_close($conn);
 
-    if ($total != 0) {
-        $percentageg2 = ($updated / $total) * 200;
-        $percentageg2 = round($percentageg2); 
-    } else {
-        $percentageg2 = 0;
-    }
+if ($total != 0) {
+    $percentageII = ($updated / $total) * 100;
+    $percentageII = round($percentageII); 
+} else {
+    $percentageII = 0;
+}
 
 ?>
 <?php
-    include('../../database.php');
 
-    // Initialize total count
-    $updated = 0;
-    $total = 0;
+include('../../database.php');
 
-    // Define the tables to query
-    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+// Initialize total count
+$updated = 0;
+$total = 0;
 
-    // Loop through each table
-    foreach ($tables as $table) {
-        // Construct SQL query
-        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'III' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
-        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'III' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
-        // Execute query
-        $result = mysqli_query($conn, $sql);
-        $result2 = mysqli_query($conn, $sql2);
+// Define the tables to query
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+// Loop through each table
+foreach ($tables as $table) {
+    // Construct SQL queries
+    $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'III' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+    $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'III' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+    
+    // Exclude LRNs that have been counted in previous tables
+    if ($table !== $tables[0]) {
+        $sql .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'III' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+        $sql1 .= " AND lrn NOT IN (SELECT DISTINCT lrn FROM " . $tables[0] . " WHERE grade = 'III' AND quarter = 2 AND school = 'Sabangan Elementary School')";
+    }
+
+    // Execute queries
+    $result = mysqli_query($conn, $sql);
+    $result1 = mysqli_query($conn, $sql1);
+    
+    // Check if queries were successful
+    if ($result && $result1) {
+        // Fetch the result rows
+        $row = mysqli_fetch_assoc($result);
+        $row1 = mysqli_fetch_assoc($result1);
         
-        // Check if query was successful
-        if ($result) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result);
-            
-            // Add the count to total
-            $updated += $row['total'];
-        } 
-        if ($result2) {
-            // Fetch the result row
-            $row = mysqli_fetch_assoc($result2);
-            
-            // Add the count to total
-            $total += $row['total2'];
-        } 
-    }
+        // Add the counts to total
+        $updated += $row['total'];
+        $total += $row1['total1'];
+    } 
+}
 
-    mysqli_close($conn);
+mysqli_close($conn);
 
-    if ($total != 0) {
-        $percentageg3 = ($updated / $total) * 200;
-        $percentageg3 = round($percentageg3); 
-    } else {
-        $percentageg3 = 0;
-    }
+if ($total != 0) {
+    $percentageIII = ($updated / $total) * 100;
+    $percentageIII = round($percentageIII); 
+} else {
+    $percentageIII = 0;
+}
 
 ?>
 <!DOCTYPE html>
@@ -1235,36 +1246,40 @@
             <tbody class="school">
                 <tr>
                     <tr>
-                        <th style="width:40%">Kinder</th>
+                        <th style="width:40%" <?php if ($percentage == 100) echo 'style="background-color: lightblue"'; ?>>Kinder</th>
                         <th style="width:15%"><?php echo $kinderenglish?></th>
                         <th style="width:15%"><?php echo $kinderfilipino?></th>
                         <th style="width:15%"><?php echo $kindernumeracy?></th>
                         <th style="width:15%"><?php echo $kinderbehavioral?></th>
                         <th style="width:15%"><?php echo $totalkinder?></th>
+                        <th style="width:15%"><?php echo $percentage?></th>
                     </tr>
                     <tr>
-                        <th style="width:40%">Grade 1</th>
+                        <th style="width:40%" <?php if ($percentageI == 100) echo 'style="background-color: lightblue"'; ?>>Grade 1</th>
                         <th style="width:15%"><?php echo $oneenglish?></th>
                         <th style="width:15%"><?php echo $onefilipino?></th>
                         <th style="width:15%"><?php echo $onenumeracy?></th>
                         <th style="width:15%"><?php echo $onebehavioral?></th>
                         <th style="width:15%"><?php echo $totalone?></th>
+                        <th style="width:15%"><?php echo $percentageI?></th>
                     </tr>
                     <tr>
-                        <th style="width:40%">Grade 2</th>
+                        <th style="width:40%" <?php if ($percentageII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 2</th>
                         <th style="width:15%"><?php echo $twoenglish?></th>
                         <th style="width:15%"><?php echo $twofilipino?></th>
                         <th style="width:15%"><?php echo $twonumeracy?></th>
                         <th style="width:15%"><?php echo $twobehavioral?></th>
                         <th style="width:15%"><?php echo $totaltwo?></th>
+                        <th style="width:15%"><?php echo $percentageII?></th>
                     </tr>
                     <tr>
-                        <th style="width:40%">Grade 3</th>
+                        <th style="width:40%" <?php if ($percentageIII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 3</th>
                         <th style="width:15%"><?php echo $threeenglish?></th>
                         <th style="width:15%"><?php echo $threefilipino?></th>
                         <th style="width:15%"><?php echo $threenumeracy?></th>
                         <th style="width:15%"><?php echo $threebehavioral?></th>
                         <th style="width:15%"><?php echo $totalthree?></th>
+                        <th style="width:15%"><?php echo $percentageIII?></th>
                     </tr>
                 </tr>
             </tbody>

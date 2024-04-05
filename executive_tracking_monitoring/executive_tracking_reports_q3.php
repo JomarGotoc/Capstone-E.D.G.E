@@ -1,3 +1,1738 @@
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bolosan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bolosan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bolosanpar = $total_count;
+        $bolosanupdate = $total_count1;
+
+        // Calculate the bolosanpercentage
+        $bolosanpercentage = ($bolosanupdate / $bolosanpar) * 100;
+    } else {
+        $bolosanpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bacayao Sur Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bacayaopar = $total_count;
+        $bacayaoupdate = $total_count1;
+
+        // Calculate the bacayaopercentage
+        $bacayaopercentage = ($bacayaoupdate / $bacayaopar) * 100;
+    } else {
+        $bacayaopercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bliss Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bliss Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $blisspar = $total_count;
+        $blissupdate = $total_count1;
+
+        // Calculate the blisspercentage
+        $blisspercentage = ($blissupdate / $blisspar) * 100;
+    } else {
+        $blisspercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bolosan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bolosan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bolosanpar = $total_count;
+        $bolosanupdate = $total_count1;
+
+        // Calculate the bolosanpercentage
+        $bolosanpercentage = ($bolosanupdate / $bolosanpar) * 100;
+    } else {
+        $bolosanpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bonuan Boquig Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Bonuan Boquig Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bonuanpar = $total_count;
+        $bonuanupdate = $total_count1;
+
+        // Calculate the bonuanpercentage
+        $bonuanpercentage = ($bonuanupdate / $bonuanpar) * 100;
+    } else {
+        $bonuanpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Calmay Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Calmay Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $calmaypar = $total_count;
+        $calmayupdate = $total_count1;
+
+        // Calculate the calmaypercentage
+        $calmaypercentage = ($calmayupdate / $calmaypar) * 100;
+    } else {
+        $calmaypercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Carael Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Carael Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $caraelpar = $total_count;
+        $caraelupdate = $total_count1;
+
+        // Calculate the caraelpercentage
+        $caraelpercentage = ($caraelupdate / $caraelpar) * 100;
+    } else {
+        $caraelpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Caranglaan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Caranglaan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $caranglaanpar = $total_count;
+        $caranglaanupdate = $total_count1;
+
+        // Calculate the caranglaanpercentage
+        $caranglaanpercentage = ($caranglaanupdate / $caranglaanpar) * 100;
+    } else {
+        $caranglaanpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'East Central Integrated School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'East Central Integrated School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $eastpar = $total_count;
+        $eastupdate = $total_count1;
+
+        // Calculate the eastpercentage
+        $eastpercentage = ($eastupdate / $eastpar) * 100;
+    } else {
+        $eastpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?><?php
+include('../database.php');
+$tables = array(
+    "academic_english",
+    "academic_filipino",
+    "academic_numeracy",
+    "behavioral"
+);
+$lrn_counted = array();
+$lrn_counted1 = array();
+$total_count = 0;
+$total_count1 = 0;
+
+foreach ($tables as $table) {
+    $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Federico N. Ceralde School Integrated School'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            if (!in_array($row['lrn'], $lrn_counted)) {
+                $total_count++;
+                $lrn_counted[] = $row['lrn'];
+            }
+        }
+    }
+    $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Federico N. Ceralde School Integrated School' AND gname <> ''";
+    $result1 = $conn->query($sql1);
+
+    if ($result1->num_rows > 0) {
+        while ($row = $result1->fetch_assoc()) {
+            if (!in_array($row['lrn'], $lrn_counted1)) {
+                $total_count1++;
+                $lrn_counted1[] = $row['lrn'];
+            }
+        }
+    }
+}
+if ($total_count > 0) {
+    $federicopar = $total_count;
+    $federicoupdate = $total_count1;
+
+    // Calculate the federicopercentage
+    $federicopercentage = ($federicoupdate / $federicopar) * 100;
+} else {
+    $federicopercentage = 0;
+}
+
+// Close connection
+$conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Gen. Gregorio Del Pilar Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Gen. Gregorio Del Pilar Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $genpar = $total_count;
+        $genupdate = $total_count1;
+
+        // Calculate the genpercentage
+        $genpercentage = ($genupdate / $genpar) * 100;
+    } else {
+        $genpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Juan L. Siapno Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Juan L. Siapno Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $juanlpar = $total_count;
+        $juanlupdate = $total_count1;
+
+        // Calculate the juanlpercentage
+        $juanlpercentage = ($juanlupdate / $juanlpar) * 100;
+    } else {
+        $juanlpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Juan P. Guadiz Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Juan P. Guadiz Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $juanppar = $total_count;
+        $juanpupdate = $total_count1;
+
+        // Calculate the juanppercentage
+        $juanppercentage = ($juanpupdate / $juanppar) * 100;
+    } else {
+        $juanppercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lasip Grande Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lasip Grande Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lasippar = $total_count;
+        $lasipupdate = $total_count1;
+
+        // Calculate the lasippercentage
+        $lasippercentage = ($lasipupdate / $lasippar) * 100;
+    } else {
+        $lasippercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Leon-Francisco Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Leon-Francisco Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $leonpar = $total_count;
+        $leonupdate = $total_count1;
+
+        // Calculate the leonpercentage
+        $leonpercentage = ($leonupdate / $leonpar) * 100;
+    } else {
+        $leonpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lomboy Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lomboy Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lomboypar = $total_count;
+        $lomboyupdate = $total_count1;
+
+        // Calculate the lomboypercentage
+        $lomboypercentage = ($lomboyupdate / $lomboypar) * 100;
+    } else {
+        $lomboypercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lucao Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Lucao Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lucaopar = $total_count;
+        $lucaoupdate = $total_count1;
+
+        // Calculate the lucaopercentage
+        $lucaopercentage = ($lucaoupdate / $lucaopar) * 100;
+    } else {
+        $lucaopercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Malued Sur Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Malued Sur Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $maluedpar = $total_count;
+        $maluedupdate = $total_count1;
+
+        // Calculate the maluedpercentage
+        $maluedpercentage = ($maluedupdate / $maluedpar) * 100;
+    } else {
+        $maluedpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Mamalingling Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Mamalingling Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $mamalinglingpar = $total_count;
+        $mamalinglingupdate = $total_count1;
+
+        // Calculate the mamalinglingpercentage
+        $mamalinglingpercentage = ($mamalinglingupdate / $mamalinglingpar) * 100;
+    } else {
+        $mamalinglingpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Mangin-Tebeng Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Mangin-Tebeng Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $manginpar = $total_count;
+        $manginupdate = $total_count1;
+
+        // Calculate the manginpercentage
+        $manginpercentage = ($manginupdate / $manginpar) * 100;
+    } else {
+        $manginpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'North Central Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'North Central Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $northpar = $total_count;
+        $northupdate = $total_count1;
+
+        // Calculate the northpercentage
+        $northpercentage = ($northupdate / $northpar) * 100;
+    } else {
+        $northpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pantal Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pantal Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pantalpar = $total_count;
+        $pantalupdate = $total_count1;
+
+        // Calculate the pantalpercentage
+        $pantalpercentage = ($pantalupdate / $pantalpar) * 100;
+    } else {
+        $pantalpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pascuala G. Villamil Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pascuala G. Villamil Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pascualapar = $total_count;
+        $pascualaupdate = $total_count1;
+
+        // Calculate the pascualapercentage
+        $pascualapercentage = ($pascualaupdate / $pascualapar) * 100;
+    } else {
+        $pascualapercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pogo-Lasip Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pogo-Lasip Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pogopar = $total_count;
+        $pogoupdate = $total_count1;
+
+        // Calculate the pogopercentage
+        $pogopercentage = ($pogoupdate / $pogopar) * 100;
+    } else {
+        $pogopercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pugaro Integrated School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Pugaro Integrated School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pugaropar = $total_count;
+        $pugaroupdate = $total_count1;
+
+        // Calculate the pugaropercentage
+        $pugaropercentage = ($pugaroupdate / $pugaropar) * 100;
+    } else {
+        $pugaropercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Sabangan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Sabangan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $sabanganpar = $total_count;
+        $sabanganupdate = $total_count1;
+
+        // Calculate the sabanganpercentage
+        $sabanganpercentage = ($sabanganupdate / $sabanganpar) * 100;
+    } else {
+        $sabanganpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Salapingao Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Salapingao Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $salipangaopar = $total_count;
+        $salipangaoupdate = $total_count1;
+
+        // Calculate the salipangaopercentage
+        $salipangaopercentage = ($salipangaoupdate / $salipangaopar) * 100;
+    } else {
+        $salipangaopercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Salisay Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Salisay Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $salisaypar = $total_count;
+        $salisayupdate = $total_count1;
+
+        // Calculate the salisaypercentage
+        $salisaypercentage = ($salisayupdate / $salisaypar) * 100;
+    } else {
+        $salisaypercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Suit Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Suit Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $suitpar = $total_count;
+        $suitupdate = $total_count1;
+
+        // Calculate the suitpercentage
+        $suitpercentage = ($suitupdate / $suitpar) * 100;
+    } else {
+        $suitpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'T. Ayson Rosario Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'T. Ayson Rosario Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $aysonpar = $total_count;
+        $aysonupdate = $total_count1;
+
+        // Calculate the aysonpercentage
+        $aysonpercentage = ($aysonupdate / $aysonpar) * 100;
+    } else {
+        $aysonpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Tambac Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Tambac Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $tambacpar = $total_count;
+        $tambacupdate = $total_count1;
+
+        // Calculate the tambacpercentage
+        $tambacpercentage = ($tambacupdate / $tambacpar) * 100;
+    } else {
+        $tambacpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Tebeng Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Tebeng Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $tebengpar = $total_count;
+        $tebengupdate = $total_count1;
+
+        // Calculate the tebengpercentage
+        $tebengpercentage = ($tebengupdate / $tebengpar) * 100;
+    } else {
+        $tebengpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Victoria Q. Zarate Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'Victoria Q. Zarate Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $victoriapar = $total_count;
+        $victoriaupdate = $total_count1;
+
+        // Calculate the victoriapercentage
+        $victoriapercentage = ($victoriaupdate / $victoriapar) * 100;
+    } else {
+        $victoriapercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'West Central II Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 3 AND school = 'West Central II Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $westpar = $total_count;
+        $westupdate = $total_count1;
+
+        // Calculate the westpercentage
+        $westpercentage = ($westupdate / $westpar) * 100;
+    } else {
+        $westpercentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+
 <?php $currentFileName2 = basename(__FILE__,'_q3.php'); ?>
 <?php
 include('../database.php');
@@ -4078,7 +5813,7 @@ $filename = basename($_SERVER['PHP_SELF']);
 
         <tbody class="school">
         <tr>
-        <tr <?php if ($totalbacayao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+        <tr <?php if ($bacayaopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bacayao Sur Elementary School</th>
                 <th style="width:12%"><?php echo $bucayaostudents ?></th>
                 <th style="width:12%"><?php echo $totalbacayao ?></th>
@@ -4086,8 +5821,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bucayaofilipino ?></th>
                 <th style="width:12%"><?php echo $bucayaonumeracy ?></th>
                 <th style="width:12%"><?php echo $bucayaobehavioral ?></th>
+                <th style="width:12%"><?php echo $bacayaopercentage ?></th>
             </tr>
-            <tr <?php if ($totalbliss > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($blisspercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bliss Elementary School</th>
                 <th style="width:12%"><?php echo $blissstudents ?></th>
                 <th style="width:12%"><?php echo $totalbliss ?></th>
@@ -4095,8 +5831,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $blissfilipino ?></th>
                 <th style="width:12%"><?php echo $blissnumeracy ?></th>
                 <th style="width:12%"><?php echo $blissbehavioral ?></th>
+                <th style="width:12%"><?php echo $blisspercentage ?></th>
             </tr>
-            <tr <?php if ($totalbolosan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($bolosanpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bolosan Elementary School</th>
                 <th style="width:12%"><?php echo $bolosanstudents ?></th>
                 <th style="width:12%"><?php echo $totalbolosan ?></th>
@@ -4104,8 +5841,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bolosanfilipino ?></th>
                 <th style="width:12%"><?php echo $bolosannumeracy ?></th>
                 <th style="width:12%"><?php echo $bolosanbehavioral ?></th>
+                <th style="width:12%"><?php echo $bolosanpercentage ?></th>
             </tr>
-            <tr <?php if ($totalbonuan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($bonuanpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bonuan Boquig Elementary School</th>
                 <th style="width:12%"><?php echo $bonuanstudents ?></th>
                 <th style="width:12%"><?php echo $totalbonuan ?></th>
@@ -4113,8 +5851,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $bonuanfilipino ?></th>
                 <th style="width:12%"><?php echo $bonuannumeracy ?></th>
                 <th style="width:12%"><?php echo $bonuanbehavioral ?></th>
+                <th style="width:12%"><?php echo $bonuanpercentage ?></th>
             </tr>
-            <tr <?php if ($totalcalmay > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($calmaypercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Calmay Elementary School</th>
                 <th style="width:12%"><?php echo $calmaystudents ?></th>
                 <th style="width:12%"><?php echo $totalcalmay ?></th>
@@ -4122,8 +5861,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $calmayfilipino ?></th>
                 <th style="width:12%"><?php echo $calmaynumeracy ?></th>
                 <th style="width:12%"><?php echo $calmaybehavioral ?></th>
+                <th style="width:12%"><?php echo $calmaypercentage ?></th>
             </tr>
-            <tr <?php if ($totalcarael > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($caraelpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Carael Elementary School</th>
                 <th style="width:12%"><?php echo $caraelstudents ?></th>
                 <th style="width:12%"><?php echo $totalcarael ?></th>
@@ -4131,8 +5871,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $caraelfilipino ?></th>
                 <th style="width:12%"><?php echo $caraelnumeracy ?></th>
                 <th style="width:12%"><?php echo $caraelbehavioral ?></th>
+                <th style="width:12%"><?php echo $caraelpercentage ?></th>
             </tr>
-            <tr <?php if ($totalcaranglaan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($caranglaanpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Caranglaan Elementary School</th>
                 <th style="width:12%"><?php echo $caranglaanstudents ?></th>
                 <th style="width:12%"><?php echo $totalcaranglaan?></th>
@@ -4140,8 +5881,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $caranglaanfilipino ?></th>
                 <th style="width:12%"><?php echo $caranglaannumeracy ?></th>
                 <th style="width:12%"><?php echo $caranglaanbehavioral ?></th>
+                <th style="width:12%"><?php echo $caranglaanpercentage ?></th>
             </tr>
-            <tr <?php if ($totaleast > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($eastpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">East Central Integrated School</th>
                 <th style="width:12%"><?php echo $eaststudents ?></th>
                 <th style="width:12%"><?php echo $totaleast?></th>
@@ -4149,8 +5891,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $eastfilipino ?></th>
                 <th style="width:12%"><?php echo $eastnumeracy ?></th>
                 <th style="width:12%"><?php echo $eastbehavioral ?></th>
+                <th style="width:12%"><?php echo $eastpercentage ?></th>
             </tr>
-            <tr <?php if ($totalfederico > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($federicopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Federico N. Ceralde School Integrated School</th>
                 <th style="width:12%"><?php echo $federicostudents ?></th>
                 <th style="width:12%"><?php echo $totalfederico?></th>
@@ -4158,8 +5901,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $federicofilipino ?></th>
                 <th style="width:12%"><?php echo $federiconumeracy ?></th>
                 <th style="width:12%"><?php echo $federicobehavioral ?></th>
+                <th style="width:12%"><?php echo $federicopercentage ?></th>
             </tr>
-            <tr <?php if ($totalgen > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($genpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Gen. Gregorio Del Pilar Elementary School</th>
                 <th style="width:12%"><?php echo $genstudents ?></th>
                 <th style="width:12%"><?php echo $totalgen?></th>
@@ -4167,8 +5911,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $genfilipino ?></th>
                 <th style="width:12%"><?php echo $gennumeracy ?></th>
                 <th style="width:12%"><?php echo $genbehavioral ?></th>
+                <th style="width:12%"><?php echo $genpercentage ?></th>
             </tr>
-            <tr <?php if ($totaljuanl > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($juanlpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Juan L. Siapno Elementary School</th>
                 <th style="width:12%"><?php echo $juanlstudents ?></th>
                 <th style="width:12%"><?php echo $totaljuanl ?></th>
@@ -4176,8 +5921,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $juanlfilipino ?></th>
                 <th style="width:12%"><?php echo $juanlnumeracy ?></th>
                 <th style="width:12%"><?php echo $juanlbehavioral ?></th>
+                <th style="width:12%"><?php echo $juanlpercentage ?></th>
             </tr>
-            <tr <?php if ($totaljuanp > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($juanppercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Juan P. Guadiz Elementary School</th>
                 <th style="width:12%"><?php echo $juanpstudents ?></th>
                 <th style="width:12%"><?php echo $totaljuanp?></th>
@@ -4185,8 +5931,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $juanpfilipino ?></th>
                 <th style="width:12%"><?php echo $juanpnumeracy ?></th>
                 <th style="width:12%"><?php echo $juanpbehavioral ?></th>
+                <th style="width:12%"><?php echo $juanppercentage ?></th>
             </tr>
-            <tr <?php if ($totallasip > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($lasippercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lasip Grande Elementary School</th>
                 <th style="width:12%"><?php echo $lasipstudents ?></th>
                 <th style="width:12%"><?php echo $totallasip ?></th>
@@ -4194,8 +5941,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lasipfilipino ?></th>
                 <th style="width:12%"><?php echo $lasipnumeracy ?></th>
                 <th style="width:12%"><?php echo $lasipbehavioral ?></th>
+                <th style="width:12%"><?php echo $lasippercentage ?></th>
             </tr>
-            <tr <?php if ($totalleon > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($leonpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Leon-Francisco Elementary School</th>
                 <th style="width:12%"><?php echo $leonstudents ?></th>
                 <th style="width:12%"><?php echo $totalleon ?></th>
@@ -4203,8 +5951,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $leonfilipino ?></th>
                 <th style="width:12%"><?php echo $leonnumeracy ?></th>
                 <th style="width:12%"><?php echo $leonbehavioral ?></th>
+                <th style="width:12%"><?php echo $leonpercentage ?></th>
             </tr>
-            <tr <?php if ($totallomboy > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($lomboypercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lomboy Elementary School</th>
                 <th style="width:12%"><?php echo $lomboystudents ?></th>
                 <th style="width:12%"><?php echo $totallomboy ?></th>
@@ -4212,8 +5961,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lomboyfilipino ?></th>
                 <th style="width:12%"><?php echo $lomboynumeracy ?></th>
                 <th style="width:12%"><?php echo $lomboybehavioral ?></th>
+                <th style="width:12%"><?php echo $lomboypercentage ?></th>
             </tr>
-            <tr <?php if ($totallucao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($lucaopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Lucao Elementary School</th>
                 <th style="width:12%"><?php echo $lucaostudents ?></th>
                 <th style="width:12%"><?php echo $totallucao?></th>
@@ -4221,8 +5971,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $lucaofilipino ?></th>
                 <th style="width:12%"><?php echo $lucaonumeracy ?></th>
                 <th style="width:12%"><?php echo $lucaobehavioral ?></th>
+                <th style="width:12%"><?php echo $lucaopercentage ?></th>
             </tr>
-            <tr <?php if ($totalmalued > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($maluedpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Malued Sur Elementary School</th>
                 <th style="width:12%"><?php echo $maluedstudents ?></th>
                 <th style="width:12%"><?php echo $totalmalued ?></th>
@@ -4230,8 +5981,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $maluedfilipino ?></th>
                 <th style="width:12%"><?php echo $maluednumeracy ?></th>
                 <th style="width:12%"><?php echo $maluedbehavioral ?></th>
+                <th style="width:12%"><?php echo $maluedpercentage ?></th>
             </tr>
-            <tr <?php if ($totalmamalingling > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($mamalinglingpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Mamalingling Elementary School</th>
                 <th style="width:12%"><?php echo $mamalinglingstudents ?></th>
                 <th style="width:12%"><?php echo $totalmamalingling?></th>
@@ -4239,8 +5991,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $mamalinglingfilipino ?></th>
                 <th style="width:12%"><?php echo $mamalinglingnumeracy ?></th>
                 <th style="width:12%"><?php echo $mamalinglingbehavioral ?></th>
+                <th style="width:12%"><?php echo $mamalinglingpercentage?></th>
             </tr>
-            <tr <?php if ($totalmangin > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($manginpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Mangin-Tebeng Elementary School</th>
                 <th style="width:12%"><?php echo $manginstudents ?></th>
                 <th style="width:12%"><?php echo $totalmangin?></th>
@@ -4248,8 +6001,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $manginfilipino ?></th>
                 <th style="width:12%"><?php echo $manginnumeracy ?></th>
                 <th style="width:12%"><?php echo $manginbehavioral ?></th>
+                <th style="width:12%"><?php echo $manginpercentage ?></th>
             </tr>
-            <tr <?php if ($totalnorth > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($northpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">North Central Elementary School</th>
                 <th style="width:12%"><?php echo $northstudents ?></th>
                 <th style="width:12%"><?php echo $totalnorth?></th>
@@ -4257,8 +6011,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $northfilipino ?></th>
                 <th style="width:12%"><?php echo $northnumeracy ?></th>
                 <th style="width:12%"><?php echo $northbehavioral ?></th>
+                <th style="width:12%"><?php echo $northpercentage ?></th>
             </tr>
-            <tr <?php if ($totalpantal > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($pantalpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pantal Elementary School</th>
                 <th style="width:12%"><?php echo $pantalstudents ?></th>
                 <th style="width:12%"><?php echo $totalpantal ?></th>
@@ -4266,9 +6021,10 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pantalfilipino ?></th>
                 <th style="width:12%"><?php echo $pantalnumeracy ?></th>
                 <th style="width:12%"><?php echo $pantalbehavioral ?></th>
+                <th style="width:12%"><?php echo $pantalpercentage ?></th>
             </tr>
 
-            <tr <?php if ($totalpaascuala > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($pascualapercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pascuala G. Villamil Elementary School</th>
                 <th style="width:12%"><?php echo $pascualastudents ?></th>
                 <th style="width:12%"><?php echo $totalpaascuala?></th>
@@ -4276,8 +6032,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pascualafilipino ?></th>
                 <th style="width:12%"><?php echo $pascualanumeracy ?></th>
                 <th style="width:12%"><?php echo $pascualabehavioral ?></th>
+                <th style="width:12%"><?php echo $pascualapercentage ?></th>
             </tr>
-            <tr <?php if ($totalpogo > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($pogopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pogo-Lasip Elementary School</th>
                 <th style="width:12%"><?php echo $pogostudents ?></th>
                 <th style="width:12%"><?php echo $totalpogo?></th>
@@ -4285,8 +6042,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pogofilipino ?></th>
                 <th style="width:12%"><?php echo $pogonumeracy ?></th>
                 <th style="width:12%"><?php echo $pogobehavioral ?></th>
+                <th style="width:12%"><?php echo $pogopercentage ?></th>
             </tr>
-            <tr <?php if ($totalpugaro > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($pugaropercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Pugaro Integrated School</th>
                 <th style="width:12%"><?php echo $pugarostudents ?></th>
                 <th style="width:12%"><?php echo $totalpugaro?></th>
@@ -4294,8 +6052,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $pugarofilipino ?></th>
                 <th style="width:12%"><?php echo $pugaronumeracy ?></th>
                 <th style="width:12%"><?php echo $pugarobehavioral ?></th>
+                <th style="width:12%"><?php echo $pugaropercentage ?></th>
             </tr>
-            <tr <?php if ($totalSabangan > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($sabanganpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Sabangan Elementary School</th>
                 <th style="width:12%"><?php echo $sabanganstudents ?></th>
                 <th style="width:12%"><?php echo $totalSabangan?></th>
@@ -4303,9 +6062,10 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $sabanganfilipino ?></th>
                 <th style="width:12%"><?php echo $sabangannumeracy ?></th>
                 <th style="width:12%"><?php echo $sabanganbehavioral ?></th>
+                <th style="width:12%"><?php echo $sabanganpercentage ?></th>
             </tr>
 
-            <tr <?php if ($totalsalipangao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($salipangaopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Salapingao Elementary School</th>
                 <th style="width:12%"><?php echo $salapingaostudents ?></th>
                 <th style="width:12%"><?php echo $totalsalipangao?></th>
@@ -4313,8 +6073,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $salapingaofilipino ?></th>
                 <th style="width:12%"><?php echo $salapingaonumeracy ?></th>
                 <th style="width:12%"><?php echo $salapingaobehavioral ?></th>
+                <th style="width:12%"><?php echo $salipangaopercentage ?></th>
             </tr>
-            <tr <?php if ($totalsalisay > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($salisaypercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Salisay Elementary School</th>
                 <th style="width:12%"><?php echo $salisaystudents ?></th>
                 <th style="width:12%"><?php echo $totalsalisay?></th>
@@ -4322,8 +6083,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $salisayfilipino ?></th>
                 <th style="width:12%"><?php echo $salisaynumeracy ?></th>
                 <th style="width:12%"><?php echo $salisaybehavioral ?></th>
+                <th style="width:12%"><?php echo $salisaypercentage ?></th>
             </tr>
-            <tr <?php if ($totalsuit > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($suitpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Suit Elementary School</th>
                 <th style="width:12%"><?php echo $suitstudents ?></th>
                 <th style="width:12%"><?php echo $totalsuit?></th>
@@ -4331,8 +6093,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $suitfilipino ?></th>
                 <th style="width:12%"><?php echo $suitnumeracy ?></th>
                 <th style="width:12%"><?php echo $suitbehavioral ?></th>
+                <th style="width:12%"><?php echo $suitpercentage ?></th>
             </tr>
-            <tr <?php if ($totalayson > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($aysonpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">T. Ayson Rosario Elementary School</th>
                 <th style="width:12%"><?php echo $aysonstudents ?></th>
                 <th style="width:12%"><?php echo $totalayson ?></th>
@@ -4340,8 +6103,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $aysonfilipino ?></th>
                 <th style="width:12%"><?php echo $aysonnumeracy ?></th>
                 <th style="width:12%"><?php echo $aysonbehavioral ?></th>
+                <th style="width:12%"><?php echo $aysonpercentage ?></th>
             </tr>
-            <tr <?php if ($totaltambac > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($totaltambac == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Tambac Elementary School</th>
                 <th style="width:12%"><?php echo $tambacstudents ?></th>
                 <th style="width:12%"><?php echo $totaltambac ?></th>
@@ -4349,8 +6113,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $tambacfilipino ?></th>
                 <th style="width:12%"><?php echo $tambacnumeracy ?></th>
                 <th style="width:12%"><?php echo $tambacbehavioral ?></th>
+                <th style="width:12%"><?php echo $tambacpercentage ?></th>
             </tr>
-            <tr <?php if ($totaltebeng > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($tebengpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Tebeng Elementary School</th>
                 <th style="width:12%"><?php echo $tebengstudents ?></th>
                 <th style="width:12%"><?php echo $totaltebeng ?></th>
@@ -4358,8 +6123,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $tebengfilipino ?></th>
                 <th style="width:12%"><?php echo $tebengnumeracy ?></th>
                 <th style="width:12%"><?php echo $tebengbehavioral ?></th>
+                <th style="width:12%"><?php echo $tebengpercentage ?></th>
             </tr>
-            <tr <?php if ($totalvictoria > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($victoriapercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Victoria Q. Zarate Elementary School</th>
                 <th style="width:12%"><?php echo $victoriastudents ?></th>
                 <th style="width:12%"><?php echo $totalvictoria?></th>
@@ -4367,8 +6133,9 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $victoriafilipino ?></th>
                 <th style="width:12%"><?php echo $victorianumeracy ?></th>
                 <th style="width:12%"><?php echo $victoriabehavioral ?></th>
+                <th style="width:12%"><?php echo $victoriapercentage ?></th>
             </tr>
-            <tr <?php if ($totalwest > 0) echo 'style="background-color: #90A3D1;"'; ?>>
+            <tr <?php if ($westpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">West Central II Elementary School</th>
                 <th style="width:12%"><?php echo $westcentralstudents?></th>
                 <th style="width:12%"><?php echo $totalwest?></th>
@@ -4376,6 +6143,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <th style="width:12%"><?php echo $westcentralfilipino?></th>
                 <th style="width:12%"><?php echo $westcentralnumeracy?></th>
                 <th style="width:12%"><?php echo $westcentralbehavioral?></th>
+                <th style="width:12%"><?php echo $westpercentage?></th>
             </tr>
         </table>
     </div>

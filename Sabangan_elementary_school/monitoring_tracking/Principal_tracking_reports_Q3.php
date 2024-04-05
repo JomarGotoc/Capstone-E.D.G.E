@@ -55,6 +55,8 @@ if (mysqli_num_rows($result_adviser) > 0) {
         $percentage = 0; // Default value
         if ($totalstudentpar != 0) {
             $percentage = ($unupdated / $totalstudentpar) * 100;
+        }else {
+            $percentage = 0;
         }
 
         // Count LRNs in each table for the current grade and section
@@ -808,8 +810,8 @@ $conn->close();
         <tbody class="school">
             <tr>
                 <?php foreach ($resultsArray as $result) { ?>
-                    <tr <?php if ($result['totalstudentpar'] > 0) echo 'style="background-color: lightgreen;"'; ?>>
-                        <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo $result['section']; ?></th>
+                    <tr <?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?>>
+                        <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo ucfirst($result['section']); ?></th>
                         <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
                         <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
                         <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
@@ -817,6 +819,7 @@ $conn->close();
                         <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
                         <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
                         <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['percentage']; ?></th>
                     </tr>
                 <?php } ?>
             </tr>
