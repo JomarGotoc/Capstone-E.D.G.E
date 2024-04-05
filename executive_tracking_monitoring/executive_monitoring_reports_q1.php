@@ -4307,7 +4307,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     </tr>
 
                     <tr class="school" <?php if ($totalcarael > 0) echo 'style="background-color: #90A3D1;"'; ?>>
-                        <th style="width:40%; text-align: left; padding-left: 10px">Carael Elementary School<</th>
+                        <th style="width:40%; text-align: left; padding-left: 10px">Carael Elementary School</th>
                         <th style="width:12%"><?php echo $caraelenglish ?></th>
                         <th style="width:12%"><?php echo $caraelfilipino ?></th>
                         <th style="width:12%"><?php echo $caraelnumeracy ?></th>
