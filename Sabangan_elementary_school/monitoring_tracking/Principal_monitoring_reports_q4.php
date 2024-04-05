@@ -868,7 +868,7 @@ $conn->close();
 
         #topdown {
             padding: 2px;
-            width: 426px;
+            width: 160px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -952,6 +952,91 @@ $conn->close();
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+        @media screen and (max-width: 800px) {
+            body{
+                display: flex;
+            }
+            header{
+                height: 40px;
+            }
+            .vertical-line {
+                margin-left: 40px;
+                margin-right: auto;
+                height: 15px;
+                width: 1px;
+            }
+
+            .logout-icon {
+                font-size: 1rem;
+            }
+            h4{
+                font-size: 0.6rem;
+            }
+            tbody tr tr th{
+                font-size: 0.2rem;
+            }
+            .logs{
+                width: 2rem;
+                height: 2rem;
+            }
+            .bottom-inner-container2{
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .column  h3{
+                font-size: 0.7rem;
+            }
+            #topdown1 {
+                padding: 1px;
+                width: 150px;
+                background: #FBFBFB;
+                color: #190572;
+                text-align: center;
+                border: 1px solid #190572;
+                border-radius: 5px;
+                font-size: 0.6rem;
+            }
+            .second{
+                border-radius: 3px;
+                background-color: #2206A0;
+                text-align: center;
+                width: 160px;
+            }
+            .second h3{
+                color: #FFF;
+                letter-spacing: 3px;
+                font-size: 0.6rem;
+            }
+            table{
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                padding: 1px;
+            }
+            .table-header th {
+                background-color: #190572;
+                color: #FFF;
+                font-size: 0.6rem;
+                padding: 5px;
+            }
+            .table-body{
+                font-size: 0.6rem;
+            }
+            .containers{
+                font-size: 0.3rem;
+                white-space: nowrap;
+            }
+            .school{
+                font-size: 0.6rem;
+            }
+            #topdown{
+                font-size: 0.6rem;
+            }
+            .navbar{
+                font-size: 0.6rem;
+                margin-top: -14px;
+                height: 39px;
+            }
         }
         
     </style>
@@ -1057,7 +1142,7 @@ $conn->close();
                     <th style="width:9%">Total Resolved</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
                 <tr>
                     <tr>
                         <th style="width:10%">Academic - Literacy in English</th>
@@ -1143,9 +1228,10 @@ $conn->close();
                     <th style="width:15%">Academic - Numeracy</th>
                     <th style="width:15%">Behavioral</th>
                     <th style="width:15%">Total P.A.R.s</th>
+                    <th style="width:15%">Progress%</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="school">
                 <tr>
                     <tr>
                         <th style="width:40%">Kinder</th>

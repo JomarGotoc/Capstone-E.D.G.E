@@ -955,7 +955,7 @@ if ($total != 0) {
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 800px) {
             body{
                 display: flex;
             }
@@ -1002,11 +1002,12 @@ if ($total != 0) {
                 border-radius: 3px;
                 background-color: #2206A0;
                 text-align: center;
-                width: 150px;
+                width: 160px;
             }
             .second h3{
                 color: #FFF;
                 letter-spacing: 3px;
+                font-size: 0.6rem;
             }
             table{
                 width: 100%;
@@ -1113,20 +1114,6 @@ if ($total != 0) {
             </div>
         </div>
 
-        
-      <!--  <div class="row">
-            <div class="column">
-                <div class="containers" style="background-color: #B7B7B7;">
-                    <h3>Quarter</h3>
-                </div>
-            </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3>I</h3>
-                </div>
-            </div>
-        </div> -->
-
         <table border="0">
             <thead class="table-header">
                 <tr>
@@ -1143,7 +1130,7 @@ if ($total != 0) {
                     <th style="width:9%">Total Resolved</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-body">
                 <tr>
                     <tr>
                         <th style="width:10%">Academic - Literacy in English</th>
@@ -1228,9 +1215,10 @@ if ($total != 0) {
                     <th style="width:15%">Academic - Numeracy</th>
                     <th style="width:15%">Behavioral</th>
                     <th style="width:15%">Total P.A.R.s</th>
+                    <th style="width:15%">Progress%</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="school">
                 <tr>
                     <tr>
                         <th style="width:40%">Kinder</th>
