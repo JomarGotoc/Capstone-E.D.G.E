@@ -1304,9 +1304,31 @@ if ($total != 0) {
     }
 </script>
 <script>
-    function printPARsList() {
-        window.print();
+// Function to sort the table rows based on the 6th <th> (total marks)
+function sortTable() {
+    var tbody = document.querySelector('.school');
+    var rows = tbody.querySelectorAll('tr');
+
+    var sortedRows = Array.from(rows).slice(1).sort((a, b) => {
+        var aValue = parseInt(a.querySelectorAll('th')[5].textContent);
+        var bValue = parseInt(b.querySelectorAll('th')[5].textContent);
+        return bValue - aValue; // Sort in descending order
+    });
+
+    // Empty the current tbody
+    while (tbody.firstChild) {
+        tbody.removeChild(tbody.firstChild);
     }
+
+    // Append sorted rows to tbody
+    sortedRows.forEach(row => {
+        tbody.appendChild(row);
+    });
+}
+
+// Call the sortTable function when the page loads
+window.onload = sortTable;
+
 </script>
 </body>
 </html>

@@ -6048,7 +6048,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     <th style="width:15%">Progress%</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="school">
             <tr>
                     <tr class="school" <?php if ($bacayaopercentage == 100) echo 'style="background-color:lightblue;"'; ?>>
                         <th style="width:40%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>  
@@ -6386,9 +6386,21 @@ $filename = basename($_SERVER['PHP_SELF']);
     }
 </script>
 <script>
-    function printPARsList() {
-        window.print();
-    }
+    document.addEventListener("DOMContentLoaded", function () {
+        var table = document.querySelector(".school");
+        var rows = Array.from(table.querySelectorAll("tr.school"));
+
+        rows.sort(function (a, b) {
+            var aValue = parseFloat(a.children[5].textContent);
+            var bValue = parseFloat(b.children[5].textContent);
+            return bValue - aValue; // descending order
+        });
+
+        rows.forEach(function (row) {
+            table.appendChild(row);
+        });
+    });
 </script>
+
 </body>
 </html>

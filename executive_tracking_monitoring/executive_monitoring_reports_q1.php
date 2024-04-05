@@ -6485,5 +6485,22 @@ $filename = basename($_SERVER['PHP_SELF']);
         }
     }
 </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var table = document.querySelector(".school");
+        var rows = Array.from(table.querySelectorAll("tr.school"));
+
+        rows.sort(function (a, b) {
+            var aValue = parseFloat(a.children[5].textContent);
+            var bValue = parseFloat(b.children[5].textContent);
+            return bValue - aValue; // descending order
+        });
+
+        rows.forEach(function (row) {
+            table.appendChild(row);
+        });
+    });
+</script>
+
 </body>
 </html>
