@@ -939,12 +939,18 @@ if ($total != 0) {
         tr:nth-child(odd){
             background-color: #b7b7b7;
         }
+
         .school:nth-child(even){
             background-color: white;
         }
 
         .school:nth-child(odd){
             background-color: white;
+        }
+
+        .school th{
+            border-top: 1px solid #0C052F;
+            border-bottom: 1px solid #0C052F;
         }
         
         .dropdown-content {
@@ -1245,7 +1251,7 @@ if ($total != 0) {
             </thead>
             <tbody class="school">
                 <tr>
-                    <tr>
+                <tr class="school">
                         <th style="width:40%" <?php if ($percentage == 100) echo 'style="background-color: lightblue"'; ?>>Kinder</th>
                         <th style="width:15%"><?php echo $kinderenglish?></th>
                         <th style="width:15%"><?php echo $kinderfilipino?></th>
@@ -1254,7 +1260,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totalkinder?></th>
                         <th style="width:15%"><?php echo $percentage?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageI == 100) echo 'style="background-color: lightblue"'; ?>>Grade 1</th>
                         <th style="width:15%"><?php echo $oneenglish?></th>
                         <th style="width:15%"><?php echo $onefilipino?></th>
@@ -1263,7 +1269,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totalone?></th>
                         <th style="width:15%"><?php echo $percentageI?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 2</th>
                         <th style="width:15%"><?php echo $twoenglish?></th>
                         <th style="width:15%"><?php echo $twofilipino?></th>
@@ -1272,7 +1278,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totaltwo?></th>
                         <th style="width:15%"><?php echo $percentageII?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageIII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 3</th>
                         <th style="width:15%"><?php echo $threeenglish?></th>
                         <th style="width:15%"><?php echo $threefilipino?></th>
