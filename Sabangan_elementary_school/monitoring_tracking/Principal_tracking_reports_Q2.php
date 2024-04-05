@@ -453,7 +453,6 @@ $conn->close();
         }
 
         #topdown {
-            padding: 2px;
             width: 100%;
             background: #FBFBFB;
             color: #190572;
@@ -554,8 +553,7 @@ $conn->close();
             background-color: white;
         }
 
-        tr, th{
-            border-top: 1px solid #0C052F;
+        table tr, table th{
             border-bottom: 1px solid #0C052F;
         }
         
@@ -586,6 +584,91 @@ $conn->close();
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+        thead tr th{
+            background-color: #919097;
+        }
+        @media only screen and (max-width: 800px){
+        
+            header{
+                height: 40px;
+            }
+            h4{
+                font-size: 0.6rem;
+            }
+            .logo{
+                width: 50px;
+                height: 50px;
+                margin: 0 auto 10px;
+            }
+            h2{
+                font-size: 0.6rem;
+            }
+            header {
+                padding: .1rem 2%;
+            }
+            .navbar{
+                font-size: 0.6rem;
+                margin-top: -14px;
+                height: 39px;
+            }
+            .vertical-line {
+                margin-left: 40px;
+                margin-right: auto;
+                height: 15px;
+                width: 1px;
+            }
+            .logout-icon {
+                font-size: 1rem;
+            }
+            .main-container{
+                margin: 10px;
+                margin-top: 80px;
+                height: calc(100vh - 180px);
+            }
+            .table-header th {
+                color: black;
+                font-size: 0.6rem;
+                padding: 5px;
+            }
+            tbody{
+                font-size: 0.6rem;
+            }
+            .logs{
+                width: 2rem;
+                height: 2rem;
+            }
+            .containers{
+                white-space: nowrap;
+            }
+            #topdown1 {
+                padding: 1px;
+                width: 150px;
+                background: #FBFBFB;
+                color: #190572;
+                text-align: center;
+                border: 1px solid #190572;
+                border-radius: 5px;
+                font-size: 0.6rem;
+            }
+            .second{
+                border-radius: 3px;
+                background-color: #2206A0;
+                text-align: center;
+                width: 160px;
+            }
+            .second h3{
+                color: #FFF;
+                letter-spacing: 3px;
+                font-size: 0.6rem;
+            }
+            .column {
+                font-size: 0.6rem;
+                margin-top: 5px;
+            }
+            #topdown {
+                font-size: 0.6rem;
+            }
         }
         
     </style>
@@ -706,62 +789,37 @@ $conn->close();
                 </div>
             </div>
         </div>
-        <div class="wide-row" style="margin-top:0">
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3>Grade & Section</h3>
-                </div>
-            </div>
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3>Section Adviser</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3># of Students</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3># of P.A.R</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Literacy (E)</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Literacy (F)</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Numeracy</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>Behavioral</h3>
-                </div>
-            </div>
-        </div>
-
         <table border="0" id="data-table">
-        <?php foreach ($resultsArray as $result) { ?>
-            <tr <?php if ($result['totalstudentpar'] > 0) echo 'style="background-color: lightgreen;"'; ?>>
-            <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo $result['section']; ?></th>
-            <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
-            <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
-            <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
-            <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
-            <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
-            <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
-            <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
-        </tr>
-        <?php } ?>
+            <thead class="table-header">
+                <tr>
+                    <th style="width:14.5%">Grade and Section</th>
+                    <th style="width:14.5%">Section Adviser</th>
+                    <th style="width:11.5%"># of Students</th>
+                    <th style="width:11.5%"># of P.A.R</th>
+                    <th style="width:11.5%">A - Literacy (E)</th>
+                    <th style="width:11.5%">A - Literacy (F)</th>
+                    <th style="width:11.5%">A - Numeracy</th>
+                    <th style="width:11.5%">Behavioral</th>
+                    <th style="width:11.5%">Progress%</th>
+                    
+                </tr>
+            </thead>
+
+        <tbody class="school">
+            <tr>
+                <?php foreach ($resultsArray as $result) { ?>
+                    <tr <?php if ($result['totalstudentpar'] > 0) echo 'style="background-color: lightgreen;"'; ?>>
+                        <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo $result['section']; ?></th>
+                        <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
+                    </tr>
+                <?php } ?>
+            </tr>
         </table>
     </div>
 
