@@ -179,52 +179,52 @@
 ?>
 <?php
 
-$currentFileName1 = basename(__FILE__,'_q2.php');
-include('../../database.php');
+    $currentFileName1 = basename(__FILE__,'_q2.php');
+    include('../../database.php');
 
-// Count the total rows in each table
-$sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE school = 'Sabangan Elementary School'";
-$resultEnglish = $conn->query($sqlEnglish);
-$rowEnglish = $resultEnglish->fetch_assoc();
-$totalEnglish = $rowEnglish['total'];
+    // Count the total rows in each table
+    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE school = 'Sabangan Elementary School'";
+    $resultEnglish = $conn->query($sqlEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $totalEnglish = $rowEnglish['total'];
 
 
-$sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE  school = 'Sabangan Elementary School'";
-$resultFilipino = $conn->query($sqlFilipino);
-$rowFilipino = $resultFilipino->fetch_assoc();
-$totalFilipino = $rowFilipino['total'];
+    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE  school = 'Sabangan Elementary School'";
+    $resultFilipino = $conn->query($sqlFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $totalFilipino = $rowFilipino['total'];
 
-$sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE  school = 'Sabangan Elementary School'";
-$resultNumeracy = $conn->query($sqlNumeracy);
-$rowNumeracy = $resultNumeracy->fetch_assoc();
-$totalNumeracy = $rowNumeracy['total'];
+    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE  school = 'Sabangan Elementary School'";
+    $resultNumeracy = $conn->query($sqlNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $totalNumeracy = $rowNumeracy['total'];
 
-$sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE  school = 'Sabangan Elementary School'";
-$resultBehavioral = $conn->query($sqlBehavioral);
-$rowBehavioral = $resultBehavioral->fetch_assoc();
-$totalBehavioral = $rowBehavioral['total'];
+    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE  school = 'Sabangan Elementary School'";
+    $resultBehavioral = $conn->query($sqlBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $totalBehavioral = $rowBehavioral['total'];
 
-$sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultEnglishResolved = $conn->query($sqlEnglishResolved);
-$rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
-$totalEnglishResolved = $rowEnglishResolved['total'];
+    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
+    $resultEnglishResolved = $conn->query($sqlEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $totalEnglishResolved = $rowEnglishResolved['total'];
 
-$sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'AND school = 'Sabangan Elementary School' ";
-$resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
-$rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
-$totalFilipinoResolved = $rowFilipinoResolved['total'];
+    $sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'AND school = 'Sabangan Elementary School' ";
+    $resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $totalFilipinoResolved = $rowFilipinoResolved['total'];
 
-$sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
-$rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
-$totalNumeracyResolved = $rowNumeracyResolved['total'];
+    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
+    $resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $totalNumeracyResolved = $rowNumeracyResolved['total'];
 
-$sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
-$resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
-$rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
-$totalBehavioralResolved = $rowBehavioralResolved['total'];
+    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND school = 'Sabangan Elementary School'";
+    $resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $totalBehavioralResolved = $rowBehavioralResolved['total'];
 
-$conn->close();
+    $conn->close();
 ?>
 <?php
     include('../../database.php');
@@ -373,6 +373,191 @@ $conn->close();
 ?>
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
+?>
+<?php
+
+    include('../../database.php');
+
+    // Initialize total count
+    $updated = 0;
+    $total = 0;
+
+    // Define the tables to query
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        // Construct SQL query
+        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'Kinder' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+        $sql1 = "SELECT COUNT(DISTINCT lrn) AS total1 FROM $table WHERE grade = 'Kinder' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+        // Execute query
+        $result = mysqli_query($conn, $sql);
+        $result1 = mysqli_query($conn, $sql1);
+        
+        // Check if query was successful
+        if ($result) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result);
+            
+            // Add the count to total
+            $updated += $row['total'];
+        } 
+        if ($result1) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result1);
+            
+            // Add the count to total
+            $total += $row['total1'];
+        } 
+    }
+
+    mysqli_close($conn);
+
+    if ($total != 0) {
+        $percentage = ($updated / $total) * 100;
+        $percentage = round($percentage); 
+    } else {
+        $percentage = 0;
+    }
+
+?>
+<?php
+    include('../../database.php');
+
+    // Initialize total count
+    $updated = 0;
+    $total = 0;
+
+    // Define the tables to query
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        // Construct SQL query
+        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'I' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'I' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+        // Execute query
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
+        
+        // Check if query was successful
+        if ($result) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result);
+            
+            // Add the count to total
+            $updated += $row['total'];
+        } 
+        if ($result2) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result2);
+            
+            // Add the count to total
+            $total += $row['total2'];
+        } 
+    }
+
+    mysqli_close($conn);
+
+    if ($total != 0) {
+        $percentage2 = ($updated / $total) * 200;
+        $percentage2 = round($percentage2); 
+    } else {
+        $percentage2 = 0;
+    }
+
+?>
+<?php
+    include('../../database.php');
+
+    // Initialize total count
+    $updated = 0;
+    $total = 0;
+
+    // Define the tables to query
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        // Construct SQL query
+        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'II' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'II' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+        // Execute query
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
+        
+        // Check if query was successful
+        if ($result) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result);
+            
+            // Add the count to total
+            $updated += $row['total'];
+        } 
+        if ($result2) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result2);
+            
+            // Add the count to total
+            $total += $row['total2'];
+        } 
+    }
+
+    mysqli_close($conn);
+
+    if ($total != 0) {
+        $percentageg2 = ($updated / $total) * 200;
+        $percentageg2 = round($percentageg2); 
+    } else {
+        $percentageg2 = 0;
+    }
+
+?>
+<?php
+    include('../../database.php');
+
+    // Initialize total count
+    $updated = 0;
+    $total = 0;
+
+    // Define the tables to query
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        // Construct SQL query
+        $sql = "SELECT COUNT(DISTINCT lrn) AS total FROM $table WHERE grade = 'III' AND gname <> '' AND quarter = 2 AND school = 'Sabangan Elementary School'";
+        $sql2 = "SELECT COUNT(DISTINCT lrn) AS total2 FROM $table WHERE grade = 'III' AND quarter = 2 AND school = 'Sabangan Elementary School'";    
+        // Execute query
+        $result = mysqli_query($conn, $sql);
+        $result2 = mysqli_query($conn, $sql2);
+        
+        // Check if query was successful
+        if ($result) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result);
+            
+            // Add the count to total
+            $updated += $row['total'];
+        } 
+        if ($result2) {
+            // Fetch the result row
+            $row = mysqli_fetch_assoc($result2);
+            
+            // Add the count to total
+            $total += $row['total2'];
+        } 
+    }
+
+    mysqli_close($conn);
+
+    if ($total != 0) {
+        $percentageg3 = ($updated / $total) * 200;
+        $percentageg3 = round($percentageg3); 
+    } else {
+        $percentageg3 = 0;
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

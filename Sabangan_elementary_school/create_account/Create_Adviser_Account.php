@@ -4,6 +4,7 @@ $errorMsg = "";
 $errorMsg1 = "";
 
 if (isset($_POST['submit'])) {
+    $date = date('Y-m-d');
     $employment_number = $_POST['employment_number'];
     $firstname = $_POST['firstname'];
     $middlename = $_POST['middlename'];
@@ -14,7 +15,7 @@ if (isset($_POST['submit'])) {
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
-    $date = $_POST['date'];
+    
     $grade = $_POST['grade'];
     $section = $_POST['section'];
 
@@ -529,7 +530,7 @@ $conn->close();
                 <div class="columns">
                 <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" readonly >
+                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>

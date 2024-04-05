@@ -13,13 +13,12 @@ if (isset($_POST['submit'])) {
     $firstTwoLettersLastName = substr($lastname, 0, 2);
     $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
     $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
-    $date = $_POST['date'];
+    $date = date('Y-m-d');
     
     // Start a transaction
     $conn->begin_transaction();
 
     try {
-        // Check if the fullname already exists
         $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname' FOR UPDATE";
         $check_fullname_result = $conn->query($check_fullname_query);
 
@@ -526,7 +525,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" readonly>
+                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
                 </div>
             </div>

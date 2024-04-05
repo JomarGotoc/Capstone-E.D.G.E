@@ -37,6 +37,26 @@ if (mysqli_num_rows($result_adviser) > 0) {
         // Count the number of unique LRNs
         $totalstudentpar = count($uniqueLRNs);
 
+        // Count LRNs where gname is empty in each table for the current grade and section
+        $unupdated = 0;
+        foreach ($tables as $table) {
+            $sql_unupdated = "SELECT COUNT(DISTINCT lrn) AS unupdated_count FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 2 AND gname != ''";
+            $result_unupdated = mysqli_query($conn, $sql_unupdated);
+            if ($result_unupdated) {
+                $row_unupdated = mysqli_fetch_assoc($result_unupdated);
+                $unupdated += $row_unupdated['unupdated_count'];
+                mysqli_free_result($result_unupdated);
+            } else {
+                echo "Error executing query: " . mysqli_error($conn);
+            }
+        }
+
+        // Calculate the percentage
+        $percentage = 0; // Default value
+        if ($totalstudentpar != 0) {
+            $percentage = ($unupdated / $totalstudentpar) * 100;
+        }
+
         // Count LRNs in each table for the current grade and section
         $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Sabangan Elementary School' AND quarter = 2";
         $result_english_non_distinct = mysqli_query($conn, $sql_english_non_distinct);
@@ -79,7 +99,9 @@ if (mysqli_num_rows($result_adviser) > 0) {
             'totalstud' => $totalstud,
             'filipino_count_non_distinct' => $filipino_count_non_distinct,
             'numeracy_count_non_distinct' => $numeracy_count_non_distinct,
-            'behavioral_count_non_distinct' => $behavioral_count_non_distinct
+            'behavioral_count_non_distinct' => $behavioral_count_non_distinct,
+            'unupdated' => $unupdated, // Adding unupdated count to the results
+            'percentage' => $percentage // Adding percentage to the results
         );
     }
 }
