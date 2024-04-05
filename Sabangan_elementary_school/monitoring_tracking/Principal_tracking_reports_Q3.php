@@ -55,6 +55,7 @@ if (mysqli_num_rows($result_adviser) > 0) {
         $percentage = 0; // Default value
         if ($totalstudentpar != 0) {
             $percentage = ($unupdated / $totalstudentpar) * 100;
+            $percentage = round($percentage); 
         }else {
             $percentage = 0;
         }
