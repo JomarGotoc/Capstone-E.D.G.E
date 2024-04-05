@@ -4070,7 +4070,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                     <th style="width:12%">Literacy (F)</th>
                     <th style="width:12%">Numeracy</th>
                     <th style="width:12%">Behavioral</th>
-                    <th style="width:12%">Progress %    </th>
+                    <th style="width:12%">Progress%</th>
                 </tr>
             </thead>
 

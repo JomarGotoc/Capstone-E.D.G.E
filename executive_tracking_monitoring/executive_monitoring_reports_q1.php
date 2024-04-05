@@ -3980,7 +3980,7 @@ $filename = basename($_SERVER['PHP_SELF']);
         .dropdown:hover .dropdown-content {
             display: block;
         }
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 800px) {
             body{
                 display: flex;
             }
@@ -4027,7 +4027,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 border-radius: 3px;
                 background-color: #2206A0;
                 text-align: center;
-                width: 150px;
+                width: 160px;
             }
             .second h3{
                 color: #FFF;
