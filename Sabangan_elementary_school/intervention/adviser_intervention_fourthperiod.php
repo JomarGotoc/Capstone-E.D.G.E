@@ -671,7 +671,7 @@ $conn->close();
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On Going">On-Going</option>
+                        <option value="On-Going">On-Going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

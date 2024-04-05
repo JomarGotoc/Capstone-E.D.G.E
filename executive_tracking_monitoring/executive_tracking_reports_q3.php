@@ -5842,7 +5842,7 @@ $filename = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
 
-        <table border="0" id="data-table">
+        <table border="0">
             <thead class="table-header">
                 <tr>
                     <th style="width:29%">Elementary School Name</th>
@@ -5856,7 +5856,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                 </tr>
             </thead>
 
-        <tbody class="school">
+        <tbody class="school" id="school-table">
         <tr>
         <tr <?php if ($bacayaopercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bacayao Sur Elementary School</th>
@@ -6195,25 +6195,25 @@ $filename = basename($_SERVER['PHP_SELF']);
     <script src="monitoring_tracking.js"></script>
 
     <script>
-    function filterTable() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.querySelector('.search-input');
-        filter = input.value.toUpperCase();
-        table = document.getElementById('schoolTable');
-        tr = table.getElementsByTagName('tr');
+function filterTable() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.querySelector('.search-input');
+  filter = input.value.toUpperCase();
+  table = document.getElementById("school-table");
+  tr = table.getElementsByTagName("tr");
 
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName('th')[0];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = '';
-                } else {
-                    tr[i].style.display = 'none';
-                }
-            }
-        }
-    }
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("th")[0]; // Assuming the school name is in the first column
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
 </script>
 <script>
     function redirectToQuarter() {

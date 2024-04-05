@@ -42,6 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
             $delete_stmt->close();
         }
 
+        // Additional update statement for quarters 2, 3, and 4
+        $sql_update = "UPDATE behavioral SET status = ? WHERE lrn = ? AND quarter IN ('2','3', '4') AND school = 'Sabangan Elementary School'";
+        $stmt_update = $conn->prepare($sql_update);
+        $stmt_update->bind_param("ss", $status, $lrn);
+        $stmt_update->execute();
+        $stmt_update->close();
+
         $employment_number = $_GET['employment_number'];
         header('Location: counselor_intervention_firstperiod_view.php?lrn=' . urlencode($lrn) . '&employment_number=' . urlencode($employment_number). '&classification=' . urlencode($classification));
     } else {
@@ -624,7 +631,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On-going">On-going</option>
+                        <option value="On-Going">On-going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

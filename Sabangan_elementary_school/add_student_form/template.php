@@ -593,7 +593,19 @@ $conn->close();
 
                 <div class="row">
                     <div class="column">Grade</div>
-                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php echo ucfirst($grade); ?>" readonly>
+                    <input type="text" class="column" placeholder="Grade" name="grade" id="grade" value="<?php
+
+if ($grade === "i") {
+    $grade = "I";
+} elseif ($grade === "ii") {
+    $grade = "II";
+} elseif ($grade === "iii") {
+    $grade = "III";
+}
+
+echo ucwords($grade); // Output: II (or I or III based on input)
+?>
+" readonly>
                     <div class="column">Section </div>
                     <input type="text" class="column" placeholder="Section" name="section" id="section" value="<?php echo ucfirst($section); ?>" readonly>
                     <select class="classification" name="classification">

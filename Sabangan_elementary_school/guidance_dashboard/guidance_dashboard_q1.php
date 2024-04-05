@@ -829,7 +829,7 @@ if ($result1->num_rows > 0) {
             case 'Pending':
                 $rowColor = 'blue';
                 break;
-            case 'On Going':
+            case 'On-Going':
                 $rowColor = 'yellow';
                 break;
             case 'Resolved':

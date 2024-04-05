@@ -1155,7 +1155,7 @@ if(isset($_POST['print'])) {
                     case 'Pending':
                         $rowColor = 'blue';
                         break;
-                    case 'On Going':
+                    case 'On-Going':
                         $rowColor = 'yellow';
                         break;
                     case 'Resolved':

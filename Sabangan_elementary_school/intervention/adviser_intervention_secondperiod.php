@@ -87,10 +87,17 @@ if (isset($_POST['update'])) {
         $stmt_delete->close();
     }
 
-    // Prepare and execute the SQL statement to update the table
-    $sql_update = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '2' AND school = 'Sabangan Elementary School'";
+    // Prepare and execute the SQL statement to update the status for quarters 2, 3, and 4
+    $sql_update_all = "UPDATE $table SET status=? WHERE lrn=? AND quarter IN ('2', '3', '4') AND school = 'Sabangan Elementary School'";
+    $stmt_update_all = $conn->prepare($sql_update_all);
+    $stmt_update_all->bind_param("ss", $status, $lrn);
+    $stmt_update_all->execute();
+    $stmt_update_all->close();
+
+    // Prepare and execute the SQL statement to update the record for quarter 1
+    $sql_update = "UPDATE $table SET gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '2' AND school = 'Sabangan Elementary School'";
     $stmt_update = $conn->prepare($sql_update);
-    $stmt_update->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
+    $stmt_update->bind_param("sssssss", $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
 
     if ($stmt_update->execute()) {
         // Redirect to the specified page after successful update
@@ -105,6 +112,7 @@ if (isset($_POST['update'])) {
     $conn->close();
 }
 ?>
+
 
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
@@ -683,7 +691,7 @@ $conn->close();
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On Going">On-Going</option>
+                        <option value="On-Going">On-Going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

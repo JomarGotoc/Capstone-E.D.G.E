@@ -770,7 +770,7 @@ if(isset($_POST['print'])) {
                     </div>
                     <div class="legend-item">
                         <div class="legend-color on-going"></div>
-                        <p>On Going</p>
+                        <p>On-going</p>
                     </div>
                     <div class="legend-item">
                         <div class="legend-color resolved"></div>
@@ -826,7 +826,7 @@ if ($result1->num_rows > 0) {
             case 'Pending':
                 $rowColor = 'blue';
                 break;
-            case 'On Going':
+            case 'On-Going':
                 $rowColor = 'yellow';
                 break;
             case 'Resolved':

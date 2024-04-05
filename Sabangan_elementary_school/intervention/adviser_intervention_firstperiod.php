@@ -42,7 +42,20 @@ if (isset($_POST['update'])) {
 
     $lrn = $_POST['lrn'];
 
+    // Update status for quarters 2, 3, 4 where LRN, quarter, and school match
+    $sql_update_status = "UPDATE $table SET status=? WHERE lrn=? AND quarter IN ('2', '3', '4') AND school = 'Sabangan Elementary School'";
+    $stmt_update_status = $conn->prepare($sql_update_status);
+    $stmt_update_status->bind_param("ss", $status, $lrn);
+
+    if (!$stmt_update_status->execute()) {
+        echo "Error updating status: " . $stmt_update_status->error;
+        exit();
+    }
+
+    $stmt_update_status->close();
+
     if ($status == 'Resolved') {
+        // Delete records if status is Resolved for quarters 2, 3, 4 where LRN and school match
         $sql_delete = "DELETE FROM $table WHERE lrn=? AND quarter IN ('2', '3', '4') AND school = 'Sabangan Elementary School'";
         $stmt_delete = $conn->prepare($sql_delete);
         $stmt_delete->bind_param("s", $lrn);
@@ -53,6 +66,7 @@ if (isset($_POST['update'])) {
         $stmt_delete->close();
     }
 
+    // Update status for quarter 1
     $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '1' AND school = 'Sabangan Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
@@ -68,6 +82,7 @@ if (isset($_POST['update'])) {
     $conn->close();
 }
 ?>
+
 
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
@@ -646,7 +661,7 @@ $conn->close();
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On Going">On-Going</option>
+                        <option value="On-Going">On-Going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

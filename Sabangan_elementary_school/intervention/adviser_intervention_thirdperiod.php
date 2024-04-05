@@ -74,13 +74,13 @@ if (isset($_POST['update'])) {
     $topic = $_POST['topic'];
     $advice = $_POST['advice'];
 
-    // Prepare and execute the SQL statement to update the table
+    // Assuming lrn is a field in your table to identify the record to update
+    $lrn = $_POST['lrn'];
+
+    // Prepare and execute the SQL statement to update the table for quarter 3
     $sql = "UPDATE $table SET status=?, gname=?, number=?, notes=?, intervention=?, topic=?, advice=? WHERE lrn=? AND quarter = '3' AND school = 'Sabangan Elementary School'";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $status, $gname, $number, $notes, $intervention, $topic, $advice, $lrn);
-
-    // Assuming lrn is a field in your table to identify the record to update
-    $lrn = $_POST['lrn'];
 
     if ($stmt->execute()) {
         // If the status is Resolved, delete the data for the LRN and classification in quarter 4
@@ -92,6 +92,13 @@ if (isset($_POST['update'])) {
             $stmt_delete->execute();
             $stmt_delete->close();
         }
+
+        // Prepare and execute the SQL statement to update the table for quarter 4
+        $sql_update_quarter_4 = "UPDATE $table SET status=? WHERE lrn=? AND quarter IN ('3', '4') AND school = 'Sabangan Elementary School'";
+        $stmt_update_quarter_4 = $conn->prepare($sql_update_quarter_4);
+        $stmt_update_quarter_4->bind_param("ss", $status, $lrn);
+        $stmt_update_quarter_4->execute();
+        $stmt_update_quarter_4->close();
 
         // Redirect to the specified page after successful update
         header("Location: adviser_intervention_thirdperiod_view.php?lrn=$lrn&classification=$classification&quarter=$quarter&table=$table&grade=$grade&section=$section&employment_number={$_GET['employment_number']}");
@@ -105,6 +112,7 @@ if (isset($_POST['update'])) {
     $conn->close();
 }
 ?>
+
 
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
@@ -683,7 +691,7 @@ $conn->close();
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On Going">On-Going</option>
+                        <option value="On-Going">On-Going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>

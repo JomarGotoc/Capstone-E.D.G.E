@@ -653,7 +653,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             <div class="column half-width">
                     <select id="topdown" name="status" class="containers first">
                         <option value="Pending">Pending</option>
-                        <option value="On-going">On-going</option>
+                        <option value="On-Going">On-going</option>
                         <option value="Resolved">Resolved</option>
                         <option value="Unresolved">Unresolved</option>
                     </select>
