@@ -642,17 +642,19 @@ if ($total != 0) {
         }
 
         .vertical-line {
-            margin-left: 40rem;
+            margin-right: 10px;
             height: 40px;
             width: 1px;
             background-color: #fff;
+            margin-left: auto;
         }
 
         .logout-icon {
-            color: #fff; 
+            margin-right: 0;
+            margin-left: auto;
+            color: #fff;
             font-size: 1.5rem;
-            cursor: pointer; 
-            margin-left: 15px;
+            cursor: pointer;
         }
 
         .header.sticky {
@@ -684,6 +686,8 @@ if ($total != 0) {
         .header-content {
             display: flex;
             align-items: center;
+            justify-content: start;
+            width: 94%;
         }
 
         .navbar {
@@ -936,6 +940,19 @@ if ($total != 0) {
         tr:nth-child(odd){
             background-color: #b7b7b7;
         }
+
+        .school:nth-child(even){
+            background-color: white;
+        }
+
+        .school:nth-child(odd){
+            background-color: white;
+        }
+
+        .school th{
+            border-top: 1px solid #0C052F;
+            border-bottom: 1px solid #0C052F;
+        }
         
         .dropdown-content {
             display: none;
@@ -945,8 +962,13 @@ if ($total != 0) {
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
             z-index: 1;
             right: 150px;
+            right: 0; 
+            top: 100%;
             border-bottom-left-radius: 7px;
             border-bottom-right-radius: 7px;
+        }
+        .dropdown {
+            position: relative; 
         }
 
         .dropdown-content a {
@@ -1245,7 +1267,7 @@ if ($total != 0) {
             </thead>
             <tbody class="school">
                 <tr>
-                    <tr>
+                <tr class="school">
                         <th style="width:40%" <?php if ($percentage == 100) echo 'style="background-color: lightblue"'; ?>>Kinder</th>
                         <th style="width:15%"><?php echo $kinderenglish?></th>
                         <th style="width:15%"><?php echo $kinderfilipino?></th>
@@ -1254,7 +1276,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totalkinder?></th>
                         <th style="width:15%"><?php echo $percentage?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageI == 100) echo 'style="background-color: lightblue"'; ?>>Grade 1</th>
                         <th style="width:15%"><?php echo $oneenglish?></th>
                         <th style="width:15%"><?php echo $onefilipino?></th>
@@ -1263,7 +1285,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totalone?></th>
                         <th style="width:15%"><?php echo $percentageI?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 2</th>
                         <th style="width:15%"><?php echo $twoenglish?></th>
                         <th style="width:15%"><?php echo $twofilipino?></th>
@@ -1272,7 +1294,7 @@ if ($total != 0) {
                         <th style="width:15%"><?php echo $totaltwo?></th>
                         <th style="width:15%"><?php echo $percentageII?></th>
                     </tr>
-                    <tr>
+                    <tr class="school">
                         <th style="width:40%" <?php if ($percentageIII == 100) echo 'style="background-color: lightblue"'; ?>>Grade 3</th>
                         <th style="width:15%"><?php echo $threeenglish?></th>
                         <th style="width:15%"><?php echo $threefilipino?></th>
