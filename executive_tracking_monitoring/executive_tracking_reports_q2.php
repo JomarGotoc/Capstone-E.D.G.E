@@ -3740,8 +3740,7 @@ $filename = basename($_SERVER['PHP_SELF']);
         }
 
         #topdown {
-            padding: 2px;
-            width: 435px;
+            width: 100%;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -3831,9 +3830,8 @@ $filename = basename($_SERVER['PHP_SELF']);
             border-bottom: 1px solid #0C052F;
         }
 
-        table tr th:first-child{
-            text-align: left;
-            padding-left: 10px;
+        table tr, table th {
+            border-bottom: 1px solid #0C052F;
         }
         
         .dropdown-content {
@@ -3863,6 +3861,93 @@ $filename = basename($_SERVER['PHP_SELF']);
 
         .dropdown:hover .dropdown-content {
             display: block;
+        }
+        thead tr th{
+            background-color: #919097;
+        }
+        @media only screen and (max-width: 800px){
+            header{
+                height: 40px;
+            }
+            h4{  /*E.D.G.E*/
+                font-size: 0.6rem;
+            }
+            .logo{
+                width: 50px;
+                height: 50px;
+                margin: 0 auto 10px;
+            }
+            h2{
+                font-size: 0.6rem;
+            }
+            header {
+                padding: .1rem 2%;
+            }
+            .navbar{
+                font-size: 0.6rem;
+                margin-top: -14px;
+                height: 39px;
+            }
+            .vertical-line{
+                margin-left: 40px;
+                margin-right: auto;
+                height: 39px;
+            }
+            .logout-icon{
+                font-size: 1rem;
+            }
+            .main-container{
+                margin: 10px;
+                margin-top: 80px;
+                height: calc(100vh - 180px);
+            }
+            .table-header th{
+                color: black;
+                font-size: 0.6rem;
+                padding: 5px;
+            }
+            tbody{
+                font-size: 0.6rem;
+            }
+            .logs{
+                width: 2rem;
+                height: 2rem;
+            }
+            .containers{
+                white-space: nowrap;
+            }
+            #topdown1{
+                padding: 1px;
+                width: 150px;
+                background: #FBFBFB;
+                color: #190572;
+                text-align: center;
+                border: 1px solid #190572;
+                border-radius: 5px;
+                font-size: 0.6rem;
+            }
+            .second{
+                border-radius: 3px;
+                background-color: #2206A0;
+                text-align: center;
+                width: 160px;
+            }
+            .second h3{
+                color: #FFF;
+                letter-spacing: 3px;
+                font-size: 0.6rem;
+            }
+            .column {
+                font-size: 0.6rem;
+                margin-top: 5px;
+            }
+            #topdown{
+                font-size: 0.6rem;
+            }
+            .search-box{
+                font-size: 0.6rem;
+                padding: 0.1px
+            }
         }
         
     </style>
@@ -3975,46 +4060,22 @@ $filename = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
 
+        <table border="0" id="data-table">
+            <thead class="table-header">
+                <tr>
+                    <th style="width:29%">Elementary School Name</th>
+                    <th style="width:12%"># of Students</th>
+                    <th style="width:12%"># of P.A.R</th>
+                    <th style="width:12%">Literacy (E)</th>
+                    <th style="width:12%">Literacy (F)</th>
+                    <th style="width:12%">Numeracy</th>
+                    <th style="width:12%">Behavioral</th>
+                    <th style="width:12%">Progress %    </th>
+                </tr>
+            </thead>
 
-        <div class="wide-row">
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3>Elementary School's Name</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3># of Students</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3># of P.A.R</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Literacy (E)</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Literacy (F)</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>A - Numeracy</h3>
-                </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3>Behavioral</h3>
-                </div>
-            </div>
-        </div>
 
-        <table border="0" id="schoolTable">
+        <tbody class="school">
         <tr>
         <tr <?php if ($totalbacayao > 0) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">Bacayao Sur Elementary School</th>
