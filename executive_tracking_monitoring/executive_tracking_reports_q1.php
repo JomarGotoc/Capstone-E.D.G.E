@@ -41,6 +41,7 @@
 
         // Calculate the bolosanpercentage
         $bolosanpercentage = ($bolosanupdate / $bolosanpar) * 100;
+        $bolosanpercentage = round($bolosanpercentage);
     } else {
         $bolosanpercentage = 0;
     }
@@ -92,6 +93,7 @@
 
         // Calculate the bacayaopercentage
         $bacayaopercentage = ($bacayaoupdate / $bacayaopar) * 100;
+        $bacayaopercentage = round($bacayaopercentage);
     } else {
         $bacayaopercentage = 0;
     }
@@ -143,6 +145,7 @@
 
         // Calculate the blisspercentage
         $blisspercentage = ($blissupdate / $blisspar) * 100;
+        $blisspercentage = round($blisspercentage);
     } else {
         $blisspercentage = 0;
     }
@@ -194,6 +197,7 @@
 
         // Calculate the bolosanpercentage
         $bolosanpercentage = ($bolosanupdate / $bolosanpar) * 100;
+        $bolosanpercentage = round($bolosanpercentage);
     } else {
         $bolosanpercentage = 0;
     }
@@ -245,6 +249,7 @@
 
         // Calculate the bonuanpercentage
         $bonuanpercentage = ($bonuanupdate / $bonuanpar) * 100;
+        $bonuanpercentage = round($bonuanpercentage);
     } else {
         $bonuanpercentage = 0;
     }
@@ -296,6 +301,7 @@
 
         // Calculate the calmaypercentage
         $calmaypercentage = ($calmayupdate / $calmaypar) * 100;
+        $calmaypercentage = round($calmaypercentage);
     } else {
         $calmaypercentage = 0;
     }
@@ -347,6 +353,7 @@
 
         // Calculate the caraelpercentage
         $caraelpercentage = ($caraelupdate / $caraelpar) * 100;
+        $caraelpercentage = round($caraelpercentage);
     } else {
         $caraelpercentage = 0;
     }
@@ -398,6 +405,7 @@
 
         // Calculate the caranglaanpercentage
         $caranglaanpercentage = ($caranglaanupdate / $caranglaanpar) * 100;
+        $caranglaanpercentage = round($caranglaanpercentage);
     } else {
         $caranglaanpercentage = 0;
     }
@@ -449,6 +457,7 @@
 
         // Calculate the eastpercentage
         $eastpercentage = ($eastupdate / $eastpar) * 100;
+        $eastpercentage = round($eastpercentage);
     } else {
         $eastpercentage = 0;
     }
@@ -500,6 +509,7 @@
 
         // Calculate the federicopercentage
         $federicopercentage = ($federicoupdate / $federicopar) * 100;
+        $federicopercentage = round($federicopercentage);
     } else {
         $federicopercentage = 0;
     }
@@ -551,6 +561,7 @@
 
         // Calculate the genpercentage
         $genpercentage = ($genupdate / $genpar) * 100;
+        $genpercentage = round($genpercentage);
     } else {
         $genpercentage = 0;
     }
@@ -602,57 +613,7 @@
 
         // Calculate the juanlpercentage
         $juanlpercentage = ($juanlupdate / $juanlpar) * 100;
-    } else {
-        $juanlpercentage = 0;
-    }
-
-    // Close connection
-    $conn->close();
-
-?>
-<?php
-    include('../database.php');
-    $tables = array(
-        "academic_english",
-        "academic_filipino",
-        "academic_numeracy",
-        "behavioral"
-    );
-    $lrn_counted = array();
-    $lrn_counted1 = array();
-    $total_count = 0;
-    $total_count1 = 0;
-
-    foreach ($tables as $table) {
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Juan L. Siapno Elementary School'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted)) {
-                    $total_count++;
-                    $lrn_counted[] = $row['lrn'];
-                }
-            }
-        }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Juan L. Siapno Elementary School' AND gname <> ''";
-        $result1 = $conn->query($sql1);
-
-        if ($result1->num_rows > 0) {
-            while ($row = $result1->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted1)) {
-                    $total_count1++;
-                    $lrn_counted1[] = $row['lrn'];
-                }
-            }
-        }
-    }
-    if ($total_count > 0) {
-        $juanlpar = $total_count;
-        $juanlupdate = $total_count1;
-
-        // Calculate the juanlpercentage
-        $juanlpercentage = ($juanlupdate / $juanlpar) * 100;
+        $juanlpercentage = round($juanlpercentage);
     } else {
         $juanlpercentage = 0;
     }
@@ -704,57 +665,7 @@
 
         // Calculate the juanppercentage
         $juanppercentage = ($juanpupdate / $juanppar) * 100;
-    } else {
-        $juanppercentage = 0;
-    }
-
-    // Close connection
-    $conn->close();
-
-?>
-<?php
-    include('../database.php');
-    $tables = array(
-        "academic_english",
-        "academic_filipino",
-        "academic_numeracy",
-        "behavioral"
-    );
-    $lrn_counted = array();
-    $lrn_counted1 = array();
-    $total_count = 0;
-    $total_count1 = 0;
-
-    foreach ($tables as $table) {
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Juan P. Guadiz Elementary School'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted)) {
-                    $total_count++;
-                    $lrn_counted[] = $row['lrn'];
-                }
-            }
-        }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Juan P. Guadiz Elementary School' AND gname <> ''";
-        $result1 = $conn->query($sql1);
-
-        if ($result1->num_rows > 0) {
-            while ($row = $result1->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted1)) {
-                    $total_count1++;
-                    $lrn_counted1[] = $row['lrn'];
-                }
-            }
-        }
-    }
-    if ($total_count > 0) {
-        $juanppar = $total_count;
-        $juanpupdate = $total_count1;
-
-        // Calculate the juanppercentage
-        $juanppercentage = ($juanpupdate / $juanppar) * 100;
+        $juanppercentage = round($juanppercentage);
     } else {
         $juanppercentage = 0;
     }
@@ -806,6 +717,7 @@
 
         // Calculate the lasippercentage
         $lasippercentage = ($lasipupdate / $lasippar) * 100;
+        $lasippercentage = round($lasippercentage);
     } else {
         $lasippercentage = 0;
     }
@@ -814,57 +726,7 @@
     $conn->close();
 
 ?>
-<?php
-    include('../database.php');
-    $tables = array(
-        "academic_english",
-        "academic_filipino",
-        "academic_numeracy",
-        "behavioral"
-    );
-    $lrn_counted = array();
-    $lrn_counted1 = array();
-    $total_count = 0;
-    $total_count1 = 0;
 
-    foreach ($tables as $table) {
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Lasip Grande Elementary School'";
-        $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted)) {
-                    $total_count++;
-                    $lrn_counted[] = $row['lrn'];
-                }
-            }
-        }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 4 AND school = 'Lasip Grande Elementary School' AND gname <> ''";
-        $result1 = $conn->query($sql1);
-
-        if ($result1->num_rows > 0) {
-            while ($row = $result1->fetch_assoc()) {
-                if (!in_array($row['lrn'], $lrn_counted1)) {
-                    $total_count1++;
-                    $lrn_counted1[] = $row['lrn'];
-                }
-            }
-        }
-    }
-    if ($total_count > 0) {
-        $lasippar = $total_count;
-        $lasipupdate = $total_count1;
-
-        // Calculate the lasippercentage
-        $lasippercentage = ($lasipupdate / $lasippar) * 100;
-    } else {
-        $lasippercentage = 0;
-    }
-
-    // Close connection
-    $conn->close();
-
-?>
 <?php
     include('../database.php');
     $tables = array(
@@ -908,6 +770,7 @@
 
         // Calculate the leonpercentage
         $leonpercentage = ($leonupdate / $leonpar) * 100;
+        $leonpercentage = round($leonpercentage);
     } else {
         $leonpercentage = 0;
     }
@@ -959,6 +822,7 @@
 
         // Calculate the lomboypercentage
         $lomboypercentage = ($lomboyupdate / $lomboypar) * 100;
+        $lomboypercentage = round($lomboypercentage);
     } else {
         $lomboypercentage = 0;
     }
@@ -1010,6 +874,7 @@
 
         // Calculate the lucaopercentage
         $lucaopercentage = ($lucaoupdate / $lucaopar) * 100;
+        $lucaopercentage = round($lucaopercentage);
     } else {
         $lucaopercentage = 0;
     }
@@ -1061,6 +926,7 @@
 
         // Calculate the maluedpercentage
         $maluedpercentage = ($maluedupdate / $maluedpar) * 100;
+        $maluedpercentage = round($maluedpercentage);
     } else {
         $maluedpercentage = 0;
     }
@@ -1112,6 +978,7 @@
 
         // Calculate the mamalinglingpercentage
         $mamalinglingpercentage = ($mamalinglingupdate / $mamalinglingpar) * 100;
+        $mamalinglingpercentage = round($mamalinglingpercentage);
     } else {
         $mamalinglingpercentage = 0;
     }
@@ -1163,6 +1030,7 @@
 
         // Calculate the manginpercentage
         $manginpercentage = ($manginupdate / $manginpar) * 100;
+        $manginpercentage = round($manginpercentage);
     } else {
         $manginpercentage = 0;
     }
@@ -1214,6 +1082,7 @@
 
         // Calculate the northpercentage
         $northpercentage = ($northupdate / $northpar) * 100;
+        $northpercentage = round($northpercentage);
     } else {
         $northpercentage = 0;
     }
@@ -1265,6 +1134,7 @@
 
         // Calculate the pantalpercentage
         $pantalpercentage = ($pantalupdate / $pantalpar) * 100;
+        $pantalpercentage = round($pantalpercentage);
     } else {
         $pantalpercentage = 0;
     }
@@ -1316,6 +1186,7 @@
 
         // Calculate the pascualapercentage
         $pascualapercentage = ($pascualaupdate / $pascualapar) * 100;
+        $pascualapercentage = round($pascualapercentage);
     } else {
         $pascualapercentage = 0;
     }
@@ -1367,6 +1238,7 @@
 
         // Calculate the pogopercentage
         $pogopercentage = ($pogoupdate / $pogopar) * 100;
+        $pogopercentage = round($pogopercentage);
     } else {
         $pogopercentage = 0;
     }
@@ -1418,6 +1290,7 @@
 
         // Calculate the pugaropercentage
         $pugaropercentage = ($pugaroupdate / $pugaropar) * 100;
+        $pugaropercentage = round($pugaropercentage);
     } else {
         $pugaropercentage = 0;
     }
@@ -1466,12 +1339,14 @@
     if ($total_count > 0) {
         $sabanganpar = $total_count;
         $sabanganupdate = $total_count1;
-
+    
         // Calculate the sabanganpercentage
         $sabanganpercentage = ($sabanganupdate / $sabanganpar) * 100;
+        $sabanganpercentage = round($sabanganpercentage);
     } else {
         $sabanganpercentage = 0;
     }
+    
 
     // Close connection
     $conn->close();
@@ -1520,6 +1395,7 @@
 
         // Calculate the salipangaopercentage
         $salipangaopercentage = ($salipangaoupdate / $salipangaopar) * 100;
+        $salipangaopercentage = round($salipangaopercentage);
     } else {
         $salipangaopercentage = 0;
     }
@@ -1571,6 +1447,7 @@
 
         // Calculate the salisaypercentage
         $salisaypercentage = ($salisayupdate / $salisaypar) * 100;
+        $salisaypercentage = round($salisaypercentage);
     } else {
         $salisaypercentage = 0;
     }
@@ -1622,6 +1499,7 @@
 
         // Calculate the suitpercentage
         $suitpercentage = ($suitupdate / $suitpar) * 100;
+        $suitpercentage = round($suitpercentage);
     } else {
         $suitpercentage = 0;
     }
@@ -1673,6 +1551,7 @@
 
         // Calculate the aysonpercentage
         $aysonpercentage = ($aysonupdate / $aysonpar) * 100;
+        $aysonpercentage = round($aysonpercentage);
     } else {
         $aysonpercentage = 0;
     }
@@ -1724,6 +1603,7 @@
 
         // Calculate the tambacpercentage
         $tambacpercentage = ($tambacupdate / $tambacpar) * 100;
+        $tambacpercentage = round($tambacpercentage);
     } else {
         $tambacpercentage = 0;
     }
@@ -1775,6 +1655,7 @@
 
         // Calculate the tebengpercentage
         $tebengpercentage = ($tebengupdate / $tebengpar) * 100;
+        $tebengpercentage = round($tebengpercentage);
     } else {
         $tebengpercentage = 0;
     }
@@ -1826,6 +1707,7 @@
 
         // Calculate the victoriapercentage
         $victoriapercentage = ($victoriaupdate / $victoriapar) * 100;
+        $victoriapercentage = round($victoriapercentage);
     } else {
         $victoriapercentage = 0;
     }
@@ -1877,6 +1759,7 @@
 
         // Calculate the westpercentage
         $westpercentage = ($westupdate / $westpar) * 100;
+        $westpercentage = round($westpercentage);
     } else {
         $westpercentage = 0;
     }
@@ -1884,6 +1767,7 @@
     // Close connection
     $conn->close();
 
+?>
 ?>
 
 <?php $currentFileName2 = basename(__FILE__,'_q1.php'); ?>
