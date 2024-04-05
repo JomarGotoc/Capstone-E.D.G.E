@@ -89,11 +89,19 @@ $conn->close();
 
 
 <?php
-    if (isset($_GET['grade']) && isset($_GET['section'])) {
-        $grade = strtolower($_GET['grade']);
+    if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
+        $grade = $_GET['grade'];
         $section = $_GET['section'];
+        $employment_number = $_GET['employment_number'];
 
-        $path = "grade_{$grade}_section_{$section}_q1.php?employment_number={$_GET['employment_number']}";
+        // Convert lowercase Roman numerals to uppercase
+        $romanNumerals = ['i' => 'I', 'ii' => 'II', 'iii' => 'III'];
+        $grade = strtolower($grade); // Ensure consistency for comparison
+        if (array_key_exists($grade, $romanNumerals)) {
+            $grade = $romanNumerals[$grade];
+        }
+
+        $path = "grade_{$grade}_section_{$section}_q1.php?employment_number=$employment_number";
     }
 ?>
 <?php

@@ -116,9 +116,16 @@ if (isset($_POST['update'])) {
 
 <?php
     if (isset($_GET['grade']) && isset($_GET['section']) && isset($_GET['employment_number'])) {
-        $grade = strtolower($_GET['grade']);
+        $grade = $_GET['grade'];
         $section = $_GET['section'];
         $employment_number = $_GET['employment_number'];
+
+        // Convert lowercase Roman numerals to uppercase
+        $romanNumerals = ['i' => 'I', 'ii' => 'II', 'iii' => 'III'];
+        $grade = strtolower($grade); // Ensure consistency for comparison
+        if (array_key_exists($grade, $romanNumerals)) {
+            $grade = $romanNumerals[$grade];
+        }
 
         $path = "grade_{$grade}_section_{$section}_q1.php?employment_number=$employment_number";
     }
@@ -717,7 +724,20 @@ $conn->close();
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3; ">
-                <input type="text" name="grade" class="right" id="grade" value="<?php echo $grade .' - ' .$section ?>" readonly>
+                <input type="text" name="grade" class="right" id="grade" value="<?php
+// Assuming $grade and $section are already defined
+$grade = strtolower($grade); // convert $grade to lowercase for easier comparison
+
+if ($grade == 'i') {
+    $grade = 'I';
+} elseif ($grade == 'ii') {
+    $grade = 'II';
+} elseif ($grade == 'iii') {
+    $grade = 'III';
+}
+
+echo $grade . ' - ' . $section;
+?>" readonly>
                 </div>
             </div>
         </div>

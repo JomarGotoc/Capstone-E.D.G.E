@@ -821,7 +821,7 @@ $conn->close();
         <tbody class="school">
             <tr>
                 <?php foreach ($resultsArray as $result) { ?>
-                    <tr <?php if ($result['percentage'] == 100) echo 'style="background-color: lightgreen;"'; ?>>
+                    <tr <?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?>>
                         <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo ucfirst($result['section']); ?></th>
                         <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
                         <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>

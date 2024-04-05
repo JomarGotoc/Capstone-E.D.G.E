@@ -8,7 +8,7 @@
 
       if (!empty($old_password) && !empty($new_password) && !empty($repeat_password) && !empty($employment_number)) {
           if ($new_password === $repeat_password) {
-              include('../database.php');
+              include('../../database.php');
 
               $found_tables = [];
 

@@ -1,5 +1,6 @@
 <?php
   $errorMsg = "";
+  $errorMsg1 = "";
   if (isset($_POST['submit'])) {
       $old_password = isset($_POST['old_password']) ? $_POST['old_password'] : '';
       $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
@@ -8,7 +9,7 @@
 
       if (!empty($old_password) && !empty($new_password) && !empty($repeat_password) && !empty($employment_number)) {
           if ($new_password === $repeat_password) {
-              include('../database.php');
+              include('../../database.php');
 
               $found_tables = [];
 
@@ -33,7 +34,7 @@
                           $update_stmt->bind_param("ss", $hashed_new_password, $employment_number);
                           $update_stmt->execute();
 
-                          $errorMsg = "Password updated successfully.";
+                          $errorMsg1 = "Password updated successfully.";
                           break;
                       } else {
                         $errorMsg = "Old password is incorrect.";
@@ -215,12 +216,12 @@
             background-color: #DDDAE7;
             color: #0C052F;
         }
-        .error-message{
-          color: green;
+        .errorMsg1{
+          color: greed;
           font-weight: bold;
         }
         .errorMsg{
-          color: green;
+          color: red;
           font-weight: bold;
         }
 
@@ -270,6 +271,9 @@
 
         <div class="errorMsg">
           <?php echo $errorMsg ?>
+        </div>
+        <div class="errorMsg1">
+          <?php echo $errorMsg1 ?>
         </div>
 
         <form class="login-form" action="" method="post">
