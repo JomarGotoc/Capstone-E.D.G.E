@@ -12,6 +12,161 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 1 AND school = 'West Central I Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = 1 AND school = 'West Central I Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $west1par = $total_count;
+        $west1update = $total_count1;
+
+        // Calculate the west1percentage
+        $west1percentage = ($west1update / $west1par) * 100;
+        $west1percentage = round($west1percentage);
+    } else {
+        $west1percentage = 0;
+    }
+
+    // Close connection
+    $conn->close();
+
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalwest1 = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'West Central I Elementary School' AND quarter = '1'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalwest1++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $west1centralstudents = 0;
+    $west1centralfilipino = 0;
+    $west1centralnumeracy = 0;
+    $west1centralbehavioral = 0;
+    $west1centralenglish = 0;
+    $west1centraltotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'West Central I Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '1'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '1'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '1'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $west1centralenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $west1centralfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $west1centralnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $west1centralbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $west1centralstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $west1centraltotalpar = $west1centralenglish + $west1centralfilipino + $west1centralnumeracy + $west1centralbehavioral;
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = 1 AND school = 'Bolosan Elementary School'";
         $result = $conn->query($sql);
 
@@ -6186,13 +6341,13 @@ $filename = basename($_SERVER['PHP_SELF']);
             </tr>
             <tr <?php if ($westpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">West Central I Elementary School</th>
-                <th style="width:12%"><?php echo $westcentralstudents?></th>
-                <th style="width:12%"><?php echo $totalwest?></th>
-                <th style="width:12%"><?php echo $westcentralenglish?></th>
-                <th style="width:12%"><?php echo $westcentralfilipino?></th>
-                <th style="width:12%"><?php echo $westcentralnumeracy?></th>
-                <th style="width:12%"><?php echo $westcentralbehavioral?></th>
-                <th style="width:12%"><?php echo $westpercentage?></th>
+                <th style="width:12%"><?php echo $west1centralstudents?></th>
+                <th style="width:12%"><?php echo $totalwest1?></th>
+                <th style="width:12%"><?php echo $west1centralenglish?></th>
+                <th style="width:12%"><?php echo $west1centralfilipino?></th>
+                <th style="width:12%"><?php echo $west1centralnumeracy?></th>
+                <th style="width:12%"><?php echo $west1centralbehavioral?></th>
+                <th style="width:12%"><?php echo $west1percentage?></th>
             </tr>
             <tr <?php if ($westpercentage == 100) echo 'style="background-color: #90A3D1;"'; ?>>
                 <th style="width:29%">West Central II Elementary School</th>

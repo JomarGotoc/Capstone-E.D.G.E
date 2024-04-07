@@ -26,6 +26,109 @@ foreach ($tables as $table) {
 $conn->close();
 ?>
 <?php
+    include('../database.php');
+    $tables = array();
+
+    $sql = "SELECT table_name FROM information_schema.tables WHERE table_schema = '$database' AND (table_name LIKE '%GRADE%' OR table_name LIKE '%SECTION%' OR table_name IN ('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'))";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $tables[] = $row["table_name"];
+        }
+    }
+
+    $west1centralstudents = 0;
+    $west1centralfilipino = 0;
+    $west1centralnumeracy = 0;
+    $west1centralbehavioral = 0;
+    $west1centralenglish = 0;
+    $west1centraltotalpar = 0;
+
+    foreach ($tables as $table) {
+        $count_sql = "SELECT COUNT(*) AS total FROM $table WHERE school = 'West Central I Elementary School'";
+        
+        // Add conditions for specific tables
+        switch ($table) {
+            case 'academic_english':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '2'";
+                break;
+            case 'academic_filipino':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '2'";
+                break;
+            case 'academic_numeracy':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '2'";
+                break;
+            case 'behavioral':
+                $count_sql .= " AND school = 'West Central I Elementary School' AND quarter = '2'";
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        
+        // Execute the count query
+        $count_result = $conn->query($count_sql);
+
+        if ($count_result->num_rows > 0) {
+            // Fetch the count result
+            $count_row = $count_result->fetch_assoc();
+            
+            // Update counts based on table name
+            switch ($table) {
+                case 'academic_english':
+                    $west1centralenglish += $count_row['total'];
+                    break;
+                case 'academic_filipino':
+                    $west1centralfilipino += $count_row['total'];
+                    break;
+                case 'academic_numeracy':
+                    $west1centralnumeracy += $count_row['total'];
+                    break;
+                case 'behavioral':
+                    $west1centralbehavioral += $count_row['total'];
+                    break;
+                default:
+                    $west1centralstudents += $count_row['total'];
+                    break;
+            }
+        }
+    }
+
+    // Calculate total count
+    $west1centraltotalpar = $west1centralenglish + $west1centralfilipino + $west1centralnumeracy + $west1centralbehavioral;
+
+    $conn->close();
+?>
+<?php
+include('../database.php');
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+$tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+$totalwest1 = 0;
+$lrn_counted = array(); // Array to keep track of counted LRNs
+foreach ($tables as $table) {
+    $query = "SELECT DISTINCT lrn FROM $table WHERE school = 'West Central I Elementary School' AND quarter = '2'";
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrn_counted)) { // Check if LRN already counted
+                $totalwest1++;
+                $lrn_counted[] = $lrn; // Add LRN to counted list
+            }
+        }
+        $result->free();
+    } else {
+        echo "Error: " . $conn->error;
+    }
+    
+}
+$conn->close();
+?>
+<?php
 include('../database.php');
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -4136,11 +4239,11 @@ $conn->close();
                     </tr>
                     <tr>
                         <td>West Central I Elementary School</td>
-                        <td><?php echo $westcentralenglish?></td>
-                        <td><?php echo $westcentralfilipino?></td>
-                        <td><?php echo $westcentralnumeracy?></td>
-                        <td><?php echo $westcentralbehavioral?></td>
-                        <td><?php echo $totalwest?></td>
+                        <td><?php echo $west1centralenglish?></td>
+                        <td><?php echo $west1centralfilipino?></td>
+                        <td><?php echo $west1centralnumeracy?></td>
+                        <td><?php echo $west1centralbehavioral?></td>
+                        <td><?php echo $totalwest1?></td>
                     </tr>
                     <tr>
                         <td>West Central II Elementary School</td>
