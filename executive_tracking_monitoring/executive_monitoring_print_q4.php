@@ -4135,6 +4135,14 @@ $conn->close();
                         <td><?php echo $totalvictoria ?></td>
                     </tr>
                     <tr>
+                        <td>West Central I Elementary School</td>
+                        <td><?php echo $westcentralenglish?></td>
+                        <td><?php echo $westcentralfilipino?></td>
+                        <td><?php echo $westcentralnumeracy?></td>
+                        <td><?php echo $westcentralbehavioral?></td>
+                        <td><?php echo $totalwest?></td>
+                    </tr>
+                    <tr>
                         <td>West Central II Elementary School</td>
                         <td><?php echo $westcentralenglish?></td>
                         <td><?php echo $westcentralfilipino?></td>

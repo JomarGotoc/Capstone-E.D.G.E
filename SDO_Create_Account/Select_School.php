@@ -407,6 +407,7 @@
         <a>Tambac Elementary School</a>
         <a>Tebeng Elementary School</a>
         <a>Victoria Q. Zarate Elementary School</a>
+        <a>West Cental I Elementary School</a>
         <a>West Central II Elementary School</a>
     </div>
 </div>

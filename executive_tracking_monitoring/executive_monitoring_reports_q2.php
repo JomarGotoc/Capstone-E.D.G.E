@@ -6404,6 +6404,15 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $victoriapercentage ?></th>
                     </tr>
                     <tr class="school" <?php if ($westpercentage == 100) echo 'style="background-color: lightblue;"'; ?>>
+                        <th style="width:40%; text-align: left; padding-left: 10px">West Central I Elementary School</th>
+                        <th style="width:12%"><?php echo $westcentralenglish?></th>
+                        <th style="width:12%"><?php echo $westcentralfilipino?></th>
+                        <th style="width:12%"><?php echo $westcentralnumeracy?></th>
+                        <th style="width:12%"><?php echo $westcentralbehavioral?></th>
+                        <th style="width:12%"><?php echo $totalwest?></th>
+                        <th style="width:12%"><?php echo $westpercentage?></th>
+                    </tr>
+                    <tr class="school" <?php if ($westpercentage == 100) echo 'style="background-color: lightblue;"'; ?>>
                         <th style="width:40%; text-align: left; padding-left: 10px">West Central II Elementary School</th>
                         <th style="width:12%"><?php echo $westcentralenglish?></th>
                         <th style="width:12%"><?php echo $westcentralfilipino?></th>
