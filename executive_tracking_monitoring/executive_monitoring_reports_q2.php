@@ -6564,7 +6564,7 @@ $filename = basename($_SERVER['PHP_SELF']);
                         <th style="width:12%"><?php echo $west1centralfilipino?></th>
                         <th style="width:12%"><?php echo $west1centralnumeracy?></th>
                         <th style="width:12%"><?php echo $west1centralbehavioral?></th>
-                        <th style="width:12%"><?php echo $total1west?></th>
+                        <th style="width:12%"><?php echo $totalwest1?></th>
                         <th style="width:12%"><?php echo $west1percentage?></th>
                     </tr>
                     <tr class="school" <?php if ($westpercentage == 100) echo 'style="background-color: lightblue;"'; ?>>
