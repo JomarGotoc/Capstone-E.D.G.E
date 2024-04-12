@@ -5436,16 +5436,19 @@ $filename = basename($_SERVER['PHP_SELF']);
             margin-right: 10px;
             height: 40px;
             width: 1px;
-            background-color: #fff;
+            background-color: #130550;
             margin-left: auto;
         }
 
-        .logout-icon {
+        .name {
             margin-right: 0;
             margin-left: auto;
             color: #fff;
-            font-size: 1.5rem;
+            font-size: .8rem;
             cursor: pointer;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .header.sticky {
@@ -5786,6 +5789,7 @@ $filename = basename($_SERVER['PHP_SELF']);
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            font-size: .8rem;
         }
 
         .dropdown-content a:hover {
@@ -5900,10 +5904,10 @@ $filename = basename($_SERVER['PHP_SELF']);
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
+                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
-                    <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
+                    <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>" style="border-top: 1px solid #ddd;">Change Password</a>
                     </div>
                 </div>
             </div>
