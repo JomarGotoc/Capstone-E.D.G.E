@@ -416,6 +416,72 @@ $conn->close();
         .dropdown:hover .dropdown-content {
             display: block;
         }
+        .dropdown {
+            position: relative; 
+        }
+
+        .dropdown-content a {
+            color: rgb(255, 253, 253);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #F3F3F3;
+            color: #190572;
+            opacity: 80%;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-contents {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            max-height: 200px; /* Set maximum height for the dropdown */
+            overflow-y: auto; /* Add scrollbar when content overflows */
+            width: 94%;
+            margin-left: 12px;
+        }
+        .dropdown-contents a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        .dropdown-contents a:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+        }
+        .search-container {
+            position: relative;
+            display: block;
+        }
+        .search-container:hover .dropdown-contents {
+            display: block;
+        }
+        #schoolName {
+            width: 90%; /* Adjust the width as needed */
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #190572;
+            border-radius: 20px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #E2DFEE;
+            border-radius: 20px;
+        }
+
 
         @media screen and (max-width: 800px) {
             header{
@@ -499,6 +565,46 @@ $conn->close();
 
 
         <form class="login-form" action=" " method="post">
+
+        <div class="search-container">
+            <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required oninput="filterSchools()">
+                <div class="dropdown-contents" id="schoolDropdown">
+                    <a>Bacayao Sur Elementary School</a>
+                    <a>Bliss Elementary School</a>
+                    <a>Bolosan Elementary School</a>
+                    <a>Bonuan Boquig Elementary School</a>
+                    <a>Calmay Elementary School</a>
+                    <a>Carael Elementary School</a>
+                    <a>Caranglaan Elementary School</a>
+                    <a>East Central Integrated School</a>
+                    <a>Federico N. Ceralde School Integrated School</a>
+                    <a>Gen. Gregorio Del Pilar Elementary School</a>
+                    <a>Juan L. Siapno Elementary School</a>
+                    <a>Juan P. Guadiz Elementary School</a>
+                    <a>Lasip Grande Elementary School</a>
+                    <a>Leon-Francisco Elementary School</a>
+                    <a>Lomboy Elementary School</a>
+                    <a>Lucao Elementary School</a>
+                    <a>Malued Sur Elementary School</a>
+                    <a>Mamalingling Elementary School</a>
+                    <a>Mangin-Tebeng Elementary School</a>
+                    <a>North Central Elementary School</a>
+                    <a>Pantal Elementary School</a>
+                    <a>Pascuala G. Villamil Elementary School</a>
+                    <a>Pogo-Lasip Elementary School</a>
+                    <a>Pugaro Integrated School</a>
+                    <a>Sabangan Elementary School</a>
+                    <a>Salapingao Elementary School</a>
+                    <a>Salisay Elementary School</a>
+                    <a>Suit Elementary School</a>
+                    <a>T. Ayson Rosario Elementary School</a>
+                    <a>Tambac Elementary School</a>
+                    <a>Tebeng Elementary School</a>
+                    <a>Victoria Q. Zarate Elementary School</a>
+                    <a>West Cental I Elementary School</a>
+                    <a>West Central II Elementary School</a>
+                </div>
+            </div>
         <div class="row">
                 <div class="columns">
                 <div class="form-group">
@@ -553,6 +659,54 @@ $conn->close();
 
 
     <script src="create_account.js"></script>
+    <script src="create_account.js"></script>
+    <script>
+  // Get references to the input field and the dropdown menu
+  var schoolInput = document.getElementById("schoolName");
+  var schoolDropdown = document.getElementById("schoolDropdown");
+
+  // Add event listener to the dropdown menu
+  schoolDropdown.addEventListener("click", function(event) {
+    // Check if the clicked element is an anchor tag
+    if (event.target.tagName === "A") {
+      // Update the input field value with the text of the clicked anchor tag
+      schoolName.value = event.target.textContent;
+    }
+  });
+</script>
+<script>
+function filterSchools() {
+    var input, filter, dropdown, a, i, txtValue;
+    input = document.getElementById("schoolName");
+    filter = input.value.toUpperCase();
+    dropdown = document.getElementById("schoolDropdown");
+    a = dropdown.getElementsByTagName("a");
+    if (filter === "") {
+        dropdown.style.display = "none";
+        return;
+    }
+    for (i = 0; i < a.length; i++) {
+        txtValue = a[i].textContent || a[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            a[i].style.display = "";
+        } else {
+            a[i].style.display = "none";
+        }
+    }
+    dropdown.style.display = "block";
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var dropdown = document.getElementById("schoolDropdown");
+    dropdown.addEventListener('click', function(event) {
+        var target = event.target;
+        if (target.tagName === 'A') {
+            document.getElementById("schoolName").value = target.textContent.trim();
+            dropdown.style.display = "none";
+        }
+    });
+});
+</script>
 
 </body>
 </html>
