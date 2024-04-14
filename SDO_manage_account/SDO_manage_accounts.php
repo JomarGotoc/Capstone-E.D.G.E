@@ -999,9 +999,9 @@ h5{
                     <div class="dropdown">
                         <button class="action-button" onclick="toggleActionsDropdown()">Actions</button>
                         <div class="action-option" id="actionsDropdown">
-                            <button>Edit</button>
-                            <button id="activateBtn" onclick="activate()">Activate</button>
-                            <button id="deactivateBtn" onclick="deactivate()" disabled>Deactivate</button>
+                            <button onclick="editRow(this)">Edit</button>
+                            <button id="activateBtn" onclick="activate()" class="activate">Activate</button>
+                            <button id="deactivateBtn" onclick="deactivate()" disabled class="deactivate">Deactivate</button>
                             <button>Reset Password</button>
                         </div>
                     </div>
@@ -1036,11 +1036,11 @@ h5{
                 <div class="columns">
                 <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
+                        <input type="text" id="fullname" name="" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="lastname" required>
+                        <input type="text" id="lastname" name="" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>

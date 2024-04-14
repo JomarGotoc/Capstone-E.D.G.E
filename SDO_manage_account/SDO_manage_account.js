@@ -16,16 +16,26 @@ function toggleActionsDropdown(button) {
     var dropdown = button.closest('.actions-container').querySelector('.action-option');
     dropdown.classList.toggle("show");
 }
-//acticate deactivate button
-function activate(employmentNumber) {
-    document.getElementById("activateBtn_" + employmentNumber).disabled = true;
-    document.getElementById("deactivateBtn_" + employmentNumber).disabled = false;
-}
 
-function deactivate(employmentNumber) {
-    document.getElementById("deactivateBtn_" + employmentNumber).disabled = true;
-    document.getElementById("activateBtn_" + employmentNumber).disabled = false;
-}
+//acticate deactivate button
+const rows = document.querySelectorAll('.sheshable');
+
+rows.forEach(row => {
+    const activateBtn = row.querySelector('.activate');
+    const deactivateBtn = row.querySelector('.deactivate');
+
+    activateBtn.addEventListener('click', () => {
+        activateBtn.disabled = true;
+        deactivateBtn.disabled = false;
+    });
+
+    deactivateBtn.addEventListener('click', () => {
+        deactivateBtn.disabled = true;
+        activateBtn.disabled = false;
+    });
+});
+
+
 
 
 //plus button
@@ -124,11 +134,9 @@ function filterSchools() {
 //edit form
 function toggleEditContainer() {
     var editContainer = document.querySelector('.edit-container');
-    var overlay = document.getElementById('overlay');
-    
+    var overlay = document.querySelector('.overlay'); 
     editContainer.style.display = 'block';
     overlay.style.display = 'block';
-
 
     var fullName = document.querySelector('.rows:nth-child(1)').textContent;
     var employeeNumber = document.querySelector('.rows:nth-child(2)').textContent;
@@ -151,8 +159,7 @@ function toggleEditContainer() {
 
 function hideEditContainer() {
     var editContainer = document.querySelector('.edit-container');
-    var overlay = document.getElementById('overlay');
-
+    var overlay = document.querySelector('.overlay'); 
     editContainer.style.display = 'none';
     overlay.style.display = 'none';
 }
@@ -161,11 +168,15 @@ function handleEditButtonClick() {
     toggleEditContainer();
 }
 
-var editButton = document.querySelector('#actionsDropdown button:nth-child(1)');
-editButton.addEventListener('click', handleEditButtonClick);
+var editButtons = document.querySelectorAll('#actionsDropdown button:nth-child(1)');
+editButtons.forEach(function(button) {
+    button.addEventListener('click', handleEditButtonClick);
+});
 
-var overlay = document.getElementById('overlay');
+var overlay = document.querySelector('.overlay'); 
 overlay.addEventListener('click', hideEditContainer);
+
+
 
 
 //date
