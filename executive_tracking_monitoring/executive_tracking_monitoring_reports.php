@@ -756,7 +756,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><!--?php echo $resolved. " / " . $totalpar ?--></h3>
+                    <h3 style="margin-left: 7px"><?php echo $resolved. " / " . $totalpar ?></h3>
                 </div>
             </div>
         </div>

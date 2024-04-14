@@ -1,5 +1,5 @@
 
-<!DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
 <script>
@@ -705,7 +705,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><!--?php echo $totalpars ?--></h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalpars ?></h3>
                 </div>
             </div>
         </div>
@@ -727,7 +727,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><!--?php echo $totalpars ?--></h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalpars ?></h3>
                 </div>
             </div>
         </div>
@@ -757,7 +757,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"><!--?php echo $totalresolved ?--> <span>/<!--?php echo $totalpars ?--></span></h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalresolved ?> <span>/<?php echo $totalpars ?></span></h3>
                 </div>
             </div>
         </div>
@@ -779,205 +779,19 @@
 
         <tbody class="school">
             <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
+                <?php foreach ($resultsArray as $result) { ?>
+                    <tr <?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?>>
+                        <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo ucfirst($result['section']); ?></th>
+                        <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
+                        <th style="width:11.5%"><?php echo $result['percentage']; ?></th>
                     </tr>
-                <!--?php } ?-->
-
-                <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
-
-                    <tr>
-                <!--?php foreach ($resultsArray as $result) { ?-->
-                    <tr <!--?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?-->
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:14.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                        <th style="width:11.5%">shesh</th>
-                    </tr>
+                <?php } ?>
             </tr>
         </table>
         <div class="pagination">
@@ -1025,54 +839,54 @@
                 <tr>
                     <tr>
                         <th style="width:15%">Academic - Literacy in English</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1english ?></th>
+                        <th style="width:7%"><?php echo $q1englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q2english ?></th>
+                        <th style="width:7%"><?php echo $q2englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q3english ?></th>
+                        <th style="width:7%"><?php echo $q3englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q4english ?></th>
+                        <th style="width:7%"><?php echo $q4englishresolved ?></th>
+                        <th style="width:8%"><?php echo $totalEnglish ?></th>
+                        <th style="width:8%"><?php echo $totalEnglishResolved ?></th>
                     </tr>
                     <tr>
                     <th style="width:15%">Academic - Literacy in Filipino</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1filipino ?></th>
+                        <th style="width:7%"><?php echo $q1filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q2filipino ?></th>
+                        <th style="width:7%"><?php echo $q2filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q3filipino ?></th>
+                        <th style="width:7%"><?php echo $q3filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q4filipino ?></th>
+                        <th style="width:7%"><?php echo $q4filipinoresolved ?></th>
+                        <th style="width:8%"><?php echo $totalFilipino ?></th>
+                        <th style="width:8%"><?php echo $totalFilipinoResolved ?></th>
                     </tr>
                     <tr>
                     <th style="width:15%">Academic - Numeracy</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1numeracy ?></th>
+                        <th style="width:7%"><?php echo $q1numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q2numeracy ?></th>
+                        <th style="width:7%"><?php echo $q2numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q3numeracy ?></th>
+                        <th style="width:7%"><?php echo $q3numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q4numeracy ?></th>
+                        <th style="width:7%"><?php echo $q4numeracyresolved ?></th>
+                        <th style="width:8%"><?php echo $totalNumeracy ?></th>
+                        <th style="width:8%"><?php echo $totalNumeracyResolved ?></th>
                     <tr>
                     <th style="width:15%">Behavioral</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1behavioral ?></th>
+                        <th style="width:7%"><?php echo $q1behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q2behavioral ?></th>
+                        <th style="width:7%"><?php echo $q2behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q3behavioral ?></th>
+                        <th style="width:7%"><?php echo $q3behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q4behavioral ?></th>
+                        <th style="width:7%"><?php echo $q4behavioralresolved ?></th>
+                        <th style="width:8%"><?php echo $totalBehavioral ?></th>
+                        <th style="width:8%"><?php echo $totalBehavioralResolved ?></th>
                 </tr>
             </tbody>
         </table>
@@ -1180,7 +994,7 @@ function showRows() {
 // Function to go to the previous page
 function prevPage() {
     if (currentPage > 1) {
-        currentPage--;
+        currentPage;
         showRows();
     }
 }
