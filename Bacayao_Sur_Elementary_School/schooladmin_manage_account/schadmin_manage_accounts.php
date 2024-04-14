@@ -39,7 +39,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <title>SDO Administrator</title>
+    <title>School Administrator</title>
     <style>
             
             body {
@@ -982,9 +982,9 @@ h5{
                 <div class="column"><h3></h3></div>
             </div>
             <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
-                <div>SDO Administrator</div>
-                <div>Executive Committee</div>
-                <div>School Administrator</div>
+                <div>Principal</div>
+                <div>Adviser</div>
+                <div>Guidance Counselor</div>
             </div>
 
             <table class="table">
@@ -993,7 +993,7 @@ h5{
                 <td class="rows">0321291</td>
                 <td class="rows">steph@gmail.com</td>
                 <td class="rows">10-11-22</td>
-                <td class="rows">School Administrator</td>
+                <td class="rows">Principal</td>
                 <td class="rows">
                 <div class="actions-container">
                     <div class="dropdown">
@@ -1018,9 +1018,9 @@ h5{
         </div>
         <div class="addbutton-content show" id="createAccountDropdown" >
             <div>Create an account for:</div>
-            <div onclick="createAccount('SDO Administrator')">SDO Administrator</div>
-            <div onclick="createAccount('Executive Committee')">Executive Committee</div>
-            <div onclick="createAccount('School Administrator')">School Administrator</div>
+            <div onclick="createAccount('SDO Administrator')">Principal</div>
+            <div onclick="createAccount('Executive Committee')">Adviser</div>
+            <div onclick="createAccount('School Administrator')">Guidance Counselor</div>
         </div>
     </div>
 
@@ -1156,7 +1156,7 @@ h5{
 
     <div class="edit-container">
         <div class="logo"></div>
-        <h2>SDO Administrator</h2>
+        <h2>Principal</h2>
 
         <form class="login-form" action="" method="post">
             <div class="row">
