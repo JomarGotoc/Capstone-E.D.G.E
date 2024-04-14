@@ -1,5 +1,5 @@
 <?php
-    include('../database.php');
+    include('database.php');
     if(isset($_GET['employment_number'])) {
         $employment_number = $_GET['employment_number'];
         $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
@@ -14,7 +14,7 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
+    include('database.php');
     if(isset($_GET['employment_number'])) {
         $employment_number = $_GET['employment_number'];
         $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
@@ -28,6 +28,33 @@
     } 
     $conn->close();
 ?>
+<?php
+include('database.php');
+
+// Array to store fetched data
+$data = array();
+
+// Array of tables
+$tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+
+// Loop through each table
+foreach ($tables as $table) {
+    $sql = "SELECT fullname, employment_number, email, date FROM $table";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Fetch data and add it to $data array
+        while ($row = $result->fetch_assoc()) {
+            $row['position'] = $table; // Adding position based on table name
+            $data[] = $row;
+        }
+    }
+}
+
+// Close connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -793,78 +820,78 @@
         }
 
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.4);
+            }
 
-.modal-content {
-    border-radius: 7px;
-    background-color: #130550;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-}
+            .modal-content {
+                border-radius: 7px;
+                background-color: #130550;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 30%;
+            }
 
-h5{
-    text-align: center;
-    font-size: 1.2rem;
-    color: #ddd;
-}
+            h5{
+                text-align: center;
+                font-size: 1.2rem;
+                color: #ddd;
+            }
 
-#myModal input[type="date"]{
-    height: 30px;
-    width: 100%;
-    border-radius: 5px;
-}
+            #myModal input[type="date"]{
+                height: 30px;
+                width: 100%;
+                border-radius: 5px;
+            }
 
-#myModal label{
-    color: white;
-    font-size: 15px;
-}
+            #myModal label{
+                color: white;
+                font-size: 15px;
+            }
 
-#endDateCalendar,
-#startDateCalendar{
-    margin-bottom: 10px;
-}
+            #endDateCalendar,
+            #startDateCalendar{
+                margin-bottom: 10px;
+            }
 
-#myModal button{
-    width: 95%;
-    background-color: #ddd;
-    border: 1px solid #0C052F;
-    color: #190572;
-}
+            #myModal button{
+                width: 95%;
+                background-color: #ddd;
+                border: 1px solid #0C052F;
+                color: #190572;
+            }
 
-#myModal button:hover{
-    background-color: transparent;
-    border: 1px solid #ddd;
-    color: #ddd;
-}
+            #myModal button:hover{
+                background-color: transparent;
+                border: 1px solid #ddd;
+                color: #ddd;
+            }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
 
-.close:hover,
-.close:focus {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
+            .close:hover,
+            .close:focus {
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+            }
 
 
-        
+                    
     </style>
 </head>
 <body>
@@ -921,44 +948,49 @@ h5{
         </div>
 
         <div class="inner-container">
+    <div class="bottom-inner-container2">
+        <div class="column"><h3>Name</h3></div>
+        <div class="column"><h3>Employee Number</h3></div>
+        <div class="column"><h3>Email Address</h3></div>
+        <div class="column"><h3>Date Added</h3></div>
+        <div class="column"><h3>Position<i class="bx bx-filter-alt filter-icon"></i></h3></div>
+        <div class="column"><h3></h3></div>
+    </div>
+    <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
+        <div>SDO Administrator</div>
+        <div>Executive Committee</div>
+        <div>School Administrator</div>
+    </div>
 
-            <div class="bottom-inner-container2">
-                <div class="column"><h3>Name</h3></div>
-                <div class="column"><h3>Employee Number</h3></div>
-                <div class="column"><h3>Email Address</h3></div>
-                <div class="column"><h3>Date Added</h3></div>
-                <div class="column"><h3>Position<i class="bx bx-filter-alt filter-icon"></i></h3></div>
-                <div class="column"><h3></h3></div>
-            </div>
-            <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
-                <div>SDO Administrator</div>
-                <div>Executive Committee</div>
-                <div>School Administrator</div>
-            </div>
+    <table class="table">
+        <?php
+        // Loop through $data to display table rows
+        foreach ($data as $row) {
+            echo "<tr class='sheshable'>";
+            echo "<td class='rows'>" . $row['fullname'] . "</td>";
+            echo "<td class='rows'>" . $row['employment_number'] . "</td>";
+            echo "<td class='rows'>" . $row['email'] . "</td>";
+            echo "<td class='rows'>" . $row['date'] . "</td>";
+            echo "<td class='rows'>" . $row['position'] . "</td>";
+            echo "<td class='rows'>";
+            echo "<div class='actions-container'>";
+            echo "<div class='dropdown'>";
+            echo "<button class='action-button' onclick='toggleActionsDropdown()'>Actions</button>";
+            echo "<div class='action-option' id='actionsDropdown'>";
+            echo "<button onclick='toggleActionsDropdown(this)'>Edit</button>";
+            echo "<button id='activateBtn_" . $row['employment_number'] . "' onclick='activate(\"" . $row['employment_number'] . "\")'>Activate</button>";
+            echo "<button id='deactivateBtn_" . $row['employment_number'] . "' onclick='deactivate(\"" . $row['employment_number'] . "\")'>Deactivate</button>";
+            echo "<button>Reset Password</button>";
+            echo "</div>";
+            echo "</div>";
+            echo "</div>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        ?>
+    </table>
+</div>
 
-            <table class="table">
-                <tr class="sheshable">
-                <td class="rows">Stephanie</td>
-                <td class="rows">0321291</td>
-                <td class="rows">steph@gmail.com</td>
-                <td class="rows">10-11-22</td>
-                <td class="rows">School Administrator</td>
-                <td class="rows">
-                <div class="actions-container">
-                    <div class="dropdown">
-                        <button class="action-button" onclick="toggleActionsDropdown()">Actions</button>
-                        <div class="action-option" id="actionsDropdown">
-                            <button>Edit</button>
-                            <button id="activateBtn" onclick="activate()">Activate</button>
-                            <button id="deactivateBtn" onclick="deactivate()" disabled>Deactivate</button>
-                            <button>Reset Password</button>
-                        </div>
-                    </div>
-                </div>
-            </td>
-                </tr>
-            </table>
-        </div>
     </div>
 
     <div class="dropdowns">
@@ -1135,6 +1167,6 @@ h5{
         </form>
     </div>
 
-    <script src="SDO_manage_account.js"></script>
+    <script src="SDO_manage_account/SDO_manage_account.js"></script>
 </body>
 </html>

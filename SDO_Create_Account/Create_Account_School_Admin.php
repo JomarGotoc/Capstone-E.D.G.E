@@ -1,56 +1,66 @@
 <?php
-include ("../database.php");
-$errorMsg = "";
-$errorMsg1 = "";
+    include('../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($sdoname);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
+<?php
+    include ("../database.php");
+    $errorMsg = "";
+    $errorMsg1 = "";
+    if (isset($_POST['submit'])) {
+        $employment_number = $_POST['employment_number'];
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
+        $firstThreeLetters = substr($firstname, 0, 3);
+        $firstTwoLettersLastName = substr($lastname, 0, 2);
+        $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
+        $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
+        $date = date('Y-m-d');
+        $schoolname = $_POST['school'];
 
-// Retrieve schoolname from URL using GET
-if(isset($_GET['schoolname'])) {
-    $schoolname = $_GET['schoolname'];
-} 
+        // Check if the fullname already exists
+        $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
+        $check_fullname_result = $conn->query($check_fullname_query);
 
-if (isset($_POST['submit'])) {
-    $employment_number = $_POST['employment_number'];
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $lastname = $_POST['lastname'];
-    $extension = $_POST['extension'];
-    $fullname = $firstname . ' ' . $middlename . ' '. $lastname.' ' . $extension;
-    $firstThreeLetters = substr($firstname, 0, 3);
-    $firstTwoLettersLastName = substr($lastname, 0, 2);
-    $firstTwoNumbersEmploymentNumber = substr($employment_number, 0, 2);
-    $password = $firstThreeLetters . $firstTwoLettersLastName . $firstTwoNumbersEmploymentNumber;
-    $date = date('Y-m-d');
+        // Check if the employment_number already exists
+        $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number'";
+        $check_employment_number_result = $conn->query($check_employment_number_query);
 
-    // Check if the fullname already exists
-    $check_fullname_query = "SELECT * FROM sdo_admin WHERE fullname='$fullname'";
-    $check_fullname_result = $conn->query($check_fullname_query);
-
-    // Check if the employment_number already exists
-    $check_employment_number_query = "SELECT * FROM sdo_admin WHERE employment_number='$employment_number'";
-    $check_employment_number_result = $conn->query($check_employment_number_query);
-
-    if ($check_fullname_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Full Name already exists.";
-    } elseif ($check_employment_number_result->num_rows > 0) {
-        $errorMsg1 = "Account with the provided Employment Number already exists.";
-    } else {
-            
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-        $verified = "no";
-        $school = $schoolname; 
-        $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date, verified, school) 
-                 VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
-
-        if ($conn->query($insert_query) === TRUE) {
-            $errorMsg = "Account created successfully";
+        if ($check_fullname_result->num_rows > 0) {
+            $errorMsg1 = "Account with the provided Full Name already exists.";
+        } elseif ($check_employment_number_result->num_rows > 0) {
+            $errorMsg1 = "Account with the provided Employment Number already exists.";
         } else {
-            echo "Error: " . $insert_query . "<br>" . $conn->error;
+                
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $verified = "no";
+            $school = $schoolname; 
+            $insert_query = "INSERT INTO school_admin (fullname, employment_number, password, date, verified, school) 
+                    VALUES ('$fullname', '$employment_number', '$hashed_password', '$date','$verified', '$school')";
+
+            if ($conn->query($insert_query) === TRUE) {
+                $errorMsg = "Account created successfully";
+            } else {
+                echo "Error: " . $insert_query . "<br>" . $conn->error;
+            }
         }
     }
-}
 
-// Close the database connection
-$conn->close();
+    // Close the database connection
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -540,7 +550,7 @@ $conn->close();
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
                     <a href="../SDO_manage_account/sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -552,7 +562,7 @@ $conn->close();
 
  
     <div class="login-container">
-    <a href="Select_School.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <a href="../SDO_manage_account/SDO_manageaccount3.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>School Administrator</h2>
 
@@ -567,7 +577,7 @@ $conn->close();
         <form class="login-form" action=" " method="post">
 
         <div class="search-container">
-            <input type="text" id="schoolName" placeholder="School's Name: " name="schoolName" required oninput="filterSchools()">
+            <input type="text" id="schoolName" placeholder="School's Name: " name="school" required oninput="filterSchools()">
                 <div class="dropdown-contents" id="schoolDropdown">
                     <a>Bacayao Sur Elementary School</a>
                     <a>Bliss Elementary School</a>

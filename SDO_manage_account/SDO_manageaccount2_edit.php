@@ -1,44 +1,59 @@
 <?php
-// Assuming you have a database connection
-include("../database.php");
+    // Assuming you have a database connection
+    include("../database.php");
 
-$id = $_GET["id"];
+    $id = $_GET["id"];
 
-// Retrieve user information from the database based on ID
-$sql_select_user = "SELECT * FROM executive_committee WHERE id=$id";
-$result_user = $conn->query($sql_select_user);
+    // Retrieve user information from the database based on ID
+    $sql_select_user = "SELECT * FROM executive_committee WHERE id=$id";
+    $result_user = $conn->query($sql_select_user);
 
-if ($result_user->num_rows > 0) {
-    $row_user = $result_user->fetch_assoc();
-    $fullname = $row_user["fullname"];
-    $email = $row_user["email"];
-    $employment_number = $row_user["employment_number"];
-    $date = $row_user["date"];
-} else {
-    echo "User not found";
-    $conn->close();
-    exit();
-}
-
-// Check if form is submitted for updating
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
-    $new_full_name = $_POST["fullname"];
-    $new_email = $_POST["email"];
-    $new_employment_number = $_POST["employment_number"];
-    $new_date = $_POST["date"];
-
-    // Update user information in the database
-    $sql_update = "UPDATE executive_committee SET fullname='$new_full_name', email ='$new_email', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
-
-    if ($conn->query($sql_update) === TRUE) {
-        header("Location: SDO_manageaccount2.php");
+    if ($result_user->num_rows > 0) {
+        $row_user = $result_user->fetch_assoc();
+        $fullname = $row_user["fullname"];
+        $email = $row_user["email"];
+        $employment_number = $row_user["employment_number"];
+        $date = $row_user["date"];
     } else {
-        $error_message = "Error updating record: " . $conn->error;
+        echo "User not found";
+        $conn->close();
+        exit();
     }
-}
 
-// Close the database connection
-$conn->close();
+    // Check if form is submitted for updating
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["update"])) {
+        $new_full_name = $_POST["fullname"];
+        $new_email = $_POST["email"];
+        $new_employment_number = $_POST["employment_number"];
+        $new_date = $_POST["date"];
+
+        // Update user information in the database
+        $sql_update = "UPDATE executive_committee SET fullname='$new_full_name', email ='$new_email', employment_number='$new_employment_number', date='$new_date' WHERE id=$id";
+
+        if ($conn->query($sql_update) === TRUE) {
+            header("Location: SDO_manageaccount2.php");
+        } else {
+            $error_message = "Error updating record: " . $conn->error;
+        }
+    }
+
+    // Close the database connection
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($sdoname);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -436,7 +451,7 @@ $conn->close();
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="#">Log Out</a>
                         <a href="sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">>Change Password</a>

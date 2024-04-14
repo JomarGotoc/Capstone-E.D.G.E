@@ -12,20 +12,19 @@ function toggleFilterOptions() {
 var filterIcons = document.querySelectorAll(".filter-icon");
 filterIcons.forEach(icon => icon.addEventListener("click", toggleFilterOptions));
 
-function toggleActionsDropdown() {
-    var dropdowns = document.querySelectorAll(".action-option");
-    dropdowns.forEach(dropdown => dropdown.classList.toggle("show"));
+function toggleActionsDropdown(button) {
+    var dropdown = button.closest('.actions-container').querySelector('.action-option');
+    dropdown.classList.toggle("show");
 }
-
 //acticate deactivate button
-function activate() {
-    document.getElementById("activateBtn").disabled = true;
-    document.getElementById("deactivateBtn").disabled = false;
+function activate(employmentNumber) {
+    document.getElementById("activateBtn_" + employmentNumber).disabled = true;
+    document.getElementById("deactivateBtn_" + employmentNumber).disabled = false;
 }
 
-function deactivate() {
-    document.getElementById("deactivateBtn").disabled = true;
-    document.getElementById("activateBtn").disabled = false;
+function deactivate(employmentNumber) {
+    document.getElementById("deactivateBtn_" + employmentNumber).disabled = true;
+    document.getElementById("activateBtn_" + employmentNumber).disabled = false;
 }
 
 

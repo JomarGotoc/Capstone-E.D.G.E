@@ -1,32 +1,47 @@
 <?php
-$errormsg = "";
-include('../database.php');
-$sql = "SELECT * FROM executive_committee";
-$result1 = $conn->query($sql);
+    $errormsg = "";
+    include('../database.php');
+    $sql = "SELECT * FROM executive_committee";
+    $result1 = $conn->query($sql);
 
-if(isset($_POST['reset_password'])) {
-    // Get user ID from the form
-    $user_id = $_POST['user_id'];
-    $query = "SELECT * FROM executive_committee WHERE id = $user_id";
-    $result = $conn->query($query);
+    if(isset($_POST['reset_password'])) {
+        // Get user ID from the form
+        $user_id = $_POST['user_id'];
+        $query = "SELECT * FROM executive_committee WHERE id = $user_id";
+        $result = $conn->query($query);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $employment_number = $row['employment_number'];
-        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
-        $update_query = "UPDATE executive_committee SET password = '$hashed_password' WHERE id = $user_id";
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $employment_number = $row['employment_number'];
+            $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+            $update_query = "UPDATE executive_committee SET password = '$hashed_password' WHERE id = $user_id";
 
-        if ($conn->query($update_query) === TRUE) {
-            $errormsg = "Password Reset Sucessful";
-            echo "<script>setTimeout(function(){ document.getElementById('error-msg').style.display = 'none'; }, 2000);</script>";
+            if ($conn->query($update_query) === TRUE) {
+                $errormsg = "Password Reset Sucessful";
+                echo "<script>setTimeout(function(){ document.getElementById('error-msg').style.display = 'none'; }, 2000);</script>";
+            } else {
+            }
         } else {
+            echo "User not found";
         }
-    } else {
-        echo "User not found";
+        $conn->close();
     }
-    $conn->close();
-}
 ?> 
+<?php
+    include('../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($sdoname);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -742,7 +757,7 @@ if(isset($_POST['reset_password'])) {
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
                         <a href="sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
