@@ -119,6 +119,11 @@ function filterSchools() {
 
 //edit form
 function toggleEditContainer(editButton) {
+    var editContainer = document.querySelector('.edit-container');
+    var overlay = document.querySelector('.overlay'); 
+    editContainer.style.display = 'block';
+    overlay.style.display = 'block';
+
     var row = editButton.closest('tr');
 
     var fullName = row.querySelector('.rows:nth-child(1)').textContent;
@@ -126,17 +131,20 @@ function toggleEditContainer(editButton) {
     var email = row.querySelector('.rows:nth-child(3)').textContent;
     var dateAdded = row.querySelector('.rows:nth-child(4)').textContent;
 
-    // Construct the URL with query parameters
-    var url = 'SDO_manage_accounts_edit.php?' +
-        'fullname=' + encodeURIComponent(fullName) +
-        '&employment_number=' + encodeURIComponent(employeeNumber) +
-        '&email=' + encodeURIComponent(email) +
-        '&date=' + encodeURIComponent(dateAdded);
+    console.log("Full Name:", fullName);
+    console.log("Employee Number:", employeeNumber);
+    console.log("Email:", email);
+    console.log("Date Added:", dateAdded);
 
-    // Redirect to the try.php page with the data
-    window.location.href = url;
+    document.getElementById('full-name').value = fullName;
+    document.getElementById('idnum').value = employeeNumber;
+    document.getElementById('email').value = email;
+    document.getElementById('date-added').value = dateAdded;
+
+    var position = row.querySelector('.rows:nth-child(5)').textContent;
+    var editContainerTitle = document.querySelector('.edit-container h2');
+    editContainerTitle.textContent = position;
 }
-
 
 function hideEditContainer() {
     var editContainer = document.querySelector('.edit-container');

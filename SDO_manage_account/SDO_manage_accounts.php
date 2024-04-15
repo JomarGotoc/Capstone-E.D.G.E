@@ -1,5 +1,65 @@
 <?php
     include('../database.php');
+    if(isset($_POST['submit1'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $date = date('Y-m-d'); // Current date
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../database.php');
+    if(isset($_POST['submit2'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $school = $_POST['schoolName'];
+        $date = date('Y-m-d');
+        
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../database.php');
     if(isset($_GET['employment_number'])) {
         $employment_number = $_GET['employment_number'];
         $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
@@ -29,36 +89,91 @@
     $conn->close();
 ?>
 <?php
-include('../database.php');
+    include('../database.php');
 
-// Array to store fetched data
-$data = array();
+    // Array to store fetched data
+    $data = array();
 
-// Array of tables
-$tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+    // Array of tables
+    $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
 
-// Loop through each table
-foreach ($tables as $table) {
-    $sql = "SELECT fullname, employment_number, email, date FROM $table";
-    $result = $conn->query($sql);
+    // Loop through each table
+    foreach ($tables as $table) {
+        $sql = "SELECT fullname, employment_number, email, date FROM $table";
+        $result = $conn->query($sql);
 
-if ($result->num_rows > 0) {
-    // Fetch data and add it to $data array
-    while ($row = $result->fetch_assoc()) {
-        // Replace underscore with space in table name and capitalize each word
-        $position = ucwords(str_replace('_', ' ', $table)); 
-        // Convert "sdo" to "SDO" if found
-        $position = str_replace('Sdo', 'SDO', $position); 
-        $row['position'] = $position; // Adding position based on modified table name
-        $data[] = $row;
+    if ($result->num_rows > 0) {
+        // Fetch data and add it to $data array
+        while ($row = $result->fetch_assoc()) {
+            // Replace underscore with space in table name and capitalize each word
+            $position = ucwords(str_replace('_', ' ', $table)); 
+            // Convert "sdo" to "SDO" if found
+            $position = str_replace('Sdo', 'SDO', $position); 
+            $row['position'] = $position; // Adding position based on modified table name
+            $data[] = $row;
+        }
+    }
+
+    }
+?>
+<?php
+// Assuming you have already established a MySQLi connection
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the "activate" button was clicked
+    if (isset($_POST["activate"])) {
+        // Get the employment number from the form submission
+        $employment_number = $_POST["employment_number"];
+
+        // Prepare and execute SELECT queries to check if employment_number exists in each table
+        $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+        $found = false;
+
+        foreach ($tables as $table) {
+            $sql = "SELECT * FROM $table WHERE employment_number = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $employment_number);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // If employment_number found in table, update activation column
+                $found = true;
+                $sql_update = "UPDATE $table SET activation = 'activate' WHERE employment_number = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("s", $employment_number);
+                $stmt_update->execute();
+            }
+        }
+    } elseif (isset($_POST["deactivate"])) { // Check if the "deactivate" button was clicked
+        // Get the employment number from the form submission
+        $employment_number = $_POST["employment_number"];
+
+        // Prepare and execute UPDATE queries to deactivate the user only in the table where employment_number is found
+        $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+
+        foreach ($tables as $table) {
+            $sql_check = "SELECT * FROM $table WHERE employment_number = ?";
+            $stmt_check = $conn->prepare($sql_check);
+            $stmt_check->bind_param("s", $employment_number);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
+
+            if ($result_check->num_rows > 0) {
+                $sql_update = "UPDATE $table SET activation = 'deactivate' WHERE employment_number = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("s", $employment_number);
+                $stmt_update->execute();
+                // Since we found the employment number in one table, we can break out of the loop
+                break;
+            }
+        }
     }
 }
-
-}
-
-// Close connection
-$conn->close();
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -963,32 +1078,37 @@ $conn->close();
     </div>
 
     <table class="table">
-        <?php
-        // Loop through $data to display table rows
-        foreach ($data as $row) {
-            echo "<tr class='sheshable'>";
-            echo "<td class='rows'>" . $row['fullname'] . "</td>";
-            echo "<td class='rows'>" . $row['employment_number'] . "</td>";
-            echo "<td class='rows'>" . $row['email'] . "</td>";
-            echo "<td class='rows'>" . $row['date'] . "</td>";
-            echo "<td class='rows'>" . $row['position'] . "</td>";
-            echo "<td class='rows'>";
-            echo "<div class='actions-container'>";
-            echo "<div class='dropdown'>";
-            echo "<button class='action-button' onclick='toggleActionsDropdown()'>Actions</button>";
-            echo "<div class='action-option' id='actionsDropdown'>";
-            echo "<button onclick='toggleEditContainer(this)'>Edit</button>"; // Add event listener
-            echo "<button id='activateBtn_" . $row['employment_number'] . "' onclick='activate(\"" . $row['employment_number'] . "\")'>Activate</button>";
-            echo "<button id='deactivateBtn_" . $row['employment_number'] . "' onclick='deactivate(\"" . $row['employment_number'] . "\")'>Deactivate</button>";
-            echo "<button>Reset Password</button>";
-            echo "</div>";
-            echo "</div>";
-            echo "</div>";
-            echo "</td>";
-            echo "</tr>";
-        }        
-        ?>
-    </table>
+    <?php
+    // Loop through $data to display table rows
+    foreach ($data as $row) {
+        echo "<tr class='sheshable'>";
+        echo "<td class='rows'>" . $row['fullname'] . "</td>";
+        echo "<td class='rows'>" . $row['employment_number'] . "</td>";
+        echo "<td class='rows'>" . $row['email'] . "</td>";
+        echo "<td class='rows'>" . $row['date'] . "</td>";
+        echo "<td class='rows'>" . $row['position'] . "</td>";
+        echo "<td class='rows'>";
+        echo "<div class='actions-container'>";
+        echo "<div class='dropdown'>";
+        echo "<button class='action-button' onclick='toggleActionsDropdown()'>Actions</button>";
+        echo "<div class='action-option' id='actionsDropdown'>";
+        echo "<button onclick='toggleEditContainer(this)'>Edit</button>"; // Add event listener
+        echo "<form method='post' action=''>"; // Opening form tag
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
+        echo "<button type='submit' name='activate'>Activate</button>"; // Submit button
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
+        echo "<button type='submit' name='deactivate'>Deactivate</button>"; // Submit button
+        echo "</form>"; // Closing form tag for deactivate
+        echo "<button>Reset Password</button>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+        echo "</td>";
+        echo "</tr>";
+    }        
+    ?>
+</table>
+
 </div>
 
     </div>
@@ -1012,16 +1132,20 @@ $conn->close();
         <div class="logo"></div>
         <h2>SDO Administrator</h2>
 
+        <div class="errorMessage">
+            <?php echo $errormsg ?>
+        </div>
+
         <form class="login-form" action=" " method="post">
         <div class="row">
                 <div class="columns">
                 <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
+                        <input type="text" id="firstname" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="lastname" required>
+                        <input type="text" id="lastname" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
@@ -1040,12 +1164,12 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                        <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" name="submit">Create Account</button>
+                <button type="submit" name="submit1">Create Account</button>
             </div>
         </form>
     </div>
@@ -1101,11 +1225,11 @@ $conn->close();
                 <div class="columns">
                 <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
+                        <input type="text" id="fullname" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="lastname" required>
+                        <input type="text" id="lastname" name="lastname" required>
                     </div>
                     <div class="form-group">
                         <label for="topdown">Employee Number</label>
@@ -1124,13 +1248,13 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                        <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <button type="submit" name="submit">Create Account</button>
+                <button type="submit" name="submit2">Create Account</button>
             </div>
         </form>
     </div>
@@ -1142,26 +1266,26 @@ $conn->close();
         <form class="login-form" action="" method="post">
             <div class="row">
             <div class="columns">
-    <div class="form-group">
-        <label for="full-name">Full Name</label>
-        <input type="text" id="full-name" name="full-name" value="" required>
-    </div>
-    <div class="form-group">
-        <label for="idnum">Employee Number</label>
-        <input type="text" id="idnum" name="employee-number" value="" required>
-    </div>
-</div>
+                <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" value="" readonly>
+                </div>
+                  <div class="form-group">
+                        <label for="idnum">Employee Number</label>
+                        <input type="text" id="idnum" name="employee-number" value="" readonly>
+                  </div>
+            </div>
 
-<div class="columns">
-    <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="" required>
-    </div>
-    <div class="form-group">
-        <label for="date-added">Date Added</label>
-        <input type="date" id="date-added" name="date-added" value="" readonly>
-    </div>
-</div>
+            <div class="columns">
+                <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="" required>
+                </div>
+                <div class="form-group">
+                        <label for="date-added">Date Added</label>
+                        <input type="date" id="date-added" name="date-added" value="" readonly>
+                </div>
+                </div>
             </div>
             <button type="submit" name="update" id="add-btn">Save Changes</button>
         </form>
