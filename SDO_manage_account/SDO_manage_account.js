@@ -9,32 +9,18 @@ function toggleFilterOptions() {
 }
 
 //action button
-var filterIcons = document.querySelectorAll(".filter-icon");
-filterIcons.forEach(icon => icon.addEventListener("click", toggleFilterOptions));
-
 function toggleActionsDropdown(button) {
     var dropdown = button.closest('.actions-container').querySelector('.action-option');
     dropdown.classList.toggle("show");
 }
-
-//acticate deactivate button
-const rows = document.querySelectorAll('.sheshable');
-
-rows.forEach(row => {
-    const activateBtn = row.querySelector('.activate');
-    const deactivateBtn = row.querySelector('.deactivate');
-
-    activateBtn.addEventListener('click', () => {
-        activateBtn.disabled = true;
-        deactivateBtn.disabled = false;
-    });
-
-    deactivateBtn.addEventListener('click', () => {
-        deactivateBtn.disabled = true;
-        activateBtn.disabled = false;
-    });
-});
-
+function activate(employmentNumber) {
+    document.getElementById("activateBtn_" + employmentNumber).disabled = true;
+    document.getElementById("deactivateBtn_" + employmentNumber).disabled = false;
+}
+function deactivate(employmentNumber) {
+    document.getElementById("deactivateBtn_" + employmentNumber).disabled = true;
+    document.getElementById("activateBtn_" + employmentNumber).disabled = false;
+}
 
 
 
@@ -132,30 +118,25 @@ function filterSchools() {
 
 
 //edit form
-function toggleEditContainer() {
-    var editContainer = document.querySelector('.edit-container');
-    var overlay = document.querySelector('.overlay'); 
-    editContainer.style.display = 'block';
-    overlay.style.display = 'block';
+function toggleEditContainer(editButton) {
+    var row = editButton.closest('tr');
 
-    var fullName = document.querySelector('.rows:nth-child(1)').textContent;
-    var employeeNumber = document.querySelector('.rows:nth-child(2)').textContent;
-    var email = document.querySelector('.rows:nth-child(3)').textContent;
+    var fullName = row.querySelector('.rows:nth-child(1)').textContent;
+    var employeeNumber = row.querySelector('.rows:nth-child(2)').textContent;
+    var email = row.querySelector('.rows:nth-child(3)').textContent;
+    var dateAdded = row.querySelector('.rows:nth-child(4)').textContent;
 
-    document.getElementById('full-name').value = fullName;
-    document.getElementById('idnum').value = employeeNumber;
-    document.getElementById('email').value = email;
+    // Construct the URL with query parameters
+    var url = 'SDO_manage_accounts_edit.php?' +
+        'fullname=' + encodeURIComponent(fullName) +
+        '&employment_number=' + encodeURIComponent(employeeNumber) +
+        '&email=' + encodeURIComponent(email) +
+        '&date=' + encodeURIComponent(dateAdded);
 
-    var position = document.querySelector('.rows:nth-child(5)').textContent;
-    var editContainerTitle = document.querySelector('.edit-container h2');
-    if (position === "SDO Administrator") {
-        editContainerTitle.textContent = "SDO Administrator";
-    } else if (position === "Executive Committee") {
-        editContainerTitle.textContent = "Executive Committee";
-    } else if (position === "School Administrator") {
-        editContainerTitle.textContent = "School Administrator";
-    }
+    // Redirect to the try.php page with the data
+    window.location.href = url;
 }
+
 
 function hideEditContainer() {
     var editContainer = document.querySelector('.edit-container');
