@@ -134,7 +134,7 @@
     }
 ?>
 <?php
-    // Assuming you have already established a MySQLi connection
+    // Assuming you have already established a MySQLi conn
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the "activate" button was clicked
@@ -188,9 +188,32 @@
     }
     }
 ?>
+<?php
+include('../database.php');
 
-
-
+if(isset($_POST['reset'])) {
+    // Retrieve employment number from form submission
+    $employment_number = $_POST['employment_number'];
+    
+    // Generate a hashed password (you can use password_hash() function)
+    $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+    
+    // Check if the employment number exists in any of the tables
+    $tables = array('adviser', 'principal', 'counselor');
+    foreach ($tables as $table) {
+        $query = "SELECT * FROM $table WHERE employment_number = '$employment_number'";
+        $result = mysqli_query($conn, $query);
+        if(mysqli_num_rows($result) > 0) {
+            // If employment number found, update the password to the hashed value
+            $updateQuery = "UPDATE $table SET password = '$hashed_password' WHERE employment_number = '$employment_number'";
+            mysqli_query($conn, $updateQuery);
+            // Break the loop since the employment number is found
+            break;
+        }
+    }
+    // You can add further logic here, like displaying a message to the user after resetting the password
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1183,8 +1206,9 @@
         echo "<button type='submit' name='activate'>Activate</button>"; // Submit button
         echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
         echo "<button type='submit' name='deactivate'>Deactivate</button>"; // Submit button
-        echo "</form>"; // Closing form tag for deactivate
-        echo "<button>Reset Password</button>";
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>";
+        echo "<button type='submit' name='reset'>Reset Password</button>"; // Submit button
+        echo "</form>";
         echo "</div>";
         echo "</div>";
         echo "</div>";

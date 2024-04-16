@@ -1,6 +1,7 @@
 <?php
 include('../database.php');
 $errorMsg = "";
+
 function sanitizeInput($data) {
     return htmlspecialchars(strip_tags($data));
 }
@@ -22,87 +23,96 @@ if (isset($_POST['submit'])) {
             $row = $result->fetch_assoc();
             $hashedPasswordInDB = $row['password'];
             $verifiedStatus = $row['verified'];
+            $activationStatus = $row['activation']; // Added to fetch activation status
 
             if (password_verify($password, $hashedPasswordInDB)) {
-                switch ($table) {
-                    case 'adviser':
-                        if ($verifiedStatus == 'yes') {
-                            $grade = $row['grade'];
-                            $section = $row['section'];
-                            $school = str_replace(' ', '_', $row['school']);
-                            header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                if ($activationStatus == 'activate') { // Check activation status
+                    switch ($table) {
+                        case 'adviser':
+                            if ($verifiedStatus == 'yes') {
+                                $grade = $row['grade'];
+                                $section = $row['section'];
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    case 'principal':
-                        if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $row['school']);
-                            header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                        case 'principal':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    case 'counselor':
-                        if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $row['school']);
-                            header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                        case 'counselor':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    case 'school_admin':
-                        if ($verifiedStatus == 'yes') {
-                            $school = str_replace(' ', '_', $row['school']);
-                            header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                        case 'school_admin':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    case 'sdo_admin':
-                        if ($verifiedStatus == 'yes') {
-                            header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                        case 'sdo_admin':
+                            if ($verifiedStatus == 'yes') {
+                                header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    case 'executive_committee':
-                        if ($verifiedStatus == 'yes') {
-                            header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
-                            exit();
-                        } else {
-                            header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                            exit();
-                        }
-                        break;
+                        case 'executive_committee':
+                            if ($verifiedStatus == 'yes') {
+                                header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+                } elseif ($activationStatus == 'deactivate') { // Account deactivated
+                    $errorMsg = "This account is Deactivated";
+                    break; // Exit loop
                 }
             }
         }
     }
-    $errorMsg = "Invalid login credentials";
-
+    if (empty($errorMsg)) {
+        $errorMsg = "Invalid login credentials";
+    }
     $stmt->close();
     $conn->close();
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

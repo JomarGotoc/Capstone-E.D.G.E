@@ -1,509 +1,378 @@
 <?php
-    include('database.php');
+include('../database.php');
+$errorMsg = "";
 
-    // Define the quarters
-    $quarters = array(1, 2, 3, 4);
+function sanitizeInput($data) {
+    return htmlspecialchars(strip_tags($data));
+}
 
-    // Initialize total LRN counts for each school
-    $bacayaototalpar = 0;
-    $blisstotalpar = 0;
-    $bolosantotalpar = 0;
-    $bonuantotalpar = 0;
-    $calmaytotalpar = 0;
-    $caraeltotalpar = 0;
-    $caranglaantotalpar = 0;
-    $eastcentraltotalpar = 0;
-    $federicototalpar = 0;
-    $gregoriodelpilartotalpar = 0;
-    $juanltotalpar = 0;
-    $juanptotalpar = 0;
-    $lasiptotalpar = 0;
-    $leonfranciscototalpar = 0;
-    $lomboytotalpar = 0;
-    $lucaototalpar = 0;
-    $maluedsurtotalpar = 0;
-    $mamalinglingtotalpar = 0;
-    $mangintebengtotalpar = 0;
-    $northcentraltotalpar = 0;
-    $pantaltotalpar = 0;
-    $pascualatotalpar = 0;
-    $pogolasiptotalpar = 0;
-    $pugarototalpar = 0;
-    $sabangantotalpar = 0;
-    $salapingaototalpar = 0;
-    $salisaytotalpar = 0;
-    $suittotalpar = 0;
-    $taysonrosariototalpar = 0;
-    $tambactotalpar = 0;
-    $tebengtotalpar = 0;
-    $zaratetotalpar = 0;
-    $westcentralItotalpar = 0;
-    $westcentralIItotalpar = 0;
+if (isset($_POST['submit'])) {
+    $employment_number = sanitizeInput($_POST['employment_number']);
+    $password = sanitizeInput($_POST['password']);
 
-    // Loop through each quarter
-    foreach ($quarters as $selectedQuarter) {
-        // Query to count LRNs for Bacayao Sur Elementary School
-        $sql_bacayao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_bacayao = $conn->query($sql_bacayao);
-        $row_bacayao = $result_bacayao->fetch_assoc();
-        $bacayaototalpar += $row_bacayao['total_count']; // Update the total count for Bacayao Sur Elementary School
+    $tables = array('adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee');
 
-        // Query to count LRNs for Bliss Elementary School
-        $sql_bliss = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_bliss = $conn->query($sql_bliss);
-        $row_bliss = $result_bliss->fetch_assoc();
-        $blisstotalpar += $row_bliss['total_count'];
+    foreach ($tables as $table) {
+        $query = "SELECT * FROM $table WHERE employment_number = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('s', $employment_number);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        // Query to count LRNs for Bolosan Elementary School
-        $sql_bolosan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_bolosan = $conn->query($sql_bolosan);
-        $row_bolosan = $result_bolosan->fetch_assoc();
-        $bolosantotalpar += $row_bolosan['total_count'];
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $hashedPasswordInDB = $row['password'];
+            $verifiedStatus = $row['verified'];
+            $activationStatus = $row['activation']; // Added to fetch activation status
 
-        // Query to count LRNs for Bonuan Boquig Elementary School
-        $sql_bonuan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_bonuan = $conn->query($sql_bonuan);
-        $row_bonuan = $result_bonuan->fetch_assoc();
-        $bonuantotalpar += $row_bonuan['total_count'];
+            if (password_verify($password, $hashedPasswordInDB)) {
+                if ($activationStatus == 'activate') { // Check activation status
+                    switch ($table) {
+                        case 'adviser':
+                            if ($verifiedStatus == 'yes') {
+                                $grade = $row['grade'];
+                                $section = $row['section'];
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        // Query to count LRNs for Calmay Elementary School
-        $sql_calmay = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_calmay = $conn->query($sql_calmay);
-        $row_calmay = $result_calmay->fetch_assoc();
-        $calmaytotalpar += $row_calmay['total_count'];
+                        case 'principal':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_carael = $conn->query($sql_carael);
-        $row_carael = $result_carael->fetch_assoc();
-        $caraeltotalpar += $row_carael['total_count'];
+                        case 'counselor':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_carael = $conn->query($sql_carael);
-        $row_carael = $result_carael->fetch_assoc();
-        $caraeltotalpar += $row_carael['total_count'];
+                        case 'school_admin':
+                            if ($verifiedStatus == 'yes') {
+                                $school = str_replace(' ', '_', $row['school']);
+                                header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_carael = $conn->query($sql_carael);
-        $row_carael = $result_carael->fetch_assoc();
-        $caraeltotalpar += $row_carael['total_count'];
+                        case 'sdo_admin':
+                            if ($verifiedStatus == 'yes') {
+                                header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        $sql_eastcentral = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_eastcentral = $conn->query($sql_eastcentral);
-        $row_eastcentral = $result_eastcentral->fetch_assoc();
-        $eastcentraltotalpar += $row_eastcentral['total_count'];
+                        case 'executive_committee':
+                            if ($verifiedStatus == 'yes') {
+                                header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
+                                exit();
+                            } else {
+                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
+                                exit();
+                            }
+                            break;
 
-        $sql_federicoceralde = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_federicoceralde = $conn->query($sql_federicoceralde);
-        $row_federicoceralde = $result_federicoceralde->fetch_assoc();
-        $federicototalpar += $row_federicoceralde['total_count'];
-
-        $sql_gregoriodelpilar = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_gregoriodelpilar = $conn->query($sql_gregoriodelpilar);
-        $row_gregoriodelpilar = $result_gregoriodelpilar->fetch_assoc();
-        $gregoriodelpilartotalpar += $row_gregoriodelpilar['total_count'];
-
-        $sql_juansiapno = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_juansiapno = $conn->query($sql_juansiapno);
-        $row_juansiapno = $result_juansiapno->fetch_assoc();
-        $juanltotalpar += $row_juansiapno['total_count'];
-
-        $sql_juanguadiz = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_juanguadiz = $conn->query($sql_juanguadiz);
-        $row_juanguadiz = $result_juanguadiz->fetch_assoc();
-        $juanptotalpar += $row_juanguadiz['total_count'];
-
-        $sql_lasipgrande = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_lasipgrande = $conn->query($sql_lasipgrande);
-        $row_lasipgrande = $result_lasipgrande->fetch_assoc();
-        $lasiptotalpar += $row_lasipgrande['total_count'];
-
-        $sql_leon = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_leon = $conn->query($sql_leon);
-        $row_leon = $result_leon->fetch_assoc();
-        $leonfranciscototalpar += $row_leon['total_count'];
-
-        $sql_lomboy = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_lomboy = $conn->query($sql_lomboy);
-        $row_lomboy = $result_lomboy->fetch_assoc();
-        $lomboytotalpar += $row_lomboy['total_count'];
-
-        $sql_lucao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_lucao = $conn->query($sql_lucao);
-        $row_lucao = $result_lucao->fetch_assoc();
-        $lucaototalpar += $row_lucao['total_count'];
-
-        $sql_malued = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_malued = $conn->query($sql_malued);
-        $row_malued = $result_malued->fetch_assoc();
-        $maluedsurtotalpar += $row_malued['total_count'];
-
-        $sql_mamalingling = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_mamalingling = $conn->query($sql_mamalingling);
-        $row_mamalingling = $result_mamalingling->fetch_assoc();
-        $mamalinglingtotalpar += $row_mamalingling['total_count'];
-
-        $sql_mangin = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_mangin = $conn->query($sql_mangin);
-        $row_mangin = $result_mangin->fetch_assoc();
-        $mangintebengtotalpar += $row_mangin['total_count'];
-
-        $sql_northcentral = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_northcentral = $conn->query($sql_northcentral);
-        $row_northcentral = $result_northcentral->fetch_assoc();
-        $northcentraltotalpar += $row_northcentral['total_count'];
-
-        $sql_pantal = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_pantal = $conn->query($sql_pantal);
-        $row_pantal = $result_pantal->fetch_assoc();
-        $pantaltotalpar += $row_pantal['total_count'];
-
-        $sql_pascuala = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_pascuala = $conn->query($sql_pascuala);
-        $row_pascuala = $result_pascuala->fetch_assoc();
-        $pascualatotalpar += $row_pascuala['total_count'];
-
-        $sql_pogo = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_pogo = $conn->query($sql_pogo);
-        $row_pogo = $result_pogo->fetch_assoc();
-        $pogolasiptotalpar += $row_pogo['total_count'];
-
-        $sql_pugaro = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_pugaro = $conn->query($sql_pugaro);
-        $row_pugaro = $result_pugaro->fetch_assoc();
-        $pugarototalpar += $row_pugaro['total_count'];
-
-        $sql_sabangan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_sabangan = $conn->query($sql_sabangan);
-        $row_sabangan = $result_sabangan->fetch_assoc();
-        $sabangantotalpar += $row_sabangan['total_count'];
-
-        $sql_salapingao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_salapingao = $conn->query($sql_salapingao);
-        $row_salapingao = $result_salapingao->fetch_assoc();
-        $salapingaototalpar += $row_salapingao['total_count'];
-
-        $sql_salisay = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_salisay = $conn->query($sql_salisay);
-        $row_salisay = $result_salisay->fetch_assoc();
-        $salisaytotalpar += $row_salisay['total_count'];
-
-        $sql_suit = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_suit = $conn->query($sql_suit);
-        $row_suit = $result_suit->fetch_assoc();
-        $suittotalpar += $row_suit['total_count'];
-
-        $sql_ayson = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_ayson = $conn->query($sql_ayson);
-        $row_ayson = $result_ayson->fetch_assoc();
-        $taysonrosariototalpar += $row_ayson['total_count'];
-
-        $sql_tambac = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_tambac = $conn->query($sql_tambac);
-        $row_tambac = $result_tambac->fetch_assoc();
-        $tambactotalpar += $row_tambac['total_count'];
-
-        $sql_tebeng = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_tebeng = $conn->query($sql_tebeng);
-        $row_tebeng = $result_tebeng->fetch_assoc();
-        $tebengtotalpar += $row_tebeng['total_count'];
-
-        $sql_zarate = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_zarate = $conn->query($sql_zarate);
-        $row_zarate = $result_zarate->fetch_assoc();
-        $zaratetotalpar += $row_zarate['total_count'];
-
-        $sql_westI = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_westI = $conn->query($sql_westI);
-        $row_westI = $result_westI->fetch_assoc();
-        $westcentralItotalpar += $row_westI['total_count'];
-
-        $sql_westII = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
-            UNION
-            SELECT lrn FROM behavioral WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
-        ) AS all_lrns";
-        $result_westII = $conn->query($sql_westII);
-        $row_westII = $result_westII->fetch_assoc();
-        $westcentralIItotalpar += $row_westII['total_count'];
-
+                        default:
+                            break;
+                    }
+                } elseif ($activationStatus == 'deactivate') { // Account deactivated
+                    $errorMsg = "This account is Deactivated";
+                    break; // Exit loop
+                }
+            }
+        }
     }
-
-    // Close connection
+    if (empty($errorMsg)) {
+        $errorMsg = "Invalid login credentials";
+    }
+    $stmt->close();
     $conn->close();
+}
 ?>
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script>
+        function preventBack(){window.history.forward()};
+        setTimeout("preventBack()",0);
+        window.onunload=function(){null;}
+    </script>
+    <title>LogIn</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url(../img/bg.png);
+            background-size: cover;
+        }
+
+        .login-container {
+            background-color: #190572;
+            opacity: 1;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 18.5rem;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            background-image: url('../img/logo.png');
+            background-size: cover;   
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 92%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            align-items: center;
+        }
+
+        .login-form button {
+            background-color: #0C052F;
+            width: 98%;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 30px;
+            cursor: pointer;
+            margin-top: 10px; 
+            justify-content: center;
+        }
+
+        .login-form button:hover {
+            background-color: #DDDAE7;
+            color: #0C052F;
+        }
+
+        .login-form{
+            align-items: center;
+        }
+
+        h2 {
+            font-family: 'Darker Grotesque', sans-serif;
+            font-weight: 500;
+            align-items: start;
+            color: #fff;
+        }
+
+        .login-container {
+            background-color: rgba(25, 5, 114, 0.80);
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 18.5rem;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: .1rem 5%;
+            background: #130550;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            height: 55px;
+        }
+
+        .header.sticky {
+            border-bottom: .2rem solid rgba(185, 169, 169, 0.2);
+        }
+
+        h4 {
+            color: #fff;
+            font-family: 'Darker Grotesque', sans-serif;
+            font-weight: 300;
+            font-size: 1.3rem;
+            margin-left: 1rem;
+            letter-spacing: 2px;
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+        }
+
+        .logs {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+
+        .login-container {
+            position: relative;
+        }
+
+        .back-icon {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .back-icon i {
+            margin-right: 5px;
+        }
+
+        .login-container .forgot{
+            background-color: #0C052F;
+            width: 98%;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 30px;
+            cursor: pointer;
+            margin-top: 5px; 
+            justify-content: center;
+        }
+
+        .login-container .forgot:hover {
+            background-color: #DDDAE7;
+            color: #0C052F;
+        }
+        .errorMessage{
+            color: red;
+            font-weight:bold ;
+            text-align: center;
+          }
+
+          @media screen and (max-width: 800px) {
+            header{
+                height: 40px;
+            }
+            h4 {
+                font-size: 0.6rem; 
+            }
+
+            .logs {
+                width: 2rem;
+                height: 2rem;
+            }
+
+            .login-container {
+                width: 90%; 
+            }
+
+            .login-container .forgot,
+            .login-form button{
+                width: 97%;
+            }
+
+            .password-toggle{
+                display: none;
+            }
+        }
+
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="../img/logo.png" class="logs">
+    <div class="container">
+        <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
+    </div>
+</header>
+
+<div class="login-container">
+    <a href="../index.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+    <div class="logo"></div>
+    <h2>Sign in to E.D.G.E.</h2>
+
+    <div class="errorMessage">
+        <?php echo $errorMsg ?>
+    </div>
+
+    <form class="login-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
+        <input type="text" id="idnum" name="employment_number" placeholder="Enter Employee Number ">
+        
+        <div class="password-container">
+            <input type="password" id="password" name="password" placeholder="Enter Password">
+            <div class="password-toggle" onclick="togglePasswordVisibility()">
+                <i id="eye-icon" class='bx bx-show'></i>
+            </div>
+        </div>
+
+        <button type="submit" name="submit">Log In</button>
+    </form>
+    
+    <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="">Forgot Password</button></a>
+</div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordField = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            eyeIcon.classList.remove("bx-show");
+            eyeIcon.classList.add("bx-hide");
+        } else {
+            passwordField.type = "password";
+            eyeIcon.classList.remove("bx-hide");
+            eyeIcon.classList.add("bx-show");
+        }
+    }
+</script>
+</body>
+
+</html>
