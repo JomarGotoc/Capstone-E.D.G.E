@@ -1078,6 +1078,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <table class="table">
+
     <?php
     // Loop through $data to display table rows
     foreach ($data as $row) {
@@ -1129,52 +1130,102 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <!-- form -->
     <div class="login-container" style="display: none;">
-        <div class="logo"></div>
-        <h2>SDO Administrator</h2>
+    <span class="close">&times;</span>
+    <div class="logo"></div>
+    <h2>SDO Administrator</h2>
 
-        <div class="errorMessage">
-            <?php echo $errormsg ?>
-        </div>
-
-        <form class="login-form" action=" " method="post">
-        <div class="row">
-                <div class="columns">
-                <div class="form-group">
-                        <label for="name">First Name</label>
-                        <input type="text" id="firstname" name="firstname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="idnum">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Employee Number</label>
-                        <input type="number"  name="employment_number" required>     
-                    </div>
-                </div>
-
-                <div class="columns">
-                    <div class="form-group">
-                        <label for="date-added">Middle Name</label>
-                        <input type="text" id="middle-name" name="middlename" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Extension Name</label>
-                        <input type="text"  name="extension">     
-                    </div>
-                    <div class="form-group">
-                        <label for="date-added">Date Added</label>
-                        <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" name="submit1">Create Account</button>
-            </div>
-        </form>
+    <div class="errorMessage">
+        <?php echo $errormsg ?>
     </div>
 
+    <form class="login-form" action="" method="post">
+        <div class="row">
+            <div class="columns">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="idnum">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Employee Number</label>
+                    <input type="number" name="employment_number" required>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="form-group">
+                    <label for="date-added">Middle Name</label>
+                    <input type="text" id="middle-name" name="middlename" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Extension Name</label>
+                    <input type="text" name="extension">
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit1">Create Account</button>
+        </div>
+    </form>
+</div>
+
+<div class="login-container executive" style="display: none;">
+    <span class="close">&times;</span>
+    <div class="logo"></div>
+    <h2>Executive Committee</h2>
+
+    <div class="errorMessage">
+        <?php echo $errormsg ?>
+    </div>
+
+    <form class="login-form" action="" method="post">
+        <div class="row">
+            <div class="columns">
+                <div class="form-group">
+                    <label for="name">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required>
+                </div>
+                <div class="form-group">
+                    <label for="idnum">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Employee Number</label>
+                    <input type="number" name="employment_number" required>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="form-group">
+                    <label for="date-added">Middle Name</label>
+                    <input type="text" id="middle-name" name="middlename" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Extension Name</label>
+                    <input type="text" name="extension">
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit1">Create Account</button>
+        </div>
+    </form>
+</div>
+
+
     <div class="login-container schooladmin" style="display: none;">
+    <span class="close">&times;</span>
         <div class="logo"></div>
         <h2>School Administrator</h2>
 
@@ -1260,6 +1311,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="edit-container">
+    <span class="close">&times;</span>
         <div class="logo"></div>
         <h2>SDO Administrator</h2>
 

@@ -38,50 +38,89 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 //add form log in container 
+//sdo admin
 function showLoginContainer(accountType) {
     var loginContainer = document.querySelector('.login-container');
-    var overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
     loginContainer.style.display = 'block';
-    overlay.style.display = 'block'; 
-    overlay.addEventListener('click', hideLoginContainer);
 
     var loginContainerTitle = loginContainer.querySelector('h2');
     loginContainerTitle.textContent = accountType;
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainer();
+    });
 }
 
 function hideLoginContainer() {
     var loginContainer = document.querySelector('.login-container');
     var overlay = document.querySelector('.overlay');
-    document.body.removeChild(overlay);
     loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
 }
 
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainer);
+
+//schooladmin
 function showSchoolAdminLoginContainer() {
-    var loginContainer = document.querySelector('.login-container.schooladmin'); 
-    var overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
+    var loginContainer = document.querySelector('.login-container.schooladmin');
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
     loginContainer.style.display = 'block';
-    overlay.style.display = 'block'; 
-    overlay.addEventListener('click', hideLoginContainerSchoolAdmin);
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainerSchoolAdmin();
+    });
 }
 
 function hideLoginContainerSchoolAdmin() {
     var loginContainer = document.querySelector('.login-container.schooladmin');
     var overlay = document.querySelector('.overlay');
-    document.body.removeChild(overlay);
     loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
+}
+
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainerSchoolAdmin);
+
+//executive
+function showExecutiveLoginContainer() {
+    var loginContainer = document.querySelector('.login-container.executive');
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
+    loginContainer.style.display = 'block';
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainerExecutive();
+    });
+
+}
+
+function hideLoginContainerExecutive() {
+    var loginContainer = document.querySelector('.login-container.executive');
+    var overlay = document.querySelector('.overlay');
+    loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
 }
 
 function createAccount(accountType) {
-    if (accountType === 'SDO Administrator' || accountType === 'Executive Committee') {
+    if (accountType === 'SDO Administrator') {
         showLoginContainer(accountType);
     } else if (accountType === 'School Administrator') {
         showSchoolAdminLoginContainer();
-    }
+    } else if (accountType === 'Executive Committee') {
+        showExecutiveLoginContainer();
 }
+}
+
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainerExecutive);
+
 
 
 //select school options
@@ -144,6 +183,11 @@ function toggleEditContainer(editButton) {
     var position = row.querySelector('.rows:nth-child(5)').textContent;
     var editContainerTitle = document.querySelector('.edit-container h2');
     editContainerTitle.textContent = position;
+
+    var closeButton = editContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideEditContainer();
+    });
 }
 
 function hideEditContainer() {
@@ -210,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var startYearParts = startYear.split(" - ");
             selectedStartYear = startYearParts[0];
 
-            var endYearParts = endYear.split("-");
+            var endYearParts = endYear.split(" - ");
             selectedEndYear = endYearParts[0];
 
             var schoolYear = selectedStartYear + ' - ' + selectedEndYear;
