@@ -7,7 +7,10 @@
         $lastname = $_POST['lastname'];
         $extension = $_POST['extension'];
         $employment_number = $_POST['employment_number'];
+        $grade = $_POST['grade'];
+        $section = $_POST['section'];
         $date = date('Y-m-d'); // Current date
+        $school = "Bacayao Sur Elementary School";
 
         // Concatenate full name
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
@@ -22,7 +25,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified')";
+        $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -36,7 +39,7 @@
         $lastname = $_POST['lastname'];
         $extension = $_POST['extension'];
         $employment_number = $_POST['employment_number'];
-        $school = $_POST['schoolName'];
+        $school = "Bacayao Sur Elementary School";
         $date = date('Y-m-d');
         
 
@@ -53,7 +56,38 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../database.php');
+    if(isset($_POST['submit3'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $school = "Bacayao Sur Elementary School";
+        $date = date('Y-m-d');
+        
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -62,22 +96,7 @@
     include('../database.php');
     if(isset($_GET['employment_number'])) {
         $employment_number = $_GET['employment_number'];
-        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $employment_number);
-        $stmt->execute();
-        $stmt->bind_result($sdoname);
-        if($stmt->fetch()) {
-        }
-        $stmt->close();
-    } 
-    $conn->close();
-?>
-<?php
-    include('../database.php');
-    if(isset($_GET['employment_number'])) {
-        $employment_number = $_GET['employment_number'];
-        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
+        $sql = "SELECT fullname FROM school_admin WHERE employment_number = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $employment_number);
         $stmt->execute();
@@ -95,7 +114,7 @@
     $data = array();
 
     // Array of tables
-    $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+    $tables = ['adviser', 'principal', 'counselor'];
 
     // Loop through each table
     foreach ($tables as $table) {
@@ -107,8 +126,6 @@
         while ($row = $result->fetch_assoc()) {
             // Replace underscore with space in table name and capitalize each word
             $position = ucwords(str_replace('_', ' ', $table)); 
-            // Convert "sdo" to "SDO" if found
-            $position = str_replace('Sdo', 'SDO', $position); 
             $row['position'] = $position; // Adding position based on modified table name
             $data[] = $row;
         }
@@ -117,16 +134,16 @@
     }
 ?>
 <?php
-// Assuming you have already established a MySQLi connection
+    // Assuming you have already established a MySQLi connection
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the "activate" button was clicked
     if (isset($_POST["activate"])) {
         // Get the employment number from the form submission
         $employment_number = $_POST["employment_number"];
 
         // Prepare and execute SELECT queries to check if employment_number exists in each table
-        $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+        $tables = ['adviser', 'principal', 'counselor'];
         $found = false;
 
         foreach ($tables as $table) {
@@ -150,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $employment_number = $_POST["employment_number"];
 
         // Prepare and execute UPDATE queries to deactivate the user only in the table where employment_number is found
-        $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
+        $tables = ['adviser', 'principal', 'counselor'];
 
         foreach ($tables as $table) {
             $sql_check = "SELECT * FROM $table WHERE employment_number = ?";
@@ -169,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-}
+    }
 ?>
 
 
@@ -1006,65 +1023,65 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 cursor: pointer;
             }
             /* Style for dropdown container */
-.dropdown-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-left: 620px;
-}
+    .dropdown-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 620px;
+    }
 
-/* Style for dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+    /* Style for dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
 
-/* Style for dropdown button */
-.dropbtn {
-    background-color: #130550;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    width: 200px;
-    margin-left: 5.5rem;
-}
+    /* Style for dropdown button */
+    .dropbtn {
+        background-color: #130550;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        width: 200px;
+        margin-left: 5.5rem;
+    }
 
-/* Style for dropdown content */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    min-width: max-content;
-    width: 200px;
-}
+    /* Style for dropdown content */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        min-width: max-content;
+        width: 200px;
+    }
 
-/* Style for dropdown links */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    width: auto;
-}
+    /* Style for dropdown links */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        width: auto;
+    }
 
-/* Style for dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+    /* Style for dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
 
-/* Show dropdown content when hovering over dropdown button */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+    /* Show dropdown content when hovering over dropdown button */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
 
 
-                    
-    </style>
+                        
+        </style>
 </head>
 <body>
 
@@ -1235,7 +1252,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="submit1">Create Account</button>
+            <button type="submit" name="submit2">Create Account</button>
         </div>
     </form>
 </div>
@@ -1279,7 +1296,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="submit1">Create Account</button>
+            <button type="submit" name="submit3">Create Account</button>
         </div>
     </form>
 </div>
@@ -1295,11 +1312,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="columns">
                     <div class="form-group">
                         <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
+                        <input type="text" id="firstname" name="firstname" required>
                     </div>
                     <div class="form-group">
                         <label for="idnum">Middle Name</label>
-                        <input type="text" id="idnum" name="middlename" required>
+                        <input type="text" id="middlename" name="middlename" required>
                     </div>
                     <div class="form-group">
                         <label for="pass">Last Name</label>
@@ -1335,7 +1352,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
             </div>
             </div>
-            <button type="submit" name="submit" id="add-btn">Create Account</button>
+            <button type="submit" name="submit1" id="add-btn">Create Account</button>
         </form>
     </div>
 
