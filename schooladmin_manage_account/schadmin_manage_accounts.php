@@ -1026,7 +1026,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     font-size: 16px;
     border: none;
     cursor: pointer;
-    width: auto;
+    width: 200px;
+    margin-left: 5.5rem;
 }
 
 /* Style for dropdown content */
@@ -1038,6 +1039,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     min-width: max-content;
+    width: 200px;
 }
 
 /* Style for dropdown links */
@@ -1046,6 +1048,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    width: auto;
 }
 
 /* Style for dropdown links on hover */
@@ -1100,9 +1103,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <div class="column dropdown-container">
                 <div class="dropdown">
-                    <button class="dropbtn">Manage Accounts</button>
-                    <div class="dropdown-content"> <!-- Corrected class name -->
-                        <a href="#">Manage Student's List</a>
+                    <button class="dropbtn">Manage Student's List</button>
+                    <div class="dropdown-content">
+                        <a href="../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">View Student's List</a>
+                        <a href="../Bacayao_Sur_Elementary_School/manage_student/template.php">Upload Student's List</a>
                     </div>
                 </div>
             </div>
