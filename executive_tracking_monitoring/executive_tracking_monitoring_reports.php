@@ -2143,6 +2143,1420 @@
     } 
     $conn->close();
 ?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    // Bacayao Sur Elementary School
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bacayaopar = $total_count;
+        $bacayaoupdate = $total_count1;
+
+        // Calculate the bacayaopercentage
+        $bacayaopercentage = ($bacayaoupdate / $bacayaopar) * 100;
+        $bacayaopercentage = round($bacayaopercentage);
+    } else {
+        $bacayaopercentage = 0;
+    }
+
+    // Bliss Elementary School
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $blisspar = $total_count;
+        $blissupdate = $total_count1;
+
+        // Calculate the blisspercentage
+        $blisspercentage = ($blissupdate / $blisspar) * 100;
+        $blisspercentage = round($blisspercentage);
+    } else {
+        $blisspercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bolosanpar = $total_count;
+        $bolosanupdate = $total_count1;
+
+        // Calculate the bolosanpercentage
+        $bolosanpercentage = ($bolosanupdate / $bolosanpar) * 100;
+        $bolosanpercentage = round($bolosanpercentage);
+    } else {
+        $bolosanpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $bonuanpar = $total_count;
+        $bonuanupdate = $total_count1;
+
+        // Calculate the bonuanpercentage
+        $bonuanpercentage = ($bonuanupdate / $bonuanpar) * 100;
+        $bonuanpercentage = round($bonuanpercentage);
+    } else {
+        $bonuanpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $calmaypar = $total_count;
+        $calmayupdate = $total_count1;
+
+        // Calculate the calmaypercentage
+        $calmaypercentage = ($calmayupdate / $calmaypar) * 100;
+        $calmaypercentage = round($calmaypercentage);
+    } else {
+        $calmaypercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $caraelpar = $total_count;
+        $caraelupdate = $total_count1;
+
+        // Calculate the caraelpercentage
+        $caraelpercentage = ($caraelupdate / $caraelpar) * 100;
+        $caraelpercentage = round($caraelpercentage);
+    } else {
+        $caraelpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $caranglaanpar = $total_count;
+        $caranglaanupdate = $total_count1;
+
+        // Calculate the caranglaanpercentage
+        $caranglaanpercentage = ($caranglaanupdate / $caranglaanpar) * 100;
+        $caranglaanpercentage = round($caranglaanpercentage);
+    } else {
+        $caranglaanpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $eastpar = $total_count;
+        $eastupdate = $total_count1;
+
+        // Calculate the eastpercentage
+        $eastpercentage = ($eastupdate / $eastpar) * 100;
+        $eastpercentage = round($eastpercentage);
+    } else {
+        $eastpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $federicopar = $total_count;
+        $federicoupdate = $total_count1;
+
+        // Calculate the federicopercentage
+        $federicopercentage = ($federicoupdate / $federicopar) * 100;
+        $federicopercentage = round($federicopercentage);
+    } else {
+        $federicopercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $genpar = $total_count;
+        $genupdate = $total_count1;
+
+        // Calculate the genpercentage
+        $genpercentage = ($genupdate / $genpar) * 100;
+        $genpercentage = round($genpercentage);
+    } else {
+        $genpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $juanlpar = $total_count;
+        $juanlupdate = $total_count1;
+
+        // Calculate the juanlpercentage
+        $juanlpercentage = ($juanlupdate / $juanlpar) * 100;
+        $juanlpercentage = round($juanlpercentage);
+    } else {
+        $juanlpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $juanppar = $total_count;
+        $juanpupdate = $total_count1;
+
+        // Calculate the juanppercentage
+        $juanppercentage = ($juanpupdate / $juanppar) * 100;
+        $juanppercentage = round($juanppercentage);
+    } else {
+        $juanppercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lasippar = $total_count;
+        $lasipupdate = $total_count1;
+
+        // Calculate the lasippercentage
+        $lasippercentage = ($lasipupdate / $lasippar) * 100;
+        $lasippercentage = round($lasippercentage);
+    } else {
+        $lasippercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $leonpar = $total_count;
+        $leonupdate = $total_count1;
+
+        // Calculate the leonpercentage
+        $leonpercentage = ($leonupdate / $leonpar) * 100;
+        $leonpercentage = round($leonpercentage);
+    } else {
+        $leonpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lomboypar = $total_count;
+        $lomboyupdate = $total_count1;
+
+        // Calculate the lomboypercentage
+        $lomboypercentage = ($lomboyupdate / $lomboypar) * 100;
+        $lomboypercentage = round($lomboypercentage);
+    } else {
+        $lomboypercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $lucaopar = $total_count;
+        $lucaoupdate = $total_count1;
+
+        // Calculate the lucaopercentage
+        $lucaopercentage = ($lucaoupdate / $lucaopar) * 100;
+        $lucaopercentage = round($lucaopercentage);
+    } else {
+        $lucaopercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $maluedpar = $total_count;
+        $maluedupdate = $total_count1;
+
+        // Calculate the maluedpercentage
+        $maluedpercentage = ($maluedupdate / $maluedpar) * 100;
+        $maluedpercentage = round($maluedpercentage);
+    } else {
+        $maluedpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $mamalinglingpar = $total_count;
+        $mamalinglingupdate = $total_count1;
+
+        // Calculate the mamalinglingpercentage
+        $mamalinglingpercentage = ($mamalinglingupdate / $mamalinglingpar) * 100;
+        $mamalinglingpercentage = round($mamalinglingpercentage);
+    } else {
+        $mamalinglingpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $manginpar = $total_count;
+        $manginupdate = $total_count1;
+
+        // Calculate the manginpercentage
+        $manginpercentage = ($manginupdate / $manginpar) * 100;
+        $manginpercentage = round($manginpercentage);
+    } else {
+        $manginpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $northpar = $total_count;
+        $northupdate = $total_count1;
+
+        // Calculate the northpercentage
+        $northpercentage = ($northupdate / $northpar) * 100;
+        $northpercentage = round($northpercentage);
+    } else {
+        $northpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pantalpar = $total_count;
+        $pantalupdate = $total_count1;
+
+        // Calculate the pantalpercentage
+        $pantalpercentage = ($pantalupdate / $pantalpar) * 100;
+        $pantalpercentage = round($pantalpercentage);
+    } else {
+        $pantalpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pascualapar = $total_count;
+        $pascualaupdate = $total_count1;
+
+        // Calculate the pascualapercentage
+        $pascualapercentage = ($pascualaupdate / $pascualapar) * 100;
+        $pascualapercentage = round($pascualapercentage);
+    } else {
+        $pascualapercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pogopar = $total_count;
+        $pogoupdate = $total_count1;
+
+        // Calculate the pogopercentage
+        $pogopercentage = ($pogoupdate / $pogopar) * 100;
+        $pogopercentage = round($pogopercentage);
+    } else {
+        $pogopercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $pugaropar = $total_count;
+        $pugaroupdate = $total_count1;
+
+        // Calculate the pugaropercentage
+        $pugaropercentage = ($pugaroupdate / $pugaropar) * 100;
+        $pugaropercentage = round($pugaropercentage);
+    } else {
+        $pugaropercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $sabanganpar = $total_count;
+        $sabanganupdate = $total_count1;
+    
+        // Calculate the sabanganpercentage
+        $sabanganpercentage = ($sabanganupdate / $sabanganpar) * 100;
+        $sabanganpercentage = round($sabanganpercentage);
+    } else {
+        $sabanganpercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $salipangaopar = $total_count;
+        $salipangaoupdate = $total_count1;
+
+        // Calculate the salipangaopercentage
+        $salipangaopercentage = ($salipangaoupdate / $salipangaopar) * 100;
+        $salipangaopercentage = round($salipangaopercentage);
+    } else {
+        $salipangaopercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $salisaypar = $total_count;
+        $salisayupdate = $total_count1;
+
+        // Calculate the salisaypercentage
+        $salisaypercentage = ($salisayupdate / $salisaypar) * 100;
+        $salisaypercentage = round($salisaypercentage);
+    } else {
+        $salisaypercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $suitpar = $total_count;
+        $suitupdate = $total_count1;
+
+        // Calculate the suitpercentage
+        $suitpercentage = ($suitupdate / $suitpar) * 100;
+        $suitpercentage = round($suitpercentage);
+    } else {
+        $suitpercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $aysonpar = $total_count;
+        $aysonupdate = $total_count1;
+
+        // Calculate the aysonpercentage
+        $aysonpercentage = ($aysonupdate / $aysonpar) * 100;
+        $aysonpercentage = round($aysonpercentage);
+    } else {
+        $aysonpercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $tambacpar = $total_count;
+        $tambacupdate = $total_count1;
+
+        // Calculate the tambacpercentage
+        $tambacpercentage = ($tambacupdate / $tambacpar) * 100;
+        $tambacpercentage = round($tambacpercentage);
+    } else {
+        $tambacpercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $tebengpar = $total_count;
+        $tebengupdate = $total_count1;
+
+        // Calculate the tebengpercentage
+        $tebengpercentage = ($tebengupdate / $tebengpar) * 100;
+        $tebengpercentage = round($tebengpercentage);
+    } else {
+        $tebengpercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $victoriapar = $total_count;
+        $victoriaupdate = $total_count1;
+
+        // Calculate the victoriapercentage
+        $victoriapercentage = ($victoriaupdate / $victoriapar) * 100;
+        $victoriapercentage = round($victoriapercentage);
+    } else {
+        $victoriapercentage = 0;
+    }
+
+    $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $westpar = $total_count;
+        $westupdate = $total_count1;
+
+        // Calculate the westpercentage
+        $westpercentage = ($westupdate / $westpar) * 100;
+        $westpercentage = round($westpercentage);
+    } else {
+        $westpercentage = 0;
+    }
+
+        $lrn_counted = array();
+    $lrn_counted1 = array();
+    $total_count = 0;
+    $total_count1 = 0;
+
+    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted)) {
+                    $total_count++;
+                    $lrn_counted[] = $row['lrn'];
+                }
+            }
+        }
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School' AND gname <> ''";
+        $result1 = $conn->query($sql1);
+
+        if ($result1->num_rows > 0) {
+            while ($row = $result1->fetch_assoc()) {
+                if (!in_array($row['lrn'], $lrn_counted1)) {
+                    $total_count1++;
+                    $lrn_counted1[] = $row['lrn'];
+                }
+            }
+        }
+    }
+    if ($total_count > 0) {
+        $westpar = $total_count;
+        $west1update = $total_count1;
+
+        // Calculate the west1percentage
+        $west1percentage = ($west1update / $westpar) * 100;
+        $west1percentage = round($west1percentage);
+    } else {
+        $west1percentage = 0;
+    }
+    // Close connection
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2930,7 +4344,7 @@
             <th style="width:12%"><?php echo $bacayaoFilipino ?></th>
             <th style="width:12%"><?php echo $bacayaoNumeracy ?></th>
             <th style="width:12%"><?php echo $bacayaoBehavioral ?></th>
-            <th style="width:12%"></th>
+            <th style="width:12%"><?php echo $bacayaopercentage ?></th>
         </tr>
         <tr>
             <th style="width:29%">Bliss Elementary School</th>
@@ -2940,7 +4354,7 @@
             <th style="width:12%"><?php echo $blissFilipino ?></th>
             <th style="width:12%"><?php echo $blissNumeracy ?></th>
             <th style="width:12%"><?php echo $blissBehavioral ?></th>
-            <th style="width:12%"></th>
+            <th style="width:12%"><?php echo $blisspercentage ?></th>
         </tr>
         <tr>
             <th style="width:29%">Bolosan Elementary School</th>
@@ -2950,7 +4364,7 @@
             <th style="width:12%"><?php echo $bolosanFilipino ?></th>
             <th style="width:12%"><?php echo $bolosanNumeracy ?></th>
             <th style="width:12%"><?php echo $bolosanBehavioral ?></th>
-            <th style="width:12%"></th>
+            <th style="width:12%"><?php echo $bolosanpercentage ?></th>
         </tr>
             <tr>
                 <th style="width:29%">Bonuan Boquig Elementary School</th>
@@ -2960,7 +4374,7 @@
                 <th style="width:12%"><?php echo $bonuanBoquigFilipino ?></th>
                 <th style="width:12%"><?php echo $bonuanBoquigNumeracy ?></th>
                 <th style="width:12%"><?php echo $bonuanBoquigBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $bonuanpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Calmay Elementary School</th>
@@ -2970,7 +4384,7 @@
                 <th style="width:12%"><?php echo $calmayFilipino ?></th>
                 <th style="width:12%"><?php echo $calmayNumeracy ?></th>
                 <th style="width:12%"><?php echo $calmayBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $calmaypercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Carael Elementary School</th>
@@ -2980,7 +4394,7 @@
                 <th style="width:12%"><?php echo $caraelFilipino ?></th>
                 <th style="width:12%"><?php echo $caraelNumeracy ?></th>
                 <th style="width:12%"><?php echo $caraelBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $caraelpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Caranglaan Elementary School</th>
@@ -2990,7 +4404,7 @@
                 <th style="width:12%"><?php echo $caranglaanFilipino ?></th>
                 <th style="width:12%"><?php echo $caranglaanNumeracy ?></th>
                 <th style="width:12%"><?php echo $caranglaanBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $caranglaanpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">East Central Integrated School</th>
@@ -3000,7 +4414,7 @@
                 <th style="width:12%"><?php echo $eastCentralFilipino ?></th>
                 <th style="width:12%"><?php echo $eastCentralNumeracy ?></th>
                 <th style="width:12%"><?php echo $eastCentralBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $eastpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Federico N. Ceralde School Integrated School</th>
@@ -3010,7 +4424,7 @@
                 <th style="width:12%"><?php echo $federicoCeraldeFilipino ?></th>
                 <th style="width:12%"><?php echo $federicoCeraldeNumeracy ?></th>
                 <th style="width:12%"><?php echo $federicoCeraldeBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $federicopercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Gen. Gregorio Del Pilar Elementary School</th>
@@ -3020,7 +4434,7 @@
                 <th style="width:12%"><?php echo $gregorioPilarFilipino ?></th>
                 <th style="width:12%"><?php echo $gregorioPilarNumeracy ?></th>
                 <th style="width:12%"><?php echo $gregorioPilarBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $genpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Juan L. Siapno Elementary School</th>
@@ -3030,7 +4444,7 @@
                 <th style="width:12%"><?php echo $juanSiapnoFilipino ?></th>
                 <th style="width:12%"><?php echo $juanSiapnoNumeracy ?></th>
                 <th style="width:12%"><?php echo $juanSiapnoBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $juanlpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Juan P. Guadiz Elementary School</th>
@@ -3040,7 +4454,7 @@
                 <th style="width:12%"><?php echo $juanGuadizFilipino ?></th>
                 <th style="width:12%"><?php echo $juanGuadizNumeracy ?></th>
                 <th style="width:12%"><?php echo $juanGuadizBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $juanppercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Lasip Grande Elementary School</th>
@@ -3050,7 +4464,7 @@
                 <th style="width:12%"><?php echo $lasipGrandeFilipino ?></th>
                 <th style="width:12%"><?php echo $lasipGrandeNumeracy ?></th>
                 <th style="width:12%"><?php echo $lasipGrandeBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $lasippercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Leon-Francisco Elementary School</th>
@@ -3060,7 +4474,7 @@
                 <th style="width:12%"><?php echo $leonFranciscoFilipino ?></th>
                 <th style="width:12%"><?php echo $leonFranciscoNumeracy ?></th>
                 <th style="width:12%"><?php echo $leonFranciscoBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $leonpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Lomboy Elementary School</th>
@@ -3070,7 +4484,7 @@
                 <th style="width:12%"><?php echo $lomboyFilipino ?></th>
                 <th style="width:12%"><?php echo $lomboyNumeracy ?></th>
                 <th style="width:12%"><?php echo $lomboyBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $lomboypercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Lucao Elementary School</th>
@@ -3080,7 +4494,7 @@
                 <th style="width:12%"><?php echo $lucaoFilipino ?></th>
                 <th style="width:12%"><?php echo $lucaoNumeracy ?></th>
                 <th style="width:12%"><?php echo $lucaoBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $lucaopercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Malued Sur Elementary School</th>
@@ -3090,7 +4504,7 @@
                 <th style="width:12%"><?php echo $maluedSurFilipino ?></th>
                 <th style="width:12%"><?php echo $maluedSurNumeracy ?></th>
                 <th style="width:12%"><?php echo $maluedSurBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $maluedpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Mamalingling Elementary School</th>
@@ -3100,7 +4514,7 @@
                 <th style="width:12%"><?php echo $mamalinglingFilipino ?></th>
                 <th style="width:12%"><?php echo $mamalinglingNumeracy ?></th>
                 <th style="width:12%"><?php echo $mamalinglingBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $mamalinglingpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Mangin-Tebeng Elementary School</th>
@@ -3110,7 +4524,7 @@
                 <th style="width:12%"><?php echo $manginTebengFilipino ?></th>
                 <th style="width:12%"><?php echo $manginTebengNumeracy ?></th>
                 <th style="width:12%"><?php echo $manginTebengBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $manginpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">North Central Elementary School</th>
@@ -3120,7 +4534,7 @@
                 <th style="width:12%"><?php echo $northCentralFilipino ?></th>
                 <th style="width:12%"><?php echo $northCentralNumeracy ?></th>
                 <th style="width:12%"><?php echo $northCentralBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $northpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Pantal Elementary School</th>
@@ -3130,7 +4544,7 @@
                 <th style="width:12%"><?php echo $pantalFilipino ?></th>
                 <th style="width:12%"><?php echo $pantalNumeracy ?></th>
                 <th style="width:12%"><?php echo $pantalBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $pantalpercentage ?></th>
             </tr>
 
             <tr>
@@ -3141,7 +4555,7 @@
                 <th style="width:12%"><?php echo $pascualaVillamilFilipino ?></th>
                 <th style="width:12%"><?php echo $pascualaVillamilNumeracy ?></th>
                 <th style="width:12%"><?php echo $pascualaVillamilBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $pascualapercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Pogo-Lasip Elementary School</th>
@@ -3151,7 +4565,7 @@
                 <th style="width:12%"><?php echo $pogoLasipFilipino ?></th>
                 <th style="width:12%"><?php echo $pogoLasipNumeracy ?></th>
                 <th style="width:12%"><?php echo $pogoLasipBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $pogopercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Pugaro Integrated School</th>
@@ -3161,7 +4575,7 @@
                 <th style="width:12%"><?php echo $pugaroIntegratedFilipino ?></th>
                 <th style="width:12%"><?php echo $pugaroIntegratedNumeracy ?></th>
                 <th style="width:12%"><?php echo $pugaroIntegratedBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $pugaropercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Sabangan Elementary School</th>
@@ -3171,7 +4585,7 @@
                 <th style="width:12%"><?php echo $sabanganFilipino ?></th>
                 <th style="width:12%"><?php echo $sabanganNumeracy ?></th>
                 <th style="width:12%"><?php echo $sabanganBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $sabanganpercentage ?></th>
             </tr>
 
             <tr>
@@ -3182,7 +4596,7 @@
                 <th style="width:12%"><?php echo $salapingaoFilipino ?></th>
                 <th style="width:12%"><?php echo $salapingaoNumeracy ?></th>
                 <th style="width:12%"><?php echo $salapingaoBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $salipangaopercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Salisay Elementary School</th>
@@ -3192,7 +4606,7 @@
                 <th style="width:12%"><?php echo $salisayFilipino ?></th>
                 <th style="width:12%"><?php echo $salisayNumeracy ?></th>
                 <th style="width:12%"><?php echo $salisayBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $salisaypercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Suit Elementary School</th>
@@ -3202,7 +4616,7 @@
                 <th style="width:12%"><?php echo $suitFilipino ?></th>
                 <th style="width:12%"><?php echo $suitNumeracy ?></th>
                 <th style="width:12%"><?php echo $suitBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $suitpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">T. Ayson Rosario Elementary School</th>
@@ -3212,7 +4626,7 @@
                 <th style="width:12%"><?php echo $aysonRosarioFilipino ?></th>
                 <th style="width:12%"><?php echo $aysonRosarioNumeracy ?></th>
                 <th style="width:12%"><?php echo $aysonRosarioBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $aysonpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Tambac Elementary School</th>
@@ -3222,7 +4636,7 @@
                 <th style="width:12%"><?php echo $tambacFilipino ?></th>
                 <th style="width:12%"><?php echo $tambacNumeracy ?></th>
                 <th style="width:12%"><?php echo $tambacBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $tambacpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Tebeng Elementary School</th>
@@ -3232,7 +4646,7 @@
                 <th style="width:12%"><?php echo $tebengFilipino ?></th>
                 <th style="width:12%"><?php echo $tebengNumeracy ?></th>
                 <th style="width:12%"><?php echo $tebengBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $tebengpercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">Victoria Q. Zarate Elementary School</th>
@@ -3242,7 +4656,7 @@
                 <th style="width:12%"><?php echo $zarateFilipino ?></th>
                 <th style="width:12%"><?php echo $zarateNumeracy ?></th>
                 <th style="width:12%"><?php echo $zarateBehavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $victoriapercentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">West Central I Elementary School</th>
@@ -3252,7 +4666,7 @@
                 <th style="width:12%"><?php echo $westCentral1Filipino ?></th>
                 <th style="width:12%"><?php echo $westCentral1Numeracy ?></th>
                 <th style="width:12%"><?php echo $westCentral1Behavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $west1percentage ?></th>
             </tr>
             <tr>
                 <th style="width:29%">West Central II Elementary School</th>
@@ -3262,7 +4676,7 @@
                 <th style="width:12%"><?php echo $westCentral2Filipino ?></th>
                 <th style="width:12%"><?php echo $westCentral2Numeracy ?></th>
                 <th style="width:12%"><?php echo $westCentral2Behavioral ?></th>
-                <th style="width:12%"></th>
+                <th style="width:12%"><?php echo $westpercentage ?></th>
             </tr>
         </table>
 
