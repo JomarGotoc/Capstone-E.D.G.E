@@ -1664,6 +1664,485 @@
     // Close connection
     $conn->close();
 ?>
+<?php
+    include('../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+
+    // School names
+    $schools = array(
+        'Bacayao Sur Elementary School',
+        'Bliss Elementary School',
+        'Bolosan Elementary School',
+        'Bonuan Boquig Elementary School',
+        'Calmay Elementary School',
+        'Carael Elementary School',
+        'Caranglaan Elementary School',
+        'East Central Integrated School',
+        'Federico N. Ceralde School Integrated School',
+        'Gen. Gregorio Del Pilar Elementary School',
+        'Juan L. Siapno Elementary School',
+        'Juan P. Guadiz Elementary School',
+        'Lasip Grande Elementary School',
+        'Leon-Francisco Elementary School',
+        'Lomboy Elementary School',
+        'Lucao Elementary School',
+        'Malued Sur Elementary School',
+        'Mamalingling Elementary School',
+        'Mangin-Tebeng Elementary School',
+        'North Central Elementary School',
+        'Pantal Elementary School',
+        'Pascuala G. Villamil Elementary School',
+        'Pogo-Lasip Elementary School',
+        'Pugaro Integrated School',
+        'Sabangan Elementary School',
+        'Salapingao Elementary School',
+        'Salisay Elementary School',
+        'Suit Elementary School',
+        'T. Ayson Rosario Elementary School',
+        'Tambac Elementary School',
+        'Tebeng Elementary School',
+        'Victoria Q. Zarate Elementary School',
+        'West Central I Elementary School',
+        'West Central II Elementary School'
+    );
+
+    $quarters = array(1, 2, 3, 4);
+
+    // Array to store counts for each school
+    $school_counts = array();
+
+    foreach ($schools as $school) {
+        $school_counts[$school] = array();
+        foreach ($quarters as $quarter) {
+            $sql = "SELECT COUNT(DISTINCT lrn) AS lrn_count FROM `$classification` WHERE school = '$school' AND quarter = $quarter";
+            $result = mysqli_query($conn, $sql);
+
+            if ($result) {
+                $row = mysqli_fetch_assoc($result);
+                $school_counts[$school]["q$quarter"] = $row['lrn_count'];
+                mysqli_free_result($result);
+            } else {
+                echo "Error: " . mysqli_error($conn);
+            }
+        }
+    }
+
+    mysqli_close($conn);
+
+    // Assigning variables manually for each school and quarter
+    $bacayaoq1 = $school_counts['Bacayao Sur Elementary School']['q1'];
+    $bacayaoq2 = $school_counts['Bacayao Sur Elementary School']['q2'];
+    $bacayaoq3 = $school_counts['Bacayao Sur Elementary School']['q3'];
+    $bacayaoq4 = $school_counts['Bacayao Sur Elementary School']['q4'];
+
+    $blissq1 = $school_counts['Bliss Elementary School']['q1'];
+    $blissq2 = $school_counts['Bliss Elementary School']['q2'];
+    $blissq3 = $school_counts['Bliss Elementary School']['q3'];
+    $blissq4 = $school_counts['Bliss Elementary School']['q4'];
+
+    $bolosanq1 = $school_counts['Bolosan Elementary School']['q1'];
+    $bolosanq2 = $school_counts['Bolosan Elementary School']['q2'];
+    $bolosanq3 = $school_counts['Bolosan Elementary School']['q3'];
+    $bolosanq4 = $school_counts['Bolosan Elementary School']['q4'];
+
+    $bonuanq1 = $school_counts['Bonuan Boquig Elementary School']['q1'];
+    $bonuanq2 = $school_counts['Bonuan Boquig Elementary School']['q2'];
+    $bonuanq3 = $school_counts['Bonuan Boquig Elementary School']['q3'];
+    $bonuanq4 = $school_counts['Bonuan Boquig Elementary School']['q4'];
+
+    $calmayq1 = $school_counts['Calmay Elementary School']['q1'];
+    $calmayq2 = $school_counts['Calmay Elementary School']['q2'];
+    $calmayq3 = $school_counts['Calmay Elementary School']['q3'];
+    $calmayq4 = $school_counts['Calmay Elementary School']['q4'];
+
+    $caraelq1 = $school_counts['Carael Elementary School']['q1'];
+    $caraelq2 = $school_counts['Carael Elementary School']['q2'];
+    $caraelq3 = $school_counts['Carael Elementary School']['q3'];
+    $caraelq4 = $school_counts['Carael Elementary School']['q4'];
+
+    $caranglaanq1 = $school_counts['Caranglaan Elementary School']['q1'];
+    $caranglaanq2 = $school_counts['Caranglaan Elementary School']['q2'];
+    $caranglaanq3 = $school_counts['Caranglaan Elementary School']['q3'];
+    $caranglaanq4 = $school_counts['Caranglaan Elementary School']['q4'];
+
+    $eastq1 = $school_counts['East Central Integrated School']['q1'];
+    $eastq2 = $school_counts['East Central Integrated School']['q2'];
+    $eastq3 = $school_counts['East Central Integrated School']['q3'];
+    $eastq4 = $school_counts['East Central Integrated School']['q4'];
+
+    $federicoq1 = $school_counts['Federico N. Ceralde School Integrated School']['q1'];
+    $federicoq2 = $school_counts['Federico N. Ceralde School Integrated School']['q2'];
+    $federicoq3 = $school_counts['Federico N. Ceralde School Integrated School']['q3'];
+    $federicoq4 = $school_counts['Federico N. Ceralde School Integrated School']['q4'];
+
+    $gregorioq1 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q1'];
+    $gregorioq2 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q2'];
+    $gregorioq3 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q3'];
+    $gregorioq4 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q4'];
+
+    $juanlq1 = $school_counts['Juan L. Siapno Elementary School']['q1'];
+    $juanlq2 = $school_counts['Juan L. Siapno Elementary School']['q2'];
+    $juanlq3 = $school_counts['Juan L. Siapno Elementary School']['q3'];
+    $juanlq4 = $school_counts['Juan L. Siapno Elementary School']['q4'];
+
+    $juanpgq1 = $school_counts['Juan P. Guadiz Elementary School']['q1'];
+    $juanpgq2 = $school_counts['Juan P. Guadiz Elementary School']['q2'];
+    $juanpgq3 = $school_counts['Juan P. Guadiz Elementary School']['q3'];
+    $juanpgq4 = $school_counts['Juan P. Guadiz Elementary School']['q4'];
+
+    $lasipq1 = $school_counts['Lasip Grande Elementary School']['q1'];
+    $lasipq2 = $school_counts['Lasip Grande Elementary School']['q2'];
+    $lasipq3 = $school_counts['Lasip Grande Elementary School']['q3'];
+    $lasipq4 = $school_counts['Lasip Grande Elementary School']['q4'];
+
+    $leonfq1 = $school_counts['Leon-Francisco Elementary School']['q1'];
+    $leonfq2 = $school_counts['Leon-Francisco Elementary School']['q2'];
+    $leonfq3 = $school_counts['Leon-Francisco Elementary School']['q3'];
+    $leonfq4 = $school_counts['Leon-Francisco Elementary School']['q4'];
+
+    $lomboyq1 = $school_counts['Lomboy Elementary School']['q1'];
+    $lomboyq2 = $school_counts['Lomboy Elementary School']['q2'];
+    $lomboyq3 = $school_counts['Lomboy Elementary School']['q3'];
+    $lomboyq4 = $school_counts['Lomboy Elementary School']['q4'];
+
+    $lucaoq1 = $school_counts['Lucao Elementary School']['q1'];
+    $lucaoq2 = $school_counts['Lucao Elementary School']['q2'];
+    $lucaoq3 = $school_counts['Lucao Elementary School']['q3'];
+    $lucaoq4 = $school_counts['Lucao Elementary School']['q4'];
+
+    $maluedq1 = $school_counts['Malued Sur Elementary School']['q1'];
+    $maluedq2 = $school_counts['Malued Sur Elementary School']['q2'];
+    $maluedq3 = $school_counts['Malued Sur Elementary School']['q3'];
+    $maluedq4 = $school_counts['Malued Sur Elementary School']['q4'];
+
+    $mamalinglingq1 = $school_counts['Mamalingling Elementary School']['q1'];
+    $mamalinglingq2 = $school_counts['Mamalingling Elementary School']['q2'];
+    $mamalinglingq3 = $school_counts['Mamalingling Elementary School']['q3'];
+    $mamalinglingq4 = $school_counts['Mamalingling Elementary School']['q4'];
+
+    $mangintebengq1 = $school_counts['Mangin-Tebeng Elementary School']['q1'];
+    $mangintebengq2 = $school_counts['Mangin-Tebeng Elementary School']['q2'];
+    $mangintebengq3 = $school_counts['Mangin-Tebeng Elementary School']['q3'];
+    $mangintebengq4 = $school_counts['Mangin-Tebeng Elementary School']['q4'];
+
+    $northq1 = $school_counts['North Central Elementary School']['q1'];
+    $northq2 = $school_counts['North Central Elementary School']['q2'];
+    $northq3 = $school_counts['North Central Elementary School']['q3'];
+    $northq4 = $school_counts['North Central Elementary School']['q4'];
+
+    $pantalq1 = $school_counts['Pantal Elementary School']['q1'];
+    $pantalq2 = $school_counts['Pantal Elementary School']['q2'];
+    $pantalq3 = $school_counts['Pantal Elementary School']['q3'];
+    $pantalq4 = $school_counts['Pantal Elementary School']['q4'];
+
+    $pascualaq1 = $school_counts['Pascuala G. Villamil Elementary School']['q1'];
+    $pascualaq2 = $school_counts['Pascuala G. Villamil Elementary School']['q2'];
+    $pascualaq3 = $school_counts['Pascuala G. Villamil Elementary School']['q3'];
+    $pascualaq4 = $school_counts['Pascuala G. Villamil Elementary School']['q4'];
+
+    $pogolasipq1 = $school_counts['Pogo-Lasip Elementary School']['q1'];
+    $pogolasipq2 = $school_counts['Pogo-Lasip Elementary School']['q2'];
+    $pogolasipq3 = $school_counts['Pogo-Lasip Elementary School']['q3'];
+    $pogolasipq4 = $school_counts['Pogo-Lasip Elementary School']['q4'];
+
+    $pugaroq1 = $school_counts['Pugaro Integrated School']['q1'];
+    $pugaroq2 = $school_counts['Pugaro Integrated School']['q2'];
+    $pugaroq3 = $school_counts['Pugaro Integrated School']['q3'];
+    $pugaroq4 = $school_counts['Pugaro Integrated School']['q4'];
+
+    $sabanganq1 = $school_counts['Sabangan Elementary School']['q1'];
+    $sabanganq2 = $school_counts['Sabangan Elementary School']['q2'];
+    $sabanganq3 = $school_counts['Sabangan Elementary School']['q3'];
+    $sabanganq4 = $school_counts['Sabangan Elementary School']['q4'];
+
+    $salapingaoq1 = $school_counts['Salapingao Elementary School']['q1'];
+    $salapingaoq2 = $school_counts['Salapingao Elementary School']['q2'];
+    $salapingaoq3 = $school_counts['Salapingao Elementary School']['q3'];
+    $salapingaoq4 = $school_counts['Salapingao Elementary School']['q4'];
+
+    $salisayq1 = $school_counts['Salisay Elementary School']['q1'];
+    $salisayq2 = $school_counts['Salisay Elementary School']['q2'];
+    $salisayq3 = $school_counts['Salisay Elementary School']['q3'];
+    $salisayq4 = $school_counts['Salisay Elementary School']['q4'];
+
+    $suitq1 = $school_counts['Suit Elementary School']['q1'];
+    $suitq2 = $school_counts['Suit Elementary School']['q2'];
+    $suitq3 = $school_counts['Suit Elementary School']['q3'];
+    $suitq4 = $school_counts['Suit Elementary School']['q4'];
+
+    $taysonq1 = $school_counts['T. Ayson Rosario Elementary School']['q1'];
+    $taysonq2 = $school_counts['T. Ayson Rosario Elementary School']['q2'];
+    $taysonq3 = $school_counts['T. Ayson Rosario Elementary School']['q3'];
+    $taysonq4 = $school_counts['T. Ayson Rosario Elementary School']['q4'];
+
+    $tambacq1 = $school_counts['Tambac Elementary School']['q1'];
+    $tambacq2 = $school_counts['Tambac Elementary School']['q2'];
+    $tambacq3 = $school_counts['Tambac Elementary School']['q3'];
+    $tambacq4 = $school_counts['Tambac Elementary School']['q4'];
+
+    $tebengq1 = $school_counts['Tebeng Elementary School']['q1'];
+    $tebengq2 = $school_counts['Tebeng Elementary School']['q2'];
+    $tebengq3 = $school_counts['Tebeng Elementary School']['q3'];
+    $tebengq4 = $school_counts['Tebeng Elementary School']['q4'];
+
+    $zarateq1 = $school_counts['Victoria Q. Zarate Elementary School']['q1'];
+    $zarateq2 = $school_counts['Victoria Q. Zarate Elementary School']['q2'];
+    $zarateq3 = $school_counts['Victoria Q. Zarate Elementary School']['q3'];
+    $zarateq4 = $school_counts['Victoria Q. Zarate Elementary School']['q4'];
+
+    $west1q1 = $school_counts['West Central I Elementary School']['q1'];
+    $west1q2 = $school_counts['West Central I Elementary School']['q2'];
+    $west1q3 = $school_counts['West Central I Elementary School']['q3'];
+    $west1q4 = $school_counts['West Central I Elementary School']['q4'];
+
+    $west2q1 = $school_counts['West Central II Elementary School']['q1'];
+    $west2q2 = $school_counts['West Central II Elementary School']['q2'];
+    $west2q3 = $school_counts['West Central II Elementary School']['q3'];
+    $west2q4 = $school_counts['West Central II Elementary School']['q4'];
+
+?>
+<?php
+    include('../database.php');
+
+    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1";
+    $resultEnglish = $conn->query($queryEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $q1english = $rowEnglish['q1english'];
+
+    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1";
+    $resultFilipino = $conn->query($queryFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $q1filipino = $rowFilipino['q1filipino'];
+
+    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1";
+    $resultNumeracy = $conn->query($queryNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $q1numeracy = $rowNumeracy['q1numeracy'];
+
+    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1";
+    $resultBehavioral = $conn->query($queryBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $q1behavioral = $rowBehavioral['q1behavioral'];
+
+    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND status = 'resolved'";
+    $resultEnglishResolved = $conn->query($queryEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $q1englishresolved = $rowEnglishResolved['q1englishresolved'];
+
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND status = 'resolved'";
+    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $q1filipinoresolved = $rowFilipinoResolved['q1filipinoresolved'];
+
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND status = 'resolved'";
+    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $q1numeracyresolved = $rowNumeracyResolved['q1numeracyresolved'];
+
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND status = 'resolved'";
+    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $q1behavioralresolved = $rowBehavioralResolved['q1behavioralresolved'];
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+
+    $queryEnglish = "SELECT COUNT(*) AS q2english FROM academic_english WHERE quarter = 2";
+    $resultEnglish = $conn->query($queryEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $q2english = $rowEnglish['q2english'];
+
+    $queryFilipino = "SELECT COUNT(*) AS q2filipino FROM academic_filipino WHERE quarter = 2";
+    $resultFilipino = $conn->query($queryFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $q2filipino = $rowFilipino['q2filipino'];
+
+    $queryNumeracy = "SELECT COUNT(*) AS q2numeracy FROM academic_numeracy WHERE quarter = 2";
+    $resultNumeracy = $conn->query($queryNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $q2numeracy = $rowNumeracy['q2numeracy'];
+
+    $queryBehavioral = "SELECT COUNT(*) AS q2behavioral FROM behavioral WHERE quarter = 2";
+    $resultBehavioral = $conn->query($queryBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $q2behavioral = $rowBehavioral['q2behavioral'];
+
+    $queryEnglishResolved = "SELECT COUNT(*) AS q2englishresolved FROM academic_english WHERE quarter = 2 AND status = 'resolved'";
+    $resultEnglishResolved = $conn->query($queryEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $q2englishresolved = $rowEnglishResolved['q2englishresolved'];
+
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q2filipinoresolved FROM academic_filipino WHERE quarter = 2 AND status = 'resolved'";
+    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $q2filipinoresolved = $rowFilipinoResolved['q2filipinoresolved'];
+
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q2numeracyresolved FROM academic_numeracy WHERE quarter = 2 AND status = 'resolved'";
+    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $q2numeracyresolved = $rowNumeracyResolved['q2numeracyresolved'];
+
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q2behavioralresolved FROM behavioral WHERE quarter = 2 AND status = 'resolved'";
+    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $q2behavioralresolved = $rowBehavioralResolved['q2behavioralresolved'];
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+
+    $queryEnglish = "SELECT COUNT(*) AS q3english FROM academic_english WHERE quarter = 3";
+    $resultEnglish = $conn->query($queryEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $q3english = $rowEnglish['q3english'];
+
+    $queryFilipino = "SELECT COUNT(*) AS q3filipino FROM academic_filipino WHERE quarter = 3";
+    $resultFilipino = $conn->query($queryFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $q3filipino = $rowFilipino['q3filipino'];
+
+    $queryNumeracy = "SELECT COUNT(*) AS q3numeracy FROM academic_numeracy WHERE quarter = 3";
+    $resultNumeracy = $conn->query($queryNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $q3numeracy = $rowNumeracy['q3numeracy'];
+
+    $queryBehavioral = "SELECT COUNT(*) AS q3behavioral FROM behavioral WHERE quarter = 3";
+    $resultBehavioral = $conn->query($queryBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $q3behavioral = $rowBehavioral['q3behavioral'];
+
+    $queryEnglishResolved = "SELECT COUNT(*) AS q3englishresolved FROM academic_english WHERE quarter = 3 AND status = 'resolved'";
+    $resultEnglishResolved = $conn->query($queryEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $q3englishresolved = $rowEnglishResolved['q3englishresolved'];
+
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q3filipinoresolved FROM academic_filipino WHERE quarter = 3 AND status = 'resolved'";
+    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $q3filipinoresolved = $rowFilipinoResolved['q3filipinoresolved'];
+
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q3numeracyresolved FROM academic_numeracy WHERE quarter = 3 AND status = 'resolved'";
+    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $q3numeracyresolved = $rowNumeracyResolved['q3numeracyresolved'];
+
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q3behavioralresolved FROM behavioral WHERE quarter = 3 AND status = 'resolved'";
+    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $q3behavioralresolved = $rowBehavioralResolved['q3behavioralresolved'];
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+
+    $queryEnglish = "SELECT COUNT(*) AS q4english FROM academic_english WHERE quarter = 4";
+    $resultEnglish = $conn->query($queryEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $q4english = $rowEnglish['q4english'];
+
+    $queryFilipino = "SELECT COUNT(*) AS q4filipino FROM academic_filipino WHERE quarter = 4";
+    $resultFilipino = $conn->query($queryFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $q4filipino = $rowFilipino['q4filipino'];
+
+    $queryNumeracy = "SELECT COUNT(*) AS q4numeracy FROM academic_numeracy WHERE quarter = 4";
+    $resultNumeracy = $conn->query($queryNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $q4numeracy = $rowNumeracy['q4numeracy'];
+
+    $queryBehavioral = "SELECT COUNT(*) AS q4behavioral FROM behavioral WHERE quarter = 4";
+    $resultBehavioral = $conn->query($queryBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $q4behavioral = $rowBehavioral['q4behavioral'];
+
+    $queryEnglishResolved = "SELECT COUNT(*) AS q4englishresolved FROM academic_english WHERE quarter = 4 AND status = 'resolved'";
+    $resultEnglishResolved = $conn->query($queryEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $q4englishresolved = $rowEnglishResolved['q4englishresolved'];
+
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q4filipinoresolved FROM academic_filipino WHERE quarter = 4 AND status = 'resolved'";
+    $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $q4filipinoresolved = $rowFilipinoResolved['q4filipinoresolved'];
+
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q4numeracyresolved FROM academic_numeracy WHERE quarter = 4 AND status = 'resolved'";
+    $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $q4numeracyresolved = $rowNumeracyResolved['q4numeracyresolved'];
+
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q4behavioralresolved FROM behavioral WHERE quarter = 4 AND status = 'resolved'";
+    $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $q4behavioralresolved = $rowBehavioralResolved['q4behavioralresolved'];
+
+    $conn->close();
+?>
+<?php
+
+    include('../database.php');
+
+    // Count the total rows in each table
+    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english";
+    $resultEnglish = $conn->query($sqlEnglish);
+    $rowEnglish = $resultEnglish->fetch_assoc();
+    $totalEnglish = $rowEnglish['total'];
+
+    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino";
+    $resultFilipino = $conn->query($sqlFilipino);
+    $rowFilipino = $resultFilipino->fetch_assoc();
+    $totalFilipino = $rowFilipino['total'];
+
+    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy";
+    $resultNumeracy = $conn->query($sqlNumeracy);
+    $rowNumeracy = $resultNumeracy->fetch_assoc();
+    $totalNumeracy = $rowNumeracy['total'];
+
+    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral";
+    $resultBehavioral = $conn->query($sqlBehavioral);
+    $rowBehavioral = $resultBehavioral->fetch_assoc();
+    $totalBehavioral = $rowBehavioral['total'];
+
+    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved'";
+    $resultEnglishResolved = $conn->query($sqlEnglishResolved);
+    $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
+    $totalEnglishResolved = $rowEnglishResolved['total'];
+
+    $sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'";
+    $resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
+    $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
+    $totalFilipinoResolved = $rowFilipinoResolved['total'];
+
+    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved'";
+    $resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
+    $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
+    $totalNumeracyResolved = $rowNumeracyResolved['total'];
+
+    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved'";
+    $resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
+    $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
+    $totalBehavioralResolved = $rowBehavioralResolved['total'];
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM executive_committee WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($sdoname);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2309,7 +2788,7 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $fullname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
                     <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -2834,55 +3313,55 @@
                 <tr>
                     <tr >
                         <th style="width:15%">Academic - Literacy in English</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1english ?></th>
+                        <th style="width:7%"><?php echo $q1englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q2english ?></th>
+                        <th style="width:7%"><?php echo $q2englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q3english ?></th>
+                        <th style="width:7%"><?php echo $q3englishresolved ?></th>
+                        <th style="width:4%"><?php echo $q4english ?></th>
+                        <th style="width:7%"><?php echo $q4englishresolved ?></th>
+                        <th style="width:8%"><?php echo $totalEnglish ?></th>
+                        <th style="width:8%"><?php echo $totalEnglishResolved ?></th>
                     </tr>
                     <tr >
                         <th style="width:15%">Academic - Literacy in Filipino</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1filipino ?></th>
+                        <th style="width:7%"><?php echo $q1filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q2filipino ?></th>
+                        <th style="width:7%"><?php echo $q2filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q3filipino ?></th>
+                        <th style="width:7%"><?php echo $q3filipinoresolved ?></th>
+                        <th style="width:4%"><?php echo $q4filipino ?></th>
+                        <th style="width:7%"><?php echo $q4filipinoresolved ?></th>
+                        <th style="width:8%"><?php echo $totalFilipino ?></th>
+                        <th style="width:8%"><?php echo $totalFilipinoResolved ?></th>
                     </tr>
                     <tr >
                         <th style="width:15%">Academic - Numeracy</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1numeracy ?></th>
+                        <th style="width:7%"><?php echo $q1numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q2numeracy ?></th>
+                        <th style="width:7%"><?php echo $q2numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q3numeracy ?></th>
+                        <th style="width:7%"><?php echo $q3numeracyresolved ?></th>
+                        <th style="width:4%"><?php echo $q4numeracy ?></th>
+                        <th style="width:7%"><?php echo $q4numeracyresolved ?></th>
+                        <th style="width:8%"><?php echo $totalNumeracy ?></th>
+                        <th style="width:8%"><?php echo $totalNumeracyResolved ?></th>
                     </tr>
                     <tr>
                         <th style="width:15%">Behavioral</th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:4%"></th>
-                        <th style="width:7%"></th>
-                        <th style="width:8%"></th>
-                        <th style="width:8%"></th>
+                        <th style="width:4%"><?php echo $q1behavioral ?></th>
+                        <th style="width:7%"><?php echo $q1behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q2behavioral ?></th>
+                        <th style="width:7%"><?php echo $q2behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q3behavioral ?></th>
+                        <th style="width:7%"><?php echo $q3behavioralresolved ?></th>
+                        <th style="width:4%"><?php echo $q4behavioral ?></th>
+                        <th style="width:7%"><?php echo $q4behavioralresolved ?></th>
+                        <th style="width:8%"><?php echo $totalBehavioral ?></th>
+                        <th style="width:8%"><?php echo $totalBehavioralResolved ?></th>
                     </tr>
                 </tr>
             </tbody>
@@ -2897,13 +3376,14 @@
                 </div>
             </div>
             <div class="select-wrapper">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Academic - Literacy in English</option>
-                        <option value="q1">Academic - Literacy in English</option>
-                        <option value="q2">Academic - Literacy in Filipino</option>
-                        <option value="q3">Academic - Numeracy</option>
-                        <option value="q4">Behavioral</option>
-                    </select>
+            <form id="classification" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <select id="classificationselect" name="classification" class="containers second">
+                    <option value="academic_english"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_english') echo ' selected'; ?>>Academic - Literacy in English</option>
+                    <option value="academic_filipino"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_filipino') echo ' selected'; ?>>Academic - Literacy in Filipino</option>
+                    <option value="academic_numeracy"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_numeracy') echo ' selected'; ?>>Academic - Numeracy</option>
+                    <option value="behavioral"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'behavioral') echo ' selected'; ?>>Behavioral</option>
+                </select>
+            </form>
                 </div>
         </div>
 
@@ -2923,312 +3403,321 @@
             <tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Bacayao Sur Elementary School</th>  
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bacayaoq1 ?></th>
+                        <th style="width:13%"><?php echo $bacayaoq2 ?></th>
+                        <th style="width:13%"><?php echo $bacayaoq3 ?></th>
+                        <th style="width:13%"><?php echo $bacayaoq4 ?></th>
                         <th style="width:13%"></th>
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Bliss Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $blissq1 ?></th>
+                        <th style="width:13%"><?php echo $blissq2 ?></th>
+                        <th style="width:13%"><?php echo $blissq3 ?></th>
+                        <th style="width:13%"><?php echo $blissq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Bolosan Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bolosanq1 ?></th>
+                        <th style="width:13%"><?php echo $bolosanq2 ?></th>
+                        <th style="width:13%"><?php echo $bolosanq3 ?></th>
+                        <th style="width:13%"><?php echo $bolosanq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Bonuan Boquig Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bonuanq1 ?></th>
+                        <th style="width:13%"><?php echo $bonuanq2 ?></th>
+                        <th style="width:13%"><?php echo $bonuanq3 ?></th>
+                        <th style="width:13%"><?php echo $bonuanq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Calmay Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $calmayq1 ?></th>
+                        <th style="width:13%"><?php echo $calmayq2 ?></th>
+                        <th style="width:13%"><?php echo $calmayq3 ?></th>
+                        <th style="width:13%"><?php echo $calmayq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Carael Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $caraelq1 ?></th>
+                        <th style="width:13%"><?php echo $caraelq2 ?></th>
+                        <th style="width:13%"><?php echo $caraelq3 ?></th>
+                        <th style="width:13%"><?php echo $caraelq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Caranglaan Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $caranglaanq1 ?></th>
+                        <th style="width:13%"><?php echo $caranglaanq2 ?></th>
+                        <th style="width:13%"><?php echo $caranglaanq3 ?></th>
+                        <th style="width:13%"><?php echo $caranglaanq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">East Central Integrated School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $eastq1 ?></th>
+                        <th style="width:13%"><?php echo $eastq2 ?></th>
+                        <th style="width:13%"><?php echo $eastq3 ?></th>
+                        <th style="width:13%"><?php echo $eastq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Federico N. Ceralde School Integrated School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $federicoq1 ?></th>
+                        <th style="width:13%"><?php echo $federicoq2 ?></th>
+                        <th style="width:13%"><?php echo $federicoq3 ?></th>
+                        <th style="width:13%"><?php echo $federicoq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Gen. Gregorio Del Pilar Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $gregorioq1 ?></th>
+                        <th style="width:13%"><?php echo $gregorioq2 ?></th>
+                        <th style="width:13%"><?php echo $gregorioq3 ?></th>
+                        <th style="width:13%"><?php echo $gregorioq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Juan L. Siapno Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $juanlq1 ?></th>
+                        <th style="width:13%"><?php echo $juanlq2 ?></th>
+                        <th style="width:13%"><?php echo $juanlq3 ?></th>
+                        <th style="width:13%"><?php echo $juanlq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Juan P. Guadiz Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $juanpgq1 ?></th>
+                        <th style="width:13%"><?php echo $juanpgq2 ?></th>
+                        <th style="width:13%"><?php echo $juanpgq3 ?></th>
+                        <th style="width:13%"><?php echo $juanpgq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Lasip Grande Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lasipq1 ?></th>
+                        <th style="width:13%"><?php echo $lasipq2 ?></th>
+                        <th style="width:13%"><?php echo $lasipq3 ?></th>
+                        <th style="width:13%"><?php echo $lasipq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Leon-Francisco Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $leonfq1 ?></th>
+                        <th style="width:13%"><?php echo $leonfq2 ?></th>
+                        <th style="width:13%"><?php echo $leonfq3 ?></th>
+                        <th style="width:13%"><?php echo $leonfq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Lomboy Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lomboyq1 ?></th>
+                        <th style="width:13%"><?php echo $lomboyq2 ?></th>
+                        <th style="width:13%"><?php echo $lomboyq3 ?></th>
+                        <th style="width:13%"><?php echo $lomboyq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Lucao Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lucaoq1 ?></th>
+                        <th style="width:13%"><?php echo $lucaoq2 ?></th>
+                        <th style="width:13%"><?php echo $lucaoq3 ?></th>
+                        <th style="width:13%"><?php echo $lucaoq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Malued Sur Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $maluedq1 ?></th>
+                        <th style="width:13%"><?php echo $maluedq2 ?></th>
+                        <th style="width:13%"><?php echo $maluedq3 ?></th>
+                        <th style="width:13%"><?php echo $maluedq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Mamalingling Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $mamalinglingq1 ?></th>
+                        <th style="width:13%"><?php echo $mamalinglingq2 ?></th>
+                        <th style="width:13%"><?php echo $mamalinglingq3 ?></th>
+                        <th style="width:13%"><?php echo $mamalinglingq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Mangin-Tebeng Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $mangintebengq1 ?></th>
+                        <th style="width:13%"><?php echo $mangintebengq2 ?></th>
+                        <th style="width:13%"><?php echo $mangintebengq3 ?></th>
+                        <th style="width:13%"><?php echo $mangintebengq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">North Central Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $northq1 ?></th>
+                        <th style="width:13%"><?php echo $northq2 ?></th>
+                        <th style="width:13%"><?php echo $northq3 ?></th>
+                        <th style="width:13%"><?php echo $northq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Pantal Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pantalq1 ?></th>
+                        <th style="width:13%"><?php echo $pantalq2 ?></th>
+                        <th style="width:13%"><?php echo $pantalq3 ?></th>
+                        <th style="width:13%"><?php echo $pantalq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Pascuala G. Villamil Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pascualaq1 ?></th>
+                        <th style="width:13%"><?php echo $pascualaq2 ?></th>
+                        <th style="width:13%"><?php echo $pascualaq3 ?></th>
+                        <th style="width:13%"><?php echo $pascualaq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Pogo-Lasip Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pogolasipq1 ?></th>
+                        <th style="width:13%"><?php echo $pogolasipq2 ?></th>
+                        <th style="width:13%"><?php echo $pogolasipq3 ?></th>
+                        <th style="width:13%"><?php echo $pogolasipq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Pugaro Integrated School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pugaroq1 ?></th>
+                        <th style="width:13%"><?php echo $pugaroq2 ?></th>
+                        <th style="width:13%"><?php echo $pugaroq3 ?></th>
+                        <th style="width:13%"><?php echo $pugaroq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Sabangan Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $sabanganq1 ?></th>
+                        <th style="width:13%"><?php echo $sabanganq2 ?></th>
+                        <th style="width:13%"><?php echo $sabanganq3 ?></th>
+                        <th style="width:13%"><?php echo $sabanganq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Salapingao Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $salapingaoq1 ?></th>
+                        <th style="width:13%"><?php echo $salapingaoq2 ?></th>
+                        <th style="width:13%"><?php echo $salapingaoq3 ?></th>
+                        <th style="width:13%"><?php echo $salapingaoq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Salisay Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $salisayq1 ?></th>
+                        <th style="width:13%"><?php echo $salisayq2 ?></th>
+                        <th style="width:13%"><?php echo $salisayq3 ?></th>
+                        <th style="width:13%"><?php echo $salisayq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Suit Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $suitq1 ?></th>
+                        <th style="width:13%"><?php echo $suitq2 ?></th>
+                        <th style="width:13%"><?php echo $suitq3 ?></th>
+                        <th style="width:13%"><?php echo $suitq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">T. Ayson Rosario Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $taysonq1 ?></th>
+                        <th style="width:13%"><?php echo $taysonq2 ?></th>
+                        <th style="width:13%"><?php echo $taysonq3 ?></th>
+                        <th style="width:13%"><?php echo $taysonq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Tambac Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $tambacq1 ?></th>
+                        <th style="width:13%"><?php echo $tambacq2 ?></th>
+                        <th style="width:13%"><?php echo $tambacq3 ?></th>
+                        <th style="width:13%"><?php echo $tambacq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Tebeng Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $tebengq1 ?></th>
+                        <th style="width:13%"><?php echo $tebengq2 ?></th>
+                        <th style="width:13%"><?php echo $tebengq3 ?></th>
+                        <th style="width:13%"><?php echo $tebengq4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
 
                     <tr class="school" >
                         <th style="width:35%; text-align: left; padding-left: 10px">Victoria Q. Zarate Elementary School</th>
+                        <th style="width:13%"><?php echo $zarateq1 ?></th>
+                        <th style="width:13%"><?php echo $zarateq2 ?></th>
+                        <th style="width:13%"><?php echo $zarateq3 ?></th>
+                        <th style="width:13%"><?php echo $zarateq4 ?></th>
                         <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        
+                    </tr>
+                    <tr class="school" >
+                        <th style="width:30%; text-align: left; padding-left: 10px">West Central I Elementary School</th>
+                        <th style="width:13%"><?php echo $west1q1 ?></th>
+                        <th style="width:13%"><?php echo $west1q2 ?></th>
+                        <th style="width:13%"><?php echo $west1q3 ?></th>
+                        <th style="width:13%"><?php echo $west1q4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
                     <tr class="school" >
                         <th style="width:30%; text-align: left; padding-left: 10px">West Central II Elementary School</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $west2q1 ?></th>
+                        <th style="width:13%"><?php echo $west2q2 ?></th>
+                        <th style="width:13%"><?php echo $west2q3 ?></th>
+                        <th style="width:13%"><?php echo $west2q4 ?></th>
                         <th style="width:13%"></th>
                         
                     </tr>
@@ -3260,7 +3749,14 @@
     });
 </script>
 <script>
-function filterTable() {
+    document.getElementById("classificationselect").addEventListener("change", function() {
+        var selectedValue = this.value;
+        console.log("Selected value:", selectedValue);
+        document.getElementById("classification").submit();
+    });
+</script>
+<script>
+    function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
         input = document.querySelector('.search-input');
         filter = input.value.toUpperCase();
@@ -3278,6 +3774,13 @@ function filterTable() {
             }
         }
     }
-    </script>
+</script>
+<script>
+    document.getElementById("classificationselect").addEventListener("change", function() {
+        var selectedValue = this.value;
+        console.log("Selected value:", selectedValue);
+        document.getElementById("classification").submit();
+    });
+</script>
 </body>
 </html>

@@ -7,6 +7,7 @@
         $lastname = $_POST['lastname'];
         $extension = $_POST['extension'];
         $employment_number = $_POST['employment_number'];
+        $activation = "activate";
         $date = date('Y-m-d'); // Current date
 
         // Concatenate full name
@@ -22,7 +23,37 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified')";
+        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../database.php');
+    if(isset($_POST['submit3'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $activation = "activate";
+        $date = date('Y-m-d'); // Current date
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO executive_committee (fullname, employment_number, date, password, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -37,6 +68,7 @@
         $extension = $_POST['extension'];
         $employment_number = $_POST['employment_number'];
         $school = $_POST['schoolName'];
+        $activation = "activate";
         $date = date('Y-m-d');
         
 
@@ -53,7 +85,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -117,9 +149,8 @@
     }
 ?>
 <?php
-// Assuming you have already established a MySQLi connection
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the "activate" button was clicked
     if (isset($_POST["activate"])) {
         // Get the employment number from the form submission
@@ -169,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-}
+    }
 ?>
 
 
@@ -1134,10 +1165,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="logo"></div>
     <h2>SDO Administrator</h2>
 
-    <div class="errorMessage">
-        <?php echo $errormsg ?>
-    </div>
-
     <form class="login-form" action="" method="post">
         <div class="row">
             <div class="columns">
@@ -1181,10 +1208,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="logo"></div>
     <h2>Executive Committee</h2>
 
-    <div class="errorMessage">
-        <?php echo $errormsg ?>
-    </div>
-
     <form class="login-form" action="" method="post">
         <div class="row">
             <div class="columns">
@@ -1218,7 +1241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="submit1">Create Account</button>
+            <button type="submit" name="submit3">Create Account</button>
         </div>
     </form>
 </div>

@@ -1,378 +1,238 @@
 <?php
-include('../database.php');
-$errorMsg = "";
+include('database.php');
 
-function sanitizeInput($data) {
-    return htmlspecialchars(strip_tags($data));
-}
+$classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
 
-if (isset($_POST['submit'])) {
-    $employment_number = sanitizeInput($_POST['employment_number']);
-    $password = sanitizeInput($_POST['password']);
+// School names
+$schools = array(
+    'Bacayao Sur Elementary School',
+    'Bliss Elementary School',
+    'Bolosan Elementary School',
+    'Bonuan Boquig Elementary School',
+    'Calmay Elementary School',
+    'Carael Elementary School',
+    'Caranglaan Elementary School',
+    'East Central Integrated School',
+    'Federico N. Ceralde School Integrated School',
+    'Gen. Gregorio Del Pilar Elementary School',
+    'Juan L. Siapno Elementary School',
+    'Juan P. Guadiz Elementary School',
+    'Lasip Grande Elementary School',
+    'Leon-Francisco Elementary School',
+    'Lomboy Elementary School',
+    'Lucao Elementary School',
+    'Malued Sur Elementary School',
+    'Mamalingling Elementary School',
+    'Mangin-Tebeng Elementary School',
+    'North Central Elementary School',
+    'Pantal Elementary School',
+    'Pascuala G. Villamil Elementary School',
+    'Pogo-Lasip Elementary School',
+    'Pugaro Integrated School',
+    'Sabangan Elementary School',
+    'Salapingao Elementary School',
+    'Salisay Elementary School',
+    'Suit Elementary School',
+    'T. Ayson Rosario Elementary School',
+    'Tambac Elementary School',
+    'Tebeng Elementary School',
+    'Victoria Q. Zarate Elementary School',
+    'West Central I Elementary School',
+    'West Central II Elementary School'
+);
 
-    $tables = array('adviser', 'principal', 'counselor', 'school_admin', 'sdo_admin', 'executive_committee');
+$quarters = array(1, 2, 3, 4);
 
-    foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE employment_number = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('s', $employment_number);
-        $stmt->execute();
-        $result = $stmt->get_result();
+// Array to store counts for each school
+$school_counts = array();
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $hashedPasswordInDB = $row['password'];
-            $verifiedStatus = $row['verified'];
-            $activationStatus = $row['activation']; // Added to fetch activation status
+foreach ($schools as $school) {
+    $school_counts[$school] = array();
+    foreach ($quarters as $quarter) {
+        $sql = "SELECT COUNT(DISTINCT lrn) AS lrn_count FROM `$classification` WHERE school = '$school' AND quarter = $quarter";
+        $result = mysqli_query($conn, $sql);
 
-            if (password_verify($password, $hashedPasswordInDB)) {
-                if ($activationStatus == 'activate') { // Check activation status
-                    switch ($table) {
-                        case 'adviser':
-                            if ($verifiedStatus == 'yes') {
-                                $grade = $row['grade'];
-                                $section = $row['section'];
-                                $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        case 'principal':
-                            if ($verifiedStatus == 'yes') {
-                                $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        case 'counselor':
-                            if ($verifiedStatus == 'yes') {
-                                $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        case 'school_admin':
-                            if ($verifiedStatus == 'yes') {
-                                $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        case 'sdo_admin':
-                            if ($verifiedStatus == 'yes') {
-                                header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        case 'executive_committee':
-                            if ($verifiedStatus == 'yes') {
-                                header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
-                                exit();
-                            } else {
-                                header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
-                                exit();
-                            }
-                            break;
-
-                        default:
-                            break;
-                    }
-                } elseif ($activationStatus == 'deactivate') { // Account deactivated
-                    $errorMsg = "This account is Deactivated";
-                    break; // Exit loop
-                }
-            }
-        }
-    }
-    if (empty($errorMsg)) {
-        $errorMsg = "Invalid login credentials";
-    }
-    $stmt->close();
-    $conn->close();
-}
-?>
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <script>
-        function preventBack(){window.history.forward()};
-        setTimeout("preventBack()",0);
-        window.onunload=function(){null;}
-    </script>
-    <title>LogIn</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url(../img/bg.png);
-            background-size: cover;
-        }
-
-        .login-container {
-            background-color: #190572;
-            opacity: 1;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 18.5rem;
-        }
-
-        .logo {
-            width: 75px;
-            height: 75px;
-            margin: 0 auto 20px;
-            background-image: url('../img/logo.png');
-            background-size: cover;   
-        }
-
-        .login-form input[type="text"],
-        .login-form input[type="password"] {
-            width: 92%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            align-items: center;
-        }
-
-        .login-form button {
-            background-color: #0C052F;
-            width: 98%;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 7px 30px;
-            cursor: pointer;
-            margin-top: 10px; 
-            justify-content: center;
-        }
-
-        .login-form button:hover {
-            background-color: #DDDAE7;
-            color: #0C052F;
-        }
-
-        .login-form{
-            align-items: center;
-        }
-
-        h2 {
-            font-family: 'Darker Grotesque', sans-serif;
-            font-weight: 500;
-            align-items: start;
-            color: #fff;
-        }
-
-        .login-container {
-            background-color: rgba(25, 5, 114, 0.80);
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 18.5rem;
-        }
-
-        a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: .1rem 5%;
-            background: #130550;
-            display: flex;
-            align-items: center;
-            z-index: 100;
-            height: 55px;
-        }
-
-        .header.sticky {
-            border-bottom: .2rem solid rgba(185, 169, 169, 0.2);
-        }
-
-        h4 {
-            color: #fff;
-            font-family: 'Darker Grotesque', sans-serif;
-            font-weight: 300;
-            font-size: 1.3rem;
-            margin-left: 1rem;
-            letter-spacing: 2px;
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis;
-        }
-
-        .logs {
-            width: 3.5rem;
-            height: 3.5rem;
-        }
-
-        .login-container {
-            position: relative;
-        }
-
-        .back-icon {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            font-size: 30px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .back-icon i {
-            margin-right: 5px;
-        }
-
-        .login-container .forgot{
-            background-color: #0C052F;
-            width: 98%;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 7px 30px;
-            cursor: pointer;
-            margin-top: 5px; 
-            justify-content: center;
-        }
-
-        .login-container .forgot:hover {
-            background-color: #DDDAE7;
-            color: #0C052F;
-        }
-        .errorMessage{
-            color: red;
-            font-weight:bold ;
-            text-align: center;
-          }
-
-          @media screen and (max-width: 800px) {
-            header{
-                height: 40px;
-            }
-            h4 {
-                font-size: 0.6rem; 
-            }
-
-            .logs {
-                width: 2rem;
-                height: 2rem;
-            }
-
-            .login-container {
-                width: 90%; 
-            }
-
-            .login-container .forgot,
-            .login-form button{
-                width: 97%;
-            }
-
-            .password-toggle{
-                display: none;
-            }
-        }
-
-        .password-container {
-            position: relative;
-            width: 100%;
-        }
-
-        .password-toggle {
-            position: absolute;
-            top: 50%;
-            right: 15px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-
-    </style>
-</head>
-<body>
-
-<header>
-    <img src="../img/logo.png" class="logs">
-    <div class="container">
-        <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
-    </div>
-</header>
-
-<div class="login-container">
-    <a href="../index.php" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
-    <div class="logo"></div>
-    <h2>Sign in to E.D.G.E.</h2>
-
-    <div class="errorMessage">
-        <?php echo $errorMsg ?>
-    </div>
-
-    <form class="login-form" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="post">
-        <input type="text" id="idnum" name="employment_number" placeholder="Enter Employee Number ">
-        
-        <div class="password-container">
-            <input type="password" id="password" name="password" placeholder="Enter Password">
-            <div class="password-toggle" onclick="togglePasswordVisibility()">
-                <i id="eye-icon" class='bx bx-show'></i>
-            </div>
-        </div>
-
-        <button type="submit" name="submit">Log In</button>
-    </form>
-    
-    <a href="../forgot_password/employee_number_Forgot_Pass.php"> <button class="forgot" type="">Forgot Password</button></a>
-</div>
-
-<script>
-    function togglePasswordVisibility() {
-        var passwordField = document.getElementById("password");
-        var eyeIcon = document.getElementById("eye-icon");
-
-        if (passwordField.type === "password") {
-            passwordField.type = "text";
-            eyeIcon.classList.remove("bx-show");
-            eyeIcon.classList.add("bx-hide");
+        if ($result) {
+            $row = mysqli_fetch_assoc($result);
+            $school_counts[$school]["q$quarter"] = $row['lrn_count'];
+            mysqli_free_result($result);
         } else {
-            passwordField.type = "password";
-            eyeIcon.classList.remove("bx-hide");
-            eyeIcon.classList.add("bx-show");
+            echo "Error: " . mysqli_error($conn);
         }
     }
-</script>
-</body>
+}
 
-</html>
+mysqli_close($conn);
+
+// Assigning variables manually for each school and quarter
+$bacayaoq1 = $school_counts['Bacayao Sur Elementary School']['q1'];
+$bacayaoq2 = $school_counts['Bacayao Sur Elementary School']['q2'];
+$bacayaoq3 = $school_counts['Bacayao Sur Elementary School']['q3'];
+$bacayaoq4 = $school_counts['Bacayao Sur Elementary School']['q4'];
+
+$blissq1 = $school_counts['Bliss Elementary School']['q1'];
+$blissq2 = $school_counts['Bliss Elementary School']['q2'];
+$blissq3 = $school_counts['Bliss Elementary School']['q3'];
+$blissq4 = $school_counts['Bliss Elementary School']['q4'];
+
+$bolosanq1 = $school_counts['Bolosan Elementary School']['q1'];
+$bolosanq2 = $school_counts['Bolosan Elementary School']['q2'];
+$bolosanq3 = $school_counts['Bolosan Elementary School']['q3'];
+$bolosanq4 = $school_counts['Bolosan Elementary School']['q4'];
+
+$bonuanq1 = $school_counts['Bonuan Boquig Elementary School']['q1'];
+$bonuanq2 = $school_counts['Bonuan Boquig Elementary School']['q2'];
+$bonuanq3 = $school_counts['Bonuan Boquig Elementary School']['q3'];
+$bonuanq4 = $school_counts['Bonuan Boquig Elementary School']['q4'];
+
+$calmayq1 = $school_counts['Calmay Elementary School']['q1'];
+$calmayq2 = $school_counts['Calmay Elementary School']['q2'];
+$calmayq3 = $school_counts['Calmay Elementary School']['q3'];
+$calmayq4 = $school_counts['Calmay Elementary School']['q4'];
+
+$caraelq1 = $school_counts['Carael Elementary School']['q1'];
+$caraelq2 = $school_counts['Carael Elementary School']['q2'];
+$caraelq3 = $school_counts['Carael Elementary School']['q3'];
+$caraelq4 = $school_counts['Carael Elementary School']['q4'];
+
+$caranglaanq1 = $school_counts['Caranglaan Elementary School']['q1'];
+$caranglaanq2 = $school_counts['Caranglaan Elementary School']['q2'];
+$caranglaanq3 = $school_counts['Caranglaan Elementary School']['q3'];
+$caranglaanq4 = $school_counts['Caranglaan Elementary School']['q4'];
+
+$eastq1 = $school_counts['East Central Integrated School']['q1'];
+$eastq2 = $school_counts['East Central Integrated School']['q2'];
+$eastq3 = $school_counts['East Central Integrated School']['q3'];
+$eastq4 = $school_counts['East Central Integrated School']['q4'];
+
+$federicoq1 = $school_counts['Federico N. Ceralde School Integrated School']['q1'];
+$federicoq2 = $school_counts['Federico N. Ceralde School Integrated School']['q2'];
+$federicoq3 = $school_counts['Federico N. Ceralde School Integrated School']['q3'];
+$federicoq4 = $school_counts['Federico N. Ceralde School Integrated School']['q4'];
+
+$gregorioq1 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q1'];
+$gregorioq2 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q2'];
+$gregorioq3 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q3'];
+$gregorioq4 = $school_counts['Gen. Gregorio Del Pilar Elementary School']['q4'];
+
+$juanlq1 = $school_counts['Juan L. Siapno Elementary School']['q1'];
+$juanlq2 = $school_counts['Juan L. Siapno Elementary School']['q2'];
+$juanlq3 = $school_counts['Juan L. Siapno Elementary School']['q3'];
+$juanlq4 = $school_counts['Juan L. Siapno Elementary School']['q4'];
+
+$juanpgq1 = $school_counts['Juan P. Guadiz Elementary School']['q1'];
+$juanpgq2 = $school_counts['Juan P. Guadiz Elementary School']['q2'];
+$juanpgq3 = $school_counts['Juan P. Guadiz Elementary School']['q3'];
+$juanpgq4 = $school_counts['Juan P. Guadiz Elementary School']['q4'];
+
+$lasipq1 = $school_counts['Lasip Grande Elementary School']['q1'];
+$lasipq2 = $school_counts['Lasip Grande Elementary School']['q2'];
+$lasipq3 = $school_counts['Lasip Grande Elementary School']['q3'];
+$lasipq4 = $school_counts['Lasip Grande Elementary School']['q4'];
+
+$leonfq1 = $school_counts['Leon-Francisco Elementary School']['q1'];
+$leonfq2 = $school_counts['Leon-Francisco Elementary School']['q2'];
+$leonfq3 = $school_counts['Leon-Francisco Elementary School']['q3'];
+$leonfq4 = $school_counts['Leon-Francisco Elementary School']['q4'];
+
+$lomboyq1 = $school_counts['Lomboy Elementary School']['q1'];
+$lomboyq2 = $school_counts['Lomboy Elementary School']['q2'];
+$lomboyq3 = $school_counts['Lomboy Elementary School']['q3'];
+$lomboyq4 = $school_counts['Lomboy Elementary School']['q4'];
+
+$lucaoq1 = $school_counts['Lucao Elementary School']['q1'];
+$lucaoq2 = $school_counts['Lucao Elementary School']['q2'];
+$lucaoq3 = $school_counts['Lucao Elementary School']['q3'];
+$lucaoq4 = $school_counts['Lucao Elementary School']['q4'];
+
+$maluedq1 = $school_counts['Malued Sur Elementary School']['q1'];
+$maluedq2 = $school_counts['Malued Sur Elementary School']['q2'];
+$maluedq3 = $school_counts['Malued Sur Elementary School']['q3'];
+$maluedq4 = $school_counts['Malued Sur Elementary School']['q4'];
+
+$mamalinglingq1 = $school_counts['Mamalingling Elementary School']['q1'];
+$mamalinglingq2 = $school_counts['Mamalingling Elementary School']['q2'];
+$mamalinglingq3 = $school_counts['Mamalingling Elementary School']['q3'];
+$mamalinglingq4 = $school_counts['Mamalingling Elementary School']['q4'];
+
+$mangintebengq1 = $school_counts['Mangin-Tebeng Elementary School']['q1'];
+$mangintebengq2 = $school_counts['Mangin-Tebeng Elementary School']['q2'];
+$mangintebengq3 = $school_counts['Mangin-Tebeng Elementary School']['q3'];
+$mangintebengq4 = $school_counts['Mangin-Tebeng Elementary School']['q4'];
+
+$northq1 = $school_counts['North Central Elementary School']['q1'];
+$northq2 = $school_counts['North Central Elementary School']['q2'];
+$northq3 = $school_counts['North Central Elementary School']['q3'];
+$northq4 = $school_counts['North Central Elementary School']['q4'];
+
+$pantalq1 = $school_counts['Pantal Elementary School']['q1'];
+$pantalq2 = $school_counts['Pantal Elementary School']['q2'];
+$pantalq3 = $school_counts['Pantal Elementary School']['q3'];
+$pantalq4 = $school_counts['Pantal Elementary School']['q4'];
+
+$pascualaq1 = $school_counts['Pascuala G. Villamil Elementary School']['q1'];
+$pascualaq2 = $school_counts['Pascuala G. Villamil Elementary School']['q2'];
+$pascualaq3 = $school_counts['Pascuala G. Villamil Elementary School']['q3'];
+$pascualaq4 = $school_counts['Pascuala G. Villamil Elementary School']['q4'];
+
+$pogolasipq1 = $school_counts['Pogo-Lasip Elementary School']['q1'];
+$pogolasipq2 = $school_counts['Pogo-Lasip Elementary School']['q2'];
+$pogolasipq3 = $school_counts['Pogo-Lasip Elementary School']['q3'];
+$pogolasipq4 = $school_counts['Pogo-Lasip Elementary School']['q4'];
+
+$pugaroq1 = $school_counts['Pugaro Integrated School']['q1'];
+$pugaroq2 = $school_counts['Pugaro Integrated School']['q2'];
+$pugaroq3 = $school_counts['Pugaro Integrated School']['q3'];
+$pugaroq4 = $school_counts['Pugaro Integrated School']['q4'];
+
+$sabanganq1 = $school_counts['Sabangan Elementary School']['q1'];
+$sabanganq2 = $school_counts['Sabangan Elementary School']['q2'];
+$sabanganq3 = $school_counts['Sabangan Elementary School']['q3'];
+$sabanganq4 = $school_counts['Sabangan Elementary School']['q4'];
+
+$salapingaoq1 = $school_counts['Salapingao Elementary School']['q1'];
+$salapingaoq2 = $school_counts['Salapingao Elementary School']['q2'];
+$salapingaoq3 = $school_counts['Salapingao Elementary School']['q3'];
+$salapingaoq4 = $school_counts['Salapingao Elementary School']['q4'];
+
+$salisayq1 = $school_counts['Salisay Elementary School']['q1'];
+$salisayq2 = $school_counts['Salisay Elementary School']['q2'];
+$salisayq3 = $school_counts['Salisay Elementary School']['q3'];
+$salisayq4 = $school_counts['Salisay Elementary School']['q4'];
+
+$suitq1 = $school_counts['Suit Elementary School']['q1'];
+$suitq2 = $school_counts['Suit Elementary School']['q2'];
+$suitq3 = $school_counts['Suit Elementary School']['q3'];
+$suitq4 = $school_counts['Suit Elementary School']['q4'];
+
+$taysonq1 = $school_counts['T. Ayson Rosario Elementary School']['q1'];
+$taysonq2 = $school_counts['T. Ayson Rosario Elementary School']['q2'];
+$taysonq3 = $school_counts['T. Ayson Rosario Elementary School']['q3'];
+$taysonq4 = $school_counts['T. Ayson Rosario Elementary School']['q4'];
+
+$tambacq1 = $school_counts['Tambac Elementary School']['q1'];
+$tambacq2 = $school_counts['Tambac Elementary School']['q2'];
+$tambacq3 = $school_counts['Tambac Elementary School']['q3'];
+$tambacq4 = $school_counts['Tambac Elementary School']['q4'];
+
+$tebengq1 = $school_counts['Tebeng Elementary School']['q1'];
+$tebengq2 = $school_counts['Tebeng Elementary School']['q2'];
+$tebengq3 = $school_counts['Tebeng Elementary School']['q3'];
+$tebengq4 = $school_counts['Tebeng Elementary School']['q4'];
+
+$zarateq1 = $school_counts['Victoria Q. Zarate Elementary School']['q1'];
+$zarateq2 = $school_counts['Victoria Q. Zarate Elementary School']['q2'];
+$zarateq3 = $school_counts['Victoria Q. Zarate Elementary School']['q3'];
+$zarateq4 = $school_counts['Victoria Q. Zarate Elementary School']['q4'];
+
+$west1q1 = $school_counts['West Central I Elementary School']['q1'];
+$west1q2 = $school_counts['West Central I Elementary School']['q2'];
+$west1q3 = $school_counts['West Central I Elementary School']['q3'];
+$west1q4 = $school_counts['West Central I Elementary School']['q4'];
+
+$west2q1 = $school_counts['West Central II Elementary School']['q1'];
+$west2q2 = $school_counts['West Central II Elementary School']['q2'];
+$west2q3 = $school_counts['West Central II Elementary School']['q3'];
+$west2q4 = $school_counts['West Central II Elementary School']['q4'];
+
+?>

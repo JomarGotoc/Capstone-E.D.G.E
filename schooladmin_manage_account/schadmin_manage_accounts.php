@@ -11,6 +11,7 @@
         $section = $_POST['section'];
         $date = date('Y-m-d'); // Current date
         $school = "Bacayao Sur Elementary School";
+        $activation = "activate";
 
         // Concatenate full name
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
@@ -25,7 +26,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified')";
+        $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified, activation) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified', '$activation')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -41,6 +42,7 @@
         $employment_number = $_POST['employment_number'];
         $school = "Bacayao Sur Elementary School";
         $date = date('Y-m-d');
+        $activation = "activate";
         
 
         // Concatenate full name
@@ -56,7 +58,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -72,6 +74,7 @@
         $employment_number = $_POST['employment_number'];
         $school = "Bacayao Sur Elementary School";
         $date = date('Y-m-d');
+        $activation = "activate";
         
 
         // Concatenate full name
@@ -87,7 +90,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified')";
+        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -189,30 +192,30 @@
     }
 ?>
 <?php
-include('../database.php');
+    include('../database.php');
 
-if(isset($_POST['reset'])) {
-    // Retrieve employment number from form submission
-    $employment_number = $_POST['employment_number'];
-    
-    // Generate a hashed password (you can use password_hash() function)
-    $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
-    
-    // Check if the employment number exists in any of the tables
-    $tables = array('adviser', 'principal', 'counselor');
-    foreach ($tables as $table) {
-        $query = "SELECT * FROM $table WHERE employment_number = '$employment_number'";
-        $result = mysqli_query($conn, $query);
-        if(mysqli_num_rows($result) > 0) {
-            // If employment number found, update the password to the hashed value
-            $updateQuery = "UPDATE $table SET password = '$hashed_password' WHERE employment_number = '$employment_number'";
-            mysqli_query($conn, $updateQuery);
-            // Break the loop since the employment number is found
-            break;
+    if(isset($_POST['reset'])) {
+        // Retrieve employment number from form submission
+        $employment_number = $_POST['employment_number'];
+        
+        // Generate a hashed password (you can use password_hash() function)
+        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+        
+        // Check if the employment number exists in any of the tables
+        $tables = array('adviser', 'principal', 'counselor');
+        foreach ($tables as $table) {
+            $query = "SELECT * FROM $table WHERE employment_number = '$employment_number'";
+            $result = mysqli_query($conn, $query);
+            if(mysqli_num_rows($result) > 0) {
+                // If employment number found, update the password to the hashed value
+                $updateQuery = "UPDATE $table SET password = '$hashed_password' WHERE employment_number = '$employment_number'";
+                mysqli_query($conn, $updateQuery);
+                // Break the loop since the employment number is found
+                break;
+            }
         }
+        // You can add further logic here, like displaying a message to the user after resetting the password
     }
-    // You can add further logic here, like displaying a message to the user after resetting the password
-}
 ?>
 
 <!DOCTYPE html>
