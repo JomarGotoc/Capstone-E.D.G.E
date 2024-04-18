@@ -1506,7 +1506,7 @@ if(isset($_POST['print'])) {
                     <h3 style="margin-left:7px">Employee Number</h3>
                 </div>
             </div>
-            <?php
+            <!--?php
             if ($result1->num_rows > 0) {
                 // Get the data of the first row
                 $row = $result1->fetch_assoc();
@@ -1517,7 +1517,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?>
+            ?-->
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1526,10 +1526,10 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <?php 
+                <!--?php 
                         $capitalizedSecondWord = ucfirst($secondWord);
                         echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
-                    ?>    
+                    ?-->    
             </div>
             </div>
 
@@ -1542,7 +1542,7 @@ if(isset($_POST['print'])) {
                     <h3 style="margin-left:7px">Adviser</h3>
                 </div>
             </div>
-            <?php
+            <!--?php
             if ($result2->num_rows > 0) {
                 $row = $result2->fetch_assoc();
                 $fullname = $row["fullname"];
@@ -1552,7 +1552,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?>
+            ?-->
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1561,7 +1561,7 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
+                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $count ?--></h3>
                 </div>
             </div>
         </div>
@@ -1666,13 +1666,13 @@ if(isset($_POST['print'])) {
                 <th style='width:22%'>srdgf</th>
                 <th style='width:13%'class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon'></i>
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
                             <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
                     </div>
                 </th>
                 <th style='width:16%'>sgsdasd</th>
@@ -1683,15 +1683,14 @@ if(isset($_POST['print'])) {
             </tr>
         </table>
 
-        <!--POP UP CONTENT
-         <form action="" method="POST" class="form-container">
+         <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
     <div class="top-container">
         <div class="school">
-            <span class="exitIcon" onclick="closeForm()">X</span>
             <h3>PUPIL'S RECORD</h3>
         </div>
     </div>
     <div class="main-container">
+    <span class="close" onclick="closeForm()">&times;</span>
         <div class="row">
             <div class="columns">
                 <div class="containers first">
@@ -1821,8 +1820,6 @@ if(isset($_POST['print'])) {
     </div>
     </form>
 
-    -->
-
         <div class="save">
             <button id="save">Update All Records</button>
         </div>
@@ -1884,6 +1881,16 @@ if(isset($_POST['print'])) {
         }
     });
 });
+
+function showPupilRecord() {
+        var pupilRecord = document.getElementById("pupilRecord");
+        pupilRecord.style.display = "block";
+    }
+
+    function closeForm() {
+        var pupilRecord = document.getElementById("pupilRecord");
+        pupilRecord.style.display = "none";
+    }
 
 //show login
 document.addEventListener("DOMContentLoaded", function() {
