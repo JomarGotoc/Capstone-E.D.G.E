@@ -4017,8 +4017,7 @@
             background: #FBFBFB;
             color: #190572;
         }
-
-        
+        #quarterSelect,
         #topdown{
             width: 100%;
             background: #FBFBFB;
@@ -4029,6 +4028,7 @@
             font-size: 17px;
             text-align: left;
         }
+        
         #topdown1 {
             padding: 2px;
             width: 100%;
@@ -4433,15 +4433,15 @@
                 </div>
             </div>
             <div class="select-wrapper1">
-            <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <select id="quarterSelect" name="quarter">
-                    <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
-                    <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
-                    <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
-                    <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
-                </select>
-            </form>
-                </div>
+                <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <select id="quarterSelect" name="quarter">
+                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
+                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
+                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
+                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
+                    </select>
+                </form>
+            </div>
             <div class="column column-left">
                 <div class="containers" style="background-color: #B7B7B7;">
                     <h3 style="margin-left: 7px">Resolved Cases</h3>
@@ -4924,15 +4924,15 @@
                 </div>
             </div>
             <div class="select-wrapper">
-            <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <select id="quarterSelect" name="quarter" onchange="submitForm()">
-        <option value="1">Quarter 1</option>
-        <option value="2">Quarter 2</option>
-        <option value="3">Quarter 3</option>
-        <option value="4">Quarter 4</option>
-    </select>
-</form>
-                </div>
+                <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+                        <option value="1">Quarter 1</option>
+                        <option value="2">Quarter 2</option>
+                        <option value="3">Quarter 3</option>
+                        <option value="4">Quarter 4</option>
+                    </select>
+                </form>
+            </div>
         </div>
 
         <div class="table-container">
@@ -5291,8 +5291,26 @@
 </script>
 <script>
     function submitForm() {
-        document.getElementById('quarterForm').submit();
+        var form = document.getElementById("quarterForm");
+        var formData = new FormData(form);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.send(formData);
     }
+
+    function handleSubmit(event) {
+        event.preventDefault(); 
+        submitForm(); 
+    }
+
+    var form = document.getElementById("quarterForm");
+    form.addEventListener("submit", handleSubmit);
 </script>
 
 <script>
