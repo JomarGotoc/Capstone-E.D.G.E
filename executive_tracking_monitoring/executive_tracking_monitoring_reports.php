@@ -3557,6 +3557,140 @@
     // Close connection
     $conn->close();
 ?>
+<?php
+    include('../database.php');
+    $tables = array(
+        "academic_english",
+        "academic_filipino",
+        "academic_numeracy",
+        "behavioral"
+    );
+
+    $totalpar = 0; 
+    $resolved = 0;
+    $encounteredLRNs = array(); // Array to store LRNs encountered
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        $sql = "SELECT lrn, COUNT(DISTINCT lrn) AS count, SUM(CASE WHEN status = 'resolved' THEN 1 ELSE 0 END) AS resolved_count FROM $table GROUP BY lrn";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $lrn = $row["lrn"];
+                // Check if LRN has been encountered before
+                if (!in_array($lrn, $encounteredLRNs)) {
+                    $totalpar += $row["count"];
+                    $resolved += $row["resolved_count"];
+                    // Add LRN to encountered list
+                    $encounteredLRNs[] = $lrn;
+                }
+            }
+        }
+    }
+
+    $conn->close();
+?>
+<?php
+    include('../database.php');
+    // Schools array
+    $schools = [
+        'Bacayao Sur Elementary School',
+        'Bliss Elementary School',
+        'Bolosan Elementary School',
+        'Bonuan Boquig Elementary School',
+        'Calmay Elementary School',
+        'Carael Elementary School',
+        'Caranglaan Elementary School',
+        'East Central Integrated School',
+        'Federico N. Ceralde School Integrated School',
+        'Gen. Gregorio Del Pilar Elementary School',
+        'Juan L. Siapno Elementary School',
+        'Juan P. Guadiz Elementary School',
+        'Lasip Grande Elementary School',
+        'Leon-Francisco Elementary School',
+        'Lomboy Elementary School',
+        'Lucao Elementary School',
+        'Malued Sur Elementary School',
+        'Mamalingling Elementary School',
+        'Mangin-Tebeng Elementary School',
+        'North Central Elementary School',
+        'Pantal Elementary School',
+        'Pascuala G. Villamil Elementary School',
+        'Pogo-Lasip Elementary School',
+        'Pugaro Integrated School',
+        'Sabangan Elementary School',
+        'Salapingao Elementary School',
+        'Salisay Elementary School',
+        'Suit Elementary School',
+        'T. Ayson Rosario Elementary School',
+        'Tambac Elementary School',
+        'Tebeng Elementary School',
+        'Victoria Q. Zarate Elementary School',
+        'West Central I Elementary School',
+        'West Central II Elementary School'
+    ];
+
+    // Associative array to store results
+    $school_counts = [];
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    foreach ($schools as $school) {
+        $sql = "SELECT COUNT(DISTINCT lrn) AS distinct_lrns 
+                FROM $classification 
+                WHERE school = '$school'";
+
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Fetch the count and store it
+            $row = $result->fetch_assoc();
+            $school_counts[$school] = $row["distinct_lrns"];
+        } else {
+            // If no results, store 0
+            $school_counts[$school] = 0;
+        }
+    }
+
+    // Close connection
+    $conn->close();
+    $bacayaoCount = $school_counts['Bacayao Sur Elementary School'];
+    $blissElementaryCount = $school_counts['Bliss Elementary School'];
+    $bolosanElementaryCount = $school_counts['Bolosan Elementary School'];
+    $bonuanBoquigElementaryCount = $school_counts['Bonuan Boquig Elementary School'];
+    $calmayElementaryCount = $school_counts['Calmay Elementary School'];
+    $caralElementaryCount = $school_counts['Carael Elementary School'];
+    $caranglaanElementaryCount = $school_counts['Caranglaan Elementary School'];
+    $eastCentralIntegratedCount = $school_counts['East Central Integrated School'];
+    $federicoNCeraldeCount = $school_counts['Federico N. Ceralde School Integrated School'];
+    $genGregorioDelPilarCount = $school_counts['Gen. Gregorio Del Pilar Elementary School'];
+    $juanLSiapnoCount = $school_counts['Juan L. Siapno Elementary School'];
+    $juanPGuadizCount = $school_counts['Juan P. Guadiz Elementary School'];
+    $lasipGrandeCount = $school_counts['Lasip Grande Elementary School'];
+    $leonFranciscoCount = $school_counts['Leon-Francisco Elementary School'];
+    $lomboyCount = $school_counts['Lomboy Elementary School'];
+    $lucaoCount = $school_counts['Lucao Elementary School'];
+    $maluedSurCount = $school_counts['Malued Sur Elementary School'];
+    $mamalinglingCount = $school_counts['Mamalingling Elementary School'];
+    $manginTebengCount = $school_counts['Mangin-Tebeng Elementary School'];
+    $northCentralCount = $school_counts['North Central Elementary School'];
+    $pantalCount = $school_counts['Pantal Elementary School'];
+    $pascualaGVillamilCount = $school_counts['Pascuala G. Villamil Elementary School'];
+    $pogoLasipCount = $school_counts['Pogo-Lasip Elementary School'];
+    $pugaroIntegratedCount = $school_counts['Pugaro Integrated School'];
+    $sabanganCount = $school_counts['Sabangan Elementary School'];
+    $salapingaoCount = $school_counts['Salapingao Elementary School'];
+    $salisayCount = $school_counts['Salisay Elementary School'];
+    $suitCount = $school_counts['Suit Elementary School'];
+    $tAysonRosarioCount = $school_counts['T. Ayson Rosario Elementary School'];
+    $tambacCount = $school_counts['Tambac Elementary School'];
+    $tebengCount = $school_counts['Tebeng Elementary School'];
+    $victoriaQZarateCount = $school_counts['Victoria Q. Zarate Elementary School'];
+    $westCentralICount = $school_counts['West Central I Elementary School'];
+    $westCentralIICount = $school_counts['West Central II Elementary School'];
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4286,7 +4420,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px">shesh</h3>
+                    <h3 style="margin-left: 7px"><?php echo $totalpar ?></h3>
                 </div>
             </div>
         </div>
@@ -4315,7 +4449,7 @@
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="margin-left: 7px"></h3>
+                    <h3 style="margin-left: 7px"><?php echo $resolved ?></h3>
                 </div>
             </div>
         </div>
@@ -4821,7 +4955,7 @@
                         <th style="width:13%"><?php echo $bacayaoq2 ?></th>
                         <th style="width:13%"><?php echo $bacayaoq3 ?></th>
                         <th style="width:13%"><?php echo $bacayaoq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bacayaoCount ?></th>
                     </tr>
 
                     <tr class="school" >
@@ -4830,7 +4964,7 @@
                         <th style="width:13%"><?php echo $blissq2 ?></th>
                         <th style="width:13%"><?php echo $blissq3 ?></th>
                         <th style="width:13%"><?php echo $blissq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $blissElementaryCount ?></th>
                         
                     </tr>
 
@@ -4840,7 +4974,7 @@
                         <th style="width:13%"><?php echo $bolosanq2 ?></th>
                         <th style="width:13%"><?php echo $bolosanq3 ?></th>
                         <th style="width:13%"><?php echo $bolosanq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bolosanElementaryCount ?></th>
                         
                     </tr>
 
@@ -4850,7 +4984,7 @@
                         <th style="width:13%"><?php echo $bonuanq2 ?></th>
                         <th style="width:13%"><?php echo $bonuanq3 ?></th>
                         <th style="width:13%"><?php echo $bonuanq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $bonuanBoquigElementaryCount ?></th>
                         
                     </tr>
 
@@ -4860,7 +4994,7 @@
                         <th style="width:13%"><?php echo $calmayq2 ?></th>
                         <th style="width:13%"><?php echo $calmayq3 ?></th>
                         <th style="width:13%"><?php echo $calmayq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $calmayElementaryCount ?></th>
                         
                     </tr>
 
@@ -4870,7 +5004,7 @@
                         <th style="width:13%"><?php echo $caraelq2 ?></th>
                         <th style="width:13%"><?php echo $caraelq3 ?></th>
                         <th style="width:13%"><?php echo $caraelq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $caralElementaryCount ?></th>
                         
                     </tr>
 
@@ -4880,7 +5014,7 @@
                         <th style="width:13%"><?php echo $caranglaanq2 ?></th>
                         <th style="width:13%"><?php echo $caranglaanq3 ?></th>
                         <th style="width:13%"><?php echo $caranglaanq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $caranglaanElementaryCount ?></th>
                         
                     </tr>
 
@@ -4890,7 +5024,7 @@
                         <th style="width:13%"><?php echo $eastq2 ?></th>
                         <th style="width:13%"><?php echo $eastq3 ?></th>
                         <th style="width:13%"><?php echo $eastq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $eastCentralIntegratedCount ?></th>
                         
                     </tr>
 
@@ -4900,7 +5034,7 @@
                         <th style="width:13%"><?php echo $federicoq2 ?></th>
                         <th style="width:13%"><?php echo $federicoq3 ?></th>
                         <th style="width:13%"><?php echo $federicoq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $federicoNCeraldeCount ?></th>
                         
                     </tr>
 
@@ -4910,7 +5044,7 @@
                         <th style="width:13%"><?php echo $gregorioq2 ?></th>
                         <th style="width:13%"><?php echo $gregorioq3 ?></th>
                         <th style="width:13%"><?php echo $gregorioq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $genGregorioDelPilarCount ?></th>
                         
                     </tr>
 
@@ -4920,7 +5054,7 @@
                         <th style="width:13%"><?php echo $juanlq2 ?></th>
                         <th style="width:13%"><?php echo $juanlq3 ?></th>
                         <th style="width:13%"><?php echo $juanlq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $juanLSiapnoCount ?></th>
                         
                     </tr>
 
@@ -4930,7 +5064,7 @@
                         <th style="width:13%"><?php echo $juanpgq2 ?></th>
                         <th style="width:13%"><?php echo $juanpgq3 ?></th>
                         <th style="width:13%"><?php echo $juanpgq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $juanPGuadizCount ?></th>
                         
                     </tr>
 
@@ -4940,7 +5074,7 @@
                         <th style="width:13%"><?php echo $lasipq2 ?></th>
                         <th style="width:13%"><?php echo $lasipq3 ?></th>
                         <th style="width:13%"><?php echo $lasipq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lasipGrandeCount ?></th>
                         
                     </tr>
 
@@ -4950,7 +5084,7 @@
                         <th style="width:13%"><?php echo $leonfq2 ?></th>
                         <th style="width:13%"><?php echo $leonfq3 ?></th>
                         <th style="width:13%"><?php echo $leonfq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $leonFranciscoCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -4959,7 +5093,7 @@
                         <th style="width:13%"><?php echo $lomboyq2 ?></th>
                         <th style="width:13%"><?php echo $lomboyq3 ?></th>
                         <th style="width:13%"><?php echo $lomboyq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lomboyCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -4968,7 +5102,7 @@
                         <th style="width:13%"><?php echo $lucaoq2 ?></th>
                         <th style="width:13%"><?php echo $lucaoq3 ?></th>
                         <th style="width:13%"><?php echo $lucaoq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $lucaoCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -4977,7 +5111,7 @@
                         <th style="width:13%"><?php echo $maluedq2 ?></th>
                         <th style="width:13%"><?php echo $maluedq3 ?></th>
                         <th style="width:13%"><?php echo $maluedq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $maluedSurCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -4986,7 +5120,7 @@
                         <th style="width:13%"><?php echo $mamalinglingq2 ?></th>
                         <th style="width:13%"><?php echo $mamalinglingq3 ?></th>
                         <th style="width:13%"><?php echo $mamalinglingq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $mamalinglingCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -4995,7 +5129,7 @@
                         <th style="width:13%"><?php echo $mangintebengq2 ?></th>
                         <th style="width:13%"><?php echo $mangintebengq3 ?></th>
                         <th style="width:13%"><?php echo $mangintebengq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $manginTebengCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5004,7 +5138,7 @@
                         <th style="width:13%"><?php echo $northq2 ?></th>
                         <th style="width:13%"><?php echo $northq3 ?></th>
                         <th style="width:13%"><?php echo $northq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $northCentralCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5013,7 +5147,7 @@
                         <th style="width:13%"><?php echo $pantalq2 ?></th>
                         <th style="width:13%"><?php echo $pantalq3 ?></th>
                         <th style="width:13%"><?php echo $pantalq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pantalCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5022,7 +5156,7 @@
                         <th style="width:13%"><?php echo $pascualaq2 ?></th>
                         <th style="width:13%"><?php echo $pascualaq3 ?></th>
                         <th style="width:13%"><?php echo $pascualaq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pascualaGVillamilCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5031,7 +5165,7 @@
                         <th style="width:13%"><?php echo $pogolasipq2 ?></th>
                         <th style="width:13%"><?php echo $pogolasipq3 ?></th>
                         <th style="width:13%"><?php echo $pogolasipq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pogoLasipCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5040,7 +5174,7 @@
                         <th style="width:13%"><?php echo $pugaroq2 ?></th>
                         <th style="width:13%"><?php echo $pugaroq3 ?></th>
                         <th style="width:13%"><?php echo $pugaroq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $pugaroIntegratedCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5049,7 +5183,7 @@
                         <th style="width:13%"><?php echo $sabanganq2 ?></th>
                         <th style="width:13%"><?php echo $sabanganq3 ?></th>
                         <th style="width:13%"><?php echo $sabanganq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $sabanganCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5058,7 +5192,7 @@
                         <th style="width:13%"><?php echo $salapingaoq2 ?></th>
                         <th style="width:13%"><?php echo $salapingaoq3 ?></th>
                         <th style="width:13%"><?php echo $salapingaoq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $salapingaoCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5067,7 +5201,7 @@
                         <th style="width:13%"><?php echo $salisayq2 ?></th>
                         <th style="width:13%"><?php echo $salisayq3 ?></th>
                         <th style="width:13%"><?php echo $salisayq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $salisayCount ?></th>
                         
                     </tr>
 
@@ -5077,7 +5211,7 @@
                         <th style="width:13%"><?php echo $suitq2 ?></th>
                         <th style="width:13%"><?php echo $suitq3 ?></th>
                         <th style="width:13%"><?php echo $suitq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $suitCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5086,7 +5220,7 @@
                         <th style="width:13%"><?php echo $taysonq2 ?></th>
                         <th style="width:13%"><?php echo $taysonq3 ?></th>
                         <th style="width:13%"><?php echo $taysonq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $tAysonRosarioCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5095,7 +5229,7 @@
                         <th style="width:13%"><?php echo $tambacq2 ?></th>
                         <th style="width:13%"><?php echo $tambacq3 ?></th>
                         <th style="width:13%"><?php echo $tambacq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $tambacCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5104,7 +5238,7 @@
                         <th style="width:13%"><?php echo $tebengq2 ?></th>
                         <th style="width:13%"><?php echo $tebengq3 ?></th>
                         <th style="width:13%"><?php echo $tebengq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $tebengCount ?></th>
                         
                     </tr>
 
@@ -5114,7 +5248,7 @@
                         <th style="width:13%"><?php echo $zarateq2 ?></th>
                         <th style="width:13%"><?php echo $zarateq3 ?></th>
                         <th style="width:13%"><?php echo $zarateq4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $victoriaQZarateCount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5123,7 +5257,7 @@
                         <th style="width:13%"><?php echo $west1q2 ?></th>
                         <th style="width:13%"><?php echo $west1q3 ?></th>
                         <th style="width:13%"><?php echo $west1q4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $westCentralICount ?></th>
                         
                     </tr>
                     <tr class="school" >
@@ -5132,7 +5266,7 @@
                         <th style="width:13%"><?php echo $west2q2 ?></th>
                         <th style="width:13%"><?php echo $west2q3 ?></th>
                         <th style="width:13%"><?php echo $west2q4 ?></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $westCentralIICount ?></th>
                         
                     </tr>
 

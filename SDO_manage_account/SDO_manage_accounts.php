@@ -202,10 +202,18 @@
     }
     }
 ?>
-
-
-
-
+<?php
+    include('../database.php');
+    if(isset($_POST['add'])) {
+        $start = $_POST['start'];
+        $end = $_POST['end'];
+        if(!empty($start) && !empty($end)) {
+            $sql = "INSERT INTO school_year (start, end) VALUES ('$start', '$end')";
+            if ($conn->query($sql) === TRUE) {
+            }
+        } 
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1084,12 +1092,14 @@
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
+                <form action="" method="post">
                 <h5>ADD SCHOOL YEAR</h5>
                 <label for="start">START OF SCHOOL YEAR</label>
                     <input type="date" name="start" id="startDateCalendar">
                 <label for="end">END OF SCHOOL YEAR</label>
                     <input type="date" name="end" id="endDateCalendar">
-                <button id="submitBtn" style="width: 100%;">Submit</button>
+                <button id="submitBtn" name="add" style="width: 100%;">Submit</button>
+                </form>
             </div>
         </div>
 

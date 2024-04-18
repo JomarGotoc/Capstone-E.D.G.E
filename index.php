@@ -1,3 +1,27 @@
+<?php
+    include('database.php');
+    $query = "SELECT end FROM school_year ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $endDate = strtotime($row['end']);
+        $today = strtotime(date('Y-m-d'));
+
+        if ($today > $endDate) {
+            $activationStatus = 'deactivate';
+        } else {
+            $activationStatus = 'activate';
+        }
+        $tablesToUpdate = ['executive_committee', 'school_admin', 'adviser', 'counselor', 'principal'];
+        foreach ($tablesToUpdate as $table) {
+            $updateQuery = "UPDATE $table SET activation = '$activationStatus'";
+            mysqli_query($conn, $updateQuery);
+        }
+    }
+
+    mysqli_close($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
