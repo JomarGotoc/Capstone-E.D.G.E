@@ -1095,6 +1095,330 @@ if(isset($_POST['print'])) {
             background-color: #190572;
         }
 
+        /*
+         body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url(../../img/bg.png);
+            background-size: cover;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+            background-color: #190572;
+            border-radius: 20px;
+        }
+    
+        ::-webkit-scrollbar-track {
+            background-color: #E2DFEE;
+            border-radius: 20px;
+        }
+
+        .top-container {
+            height: 42px; 
+            background-color: #130550;;
+            position: fixed;
+            top: 94px; 
+            width: 91%;
+            z-index: 99; 
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .top-container h3{
+            color: #F3F3F3;
+            margin-left: 40rem;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-container {
+            width: 85rem;
+            height: calc(90vh - 140px);
+            margin: 130px 27px 30px; 
+            bottom: 0;
+            background-color: #E2DFEE;
+            opacity: 80%;
+            overflow: auto;
+            padding: 20px;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            position: relative;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .wide-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; 
+        }
+
+        .column {
+            flex: 0 0 calc(16.6667%);
+            margin-bottom: 5px;
+        }
+
+        .wide-columns {
+            flex: 0 0 calc(40% - 0px);
+            margin-bottom: 20px;
+        }
+
+        .wide-column {
+            flex: 0 0 calc(12% - 10px);
+            margin-bottom: 20px;
+        }
+
+        .column-right {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+            margin-right: auto; 
+        }
+
+        .column-left {
+            flex: 0 0 calc(15%);
+            margin-left: auto; 
+        }
+
+        .row .column:not(:last-child),
+        .wide-row .column:not(:last-child) {
+            margin-right: 0;
+        }
+        
+        .full-width {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+        }
+
+        .half-width {
+            flex: 0 0 calc(25%);
+            margin-right: 0;
+        }
+
+        .containers {
+            background-color: #190572;
+            padding: .5px;
+        }
+
+        .first{
+            border-radius: 3px;
+            border: 1px solid #190572;
+            background: #FBFBFB;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            flex-shrink: 0;
+            text-align: center;
+            font-size: 15px;
+            padding-left: 50px;
+            padding-right: 50px;
+        }
+
+        .first h3{
+            color: #190572;
+        }
+
+        .select-wrapper {
+            position: relative;
+            background: #FBFBFB;
+            color: #190572;
+        }
+
+        #topdown {
+            padding: 2px;
+            width: 100%;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: left;
+            border-radius: 5px;
+        }
+
+        select{
+            border-radius: 2px;
+            background: #F3F3F3;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+
+        .second{
+            border-radius: 3px;
+            background-color: #2206A0;
+            text-align: center;
+            font-family: "Darker Grotesque";
+        }
+
+        .second h3{
+            color: #FFF;
+            letter-spacing: 3px;
+        }
+
+        h3{
+            color: #FFFFFFE5;
+            margin-left: 10px;
+            margin: 0;
+        }
+
+        input{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 400px;
+            margin-left: 10px;
+            border: none;
+            background: none;
+        }
+
+        .right{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 310px;
+            border: none;
+            background: none;
+            margin-left: 10px;
+        }
+
+        .column-right h3, 
+        .half-width h3{
+            color: #190572;
+        }
+
+        .text-container {
+            position: relative;
+            width: 800px; 
+            margin-left: 20px;
+        }
+
+        .text-container textarea {
+            width: calc(100% - 5px);
+            height: 200px;
+            padding: 10px;
+            font-size: 13px;
+            border: 1px solid #190572;
+            border-radius: 7px;
+            background: rgba(25, 5, 114, 0.19);
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) inset, 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            margin-bottom: 10px;
+            margin: 0 auto;
+            line-height: 1.5; 
+            resize: none;
+        }
+
+        .text-container textarea::placeholder {
+            color: #190572;
+            font-weight: 900;
+            letter-spacing: 2px;
+            font-family: 'Darker Grotesque', sans-serif;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.90); 
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            padding: 5px;
+            width: fit-content;
+            border-radius: 7px;
+        }
+
+        .text-container div {
+            margin: 0;
+        }
+    
+        .ints{
+            margin-top: 20px;
+        }
+    
+        .wide-columns .text-container {
+            width: 530px; 
+            margin-left: auto;
+        }
+
+        .editable-container {
+            position: relative; 
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .editable-container h3 {
+            margin: 0;
+        }
+
+        .editable-icon {
+            position: absolute; 
+            right: 0; 
+            margin: 0; 
+            cursor: pointer;
+        }
+        .columns{
+            width: 23rem;
+        }
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 2rem;
+    }
+    th, td {
+        border: 1px solid black;
+        position: relative;
+        padding: 0; /* Remove padding 
+        text-align: center;
+        background-color: #fff;
+    }
+    th {
+        background-color: #35A7FA; /* Change background color 
+        color: white; /* Change text color 
+    }
+    input {
+        width: calc(100% - 10px); /* Adjust width for padding 
+        height: 100px; /* Adjust height as needed 
+        box-sizing: border-box;
+        margin: 5px; /* Add margin to prevent text from extending to the left 
+        resize: none; /* Prevent resizing 
+    }
+    .date {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 12px;
+        color: gray;
+    }
+    .row1 {
+        background-color: #35A7FA;
+    }
+    .containers input{
+        height: 50px;
+    }
+    .saveButton {
+        background-color: rgba(12, 5, 47, 1); /* Set background color 
+        color: white; /* Set text color 
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        margin-left: 76.4rem;
+    }
+    .exitIcon {
+        font-size: 24px;
+        color: #FFF;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        cursor: pointer;
+    }
+    */
+
         @media screen and (max-width: 800px) {
             header{
                 height: 40px;
@@ -1359,6 +1683,146 @@ if(isset($_POST['print'])) {
             </tr>
         </table>
 
+        <!--POP UP CONTENT
+         <form action="" method="POST" class="form-container">
+    <div class="top-container">
+        <div class="school">
+            <span class="exitIcon" onclick="closeForm()">X</span>
+            <h3>PUPIL'S RECORD</h3>
+        </div>
+    </div>
+    <div class="main-container">
+        <div class="row">
+            <div class="columns">
+                <div class="containers first">
+                    <h3>S.Y. 2023 - 2024: Quarter 1</h3>
+                </div>
+            </div>
+            <div class="column">
+                <div class="containers second" style="display: none;">
+                    <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Reports</h3></button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column" >
+                <div class="containers" style="background-color: #190572">
+                    <h3 style="margin-left:10px">LRN</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="lrn" id="lrn"  readonly>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Grade & Section</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers" style="background-color: #F3F3F3; ">
+                <input type="text" name="grade" class="right" id="grade">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Pupil's Name</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="fullname" id="fullname"  readonly>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Identification</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers" style="background-color: #F3F3F3;">
+                <input type="text" name="classification" id="classification" class="right" readonly>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Guardian Name</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                </div>
+            </div>
+            <div class="column column-left">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left:10px">Contact Number</h3>
+                </div>
+            </div>
+            <div class="column half-width">
+                <div class="containers editable-container" style="background-color: #F3F3F3;">
+                    <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="right">
+                </div>
+            </div>
+        </div>
+
+        <table>
+        <tr id="row1">
+            <th>Notes</th>
+            <th>Topic/Matter</th>
+            <th>Intervention</th>
+            <th>Advice</th>
+            <th>Recommended to</th>
+          </tr>
+          <tr id="row2">
+            <td><input class="put" type="text" placeholder="Enter Notes"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Topic/Matter"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Intervention"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Advice"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Recommended to"><span class="date"></span></td>
+          </tr>
+          <tr id="row3">
+            <td><input type="text" placeholder="Enter Notes"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Topic/Matter"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Intervention"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Advice"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Recommended to"><span class="date"></span></td>
+          </tr>
+          <tr id="row4">
+            <td><input type="text" placeholder="Enter Notes"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Topic/Matter"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Intervention"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Advice"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Recommended to"><span class="date"></span></td>
+          </tr>
+          <tr id="row5">
+            <td><input type="text" placeholder="Enter Notes"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Topic/Matter"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Intervention"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Advice"><span class="date"></span></td>
+            <td><input type="text" placeholder="Enter Recommended to"><span class="date"></span></td>
+          </tr>
+        </table>
+          
+        <button id="saveButton" class="saveButton">Save Changes</button>
+          
+          
+    </div>
+    </form>
+
+    -->
+
         <div class="save">
             <button id="save">Update All Records</button>
         </div>
@@ -1399,6 +1863,28 @@ if(isset($_POST['print'])) {
 </div>
 
 <script >
+    //FUNCTIONS FOR INTERVENTIONS
+    function closeForm() {
+    document.getElementById('formContainer').style.display = 'none'; // Hide the form container
+    }       
+
+    document.getElementById('saveButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    var currentDate = new Date();
+    var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+    
+    // Update date only for the input boxes with data entered
+    var inputFields = document.querySelectorAll('input[type="text"]');
+    inputFields.forEach(function(inputField) {
+        if (inputField.value.trim() !== '') {
+            var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
+            dateElement.textContent = formattedDate;
+            inputField.disabled = true; // Disable input field for the saved row
+        }
+    });
+});
+
 //show login
 document.addEventListener("DOMContentLoaded", function() {
     var updateRecordButtons = document.querySelectorAll(".updateRecordButton");
