@@ -990,7 +990,7 @@ if(isset($_POST['print'])) {
             display: none;
         }
 
-        .close {
+        .closes, .close {
                 color: #aaa;
                 float: right;
                 font-size: 28px;
@@ -998,8 +998,15 @@ if(isset($_POST['print'])) {
             }
 
         .close:hover,
+        .closes:focus, 
         .close:focus {
             color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .closes:hover{
+            color: #130550;
             text-decoration: none;
             cursor: pointer;
         }
@@ -1690,7 +1697,7 @@ if(isset($_POST['print'])) {
         </div>
     </div>
     <div class="main-container">
-    <span class="close" onclick="closeForm()">&times;</span>
+    <span class="closes" onclick="closeForm()">&times;</span>
         <div class="row">
             <div class="columns">
                 <div class="containers first">
@@ -1831,7 +1838,7 @@ if(isset($_POST['print'])) {
     <div class="overlay" id="overlay"></div>
 
 
-    <div class="login-container">
+    <div class="login-container" id="login-container">
     <span class="close">&times;</span>
     <h4>Adding <span class="student-name"></span> as Pupil At Risk</h4>
 
