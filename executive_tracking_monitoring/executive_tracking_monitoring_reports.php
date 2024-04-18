@@ -4924,14 +4924,14 @@
                 </div>
             </div>
             <div class="select-wrapper">
-            <form id="classification" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
-                <select id="classificationselect" name="classification" class="containers second">
-                    <option value="academic_english"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_english') echo ' selected'; ?>>Academic - Literacy in English</option>
-                    <option value="academic_filipino"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_filipino') echo ' selected'; ?>>Academic - Literacy in Filipino</option>
-                    <option value="academic_numeracy"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_numeracy') echo ' selected'; ?>>Academic - Numeracy</option>
-                    <option value="behavioral"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'behavioral') echo ' selected'; ?>>Behavioral</option>
-                </select>
-            </form>
+            <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+        <option value="1">Quarter 1</option>
+        <option value="2">Quarter 2</option>
+        <option value="3">Quarter 3</option>
+        <option value="4">Quarter 4</option>
+    </select>
+</form>
                 </div>
         </div>
 
@@ -5290,12 +5290,11 @@
         }
 </script>
 <script>
-    document.getElementById("quarterSelect").addEventListener("change", function() {
-        var selectedValue = this.value;
-        console.log("Selected value:", selectedValue);
-        document.getElementById("quarterForm").submit();
-    });
+    function submitForm() {
+        document.getElementById('quarterForm').submit();
+    }
 </script>
+
 <script>
     document.getElementById("classificationselect").addEventListener("change", function() {
         var selectedValue = this.value;
