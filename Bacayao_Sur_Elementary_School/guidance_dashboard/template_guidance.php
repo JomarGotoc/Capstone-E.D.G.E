@@ -1,3 +1,135 @@
+<?php
+    $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
+
+    $currentFileName1 = basename(__FILE__,'_q1.php');
+    $currentFileName1 = $currentFileName1 . '.php?employment_number=' . $_GET['employment_number'];
+
+    $currentFileName2 = basename(__FILE__,'_q1.php');
+    
+    include("../../database.php");
+    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
+    $words = explode('_', $filenameWithoutExtension);
+
+    if (count($words) >= 4) {
+        $secondWord = $words[1];
+        $fourthWord = $words[3];
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
+        $result1 = $conn->query($sql);
+        $result2 = $conn->query($sql);
+    } 
+?>
+<?php
+include('../../database.php');
+$filename = basename(__FILE__, '.php');
+$words = explode('_', $filename);
+$secondWord = $words[1];
+$fourthWord = $words[3];
+$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+$count = 0;
+$lrnCounted = array(); // Array to keep track of LRNs already counted
+
+foreach ($tables as $table) {
+    $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $lrn = $row['lrn'];
+            if (!in_array($lrn, $lrnCounted)) {
+                // If LRN not already counted, add it to the count and mark as counted
+                $count++;
+                $lrnCounted[] = $lrn;
+            }
+        }
+    }
+}
+$conn->close();
+?>
+<?php
+    include('../../database.php');
+
+    // Get the current PHP filename without the extension
+    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
+
+    // Remove the ".php" extension
+    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
+
+    // Explode the filename into an array of words
+    $words = explode('_', $currentFileWithoutExtension);
+
+    // Initialize variables for grade and section
+    $grade = "";
+    $section = "";
+
+    // Check if there are at least 4 words
+    if (count($words) >= 4) {
+        // Get the 2nd and 4th words
+        $grade = $words[1];
+        $section = $words[3];
+
+        // Initialize an array to store the results
+        $results = array();
+
+        // Perform query on academic_english table
+        $results[] = fetchTable($conn, "academic_english", $grade, $section);
+
+        // Perform query on academic_filipino table
+        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
+
+        // Perform query on academic_numeracy table
+        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
+
+        // Perform query on behavioral table
+        $results[] = fetchTable($conn, "behavioral", $grade, $section);
+
+        // Close the connection
+        $conn->close();
+    } 
+
+    function fetchTable($conn, $tableName, $grade, $section) {
+        // Prepare and execute the SQL query with the condition for quarter = 1
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $grade, $section);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            // Return an array containing the table name and the fetched data
+            $tableData = array();
+            while ($row = $result->fetch_assoc()) {
+                $tableData[] = $row;
+            }
+
+            return array($tableName, $tableData);
+        } else {
+            return null;
+        }
+
+        // Close the statement
+        $stmt->close();
+    }
+?>
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+?>
+<?php
+if(isset($_POST['print'])) {
+    $filename = basename($_SERVER['PHP_SELF']);
+    $words = explode('_', $filename);
+    
+    if(count($words) >= 4) {
+        $grade = $words[1];
+        $section = $words[3];
+        
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        $filename1 = basename($_SERVER['PHP_SELF']);
+        
+        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
+        
+        header("Location: $redirect_url");
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -159,6 +291,7 @@
 
         ::-webkit-scrollbar {
             width: 10px;
+            display: none;
         }
     
         ::-webkit-scrollbar-thumb {
@@ -209,12 +342,13 @@
 
         .main-container {
             width: 100%;
-            margin-top: 80px;
+            margin-top: 7%;
             height: 80%;
             background-color: white;
             opacity: 80%;
             overflow: hidden;
             padding: 20px;
+            z-index: 1;
         }
 
         .row {
@@ -490,18 +624,7 @@
         }
 
 
-        .main-containers {
-            width: 100%;
-            height: calc(100vh - 140px);
-            margin: 20px;
-            margin-top: 80px;
-            bottom: 0;
-            background-color: #E2DFEE;
-            overflow: auto;
-            padding: 20px;
-            border-radius: 20px;
-            z-index: 2;
-        }
+
 
         .rows {
             display: flex;
@@ -510,7 +633,7 @@
         }
 
         .columns input[type="text"],
-        .columns,
+        .columns-group,
         input[type="date"] {
             flex: 1;
             padding: 5px;
@@ -519,7 +642,7 @@
         }
         input[type="text"],
         input[type="date"],
-        .columns input[type="text"],
+        .columns-group input[type="text"],
         select{
             border: none;
         }
@@ -663,7 +786,7 @@
             display: none;
         }
 
-        .columns input[type="text"]{
+        .columns-group input[type="text"]{
             width: 90%;
         }
 
@@ -756,6 +879,7 @@
             margin-top: -20px;
             display: flex;
             justify-content:right;
+            margin-right: 150px;
         }
 
         .legend-containers .icon{
@@ -858,14 +982,22 @@
             display: none;
         }
 
-        .close {
+        .closes, .close {
                 color: #aaa;
                 float: right;
                 font-size: 28px;
                 font-weight: bold;
             }
 
+            .closes{
+                background-color: #130550;
+                font-size: 26px;
+                padding-right: 5px;
+            }
+
         .close:hover,
+        .closes:focus, 
+        .closes:hover,
         .close:focus {
             color: white;
             text-decoration: none;
@@ -886,7 +1018,7 @@
         .login-container button:hover {
             background-color: #ddd;
             border: 1px solid #0C052F;
-            color: #190572;
+            color: #130550;
         }
 
         .form-group {
@@ -922,6 +1054,7 @@
             position: absolute;
             bottom: 10px;
             right: 20px;
+            z-index: 999;
         }
 
         .pagination button {
@@ -935,7 +1068,7 @@
         }
 
         .pagination button:hover {
-            background-color: #190572;
+            background-color: #130550;
         }
 
         .save {
@@ -945,7 +1078,8 @@
             left: 50%;
             transform: translateX(-50%);
             font-weight: bold;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);   
+            z-index: 999;         
         }
 
         .save button {            
@@ -959,9 +1093,223 @@
             font-weight: bold;
         }
 
+        .saveButton:hover,
         .save button:hover {
+            background-color: #130550;
+        }
+
+         .form-container {
+            justify-content: center;
+            align-items: center;
+            background:white;            
+            height: 95%;
+            width: 97%;
+            overflow:auto;
+            border-radius: 7px;
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .main-containers {
+            height: 95%;
+            background-color: #E2DFEE;
+            padding: 10px;
+            z-index: 999;
+            position: relative;
+        }
+
+        .rows {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .wide-rows {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; 
+        }
+
+        .columns {
+            flex: 0 0 calc(16.6667%);
+            margin-bottom: 5px;
+        }
+
+        .column-rights {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+            margin-right: auto; 
+        }
+
+        .column-lefts {
+            flex: 0 0 calc(15%);
+            margin-left: auto; 
+        }
+
+        .rows .columns:not(:last-child),
+        .wide-rows .columns:not(:last-child) {
+            margin-right: 0;
+        }
+        
+        .full-widths {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+        }
+
+        .half-widths {
+            flex: 0 0 calc(25%);
+            margin-right: 0;
+        }
+
+        .containerss {
             background-color: #190572;
         }
+        
+        .firsts{
+            border-radius: 3px;
+            background: #FBFBFB;
+            text-align: center;
+            justify-content: center;
+            padding-top: 4px;
+            padding-bottom: 4px;
+            font-size: 15px;
+            padding-left: 51px;
+            padding-right: 51px;
+            white-space: nowrap;
+        }
+
+        .first h3{
+            color: #190572;
+        }
+
+        .seconds{
+            border-radius: 3px;
+            text-align: center;
+            font-family: "Darker Grotesque";
+        }
+
+        .seconds h3{
+            font-size: 18px;
+            color: #FFF;
+            letter-spacing: 3px;
+            padding-top: 1px;
+            padding-bottom: 1px;
+        }
+
+        .containerss input{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 400px;
+            margin-left: 10px;
+            border: none;
+            background: none;
+        }
+
+        .firsts h3:first-child{
+            color: #130550;
+        }
+
+        .containerss h3{
+            color: #ddd;
+        }
+
+        .rights{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 310px;
+            border: none;
+            background: none;
+            margin-left: 10px;
+        }
+
+        .column-rights h3, 
+        .half-widths h3{
+            color: #190572;
+        }
+
+        .editable-containers {
+            position: relative; 
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .editable-containers h3 {
+            margin: 0;
+        }
+
+        .editable-icons {
+            position: absolute; 
+            right: 0; 
+            margin: 0; 
+            cursor: pointer;
+        }
+        .columns{
+            width: 23rem;
+        }
+    .update-record {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 2rem;
+    }
+    .update-record th, 
+    .update-record td {
+        border: 1px solid black;
+        position: relative;
+        padding: 0;
+        text-align: center;
+        background-color: #fff;
+    }
+    .update-record th {
+        background-color: #35A7FA; 
+        color: white; 
+    }
+    .form-container .table_body td input {
+        width: calc(100% - 10px); 
+        height: 100px; 
+        box-sizing: border-box;
+        margin: 5px; 
+        resize: none; 
+        border: none;
+    }
+    .dates {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 12px;
+        color: gray;
+    }
+    #row1 th{
+        background-color: #190572;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .saveButton {
+        background-color: rgba(12, 5, 47, 1); 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .record_header{
+        background-color: #130550;
+        color: #ddd;
+        padding: 3px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        display: flex;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
 
         @media screen and (max-width: 800px) {
             header{
@@ -1050,23 +1398,31 @@
                     <h3 style="margin-left:7px">Employee Number</h3>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $employment_number; ?--></h3>
+            <!--?php
+            if ($result1->num_rows > 0) {
+                // Get the data of the first row
+                $row = $result1->fetch_assoc();
+                $employment_number = $row["employment_number"];
+                echo "<div class=\"column column-right\">
+                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
+                    <h3 style=\"color: #190572; margin-left:7px\">$employment_number</h3>
                 </div>
-            </div>
+            </div>";
+            }
+            ?-->
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Total Students</h3>
                 </div>
             </div>
-
-
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $count ?--></h3>
-                </div>
+                <!--?php 
+                        $capitalizedSecondWord = ucfirst($secondWord);
+                        echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
+                    ?-->    
+            </div>
             </div>
 
         </div>
@@ -1078,11 +1434,26 @@
                     <h3 style="margin-left:7px">Guidance Counselor</h3>
                 </div>
             </div>
-            <div class="column column-right">
-                <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $fullname; ?--></h3>
+            <!--?php
+            if ($result2->num_rows > 0) {
+                $row = $result2->fetch_assoc();
+                $fullname = $row["fullname"];
+                echo "<div class=\"column column-right\">
+                <div class=\"containers\" style=\"background-color: #F3F3F3;\">
+                    <h3 style=\"color: #190572; margin-left:7px\">$fullname</h3>
                 </div>
-            </div>  
+            </div>";
+            }
+            ?-->
+
+            <div class="column column-left">
+               
+            </div>
+            <div class="column half-width">
+                <div class="containers" style="background-color: #F3F3F3;">
+                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $count ?--></h3>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -1103,6 +1474,30 @@
                 </div>
             </div>
         </div>
+            <!--<div class="legend-container">
+                    <div class="legend-item">
+                        <div class="legend-color unresolved"></div>
+                        <p>Unresolved</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color pending"></div>
+                        <p>Pending</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color on-going"></div>
+                        <p>On Going</p>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color resolved"></div>
+                        <p>Resolved</p>
+                    </div>
+                </div> -->
+                <div class="legend-containers">
+                    <div class="legend-item">
+                        <i class="par-icon bx bx-face icon"></i>
+                        <p>Behavioral</p>
+                    </div>                   
+                </div>
 
         <div class="wide-row">
             <div class="wide-column">
@@ -1120,38 +1515,169 @@
                     <h3 style="padding: 2px;">P.A.R. Identification</h3>
                 </div>
             </div>
+
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 2px;">Grade & Section</h3>
+                    <h3 style="padding: 2px;">Status</h3>
                 </div>
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 2px;">Status </h3>
+                    <h3 style="padding: 2px;">Action</h3>
                 </div>
             </div>
-    </div>
+        </div>
 
         <table border="0" id="pupilTable">
             <tr class='sheshable'>
                 <th style='width:14%'>sdrfgrg</th>
-                <th style='width:22%'>Stephanie Mislang</th>
+                <th style='width:22%'>srdgf</th>
                 <th style='width:13%'class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon'></i>
-                            <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon"></i>
-                    </div> 
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                    </div>
                 </th>
-                <th style='width:15%'>srdgf</th>
-                <th style='width:15%'>sgsdasd</th>
+                <th style='width:16%'>sgsdasd</th>
+                <th style='width:14%' class='act'>
+                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
             </tr>
-
         </table>
+    </div>
+
+         <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+            <div class="main-containers">
+            <span class="closes" onclick="closeForm()">&times;</span>
+            <h3 class="record_header">PUPIL'S RECORD</h3>
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss firsts">
+                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
+                        </div>
+                    </div>
+                    <div class="columns" style="background:none">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3; ">
+                        <input type="text" name="grade" class="rights" id="grade">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Identification</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
 
         <div class="save">
             <button id="save">Update All Records</button>
@@ -1164,13 +1690,13 @@
     <div class="overlay" id="overlay"></div>
 
 
-    <div class="login-container">
+    <div class="login-container" id="login-container">
     <span class="close">&times;</span>
     <h4>Adding <span class="student-name"></span> as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
         <div class="row">
-            <div class="columns">
+            <div class="columns-group">
                 <div class="form-group">
                     <label for="topdown">Identification</label>
                     <select name="identification" class="identificationDropdown">
@@ -1193,6 +1719,43 @@
 </div>
 
 <script >
+    //FUNCTIONS FOR INTERVENTIONS
+    function closeForm() {
+    document.getElementById('formContainer').style.display = 'none'; // Hide the form container
+    }       
+
+    document.getElementById('saveButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    var currentDate = new Date();
+    var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+    
+    // Update date only for the input boxes with data entered
+    var inputFields = document.querySelectorAll('input[type="text"]');
+    inputFields.forEach(function(inputField) {
+        if (inputField.value.trim() !== '') {
+            var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
+            dateElement.textContent = formattedDate;
+            inputField.disabled = true; // Disable input field for the saved row
+        }
+    });
+});
+
+//show form-container
+function showPupilRecord() {
+        var pupilRecord = document.querySelector(".form-container");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeForm() {
+        var pupilRecord = document.querySelector(".form-container");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
 //show login
 document.addEventListener("DOMContentLoaded", function() {
     var updateRecordButtons = document.querySelectorAll(".updateRecordButton");
