@@ -451,6 +451,17 @@ if(isset($_POST['print'])) {
             font-size: 16.5px;
         }
 
+        #topdown2 {
+            padding: 1px;
+            width: 369px;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: start;
+            border: none;
+            font-weight: bold;
+            font-size: 16.5px;
+        }
+
         .second{
             background-color: #2206A0;
             text-align: center;
@@ -535,51 +546,6 @@ if(isset($_POST['print'])) {
         .sch h1 {
             color: #FFFFFF;
         }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background-color: #FFEEEE;
-            border: 1px solid #FFCDCD;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 14px;
-        }
-        
-        .popup h2 {
-            font-size: larger;
-            color: #190572;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-        
-        .popup .row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-        
-        .popup .containerss {
-            flex-basis: 45%;
-            margin-top: 10px;
-            padding: 15px;
-            text-align: center;
-            margin-right: 5px;
-            margin-left: 5px;
-            margin-bottom: 15px;
-            width: 300px;
-            height: 200px;
-            position: relative;
-            border-radius: 10px;
-            border: 1px solid #190572;
-            background: rgba(25, 5, 114, 0.33);
-        }
         
         .close-icon {
             position: absolute;
@@ -629,7 +595,7 @@ if(isset($_POST['print'])) {
         .rows {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .columns input[type="text"],
@@ -1133,7 +1099,6 @@ if(isset($_POST['print'])) {
 
         .columns {
             flex: 0 0 calc(16.6667%);
-            margin-bottom: 5px;
         }
 
         .column-rights {
@@ -1164,22 +1129,21 @@ if(isset($_POST['print'])) {
 
         .containerss {
             background-color: #190572;
+            height: 25px;
         }
         
         .firsts{
-            border-radius: 3px;
             background: #FBFBFB;
             text-align: center;
             justify-content: center;
             padding-top: 4px;
-            padding-bottom: 4px;
             font-size: 15px;
             padding-left: 51px;
             padding-right: 51px;
             white-space: nowrap;
         }
 
-        .first h3{
+        .firsts h3{
             color: #190572;
         }
 
@@ -1194,7 +1158,6 @@ if(isset($_POST['print'])) {
             color: #FFF;
             letter-spacing: 3px;
             padding-top: 1px;
-            padding-bottom: 1px;
         }
 
         .containerss input{
@@ -1308,6 +1271,42 @@ if(isset($_POST['print'])) {
         display: flex;
         padding-top: 4px;
         padding-bottom: 4px;
+    }
+
+    .checkbox-group{
+        text-align: left;
+        margin-left: 5px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkbox-group label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+    }
+
+    .checkbox-group label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 15px;
+        border: 2px solid #130550; 
+        background-color: white; 
+        border-radius: 4px;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + label:before {
+        content: '\2713';
+        font-size: 16px;
+        color: white; 
+        background-color: #130550; 
+        text-align: center;
+        line-height: 20px;
     }
 
         @media screen and (max-width: 800px) {
@@ -1465,7 +1464,7 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column column-right">
                 <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
                         <option value="" disabled selected hidden>Quarter 1</option>
                         <option value="q1">Quarter 1</option>
                         <option value="q2">Quarter 2</option>
@@ -1578,7 +1577,7 @@ if(isset($_POST['print'])) {
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
             <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">PUPIL'S RECORD</h3>
+            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1606,12 +1605,17 @@ if(isset($_POST['print'])) {
                     </div>
                     <div class="columns column-lefts">
                         <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Grade & Section</h3>
+                            <h3 style="margin-left:10px">Status</h3>
                         </div>
                     </div>
                     <div class="columns half-widths">
-                        <div class="containerss" style="background-color: #F3F3F3; ">
-                        <input type="text" name="grade" class="rights" id="grade">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -1630,7 +1634,7 @@ if(isset($_POST['print'])) {
                     </div>
                     <div class="columns column-lefts">
                         <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Identification</h3>
+                            <h3 style="margin-left:10px">Grade & Section</h3>
                         </div>
                     </div>
                     <div class="columns half-widths">
@@ -1726,14 +1730,21 @@ if(isset($_POST['print'])) {
     <form class="login-form" action="" method="post">
         <div class="row">
             <div class="columns-group">
-                <div class="form-group">
-                    <label for="topdown">Identification</label>
-                    <select name="identification" class="identificationDropdown">
-                        <option value="option1">Academic - Literacy in English</option>
-                        <option value="option1">Academic - Literacy in Filipino</option>
-                        <option value="option1">Academic - Numeracy</option>
-                        <option value="option1">Behavioral</option>
-                    </select>
+            <div class="form-group">
+                    <label>Identification</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
+                        <label for="checkbox1">Academic - Literacy in English</label><br>
+                        
+                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
+                        <label for="checkbox2">Academic - Literacy in Filipino</label><br>
+                        
+                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
+                        <label for="checkbox3">Academic - Numeracy</label><br>
+                        
+                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
+                        <label for="checkbox4">Behavioral</label><br>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="date-added">Date Added</label>
