@@ -451,6 +451,17 @@ if(isset($_POST['print'])) {
             font-size: 16.5px;
         }
 
+        #topdown2 {
+            padding: 1px;
+            width: 369px;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: start;
+            border: none;
+            font-weight: bold;
+            font-size: 16.5px;
+        }
+
         .second{
             background-color: #2206A0;
             text-align: center;
@@ -629,7 +640,7 @@ if(isset($_POST['print'])) {
         .rows {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .columns input[type="text"],
@@ -1134,7 +1145,6 @@ if(isset($_POST['print'])) {
 
         .columns {
             flex: 0 0 calc(16.6667%);
-            margin-bottom: 5px;
         }
 
         .column-rights {
@@ -1168,12 +1178,10 @@ if(isset($_POST['print'])) {
         }
         
         .firsts{
-            border-radius: 3px;
             background: #FBFBFB;
             text-align: center;
             justify-content: center;
             padding-top: 4px;
-            padding-bottom: 4px;
             font-size: 15px;
             padding-left: 51px;
             padding-right: 51px;
@@ -1214,6 +1222,7 @@ if(isset($_POST['print'])) {
 
         .containerss h3{
             color: #ddd;
+            height: 25px;
         }
 
         .rights{
@@ -1549,7 +1558,7 @@ if(isset($_POST['print'])) {
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
             <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">PUPIL'S RECORD</h3>
+            <h3 class="record_header">BEHAVIORAL RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1577,12 +1586,17 @@ if(isset($_POST['print'])) {
                     </div>
                     <div class="columns column-lefts">
                         <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Grade & Section</h3>
+                            <h3 style="margin-left:10px">Status</h3>
                         </div>
                     </div>
                     <div class="columns half-widths">
-                        <div class="containerss" style="background-color: #F3F3F3; ">
-                        <input type="text" name="grade" class="rights" id="grade">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -1601,7 +1615,7 @@ if(isset($_POST['print'])) {
                     </div>
                     <div class="columns column-lefts">
                         <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Identification</h3>
+                            <h3 style="margin-left:10px">Grade & Section</h3>
                         </div>
                     </div>
                     <div class="columns half-widths">
