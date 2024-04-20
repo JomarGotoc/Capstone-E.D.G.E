@@ -467,6 +467,434 @@
     mysqli_close($conn);
 
 ?>
+<?php
+    include('../../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+   
+    $sqlKinderEnglish = "SELECT COUNT(LRN) AS count_kinder_english FROM $classification WHERE grade = 'kinder' AND quarter = '1' AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderEnglish = mysqli_query($conn, $sqlKinderEnglish);
+    $rowKinderEnglish = mysqli_fetch_assoc($resultKinderEnglish);
+    $kinderenglishq1 = $rowKinderEnglish['count_kinder_english'];    
+
+    $sqlKinderFilipino = "SELECT COUNT(LRN) AS count_kinder_filipino FROM $classification WHERE grade = 'kinder' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderFilipino = mysqli_query($conn, $sqlKinderFilipino);
+    $rowKinderFilipino = mysqli_fetch_assoc($resultKinderFilipino);
+    $kinderfilipinoq1 = $rowKinderFilipino['count_kinder_filipino'];
+
+    $sqlKinderNumeracy = "SELECT COUNT(LRN) AS count_kinder_numeracy FROM $classification WHERE grade = 'kinder' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderNumeracy = mysqli_query($conn, $sqlKinderNumeracy);
+    $rowKinderNumeracy = mysqli_fetch_assoc($resultKinderNumeracy);
+    $kindernumeracyq1 = $rowKinderNumeracy['count_kinder_numeracy'];
+
+    $sqlKinderBehavioral = "SELECT COUNT(LRN) AS count_kinder_behavioral FROM $classification WHERE grade = 'kinder' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderBehavioral = mysqli_query($conn, $sqlKinderBehavioral);
+    $rowKinderBehavioral = mysqli_fetch_assoc($resultKinderBehavioral);
+    $kinderbehavioralq1 = $rowKinderBehavioral['count_kinder_behavioral'];
+
+    // Query and variable names for Grade I and quarter 1
+    $sqlGradeIEnglish = "SELECT COUNT(LRN) AS count_grade_i_english FROM $classification WHERE grade = 'I' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIEnglish = mysqli_query($conn, $sqlGradeIEnglish);
+    $rowGradeIEnglish = mysqli_fetch_assoc($resultGradeIEnglish);
+    $oneenglishq1 = $rowGradeIEnglish['count_grade_i_english'];
+
+    $sqlGradeIFilipino = "SELECT COUNT(LRN) AS count_grade_i_filipino FROM $classification WHERE grade = 'I' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIFilipino = mysqli_query($conn, $sqlGradeIFilipino);
+    $rowGradeIFilipino = mysqli_fetch_assoc($resultGradeIFilipino);
+    $onefilipinoq1 = $rowGradeIFilipino['count_grade_i_filipino'];
+
+    $sqlGradeINumeracy = "SELECT COUNT(LRN) AS count_grade_i_numeracy FROM $classification WHERE grade = 'I' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeINumeracy = mysqli_query($conn, $sqlGradeINumeracy);
+    $rowGradeINumeracy = mysqli_fetch_assoc($resultGradeINumeracy);
+    $onenumeracyq1 = $rowGradeINumeracy['count_grade_i_numeracy'];
+
+    $sqlGradeIBehavioral = "SELECT COUNT(LRN) AS count_grade_i_behavioral FROM $classification WHERE grade = 'I' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIBehavioral = mysqli_query($conn, $sqlGradeIBehavioral);
+    $rowGradeIBehavioral = mysqli_fetch_assoc($resultGradeIBehavioral);
+    $onebehavioralq1 = $rowGradeIBehavioral['count_grade_i_behavioral'];
+
+    // Query and variable names for Grade II and quarter 1
+    $sqlGradeIIEnglish = "SELECT COUNT(LRN) AS count_grade_ii_english FROM $classification WHERE grade = 'II' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIEnglish = mysqli_query($conn, $sqlGradeIIEnglish);
+    $rowGradeIIEnglish = mysqli_fetch_assoc($resultGradeIIEnglish);
+    $twoenglishq1 = $rowGradeIIEnglish['count_grade_ii_english'];
+
+    $sqlGradeIIFilipino = "SELECT COUNT(LRN) AS count_grade_ii_filipino FROM $classification WHERE grade = 'II' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIFilipino = mysqli_query($conn, $sqlGradeIIFilipino);
+    $rowGradeIIFilipino = mysqli_fetch_assoc($resultGradeIIFilipino);
+    $twofilipinoq1 = $rowGradeIIFilipino['count_grade_ii_filipino'];
+
+    $sqlGradeIINumeracy = "SELECT COUNT(LRN) AS count_grade_ii_numeracy FROM $classification WHERE grade = 'II' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIINumeracy = mysqli_query($conn, $sqlGradeIINumeracy);
+    $rowGradeIINumeracy = mysqli_fetch_assoc($resultGradeIINumeracy);
+    $twonumeracyq1 = $rowGradeIINumeracy['count_grade_ii_numeracy'];
+
+    $sqlGradeIIBehavioral = "SELECT COUNT(LRN) AS count_grade_ii_behavioral FROM $classification WHERE grade = 'II' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIBehavioral = mysqli_query($conn, $sqlGradeIIBehavioral);
+    $rowGradeIIBehavioral = mysqli_fetch_assoc($resultGradeIIBehavioral);
+    $twobehavioralq1 = $rowGradeIIBehavioral['count_grade_ii_behavioral'];
+
+    // Query and variable names for Grade III and quarter 1
+    $sqlGradeIIIEnglish = "SELECT COUNT(LRN) AS count_grade_iii_english FROM $classification WHERE grade = 'III' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIEnglish = mysqli_query($conn, $sqlGradeIIIEnglish);
+    $rowGradeIIIEnglish = mysqli_fetch_assoc($resultGradeIIIEnglish);
+    $threeenglishq1 = $rowGradeIIIEnglish['count_grade_iii_english'];
+
+    $sqlGradeIIIFilipino = "SELECT COUNT(LRN) AS count_grade_iii_filipino FROM $classification WHERE grade = 'III' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIFilipino = mysqli_query($conn, $sqlGradeIIIFilipino);
+    $rowGradeIIIFilipino = mysqli_fetch_assoc($resultGradeIIIFilipino);
+    $threefilipinoq1 = $rowGradeIIIFilipino['count_grade_iii_filipino'];
+
+    $sqlGradeIIINumeracy = "SELECT COUNT(LRN) AS count_grade_iii_numeracy FROM $classification WHERE grade = 'III' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIINumeracy = mysqli_query($conn, $sqlGradeIIINumeracy);
+    $rowGradeIIINumeracy = mysqli_fetch_assoc($resultGradeIIINumeracy);
+    $threenumeracyq1 = $rowGradeIIINumeracy['count_grade_iii_numeracy'];
+
+    $sqlGradeIIIBehavioral = "SELECT COUNT(LRN) AS count_grade_iii_behavioral FROM $classification WHERE grade = 'III' AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIBehavioral = mysqli_query($conn, $sqlGradeIIIBehavioral);
+    $rowGradeIIIBehavioral = mysqli_fetch_assoc($resultGradeIIIBehavioral);
+    $threebehavioralq1 = $rowGradeIIIBehavioral['count_grade_iii_behavioral'];
+
+    mysqli_close($conn);
+?>
+<?php
+    include('../../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $sqlKinderEnglish = "SELECT COUNT(LRN) AS count_kinder_english FROM $classification WHERE grade = 'kinder' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderEnglish = mysqli_query($conn, $sqlKinderEnglish);
+    $rowKinderEnglish = mysqli_fetch_assoc($resultKinderEnglish);
+    $kinderenglishq2 = $rowKinderEnglish['count_kinder_english'];
+
+    $sqlKinderFilipino = "SELECT COUNT(LRN) AS count_kinder_filipino FROM $classification WHERE grade = 'kinder' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderFilipino = mysqli_query($conn, $sqlKinderFilipino);
+    $rowKinderFilipino = mysqli_fetch_assoc($resultKinderFilipino);
+    $kinderfilipinoq2 = $rowKinderFilipino['count_kinder_filipino'];
+
+    $sqlKinderNumeracy = "SELECT COUNT(LRN) AS count_kinder_numeracy FROM $classification WHERE grade = 'kinder' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderNumeracy = mysqli_query($conn, $sqlKinderNumeracy);
+    $rowKinderNumeracy = mysqli_fetch_assoc($resultKinderNumeracy);
+    $kindernumeracyq2 = $rowKinderNumeracy['count_kinder_numeracy'];
+
+    $sqlKinderBehavioral = "SELECT COUNT(LRN) AS count_kinder_behavioral FROM $classification WHERE grade = 'kinder' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderBehavioral = mysqli_query($conn, $sqlKinderBehavioral);
+    $rowKinderBehavioral = mysqli_fetch_assoc($resultKinderBehavioral);
+    $kinderbehavioralq2 = $rowKinderBehavioral['count_kinder_behavioral'];
+
+    // Query and variable names for Grade I and quarter 1
+    $sqlGradeIEnglish = "SELECT COUNT(LRN) AS count_grade_i_english FROM $classification WHERE grade = 'I' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIEnglish = mysqli_query($conn, $sqlGradeIEnglish);
+    $rowGradeIEnglish = mysqli_fetch_assoc($resultGradeIEnglish);
+    $oneenglishq2 = $rowGradeIEnglish['count_grade_i_english'];
+
+    $sqlGradeIFilipino = "SELECT COUNT(LRN) AS count_grade_i_filipino FROM $classification WHERE grade = 'I' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIFilipino = mysqli_query($conn, $sqlGradeIFilipino);
+    $rowGradeIFilipino = mysqli_fetch_assoc($resultGradeIFilipino);
+    $onefilipinoq2 = $rowGradeIFilipino['count_grade_i_filipino'];
+
+    $sqlGradeINumeracy = "SELECT COUNT(LRN) AS count_grade_i_numeracy FROM $classification WHERE grade = 'I' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeINumeracy = mysqli_query($conn, $sqlGradeINumeracy);
+    $rowGradeINumeracy = mysqli_fetch_assoc($resultGradeINumeracy);
+    $onenumeracyq2 = $rowGradeINumeracy['count_grade_i_numeracy'];
+
+    $sqlGradeIBehavioral = "SELECT COUNT(LRN) AS count_grade_i_behavioral FROM $classification WHERE grade = 'I' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIBehavioral = mysqli_query($conn, $sqlGradeIBehavioral);
+    $rowGradeIBehavioral = mysqli_fetch_assoc($resultGradeIBehavioral);
+    $onebehavioralq2 = $rowGradeIBehavioral['count_grade_i_behavioral'];
+
+    // Query and variable names for Grade II and quarter 1
+    $sqlGradeIIEnglish = "SELECT COUNT(LRN) AS count_grade_ii_english FROM $classification WHERE grade = 'II' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIEnglish = mysqli_query($conn, $sqlGradeIIEnglish);
+    $rowGradeIIEnglish = mysqli_fetch_assoc($resultGradeIIEnglish);
+    $twoenglishq2 = $rowGradeIIEnglish['count_grade_ii_english'];
+
+    $sqlGradeIIFilipino = "SELECT COUNT(LRN) AS count_grade_ii_filipino FROM $classification WHERE grade = 'II' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIFilipino = mysqli_query($conn, $sqlGradeIIFilipino);
+    $rowGradeIIFilipino = mysqli_fetch_assoc($resultGradeIIFilipino);
+    $twofilipinoq2 = $rowGradeIIFilipino['count_grade_ii_filipino'];
+
+    $sqlGradeIINumeracy = "SELECT COUNT(LRN) AS count_grade_ii_numeracy FROM $classification WHERE grade = 'II' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIINumeracy = mysqli_query($conn, $sqlGradeIINumeracy);
+    $rowGradeIINumeracy = mysqli_fetch_assoc($resultGradeIINumeracy);
+    $twonumeracyq2 = $rowGradeIINumeracy['count_grade_ii_numeracy'];
+
+    $sqlGradeIIBehavioral = "SELECT COUNT(LRN) AS count_grade_ii_behavioral FROM $classification WHERE grade = 'II' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIBehavioral = mysqli_query($conn, $sqlGradeIIBehavioral);
+    $rowGradeIIBehavioral = mysqli_fetch_assoc($resultGradeIIBehavioral);
+    $twobehavioralq2 = $rowGradeIIBehavioral['count_grade_ii_behavioral'];
+
+    // Query and variable names for Grade III and quarter 1
+    $sqlGradeIIIEnglish = "SELECT COUNT(LRN) AS count_grade_iii_english FROM $classification WHERE grade = 'III' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIEnglish = mysqli_query($conn, $sqlGradeIIIEnglish);
+    $rowGradeIIIEnglish = mysqli_fetch_assoc($resultGradeIIIEnglish);
+    $threeenglishq2 = $rowGradeIIIEnglish['count_grade_iii_english'];
+
+    $sqlGradeIIIFilipino = "SELECT COUNT(LRN) AS count_grade_iii_filipino FROM $classification WHERE grade = 'III' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIFilipino = mysqli_query($conn, $sqlGradeIIIFilipino);
+    $rowGradeIIIFilipino = mysqli_fetch_assoc($resultGradeIIIFilipino);
+    $threefilipinoq2 = $rowGradeIIIFilipino['count_grade_iii_filipino'];
+
+    $sqlGradeIIINumeracy = "SELECT COUNT(LRN) AS count_grade_iii_numeracy FROM $classification WHERE grade = 'III' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIINumeracy = mysqli_query($conn, $sqlGradeIIINumeracy);
+    $rowGradeIIINumeracy = mysqli_fetch_assoc($resultGradeIIINumeracy);
+    $threenumeracyq2 = $rowGradeIIINumeracy['count_grade_iii_numeracy'];
+
+    $sqlGradeIIIBehavioral = "SELECT COUNT(LRN) AS count_grade_iii_behavioral FROM $classification WHERE grade = 'III' AND quarter =2 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIBehavioral = mysqli_query($conn, $sqlGradeIIIBehavioral);
+    $rowGradeIIIBehavioral = mysqli_fetch_assoc($resultGradeIIIBehavioral);
+    $threebehavioralq2 = $rowGradeIIIBehavioral['count_grade_iii_behavioral'];
+
+    mysqli_close($conn);
+?>
+<?php
+    include('../../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $sqlKinderEnglish = "SELECT COUNT(LRN) AS count_kinder_english FROM $classification WHERE grade = 'kinder' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderEnglish = mysqli_query($conn, $sqlKinderEnglish);
+    $rowKinderEnglish = mysqli_fetch_assoc($resultKinderEnglish);
+    $kinderenglishq3 = $rowKinderEnglish['count_kinder_english'];
+
+    $sqlKinderFilipino = "SELECT COUNT(LRN) AS count_kinder_filipino FROM $classification WHERE grade = 'kinder' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderFilipino = mysqli_query($conn, $sqlKinderFilipino);
+    $rowKinderFilipino = mysqli_fetch_assoc($resultKinderFilipino);
+    $kinderfilipinoq3 = $rowKinderFilipino['count_kinder_filipino'];
+
+    $sqlKinderNumeracy = "SELECT COUNT(LRN) AS count_kinder_numeracy FROM $classification WHERE grade = 'kinder' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderNumeracy = mysqli_query($conn, $sqlKinderNumeracy);
+    $rowKinderNumeracy = mysqli_fetch_assoc($resultKinderNumeracy);
+    $kindernumeracyq3 = $rowKinderNumeracy['count_kinder_numeracy'];
+
+    $sqlKinderBehavioral = "SELECT COUNT(LRN) AS count_kinder_behavioral FROM $classification WHERE grade = 'kinder' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderBehavioral = mysqli_query($conn, $sqlKinderBehavioral);
+    $rowKinderBehavioral = mysqli_fetch_assoc($resultKinderBehavioral);
+    $kinderbehavioralq3 = $rowKinderBehavioral['count_kinder_behavioral'];
+
+    // Query and variable names for Grade I and quarter 1
+    $sqlGradeIEnglish = "SELECT COUNT(LRN) AS count_grade_i_english FROM $classification WHERE grade = 'I' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIEnglish = mysqli_query($conn, $sqlGradeIEnglish);
+    $rowGradeIEnglish = mysqli_fetch_assoc($resultGradeIEnglish);
+    $oneenglishq3 = $rowGradeIEnglish['count_grade_i_english'];
+
+    $sqlGradeIFilipino = "SELECT COUNT(LRN) AS count_grade_i_filipino FROM $classification WHERE grade = 'I' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIFilipino = mysqli_query($conn, $sqlGradeIFilipino);
+    $rowGradeIFilipino = mysqli_fetch_assoc($resultGradeIFilipino);
+    $onefilipinoq3 = $rowGradeIFilipino['count_grade_i_filipino'];
+
+    $sqlGradeINumeracy = "SELECT COUNT(LRN) AS count_grade_i_numeracy FROM $classification WHERE grade = 'I' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeINumeracy = mysqli_query($conn, $sqlGradeINumeracy);
+    $rowGradeINumeracy = mysqli_fetch_assoc($resultGradeINumeracy);
+    $onenumeracyq3 = $rowGradeINumeracy['count_grade_i_numeracy'];
+
+    $sqlGradeIBehavioral = "SELECT COUNT(LRN) AS count_grade_i_behavioral FROM $classification WHERE grade = 'I' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIBehavioral = mysqli_query($conn, $sqlGradeIBehavioral);
+    $rowGradeIBehavioral = mysqli_fetch_assoc($resultGradeIBehavioral);
+    $onebehavioralq3 = $rowGradeIBehavioral['count_grade_i_behavioral'];
+
+    // Query and variable names for Grade II and quarter 1
+    $sqlGradeIIEnglish = "SELECT COUNT(LRN) AS count_grade_ii_english FROM $classification WHERE grade = 'II' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIEnglish = mysqli_query($conn, $sqlGradeIIEnglish);
+    $rowGradeIIEnglish = mysqli_fetch_assoc($resultGradeIIEnglish);
+    $twoenglishq3 = $rowGradeIIEnglish['count_grade_ii_english'];
+
+    $sqlGradeIIFilipino = "SELECT COUNT(LRN) AS count_grade_ii_filipino FROM $classification WHERE grade = 'II' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIFilipino = mysqli_query($conn, $sqlGradeIIFilipino);
+    $rowGradeIIFilipino = mysqli_fetch_assoc($resultGradeIIFilipino);
+    $twofilipinoq3 = $rowGradeIIFilipino['count_grade_ii_filipino'];
+
+    $sqlGradeIINumeracy = "SELECT COUNT(LRN) AS count_grade_ii_numeracy FROM $classification WHERE grade = 'II' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIINumeracy = mysqli_query($conn, $sqlGradeIINumeracy);
+    $rowGradeIINumeracy = mysqli_fetch_assoc($resultGradeIINumeracy);
+    $twonumeracyq3 = $rowGradeIINumeracy['count_grade_ii_numeracy'];
+
+    $sqlGradeIIBehavioral = "SELECT COUNT(LRN) AS count_grade_ii_behavioral FROM $classification WHERE grade = 'II' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIBehavioral = mysqli_query($conn, $sqlGradeIIBehavioral);
+    $rowGradeIIBehavioral = mysqli_fetch_assoc($resultGradeIIBehavioral);
+    $twobehavioralq3 = $rowGradeIIBehavioral['count_grade_ii_behavioral'];
+
+    // Query and variable names for Grade III and quarter 1
+    $sqlGradeIIIEnglish = "SELECT COUNT(LRN) AS count_grade_iii_english FROM $classification WHERE grade = 'III' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIEnglish = mysqli_query($conn, $sqlGradeIIIEnglish);
+    $rowGradeIIIEnglish = mysqli_fetch_assoc($resultGradeIIIEnglish);
+    $threeenglishq3 = $rowGradeIIIEnglish['count_grade_iii_english'];
+
+    $sqlGradeIIIFilipino = "SELECT COUNT(LRN) AS count_grade_iii_filipino FROM $classification WHERE grade = 'III' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIFilipino = mysqli_query($conn, $sqlGradeIIIFilipino);
+    $rowGradeIIIFilipino = mysqli_fetch_assoc($resultGradeIIIFilipino);
+    $threefilipinoq3 = $rowGradeIIIFilipino['count_grade_iii_filipino'];
+
+    $sqlGradeIIINumeracy = "SELECT COUNT(LRN) AS count_grade_iii_numeracy FROM $classification WHERE grade = 'III' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIINumeracy = mysqli_query($conn, $sqlGradeIIINumeracy);
+    $rowGradeIIINumeracy = mysqli_fetch_assoc($resultGradeIIINumeracy);
+    $threenumeracyq3 = $rowGradeIIINumeracy['count_grade_iii_numeracy'];
+
+    $sqlGradeIIIBehavioral = "SELECT COUNT(LRN) AS count_grade_iii_behavioral FROM $classification WHERE grade = 'III' AND quarter = 3 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIBehavioral = mysqli_query($conn, $sqlGradeIIIBehavioral);
+    $rowGradeIIIBehavioral = mysqli_fetch_assoc($resultGradeIIIBehavioral);
+    $threebehavioralq3 = $rowGradeIIIBehavioral['count_grade_iii_behavioral'];
+
+    mysqli_close($conn);
+?>
+<?php
+    include('../../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $sqlKinderEnglish = "SELECT COUNT(LRN) AS count_kinder_english FROM $classification WHERE grade = 'kinder' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderEnglish = mysqli_query($conn, $sqlKinderEnglish);
+    $rowKinderEnglish = mysqli_fetch_assoc($resultKinderEnglish);
+    $kinderenglishq4  = $rowKinderEnglish['count_kinder_english'];
+
+    $sqlKinderFilipino = "SELECT COUNT(LRN) AS count_kinder_filipino FROM $classification WHERE grade = 'kinder' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderFilipino = mysqli_query($conn, $sqlKinderFilipino);
+    $rowKinderFilipino = mysqli_fetch_assoc($resultKinderFilipino);
+    $kinderfilipinoq4  = $rowKinderFilipino['count_kinder_filipino'];
+
+    $sqlKinderNumeracy = "SELECT COUNT(LRN) AS count_kinder_numeracy FROM $classification WHERE grade = 'kinder' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderNumeracy = mysqli_query($conn, $sqlKinderNumeracy);
+    $rowKinderNumeracy = mysqli_fetch_assoc($resultKinderNumeracy);
+    $kindernumeracyq4  = $rowKinderNumeracy['count_kinder_numeracy'];
+
+    $sqlKinderBehavioral = "SELECT COUNT(LRN) AS count_kinder_behavioral FROM $classification WHERE grade = 'kinder' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultKinderBehavioral = mysqli_query($conn, $sqlKinderBehavioral);
+    $rowKinderBehavioral = mysqli_fetch_assoc($resultKinderBehavioral);
+    $kinderbehavioralq4  = $rowKinderBehavioral['count_kinder_behavioral'];
+
+    // Query and variable names for Grade I and quarter 1
+    $sqlGradeIEnglish = "SELECT COUNT(LRN) AS count_grade_i_english FROM $classification WHERE grade = 'I' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIEnglish = mysqli_query($conn, $sqlGradeIEnglish);
+    $rowGradeIEnglish = mysqli_fetch_assoc($resultGradeIEnglish);
+    $oneenglishq4  = $rowGradeIEnglish['count_grade_i_english'];
+
+    $sqlGradeIFilipino = "SELECT COUNT(LRN) AS count_grade_i_filipino FROM $classification WHERE grade = 'I' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIFilipino = mysqli_query($conn, $sqlGradeIFilipino);
+    $rowGradeIFilipino = mysqli_fetch_assoc($resultGradeIFilipino);
+    $onefilipinoq4  = $rowGradeIFilipino['count_grade_i_filipino'];
+
+    $sqlGradeINumeracy = "SELECT COUNT(LRN) AS count_grade_i_numeracy FROM $classification WHERE grade = 'I' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeINumeracy = mysqli_query($conn, $sqlGradeINumeracy);
+    $rowGradeINumeracy = mysqli_fetch_assoc($resultGradeINumeracy);
+    $onenumeracyq4  = $rowGradeINumeracy['count_grade_i_numeracy'];
+
+    $sqlGradeIBehavioral = "SELECT COUNT(LRN) AS count_grade_i_behavioral FROM $classification WHERE grade = 'I' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIBehavioral = mysqli_query($conn, $sqlGradeIBehavioral);
+    $rowGradeIBehavioral = mysqli_fetch_assoc($resultGradeIBehavioral);
+    $onebehavioralq4  = $rowGradeIBehavioral['count_grade_i_behavioral'];
+
+    // Query and variable names for Grade II and quarter 1
+    $sqlGradeIIEnglish = "SELECT COUNT(LRN) AS count_grade_ii_english FROM $classification WHERE grade = 'II' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIEnglish = mysqli_query($conn, $sqlGradeIIEnglish);
+    $rowGradeIIEnglish = mysqli_fetch_assoc($resultGradeIIEnglish);
+    $twoenglishq4  = $rowGradeIIEnglish['count_grade_ii_english'];
+
+    $sqlGradeIIFilipino = "SELECT COUNT(LRN) AS count_grade_ii_filipino FROM $classification WHERE grade = 'II' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIFilipino = mysqli_query($conn, $sqlGradeIIFilipino);
+    $rowGradeIIFilipino = mysqli_fetch_assoc($resultGradeIIFilipino);
+    $twofilipinoq4  = $rowGradeIIFilipino['count_grade_ii_filipino'];
+
+    $sqlGradeIINumeracy = "SELECT COUNT(LRN) AS count_grade_ii_numeracy FROM $classification WHERE grade = 'II' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIINumeracy = mysqli_query($conn, $sqlGradeIINumeracy);
+    $rowGradeIINumeracy = mysqli_fetch_assoc($resultGradeIINumeracy);
+    $twonumeracyq4  = $rowGradeIINumeracy['count_grade_ii_numeracy'];
+
+    $sqlGradeIIBehavioral = "SELECT COUNT(LRN) AS count_grade_ii_behavioral FROM $classification WHERE grade = 'II' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIBehavioral = mysqli_query($conn, $sqlGradeIIBehavioral);
+    $rowGradeIIBehavioral = mysqli_fetch_assoc($resultGradeIIBehavioral);
+    $twobehavioralq4  = $rowGradeIIBehavioral['count_grade_ii_behavioral'];
+
+    // Query and variable names for Grade III and quarter 1
+    $sqlGradeIIIEnglish = "SELECT COUNT(LRN) AS count_grade_iii_english FROM $classification WHERE grade = 'III' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIEnglish = mysqli_query($conn, $sqlGradeIIIEnglish);
+    $rowGradeIIIEnglish = mysqli_fetch_assoc($resultGradeIIIEnglish);
+    $threeenglishq4  = $rowGradeIIIEnglish['count_grade_iii_english'];
+
+    $sqlGradeIIIFilipino = "SELECT COUNT(LRN) AS count_grade_iii_filipino FROM $classification WHERE grade = 'III' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIFilipino = mysqli_query($conn, $sqlGradeIIIFilipino);
+    $rowGradeIIIFilipino = mysqli_fetch_assoc($resultGradeIIIFilipino);
+    $threefilipinoq4  = $rowGradeIIIFilipino['count_grade_iii_filipino'];
+
+    $sqlGradeIIINumeracy = "SELECT COUNT(LRN) AS count_grade_iii_numeracy FROM $classification WHERE grade = 'III' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIINumeracy = mysqli_query($conn, $sqlGradeIIINumeracy);
+    $rowGradeIIINumeracy = mysqli_fetch_assoc($resultGradeIIINumeracy);
+    $threenumeracyq4  = $rowGradeIIINumeracy['count_grade_iii_numeracy'];
+
+    $sqlGradeIIIBehavioral = "SELECT COUNT(LRN) AS count_grade_iii_behavioral FROM $classification WHERE grade = 'III' AND quarter = 4 AND school = 'Bacayao Sur Elementary School'";
+    $resultGradeIIIBehavioral = mysqli_query($conn, $sqlGradeIIIBehavioral);
+    $rowGradeIIIBehavioral = mysqli_fetch_assoc($resultGradeIIIBehavioral);
+    $threebehavioralq4  = $rowGradeIIIBehavioral['count_grade_iii_behavioral'];
+
+    mysqli_close($conn);
+?>
+<?php
+    include('../../database.php');
+
+    $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $sql = "SELECT
+                (SELECT COUNT(DISTINCT lrn) FROM (
+                    SELECT lrn FROM $classification WHERE grade = 'kinder' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'kinder' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'kinder' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'kinder' AND school = 'Bacayao Sur Elementary School'
+                ) AS kinder_lrns) AS totalkinder,
+                (SELECT COUNT(DISTINCT lrn) FROM (
+                    SELECT lrn FROM $classification WHERE grade = 'I' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'I' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'I' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'I' AND school = 'Bacayao Sur Elementary School'
+                ) AS gradeone_lrns) AS totalone,
+                (SELECT COUNT(DISTINCT lrn) FROM (
+                    SELECT lrn FROM $classification WHERE grade = 'II' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'II' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'II' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'II' AND school = 'Bacayao Sur Elementary School'
+                ) AS gradetwo_lrns) AS totaltwo,
+                (SELECT COUNT(DISTINCT lrn) FROM (
+                    SELECT lrn FROM $classification WHERE grade = 'III' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'III' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'III' AND school = 'Bacayao Sur Elementary School'
+                    UNION
+                    SELECT lrn FROM $classification WHERE grade = 'III' AND school = 'Bacayao Sur Elementary School'
+                ) AS gradethree_lrns) AS totalthree";
+
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Fetch the total counts and store them in variables
+        $row = $result->fetch_assoc();
+        $totalkinderq4 = $row['totalkinder'];
+        $totaloneq4 = $row['totalone'];
+        $totaltwoq4 = $row['totaltwo'];
+        $totalthreeq4 = $row['totalthree'];
+    }
+
+    // Close connection
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM principal WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($sdoname);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
 <DOCTYPE html>
 <html lang="en">
 <head>
@@ -1112,7 +1540,7 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $fullname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
                     <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -1136,10 +1564,10 @@
             
             <div class="column">
                 <div class="containers second">
-                    <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Search School" oninput="filterTable()">
-                        <i class='bx bx-search search-icon'></i>
-                    </div>
+                <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search Adviser" oninput="filterTable()">
+    <i class='bx bx-search search-icon'></i>
+</div>
                 </div>
             </div>
             <div class="column full-width">
@@ -1209,8 +1637,8 @@
             </div>
             <div class="column column-right">
             <div class="select-wrapper1">
-                    <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                        <select id="quarterSelect" name="quarter">
+            <form id="quarterForm1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <select id="quarterSelect" name="quarter" onchange="submitForm()">
                             <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                             <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
                             <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
@@ -1246,22 +1674,21 @@
                 </tr>
             </thead>
 
-        <tbody class="school">
-            <tr>
-                <?php foreach ($resultsArray as $result) { ?>
-                    <tr <?php if ($result['percentage'] == 100) echo 'style="background-color: lightblue;"'; ?>>
-                        <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo ucfirst($result['section']); ?></th>
-                        <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
-                        <th style="width:11.5%"><?php echo $result['percentage']; ?></th>
-                    </tr>
-                <?php } ?>
-            </tr>
+            <tbody class="school">
+    <?php foreach ($resultsArray as $result) { ?>
+        <tr class="school-row">
+            <th style="width:14.5%"><?php echo ucfirst($result['grade']); ?> - <?php echo ucfirst($result['section']); ?></th>
+            <th style="width:14.5%"><?php echo $result['fullname']; ?></th>
+            <th style="width:11.5%"><?php echo $result['totalstud']; ?></th>
+            <th style="width:11.5%"><?php echo $result['totalstudentpar']; ?></th>
+            <th style="width:11.5%"><?php echo $result['english_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['filipino_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['numeracy_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['behavioral_count_non_distinct']; ?></th>
+            <th style="width:11.5%"><?php echo $result['percentage']; ?></th>
+        </tr>
+    <?php } ?>
+</tbody>
         </table>
         <div class="pagination">
             <button id="prevBtn" onclick="prevPage()">Previous</button>
@@ -1370,13 +1797,14 @@
                 </div>
             </div>
             <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
-                        <option value="" disabled selected hidden>Academic - Literacy in English</option>
-                        <option value="q1">Academic - Literacy in English</option>
-                        <option value="q2">Academic - Literacy in Filipino</option>
-                        <option value="q3">Academic - Numeracy</option>
-                        <option value="q4">Behavioral</option>
-                    </select>
+            <form id="classification" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <select id="classificationselect" name="classification" class="containers second">
+                    <option value="academic_english"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_english') echo ' selected'; ?>>Academic - Literacy in English</option>
+                    <option value="academic_filipino"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_filipino') echo ' selected'; ?>>Academic - Literacy in Filipino</option>
+                    <option value="academic_numeracy"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_numeracy') echo ' selected'; ?>>Academic - Numeracy</option>
+                    <option value="behavioral"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'behavioral') echo ' selected'; ?>>Behavioral</option>
+                </select>
+            </form>
                 </div>
         </div>
 
@@ -1395,35 +1823,35 @@
                 <tr>
                 <tr class="school">
                         <th style="width:35%" >Kinder</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $kinderenglishq1 ?></th>
+                        <th style="width:13%"><?php echo $kinderenglishq2 ?></th>
+                        <th style="width:13%"><?php echo $kinderenglishq3 ?></th>
+                        <th style="width:13%"><?php echo $kinderenglishq4 ?></th>
+                        <th style="width:13%"><?php echo $totalkinderq4 ?></th>
                     </tr>
                     <tr class="school">
                         <th style="width:35%" >Grade 1</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $oneenglishq1 ?></th>
+                        <th style="width:13%"><?php echo $oneenglishq2 ?></th>
+                        <th style="width:13%"><?php echo $oneenglishq3 ?></th>
+                        <th style="width:13%"><?php echo $oneenglishq4 ?></th>
+                        <th style="width:13%"><?php echo $totaloneq4 ?></th>
                     </tr>
                     <tr class="school">
                         <th style="width:35%">Grade 2</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $twoenglishq1 ?></th>
+                        <th style="width:13%"><?php echo $twoenglishq2 ?></th>
+                        <th style="width:13%"><?php echo $twoenglishq3 ?></th>
+                        <th style="width:13%"><?php echo $twoenglishq4 ?></th>
+                        <th style="width:13%"><?php echo $totaltwoq4 ?></th>
                     </tr>
                     <tr class="school">
                         <th style="width:35%" >Grade 3</th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
-                        <th style="width:13%"></th>
+                        <th style="width:13%"><?php echo $threeenglishq1 ?></th>
+                        <th style="width:13%"><?php echo $threeenglishq2 ?></th>
+                        <th style="width:13%"><?php echo $threeenglishq3 ?></th>
+                        <th style="width:13%"><?php echo $threeenglishq4 ?></th>
+                        <th style="width:13%"><?php echo $totalthreeq4 ?></th>
                     </tr>
                 </tr>
             </tbody>
@@ -1485,11 +1913,35 @@
 
 </script>
 <script>
-    document.getElementById("quarterSelect").addEventListener("change", function() {
+    function submitForm() {
+        document.getElementById('quarterForm1').submit();
+    }
+</script>
+<script>
+    document.getElementById("classificationselect").addEventListener("change", function() {
         var selectedValue = this.value;
         console.log("Selected value:", selectedValue);
-        document.getElementById("quarterForm").submit();
+        document.getElementById("classification").submit();
     });
+</script>
+<script>
+    function filterTable() {
+        var input, filter, table, rows, fullname, i, txtValue;
+        input = document.querySelector(".search-input");
+        filter = input.value.toUpperCase();
+        table = document.querySelector(".school");
+        rows = table.querySelectorAll(".school-row");
+
+        rows.forEach(function(row) {
+            fullname = row.getElementsByTagName("th")[1];
+            txtValue = fullname.textContent || fullname.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    }
 </script>
 </body>
 </html>

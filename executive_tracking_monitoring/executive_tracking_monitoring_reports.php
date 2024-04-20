@@ -4433,8 +4433,8 @@
                 </div>
             </div>
             <div class="select-wrapper1">
-                <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <select id="quarterSelect" name="quarter">
+                <form id="quarterForm1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
                         <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                         <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
                         <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
@@ -4924,14 +4924,14 @@
                 </div>
             </div>
             <div class="select-wrapper">
-                <form id="quarterForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
-                        <option value="1">Quarter 1</option>
-                        <option value="2">Quarter 2</option>
-                        <option value="3">Quarter 3</option>
-                        <option value="4">Quarter 4</option>
-                    </select>
-                </form>
+                <form id="classification" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST">
+                <select id="classificationselect" name="classification" class="containers second">
+                    <option value="academic_english"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_english') echo ' selected'; ?>>Academic - Literacy in English</option>
+                    <option value="academic_filipino"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_filipino') echo ' selected'; ?>>Academic - Literacy in Filipino</option>
+                    <option value="academic_numeracy"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'academic_numeracy') echo ' selected'; ?>>Academic - Numeracy</option>
+                    <option value="behavioral"<?php if(isset($_POST['classification']) && $_POST['classification'] == 'behavioral') echo ' selected'; ?>>Behavioral</option>
+                </select>
+            </form>
             </div>
         </div>
 
@@ -5312,14 +5312,6 @@
     var form = document.getElementById("quarterForm");
     form.addEventListener("submit", handleSubmit);
 </script>
-
-<script>
-    document.getElementById("classificationselect").addEventListener("change", function() {
-        var selectedValue = this.value;
-        console.log("Selected value:", selectedValue);
-        document.getElementById("classification").submit();
-    });
-</script>
 <script>
     function filterTable() {
         var input, filter, table, tr, td, i, txtValue;
@@ -5346,6 +5338,11 @@
         console.log("Selected value:", selectedValue);
         document.getElementById("classification").submit();
     });
+</script>
+<script>
+    function submitForm() {
+        document.getElementById('quarterForm1').submit();
+    }
 </script>
 </body>
 </html>
