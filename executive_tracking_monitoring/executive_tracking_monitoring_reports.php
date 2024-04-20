@@ -4017,6 +4017,8 @@
             background: #FBFBFB;
             color: #190572;
         }
+
+        #classificationselect,
         #quarterSelect,
         #topdown{
             width: 100%;
@@ -5320,7 +5322,7 @@
         table = document.getElementById("data-table1");
         tr = table.getElementsByTagName("tr");
         for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("th")[0]; // Adjust index if needed based on column
+            td = tr[i].getElementsByTagName("th")[0]; 
             if (td) {
                 txtValue = td.textContent || td.innerText;
                 if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -5333,11 +5335,33 @@
     }
 </script>
 <script>
-    document.getElementById("classificationselect").addEventListener("change", function() {
-        var selectedValue = this.value;
-        console.log("Selected value:", selectedValue);
-        document.getElementById("classification").submit();
-    });
+document.getElementById("classification").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    var selectedValue = document.getElementById("classificationselect").value;
+    console.log("Selected value:", selectedValue);
+    submitForm(selectedValue); 
+});
+
+function submitForm(selectedValue) {
+    var formData = new FormData();
+    formData.append('classification', selectedValue); 
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                document.getElementById("result").innerHTML = xhr.responseText;
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+    xhr.open("POST", "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>", true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send(formData);
+}
+
 </script>
 <script>
     function submitForm() {

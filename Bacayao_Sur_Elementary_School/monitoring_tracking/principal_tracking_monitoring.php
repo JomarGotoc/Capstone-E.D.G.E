@@ -1222,7 +1222,8 @@
             color: #190572;
         }
 
-        
+        #classificationselect,
+        #quarterSelect,
         #topdown{
             width: 100%;
             background: #FBFBFB;
@@ -1918,12 +1919,31 @@
     }
 </script>
 <script>
-    document.getElementById("classificationselect").addEventListener("change", function() {
-        var selectedValue = this.value;
-        console.log("Selected value:", selectedValue);
-        document.getElementById("classification").submit();
-    });
+document.getElementById("classificationselect").addEventListener("change", function() {
+    var selectedValue = this.value;
+    console.log("Selected value:", selectedValue);
+    submitForm(selectedValue); 
+});
+
+function submitForm(selectedValue) {
+    var formData = new FormData();
+    formData.append('classification', selectedValue); 
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                document.getElementById("result").innerHTML = xhr.responseText;
+            } else {
+                console.error('Request failed: ' + xhr.status);
+            }
+        }
+    };
+    xhr.open("POST", "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>", true);
+    xhr.send(formData);
+}
 </script>
+
 <script>
     function filterTable() {
         var input, filter, table, rows, fullname, i, txtValue;
