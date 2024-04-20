@@ -45,14 +45,7 @@ foreach ($tables as $table) {
 $conn->close();
 ?>
 <?php
-include('../../database.php');
-
-$results = []; // Initialize $results array to avoid undefined variable warning
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the selected school year
-    $selectedYear = $_POST["year"];
+    include('../../database.php');
 
     // Get the current PHP filename without the extension
     $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
@@ -73,47 +66,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $grade = $words[1];
         $section = $words[3];
 
+        // Initialize an array to store the results
+        $results = array();
+
         // Perform query on academic_english table
-        $results[] = fetchTable($conn, "academic_english", $grade, $section, $selectedYear);
+        $results[] = fetchTable($conn, "academic_english", $grade, $section);
 
         // Perform query on academic_filipino table
-        $results[] = fetchTable($conn, "academic_filipino", $grade, $section, $selectedYear);
+        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
 
         // Perform query on academic_numeracy table
-        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section, $selectedYear);
+        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
 
         // Perform query on behavioral table
-        $results[] = fetchTable($conn, "behavioral", $grade, $section, $selectedYear);
+        $results[] = fetchTable($conn, "behavioral", $grade, $section);
 
         // Close the connection
         $conn->close();
-    }
-}
+    } 
 
-function fetchTable($conn, $tableName, $grade, $section, $selectedYear) {
-    // Prepare and execute the SQL query with the condition for quarter = 1 and selected school year
-    $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Bacayao Sur Elementary School' AND year = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $grade, $section, $selectedYear);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        // Return an array containing the table name and the fetched data
-        $tableData = array();
-        while ($row = $result->fetch_assoc()) {
-            $tableData[] = $row;
+    function fetchTable($conn, $tableName, $grade, $section) {
+        // Prepare and execute the SQL query with the condition for quarter = 1
+        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $grade, $section);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            // Return an array containing the table name and the fetched data
+            $tableData = array();
+            while ($row = $result->fetch_assoc()) {
+                $tableData[] = $row;
+            }
+
+            return array($tableName, $tableData);
+        } else {
+            return null;
         }
 
-        return array($tableName, $tableData);
-    } else {
-        return null;
+        // Close the statement
+        $stmt->close();
     }
-
-    // Close the statement
-    $stmt->close();
-}
 ?>
-
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
@@ -158,8 +152,9 @@ if(isset($_POST['print'])) {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../img/bg.png);
+            background: white;
             background-size: cover;
+            overflow-y: hidden;
         }
 
         .logo {
@@ -170,6 +165,7 @@ if(isset($_POST['print'])) {
             background-size: cover;
         }
         
+        h4,
         h2 {
             font-family: 'Darker Grotesque', sans-serif;
             color: #fff;
@@ -178,15 +174,6 @@ if(isset($_POST['print'])) {
         h2 p{
             margin-top: 5px;
             font-size: 18px;
-        }
-
-        .login-container {
-            background-color: rgba(25, 5, 114, 0.80); 
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            width: 300px;
-            text-align: center;
         }
         
         a {
@@ -219,16 +206,20 @@ if(isset($_POST['print'])) {
             margin-right: 10px;
             height: 40px;
             width: 1px;
-            background-color: #fff;
+            background-color: #130550;
             margin-left: auto;
         }
 
-        .logout-icon {
+
+        .name {
             margin-right: 0;
             margin-left: auto;
             color: #fff;
-            font-size: 1.5rem;
+            font-size: .8rem;
             cursor: pointer;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .header.sticky {
@@ -300,6 +291,7 @@ if(isset($_POST['print'])) {
 
         ::-webkit-scrollbar {
             width: 10px;
+            display: none;
         }
     
         ::-webkit-scrollbar-thumb {
@@ -314,15 +306,13 @@ if(isset($_POST['print'])) {
 
         .top-container {
             height: 42px; 
-            background-color: #0C052F7A;
             position: fixed;
-            top: 100px; 
-            width: 97.4%;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
+            top: 70px; 
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 1;
         }
 
         .back-button {
@@ -341,27 +331,24 @@ if(isset($_POST['print'])) {
         .school {
             border-radius: 5px;
             text-decoration: none;
-            color: #fff;
+            color: #070000;
             margin-right: auto;
         }
 
         .school h3{
-            color: #fff;
+            color: #070000;
             margin-left: 15px;
         }
 
         .main-container {
             width: 100%;
-            height: calc(90vh - 140px);
-            margin: 20px;
-            margin-top: 125px;
-            bottom: 0;
-            background-color: #E2DFEE;
+            margin-top: 7%;
+            height: 80%;
+            background-color: white;
             opacity: 80%;
-            overflow: auto;
+            overflow: hidden;
             padding: 20px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            z-index: 1;
         }
 
         .row {
@@ -381,13 +368,13 @@ if(isset($_POST['print'])) {
         }
 
         .wide-columns {
-            flex: 0 0 calc(22% - 7px);
+            flex: 0 0 calc(26% - 7px);
             margin-bottom: 20px;
             margin-top: 10px;
         }
 
         .wide-column {
-            flex: 0 0 calc(16% - 7px);
+            flex: 0 0 calc(19% - 7px);
             margin-bottom: 20px;
             margin-top: 10px;
         }
@@ -464,6 +451,17 @@ if(isset($_POST['print'])) {
             font-size: 16.5px;
         }
 
+        #topdown2 {
+            padding: 1px;
+            width: 369px;
+            background: #FBFBFB;
+            color: #190572;
+            text-align: start;
+            border: none;
+            font-weight: bold;
+            font-size: 16.5px;
+        }
+
         .second{
             background-color: #2206A0;
             text-align: center;
@@ -532,7 +530,7 @@ if(isset($_POST['print'])) {
             color: #FFF;
         }
         .act button {
-        background-color: #008705;
+        background-color:#130550;
         color: #fff;
         padding: 10px 20px;
         border: none;
@@ -542,57 +540,11 @@ if(isset($_POST['print'])) {
         }
 
         .act button:hover {
-            background-color: #CCFF00;
-            color: #070000;
-            font-weight: bold;
-        }
+            background-color: #0C052F;
+        } 
+
         .sch h1 {
             color: #FFFFFF;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-            background-color: #FFEEEE;
-            border: 1px solid #FFCDCD;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 14px;
-        }
-        
-        .popup h2 {
-            font-size: larger;
-            color: #190572;
-            font-size: 22px;
-            margin-bottom: 20px;
-        }
-        
-        .popup .row {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-        }
-        
-        .popup .containerss {
-            flex-basis: 45%;
-            margin-top: 10px;
-            padding: 15px;
-            text-align: center;
-            margin-right: 5px;
-            margin-left: 5px;
-            margin-bottom: 15px;
-            width: 300px;
-            height: 200px;
-            position: relative;
-            border-radius: 10px;
-            border: 1px solid #190572;
-            background: rgba(25, 5, 114, 0.33);
         }
         
         .close-icon {
@@ -638,27 +590,16 @@ if(isset($_POST['print'])) {
         }
 
 
-        .main-containers {
-            width: 100%;
-            height: calc(100vh - 140px);
-            margin: 20px;
-            margin-top: 80px;
-            bottom: 0;
-            background-color: #E2DFEE;
-            overflow: auto;
-            padding: 20px;
-            border-radius: 20px;
-            z-index: 2;
-        }
+
 
         .rows {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .columns input[type="text"],
-        .columns,
+        .columns-group,
         input[type="date"] {
             flex: 1;
             padding: 5px;
@@ -667,7 +608,7 @@ if(isset($_POST['print'])) {
         }
         input[type="text"],
         input[type="date"],
-        .columns input[type="text"],
+        .columns-group input[type="text"],
         select{
             border: none;
         }
@@ -782,30 +723,6 @@ if(isset($_POST['print'])) {
             margin-top: 20px;
         }
     
-        .formatting-buttons {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            display: flex;
-        }
-    
-        .formatting-buttons button {
-            background-color: #b3adcb;
-            color:#190572;
-            font-weight: bold;
-            border: 1px solid #190572;
-            padding: 5px 10px;
-            margin-left: 2px;
-            border-radius: 3px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-    
-        .formatting-buttons button:hover {
-            background-color: #190572;
-            color: #ddd;
-        }
 
         .add-buttons {
             width: 100%;
@@ -835,7 +752,7 @@ if(isset($_POST['print'])) {
             display: none;
         }
 
-        .columns input[type="text"]{
+        .columns-group input[type="text"]{
             width: 90%;
         }
 
@@ -871,6 +788,7 @@ if(isset($_POST['print'])) {
             padding: 12px 16px;
             text-decoration: none;
             display: block;
+            font-size: .8rem;
         }
 
         .dropdown-content a:hover {
@@ -923,6 +841,474 @@ if(isset($_POST['print'])) {
             background-color: green;
         }
 
+        .legend-containers {
+            margin-top: -20px;
+            display: flex;
+            justify-content:right;
+        }
+
+        .legend-containers .icon{
+            margin-right: 5px;
+            color: #130550;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        .legend-containers .legend-item{
+            color: #130550;
+            font-weight: bold;
+        }
+
+        .legend-containers .checkbox-container{
+            margin-top: 10px;
+            margin-right: 30px;
+            margin-left: 30px;
+        }
+
+        .legend-containers .non{
+            margin-right: auto;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-right: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 15px;
+            height: 10px;
+            background-color: #fff;
+            border: 2px solid #190572;
+            position: relative;
+        }
+
+        .checkbox-container input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15px;
+            height: 10px;
+            background-color: #190572;
+            opacity: 0;
+        }
+
+        .checkbox-container input[type="checkbox"]:checked::before {
+            opacity: 1;
+        }
+
+        .checkbox-container label {
+            font-size: 15px;
+            font-weight: bold;
+            color: #0C052F;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .icon-containers{
+            font-size: 20px;
+            color: #0C052F;
+        }
+
+        .vertical-lines {
+            height: 40px;
+            width: .5px;
+            background-color: #0C052F;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            z-index: 999; 
+        }
+
+        .login-container {
+            background-color: rgba(25, 5, 114, 0.80); 
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 400px;
+            text-align: center;
+            z-index: 1;
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 1000; 
+            border-radius: 10px;
+            display: none;
+        }
+
+        .closes, .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .closes{
+                background-color: #130550;
+                font-size: 26px;
+                padding-right: 5px;
+            }
+
+        .close:hover,
+        .closes:focus, 
+        .closes:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .login-container button {
+        margin-top: 10px;
+        background-color: #0C052F;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 97.5%;
+        }
+
+        .login-container button:hover {
+            background-color: #ddd;
+            border: 1px solid #0C052F;
+            color: #130550;
+        }
+
+        .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+        }
+
+        label {
+        font-size: 15px;
+        color: #FFFFFF; 
+        text-align: left;
+        }
+
+        select, .form-group input[type="text"] {
+        height: 20x;
+        padding: 10px;
+        border: 1px solid #0C052F; 
+        border-radius: 5px;
+        background-color: #DDDAE7;
+        color: #0C052F; 
+        }
+
+        .form-group input[type="text"]{
+            width: 95%;
+        }            
+
+        span{
+            font-style: italic;
+        }
+
+        .pagination {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            z-index: 999;
+        }
+
+        .pagination button {
+            padding: 8px 16px;
+            background-color: #0C052F;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #130550;
+        }
+
+        .save {
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);   
+            z-index: 999;         
+        }
+
+        .save button {            
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);            
+            padding: 8px 16px;
+            background-color: #0C052F;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .saveButton:hover,
+        .save button:hover {
+            background-color: #130550;
+        }
+
+         .form-container {
+            justify-content: center;
+            align-items: center;
+            background:white;            
+            height: 95%;
+            width: 97%;
+            overflow:auto;
+            border-radius: 7px;
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+
+        .main-containers {
+            height: 95%;
+            background-color: #E2DFEE;
+            padding: 10px;
+            z-index: 999;
+            position: relative;
+        }
+
+        .rows {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .wide-rows {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; 
+        }
+
+        .columns {
+            flex: 0 0 calc(16.6667%);
+        }
+
+        .column-rights {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+            margin-right: auto; 
+        }
+
+        .column-lefts {
+            flex: 0 0 calc(15%);
+            margin-left: auto; 
+        }
+
+        .rows .columns:not(:last-child),
+        .wide-rows .columns:not(:last-child) {
+            margin-right: 0;
+        }
+        
+        .full-widths {
+            flex: 0 0 calc(30%);
+            margin-right: 0;
+        }
+
+        .half-widths {
+            flex: 0 0 calc(25%);
+            margin-right: 0;
+        }
+
+        .containerss {
+            background-color: #190572;
+            height: 25px;
+        }
+        
+        .firsts{
+            background: #FBFBFB;
+            text-align: center;
+            justify-content: center;
+            padding-top: 4px;
+            font-size: 15px;
+            padding-left: 51px;
+            padding-right: 51px;
+            white-space: nowrap;
+        }
+
+        .firsts h3{
+            color: #190572;
+        }
+
+        .seconds{
+            border-radius: 3px;
+            text-align: center;
+            font-family: "Darker Grotesque";
+        }
+
+        .seconds h3{
+            font-size: 18px;
+            color: #FFF;
+            letter-spacing: 3px;
+            padding-top: 1px;
+        }
+
+        .containerss input{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 400px;
+            margin-left: 10px;
+            border: none;
+            background: none;
+        }
+
+        .firsts h3:first-child{
+            color: #130550;
+        }
+
+        .containerss h3{
+            color: #ddd;
+        }
+
+        .rights{
+            color:#130550;
+            font-weight: 500;
+            font-size: 15px;
+            width: 310px;
+            border: none;
+            background: none;
+            margin-left: 10px;
+        }
+
+        .column-rights h3, 
+        .half-widths h3{
+            color: #190572;
+        }
+
+        .editable-containers {
+            position: relative; 
+            display: flex;
+            align-items: center;
+            height: 20px;
+        }
+
+        .editable-containers h3 {
+            margin: 0;
+        }
+
+        .editable-icons {
+            position: absolute; 
+            right: 0; 
+            margin: 0; 
+            cursor: pointer;
+        }
+        .columns{
+            width: 23rem;
+        }
+    .update-record {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 2rem;
+    }
+    .update-record th, 
+    .update-record td {
+        border: 1px solid black;
+        position: relative;
+        padding: 0;
+        text-align: center;
+        background-color: #fff;
+    }
+    .update-record th {
+        background-color: #35A7FA; 
+        color: white; 
+    }
+    .form-container .table_body td input {
+        width: calc(100% - 10px); 
+        height: 100px; 
+        box-sizing: border-box;
+        margin: 5px; 
+        resize: none; 
+        border: none;
+    }
+    .dates {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: 12px;
+        color: gray;
+    }
+    #row1 th{
+        background-color: #190572;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+    .saveButton {
+        background-color: rgba(12, 5, 47, 1); 
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .record_header{
+        background-color: #130550;
+        color: #ddd;
+        padding: 3px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        display: flex;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .checkbox-group{
+        text-align: left;
+        margin-left: 5px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+        display: none;
+    }
+
+    .checkbox-group label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+    }
+
+    .checkbox-group label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 15px;
+        border: 2px solid #130550; 
+        background-color: white; 
+        border-radius: 4px;
+    }
+
+    .checkbox-group input[type="checkbox"]:checked + label:before {
+        content: '\2713';
+        font-size: 16px;
+        color: white; 
+        background-color: #130550; 
+        text-align: center;
+        line-height: 20px;
+    }
+
         @media screen and (max-width: 800px) {
             header{
                 height: 40px;
@@ -962,10 +1348,10 @@ if(isset($_POST['print'])) {
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <i class='bx log-out bx-lock-alt logout-icon' onclick="toggleDropdown()"></i>
+                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
-                        <a href="adviser_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>">Change Password</a>
+                        <a href="" style="border-top: 1px solid #ddd;">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -980,33 +1366,28 @@ if(isset($_POST['print'])) {
     <div class="main-container">
         <div class="row">
             <div class="column">
-            <form id="myForm" method="post" action="">
-    <div class="select-wrapper">
-        <select id="topdown1" name="year" class="containers first" onchange="submitForm()">
-            <option value="2023-2024" <?php if(isset($_POST['year']) && $_POST['year'] == '2023-2024') echo 'selected'; ?>>S.Y. 2023 - 2024</option>
-            <option value="2025-2026" <?php if(isset($_POST['year']) && $_POST['year'] == '2025-2026') echo 'selected'; ?>>S.Y. 2025 - 2026</option>
-        </select>
-    </div>
-</form>
-
-
-</div>
+                <div class="select-wrapper">
+                    <select id="topdown1" name="school-year" class="containers first">
+                        <option value="school-year">S.Y. 2023 - 2024</option>
+                    </select>
+                </div>
+        </div>
         <div class="column">
             <form method="post">
-        <div class="containers second">
-            <button style="background: transparent; border: none;" name="print">
-                <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
-            </button>
+                <div class="containers second">
+                    <button style="background: transparent; border: none;" name="print">
+                        <h3><i class='bx bx-printer'></i>Print P.A.Rs List</h3>
+                    </button>
+                </div>
+            </form>
         </div>
-        </form>
+        <div class="column third-column">
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="Search Pupil's Name">
+                <i class='bx bx-search search-icon'></i>
+            </div>
         </div>
-            <div class="column third-column">
-    <div class="search-box">
-        <input type="text" class="search-input" placeholder="Search Pupil's Name">
-        <i class='bx bx-search search-icon'></i>
     </div>
-</div>
-        </div>
 
 
         <div class="row">
@@ -1015,7 +1396,7 @@ if(isset($_POST['print'])) {
                     <h3 style="margin-left:7px">Employee Number</h3>
                 </div>
             </div>
-            <?php
+            <!--?php
             if ($result1->num_rows > 0) {
                 // Get the data of the first row
                 $row = $result1->fetch_assoc();
@@ -1026,7 +1407,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?>
+            ?-->
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1035,11 +1416,11 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <?php 
+                <!--?php 
                         $capitalizedSecondWord = ucfirst($secondWord);
                         echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
-                    ?>
-                </div>
+                    ?-->    
+            </div>
             </div>
 
         </div>
@@ -1050,9 +1431,8 @@ if(isset($_POST['print'])) {
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left:7px">Adviser</h3>
                 </div>
-
             </div>
-            <?php
+            <!--?php
             if ($result2->num_rows > 0) {
                 $row = $result2->fetch_assoc();
                 $fullname = $row["fullname"];
@@ -1062,7 +1442,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?>
+            ?-->
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1071,7 +1451,7 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
+                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $count ?--></h3>
                 </div>
             </div>
         </div>
@@ -1083,8 +1463,8 @@ if(isset($_POST['print'])) {
                 </div>
             </div>
             <div class="column column-right">
-            <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
                         <option value="" disabled selected hidden>Quarter 1</option>
                         <option value="q1">Quarter 1</option>
                         <option value="q2">Quarter 2</option>
@@ -1092,9 +1472,9 @@ if(isset($_POST['print'])) {
                         <option value="q4">Quarter 4</option>
                     </select>
                 </div>
-</div>
+            </div>
         </div>
-        <div class="legend-container">
+            <!--<div class="legend-container">
                     <div class="legend-item">
                         <div class="legend-color unresolved"></div>
                         <p>Unresolved</p>
@@ -1111,160 +1491,466 @@ if(isset($_POST['print'])) {
                         <div class="legend-color resolved"></div>
                         <p>Resolved</p>
                     </div>
+                </div> -->
+                <div class="legend-containers">
+                    <div class="legend-item">
+                        <i class="par-icon bx bx-calculator icon"></i>
+                        <p>Academic - Numeracy</p>
+                    </div>
+                    <div class="legend-item">
+                        E<i class='bx bx-book-open icon'></i>
+                        <p>Academic - Literacy in English</p>
+                    </div>
                 </div>
-
+                <div class="legend-containers">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="legend-checkbox-at-risk">
+                        <label for="legend-checkbox-at-risk">Pupil At Risk</label>
+                    </div>
+                    <div class="checkbox-container non">
+                        <input type="checkbox" id="legend-checkbox-non-risk">
+                        <label for="legend-checkbox-non-risk">Non - Risk Pupil</label>
+                    </div>
+                    <div class="legend-item">
+                        <i class="par-icon bx bx-face icon"></i>
+                        <p>Behavioral</p>
+                    </div>                   
+                    <div class="legend-item">
+                        F<i class="bx bx-book-open icon"></i>
+                        <p>Academic - Literacy in Filipino</p>
+                    </div>
+                </div>
 
         <div class="wide-row">
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">LRN</h3>
+                    <h3 style="padding: 2px;">LRN</h3>
                 </div>
             </div>
             <div class="wide-columns">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Pupil's Name </h3>
+                    <h3 style="padding: 2px;">Pupil's Name </h3>
                 </div>
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">P.A.R. Identification</h3>
-                </div>
-            </div>
-
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 7px;">Grade & Section</h3>
+                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
                 </div>
             </div>
 
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Status</h3>
+                    <h3 style="padding: 2px;">Status</h3>
                 </div>
             </div>
             <div class="wide-column">
                 <div class="containers">
-                    <h3 style="padding: 7px;">Action</h3>
+                    <h3 style="padding: 2px;">Action</h3>
                 </div>
             </div>
         </div>
 
         <table border="0" id="pupilTable">
-    <?php
-    foreach ($results as $tableResult) {
-        if ($tableResult) {
-            list($tableName, $tableData) = $tableResult;
-            foreach ($tableData as $row) {
-                // Determine the row color based on classification
-                $status = $row['status'];
-                $rowColor = '';
+            <tr class='sheshable'>
+                <th style='width:14%'>sdrfgrg</th>
+                <th style='width:22%'>srdgf</th>
+                <th style='width:13%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                    </div>
+                </th>
+                <th style='width:16%'>sgsdasd</th>
+                <th style='width:14%' class='act'>
+                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
+    </div>
 
-                switch ($status) {
-                    case 'Unresolved':
-                        $rowColor = 'red';
-                        break;
-                    case 'Pending':
-                        $rowColor = 'blue';
-                        break;
-                    case 'On-Going':
-                        $rowColor = 'yellow';
-                        break;
-                    case 'Resolved':
-                        $rowColor = 'green';
-                        break;
-                    default:
-                        $rowColor = '';
-                        break;
-                }
-
-                $capitalizedGrade = ucfirst($row['grade']);
-                $capitalizedSection = ucfirst($row['section']);
-
-                echo "<tr class='sheshable'>
-                        <th style='width:.5%; background-color: $rowColor;'></th>
-                        <th style='width:13%'>{$row['lrn']}</th>
-                        <th style='width:22%'>{$row['fullname']}</th>
-                        <th style='width:15%'>{$row['classification']}</th>
-                        <th style='width:15%'>{$capitalizedGrade} - {$capitalizedSection}</th>
-                        <th style='width:15%'>{$status}</th>
-                        <th style='width:15%' class='act'>
-                        <button><a href='../intervention/adviser_intervention_firstperiod.php?lrn={$row['lrn']}&fullname={$row['fullname']}&classification={$row['classification']}&grade={$row['grade']}&section={$row['section']}&status={$status}&employment_number={$_GET['employment_number']}' class='updateRecordButton'>UPDATE RECORD</a></button>
-                        </th>
-                      </tr>";
-            }
-        }
-    }
-    ?>
-</table>
+         <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+            <div class="main-containers">
+            <span class="closes" onclick="closeForm()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss firsts">
+                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
+                        </div>
+                    </div>
+                    <div class="columns" style="background:none">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="plus-button">
-        <a href="../add_student_form/<?php echo $currentFileName1?>"> <button id="addRecordButton" class="add-button"><i class='bx bx-plus'></i></button></a>
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
+
+        <div class="save">
+            <button id="save">Update All Records</button>
+        </div>
+        <div class="pagination">
+            <button id="prevbutton" onclick="prevPageReportTable()">Previous</button>
+            <button id="nextbutton" onclick="nextPageReportTable()">Next</button>
         </div>
 
+    <div class="overlay" id="overlay"></div>
 
 
-    <script src="adviserdashboard.js"></script>
+    <div class="login-container" id="login-container">
+    <span class="close">&times;</span>
+    <h4>Adding <span class="student-name"></span> as Pupil At Risk</h4>
+
+    <form class="login-form" action="" method="post">
+        <div class="row">
+            <div class="columns-group">
+            <div class="form-group">
+                    <label>Identification</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
+                        <label for="checkbox1">Academic - Literacy in English</label><br>
+                        
+                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
+                        <label for="checkbox2">Academic - Literacy in Filipino</label><br>
+                        
+                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
+                        <label for="checkbox3">Academic - Numeracy</label><br>
+                        
+                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
+                        <label for="checkbox4">Behavioral</label><br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" class="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
+        </div>
+    </form>
+</div>
+
+<script >
+    //FUNCTIONS FOR INTERVENTIONS
+    function closeForm() {
+    document.getElementById('formContainer').style.display = 'none'; // Hide the form container
+    }       
+
+    document.getElementById('saveButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
     
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    var currentDate = new Date();
+    var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+    
+    // Update date only for the input boxes with data entered
+    var inputFields = document.querySelectorAll('input[type="text"]');
+    inputFields.forEach(function(inputField) {
+        if (inputField.value.trim() !== '') {
+            var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
+            dateElement.textContent = formattedDate;
+            inputField.disabled = true; // Disable input field for the saved row
+        }
+    });
+});
 
-<script>
-    $(document).ready(function () {
-        $(".search-input").on("keyup", function () {
-            var searchText = $(this).val().toLowerCase().trim();
+//show form-container
+function showPupilRecord() {
+        var pupilRecord = document.querySelector(".form-container");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
 
-            $(".sheshable").each(function () {
-                var rowText = $(this).find('th:nth-child(3)').text().toLowerCase().trim();
-                
-                // Check if every character in searchText is present in rowText
-                var everyCharacterMatch = searchText.split('').every(function(char) {
-                    return rowText.includes(char);
-                });
+    function closeForm() {
+        var pupilRecord = document.querySelector(".form-container");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
 
-                if (searchText === "" || everyCharacterMatch) {
-                    // Show all rows if search box is empty or if every character matches
-                    $(this).show();
-                } else {
-                    // Otherwise, hide the row
-                    $(this).hide();
-                }
-            });
+//show login
+document.addEventListener("DOMContentLoaded", function() {
+    var updateRecordButtons = document.querySelectorAll(".updateRecordButton");
+    var overlays = document.querySelectorAll(".overlay");
+    var loginContainers = document.querySelectorAll(".login-container");
+    var closeButtons = document.querySelectorAll(".close");
+
+    updateRecordButtons.forEach(function(button, index) {
+        button.addEventListener("click", function() {
+            overlays[index].style.display = "block";
+            loginContainers[index].style.display = "block";
         });
     });
-</script>
-<script>
-    function redirectToQuarter() {
-        // Get the selected value from the dropdown
-        var selectedQuarter = document.getElementById("topdown").value;
 
-        // Check if a quarter is selected
-        if (selectedQuarter !== "") {
-            // Construct the URL for redirection
-            var redirectURL = "<?php echo $currentFileName2.'_'?>" + selectedQuarter + ".php?employment_number=<?php echo $employment_number?>";
+    overlays.forEach(function(overlay, index) {
+        overlay.addEventListener("click", function() {
+            overlay.style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
 
-            // Redirect to the selected quarter's PHP file
-            window.location.href = redirectURL;
+    closeButtons.forEach(function(closeButton, index) {
+        closeButton.addEventListener("click", function() {
+            overlays[index].style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    var updateRecordButtons = document.querySelectorAll(".updateRecordButton");
+    var overlays = document.querySelectorAll(".overlay");
+    var loginContainers = document.querySelectorAll(".login-container");
+    var closeButtons = document.querySelectorAll(".close");
+
+    updateRecordButtons.forEach(function(button, index) {
+        button.addEventListener("click", function() {
+            var studentName = document.querySelector("#pupilTable tr.sheshable th:nth-child(2)").textContent;
+            var studentNameSpans = document.querySelectorAll(".student-name");
+            studentNameSpans.forEach(function(span) {
+                span.textContent = studentName;
+            });
+
+            overlays[index].style.display = "block";
+            loginContainers[index].style.display = "block";
+        });
+    });
+
+    overlays.forEach(function(overlay, index) {
+        overlay.addEventListener("click", function() {
+            overlay.style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
+
+    closeButtons.forEach(function(closeButton, index) {
+        closeButton.addEventListener("click", function() {
+            overlays[index].style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
+});
+
+//change add pupil at risk button to update record
+document.addEventListener("DOMContentLoaded", function() {
+    var addPupilButtons = document.querySelectorAll(".addPupilButton");
+    var updateRecordButtonsss = document.querySelectorAll(".updateRecordButton");
+    var updateRecordButtons = document.querySelectorAll(".updateRecordButtons");
+    var overlays = document.querySelectorAll(".overlay");
+    var loginContainers = document.querySelectorAll(".login-container");
+    var closeButtons = document.querySelectorAll(".close");
+
+    addPupilButtons.forEach(function(button, index) {
+        button.addEventListener("click", function() {
+            var studentName = document.querySelector("#pupilTable tr.sheshable th:nth-child(2)").textContent;
+            var studentNameSpans = document.querySelectorAll(".student-name");
+            studentNameSpans.forEach(function(span) {
+                span.textContent = studentName;
+            });
+
+            overlays[index].style.display = "block";
+            loginContainers[index].style.display = "block";
+
+            updateRecordButtonsss[index].style.display = "none";
+            updateRecordButtons[index].style.display = "inline-block";
+        });
+    });
+
+    overlays.forEach(function(overlay, index) {
+        overlay.addEventListener("click", function() {
+            overlay.style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
+
+    closeButtons.forEach(function(closeButton, index) {
+        closeButton.addEventListener("click", function() {
+            overlays[index].style.display = "none";
+            loginContainers[index].style.display = "none";
+        });
+    });
+
+    loginContainers.forEach(function(container, index) {
+        container.querySelector("form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            overlays[index].style.display = "none";
+            container.style.display = "none";
+        });
+    });
+});
+
+//next and prev button
+var currentPageDataTable = 1;
+var rowsPerPageDataTable = 8;
+
+    function showRowsDataTable() {
+        var rows = document.querySelectorAll('#pupilTable tr');
+        var startIndex = (currentPageDataTable - 1) * rowsPerPageDataTable;
+        var endIndex = startIndex + rowsPerPageDataTable;
+
+        rows.forEach(function(row, index) {
+            if (index >= startIndex && index < endIndex) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function prevPage() {
+        if (currentPageDataTable > 1) {
+            currentPageDataTable--;
+            showRowsDataTable();
         }
     }
-</script>
-<script>
-    // Submit the form when the page loads only if the selected option differs from the current year
-    window.onload = function() {
-        var selectedYear = document.getElementById('topdown1').value;
-        var currentYear = <?php echo isset($_POST['year']) ? json_encode($_POST['year']) : 'null'; ?>;
-        
-        if (selectedYear !== currentYear) {
-            document.getElementById('myForm').submit();
-        }
-    };
 
-    // Function to submit the form when the select option is changed
-    function submitForm() {
-        document.getElementById('myForm').submit();
+    function nextPage() {
+        var rows = document.querySelectorAll('#pupilTable tr');
+        var totalRows = rows.length;
+        var totalPages = Math.ceil(totalRows / rowsPerPageDataTable);
+
+        if (currentPageDataTable < totalPages) {
+            currentPageDataTable++;
+            showRowsDataTable();
+        }
     }
+
+    showRowsDataTable();
+
+    document.getElementById('prevbutton').addEventListener('click', prevPage);
+    document.getElementById('nextbutton').addEventListener('click', nextPage);
+
 </script>
+    
+ 
 </body>
 </html>
