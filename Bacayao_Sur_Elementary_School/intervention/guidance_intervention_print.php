@@ -67,20 +67,24 @@ if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>PRINT</title>
     <style>
-        body {
+                body {
             background-color: white;
             font-family: Arial, sans-serif;
+            font-size: 15px;
         }
         header {
-            background-color: #190572;
-            padding: 10px;
-            color: white;
+            padding: 5px;
+            color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         header img {
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        header h2{
+            font-size: 15px;
         }
         .update{
             margin-top: 20px;
@@ -95,35 +99,32 @@ if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
             gap: 5px;
             margin-top: -20px;
         }
-        
         .update-record,
         .update-record2 {
             margin-top: 20px;
             margin-bottom: 20px;
-            width: 650px;
+            width: 550px;
             display: grid;
             grid-template-columns: auto auto;
             gap: 2px;
         }
         .label {
-            background-color: #190572;
-            color: white;
+            color: black;
             padding: 5px 10px;
-            border-radius: 5px;
             margin: 5px 0;
             grid-column: 1;
-            width: 300px;
+            width: 200px;
             text-align: left;
             font-weight: bold;
+            border: 1px solid #dddddd;
+
         }
         .response {
             margin: 5px 0;
             padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #19057230;
-            border: none;
+            border: 1px solid #dddddd;
             grid-column: 2;
-            width: 300px;
+            width: 400px;
         }
         table {
             width: 100%;
@@ -131,30 +132,66 @@ if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
         }
         th, td {
             border: 1px solid #dddddd;
-            text-align: center;
+            text-align: left;
             padding: 8px;
         }
-        th {
-            background-color: #190572;
-            color: white;
-        }
-        
-        td textarea {
-            width: 70%;
-            min-width: 95%;
-            max-width: 95%;
-            min-height: 95px;
-            resize:none;
-            height: fit-content;
-            padding: 5px;
-            border: none;
+        th{
             text-align: center;
         }
+        th {
+            color: black;
+        }
+        tr:nth-child(even) {
+            background-color: transparent;
+        }
+        tr:nth-child(odd) {
+            background-color: transparent;
+        }
+        .print-button {
+        background-color: white;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button{
+            background-color: transparent;
+            border: none;
+        }
+
+
+        .back-icon {
+            left: 10px;
+            font-size: 30px;
+            color:black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .back-icon i {
+            margin-right: 5px;
+        }
+
+        .print-button {
+            width: fit-content;
+            background-color: white;
+            letter-spacing: 1.2px;
+            font-size: 15px;
+            color: black;
+            border: none;
+            padding: 10px 35px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: -180px;
+}
     </style>
 </head>
 <body>
     <header>
-        <img src="../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">
@@ -188,28 +225,18 @@ if (!empty($lrn) && !empty($classification) && !empty($employment_number)) {
     <table>
         <thead>
             <tr>
-                <th style="width: 50%">Adviser's Notes</th>
-                <th style="width: 50%">Topic/Matter</th>
+                <th style="width: 25%">Counselor's Notes</th>
+                <th style="width: 25%">Topic/Matter</th>
+                <th style="width: 25%">Intervention</th>
+                <th style="width: 25%">Advice</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><textarea><?php echo $notes ?></textarea></td>
-                <td><textarea><?php echo $topic ?></textarea></td>
-            </tr>
-        </tbody>
-    </table>
-    <table>
-        <thead>
-            <tr>
-                <th style="width: 50%">Intervention</th>
-                <th style="width: 50%">Advice</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><textarea><?php echo $intervention ?></textarea></td>
-                <td><textarea><?php echo $advice ?></textarea></td>
+                <td><?php echo $notes ?></td>
+                <td><?php echo $topic ?></td>
+                <td><?php echo $intervention ?></td>
+                <td><?php echo $advice ?></td>
             </tr>
         </tbody>
     </table>

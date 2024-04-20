@@ -132,20 +132,24 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>PRINT</title>
     <style>
-        body {
+                body {
             background-color: white;
             font-family: Arial, sans-serif;
+            font-size: 15px;
         }
         header {
-            background-color: #190572;
-            padding: 10px;
-            color: white;
+            padding: 5px;
+            color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         header img {
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        header h2{
+            font-size: 15px;
         }
         .update{
             margin-top: 20px;
@@ -170,26 +174,22 @@ $conn->close();
             gap: 2px;
         }
         .label {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
             padding: 5px 10px;
-            border-radius: 5px;
             margin: 5px 0;
             grid-column: 1;
             width: 200px;
             text-align: left;
             font-weight: bold;
-            
+            border: 1px solid #dddddd;
+
         }
         .response {
             margin: 5px 0;
             padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #F3F3F3;
-            border: none;
+            border: 1px solid #dddddd;
             grid-column: 2;
-            width: 300px;
-            color: #190572;
+            width: 400px;
         }
         table {
             width: 100%;
@@ -197,21 +197,33 @@ $conn->close();
         }
         th, td {
             border: 1px solid #dddddd;
-            text-align: center;
+            text-align: left;
             padding: 8px;
         }
+        th{
+            text-align: center;
+        }
         th {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: transparent;
         }
         tr:nth-child(odd) {
             background-color: transparent;
         }
+        .print-button {
+        background-color: white;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
 
-        button{
+    button{
             background-color: transparent;
             border: none;
         }
@@ -220,7 +232,7 @@ $conn->close();
         .back-icon {
             left: 10px;
             font-size: 30px;
-            color:#190572;
+            color:black;
             text-decoration: none;
             cursor: pointer;
         }
@@ -231,24 +243,20 @@ $conn->close();
 
         .print-button {
             width: fit-content;
-            background-color: #190572;
+            background-color: white;
             letter-spacing: 1.2px;
             font-size: 15px;
-            color: white;
+            color: black;
             border: none;
             padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
             margin-left: -180px;
 }
-        .print-button:hover {
-            background-color: #0c044c;
-        }
     </style>
 </head>
 <body>
     <header>
-        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Education Detection and Guidance for Education</h2>
     </header>
     <div class="update">

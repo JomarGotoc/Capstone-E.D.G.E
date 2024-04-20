@@ -43,17 +43,21 @@ $conn->close();
         body {
             background-color: white;
             font-family: Arial, sans-serif;
+            font-size: 15px;
         }
         header {
-            background-color: #190572;
-            padding: 10px;
-            color: white;
+            padding: 5px;
+            color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         header img {
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        header h2{
+            font-size: 15px;
         }
         .update{
             margin-top: 20px;
@@ -78,22 +82,20 @@ $conn->close();
             gap: 2px;
         }
         .label {
-            background-color: #190572;
-            color: white;
+            color: black;
             padding: 5px 10px;
-            border-radius: 5px;
             margin: 5px 0;
             grid-column: 1;
             width: 200px;
             text-align: left;
             font-weight: bold;
+            border: 1px solid #dddddd;
+
         }
         .response {
             margin: 5px 0;
             padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #19057230;
-            border: none;
+            border: 1px solid #dddddd;
             grid-column: 2;
             width: 400px;
         }
@@ -110,16 +112,26 @@ $conn->close();
             text-align: center;
         }
         th {
-            background-color: #190572;
-            color: white;
+            color: black;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: transparent;
         }
         tr:nth-child(odd) {
             background-color: transparent;
         }
-        button{
+        .print-button {
+        background-color: white;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button{
             background-color: transparent;
             border: none;
         }
@@ -128,7 +140,7 @@ $conn->close();
         .back-icon {
             left: 10px;
             font-size: 30px;
-            color:#190572;
+            color:black;
             text-decoration: none;
             cursor: pointer;
         }
@@ -139,24 +151,20 @@ $conn->close();
 
         .print-button {
             width: fit-content;
-            background-color: #190572;
+            background-color: white;
             letter-spacing: 1.2px;
             font-size: 15px;
-            color: white;
+            color: black;
             border: none;
             padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
             margin-left: -180px;
 }
-        .print-button:hover {
-            background-color: #0c044c;
-        }
     </style>
 </head>
 <body>
     <header>
-        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h2>
     </header>
     <div class="update">
@@ -178,7 +186,7 @@ $conn->close();
         <p class="label">Grade & Section</p>
         <input class="response" type="text" value=" ">
         
-        <p class="label">Total Students</p>
+        <p class="label">Total P.A.Rs</p>
         <input class="response" type="text" value="<?php echo $total ?>">
     </div>
     </div>
@@ -196,12 +204,12 @@ if ($result->num_rows > 0) {
             </tr>";
     while ($row = $result->fetch_assoc()) {
         echo "<tr>
-                <td style='text-align: center;'>{$row['lrn']}</td>
-                <td style='text-align: center;'>{$row['fullname']}</td>
-                <td style='text-align: center;'>{$row['classification']}</td>
-                <td style='text-align: center;'>{$row['grade']}</td>
-                <td style='text-align: center;'>{$row['section']}</td>
-                <td style='text-align: center;'>{$row['status']}</td>
+                <td >{$row['lrn']}</td>
+                <td >{$row['fullname']}</td>
+                <td >{$row['classification']}</td>
+                <td >{$row['grade']}</td>
+                <td >{$row['section']}</td>
+                <td >{$row['status']}</td>
             </tr>";
     }
     echo "</table>";

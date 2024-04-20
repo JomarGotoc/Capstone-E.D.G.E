@@ -379,20 +379,24 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>PRINT</title>
     <style>
-        body {
+                body {
             background-color: white;
             font-family: Arial, sans-serif;
+            font-size: 15px;
         }
         header {
-            background-color: #190572;
-            padding: 10px;
-            color: white;
+            padding: 5px;
+            color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         header img {
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        header h2{
+            font-size: 15px;
         }
         .update{
             margin-top: 20px;
@@ -417,25 +421,22 @@ $conn->close();
             gap: 2px;
         }
         .label {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
             padding: 5px 10px;
-            border-radius: 5px;
             margin: 5px 0;
             grid-column: 1;
             width: 200px;
             text-align: left;
             font-weight: bold;
+            border: 1px solid #dddddd;
+
         }
         .response {
             margin: 5px 0;
             padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #F3F3F3;
-            border: none;
+            border: 1px solid #dddddd;
             grid-column: 2;
-            width: 300px;
-            color: #190572;
+            width: 400px;
         }
         table {
             width: 100%;
@@ -443,31 +444,33 @@ $conn->close();
         }
         th, td {
             border: 1px solid #dddddd;
-            text-align: center;
+            text-align: left;
             padding: 8px;
         }
-        td:first-child {
-            text-align: left;
-            font-weight: bold;
+        th{
+            text-align: center;
         }
         th {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: transparent;
         }
         tr:nth-child(odd) {
             background-color: transparent;
         }
-        .line {
-            width: 100%;
-            height: 2px;
-            background-color: #190572;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-        button{
+        .print-button {
+        background-color: white;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button{
             background-color: transparent;
             border: none;
         }
@@ -476,7 +479,7 @@ $conn->close();
         .back-icon {
             left: 10px;
             font-size: 30px;
-            color:#190572;
+            color:black;
             text-decoration: none;
             cursor: pointer;
         }
@@ -487,24 +490,20 @@ $conn->close();
 
         .print-button {
             width: fit-content;
-            background-color: #190572;
+            background-color: white;
             letter-spacing: 1.2px;
             font-size: 15px;
-            color: white;
+            color: black;
             border: none;
             padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
             margin-left: -180px;
 }
-        .print-button:hover {
-            background-color: #0c044c;
-        }
     </style>
 </head>
 <body>
     <header>
-        <img src="../../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h2>
     </header>
     <div class="update">
@@ -592,52 +591,52 @@ $conn->close();
     <div class="line"></div>
     <div class="details" >
     <div class="update-record2">
-        <p class="label">Quarter</p>
-        <input class="response" type="text" value="1">
+        <p class="label">Identification</p>
+        <input class="response" type="text" value="">
     </div>
     </div>
     <table>
         <thead>
             <tr>
                 <th>Grade level</th>
-                <th>Academic - Literacy in English</th>
-                <th>Academic - Literacy in Filipino</th>
-                <th>Academic - Numeracy</th>
-                <th>Behavioral</th>
-                <th>Total P.A.R.s</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+                <th>Total P.A.Rs</th>
             </tr>
         </thead>
         <tbody>
         <tr>
                         <td>Kinder</td>
-                        <td><?php echo $kinderenglish?></td>
-                        <td><?php echo $kinderfilipino?></td>
-                        <td><?php echo $kindernumeracy?></td>
-                        <td><?php echo $kinderbehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalkinder?></td>
                     </tr>
                     <tr>
                         <td>Grade 1</td>
-                        <td><?php echo $oneenglish?></td>
-                        <td><?php echo $onefilipino?></td>
-                        <td><?php echo $onenumeracy?></td>
-                        <td><?php echo $onebehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalone?></td>
                     </tr>
                     <tr>
                         <td>Grade 2</td>
-                        <td><?php echo $twoenglish?></td>
-                        <td><?php echo $twofilipino?></td>
-                        <td><?php echo $twonumeracy?></td>
-                        <td><?php echo $twobehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaltwo?></td>
                     </tr>
                     <tr>
                         <td>Grade 3</td>
-                        <td><?php echo $threeenglish?></td>
-                        <td><?php echo $threefilipino?></td>
-                        <td><?php echo $threenumeracy?></td>
-                        <td><?php echo $threebehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalthree?></td>
                     </tr>
         </tbody>

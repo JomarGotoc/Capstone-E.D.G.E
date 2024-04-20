@@ -7086,21 +7086,24 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <title>PRINT</title>
     <style>
-        body {
+                body {
             background-color: white;
             font-family: Arial, sans-serif;
+            font-size: 15px;
         }
         header {
-            width: 100%;
-            background-color: #190572;
-            padding: 10px;
-            color: white;
+            padding: 5px;
+            color: black;
             display: flex;
             align-items: center;
             justify-content: flex-start;
         }
         header img {
-            margin-right: 10px;
+            margin-right: 15px;
+        }
+
+        header h2{
+            font-size: 15px;
         }
         .update{
             margin-top: 20px;
@@ -7109,7 +7112,6 @@ $conn->close();
             grid-template-columns: auto auto;
             gap: 2px;
         }
-
         .details{
             display: grid;
             grid-template-columns: auto auto;
@@ -7126,25 +7128,22 @@ $conn->close();
             gap: 2px;
         }
         .label {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
             padding: 5px 10px;
-            border-radius: 5px;
             margin: 5px 0;
             grid-column: 1;
             width: 200px;
             text-align: left;
             font-weight: bold;
+            border: 1px solid #dddddd;
+
         }
         .response {
             margin: 5px 0;
             padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #F3F3F3;
-            border: none;
+            border: 1px solid #dddddd;
             grid-column: 2;
-            width: 300px;
-            color: #190572;
+            width: 400px;
         }
         table {
             width: 100%;
@@ -7152,39 +7151,42 @@ $conn->close();
         }
         th, td {
             border: 1px solid #dddddd;
-            text-align: center;
+            text-align: left;
             padding: 8px;
         }
-        td:first-child {
-            text-align: left;
-            font-weight: bold;
+        th{
+            text-align: center;
         }
         th {
-            background-color: #190572;
-            color: #FFFFFF;
+            color: black;
         }
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: transparent;
         }
         tr:nth-child(odd) {
             background-color: transparent;
         }
-        .line {
-            width: 100%;
-            height: 2px;
-            background-color: #190572;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-        button{
+        .print-button {
+        background-color: white;
+        color: black;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    button{
             background-color: transparent;
             border: none;
         }
 
+
         .back-icon {
             left: 10px;
             font-size: 30px;
-            color:#190572;
+            color:black;
             text-decoration: none;
             cursor: pointer;
         }
@@ -7195,25 +7197,20 @@ $conn->close();
 
         .print-button {
             width: fit-content;
-            background-color: #190572;
+            background-color: white;
             letter-spacing: 1.2px;
             font-size: 15px;
-            color: white;
+            color: black;
             border: none;
             padding: 10px 35px;
             border-radius: 5px;
             cursor: pointer;
             margin-left: -180px;
 }
-        .print-button:hover {
-            background-color: #0c044c;
-        }
-
     </style>
 </head>
 <body>
     <header>
-        <img src="../img/logo.png" alt="Logo" width="70" height="70">
         <h2>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h2>
     </header>
     <div class="update">
@@ -7303,307 +7300,307 @@ $conn->close();
     <div class="line"></div>
     <div class="details" >
     <div class="update-record2">
-        <p class="label">Quarter</p>
-        <input class="response" type="text" value="1" readonly>
+        <p class="label">Identification</p>
+        <input class="response" type="text" value="" readonly>
     </div>
     </div>
     <table>
         <thead>
             <tr>
                 <th>School Name</th>
-                <th>Academic - Literacy in English</th>
-                <th>Academic - Literacy in Filipino</th>
-                <th>Academic - Numeracy</th>
-                <th>Behavioral</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
                 <th>Total P.A.R.s</th>
             </tr>
         </thead>
         <tbody>
         <tr>
                         <td>Bacayao Sur Elementary School</td>  
-                        <td><?php echo $bucayaoenglish ?></td>
-                        <td><?php echo $bucayaofilipino ?></td>
-                        <td><?php echo $bucayaonumeracy ?></td>
-                        <td><?php echo $bucayaobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalbacayao ?></td>
                     </tr>
 
                     <tr>
                         <td>Bliss Elementary School</td>
-                        <td><?php echo $blissenglish ?></td>
-                        <td><?php echo $blissfilipino ?></td>
-                        <td><?php echo $blissnumeracy ?></td>
-                        <td><?php echo $blissbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalbliss ?></td>
                     </tr>
 
                     <tr>
                         <td>Bolosan Elementary School</td>
-                        <td><?php echo $bolosanenglish ?></td>
-                        <td><?php echo $bolosanfilipino ?></td>
-                        <td><?php echo $bolosannumeracy ?></td>
-                        <td><?php echo $bolosanbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalbolosan ?></td>
                     </tr>
 
                     <tr>
-                        <td>Bonuan Boquig Elementary School</td>
-                        <td><?php echo $bonuanenglish ?></td>
-                        <td><?php echo $bonuanfilipino ?></td>
-                        <td><?php echo $bonuannumeracy ?></td>
-                        <td><?php echo $bonuanbehavioral ?></td>
+                        <td>Bonuan Boquig Elementary School</td>                        
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalbonuan ?></td>
                     </tr>
 
                     <tr>
                         <td>Calmay Elementary School</td>
-                        <td><?php echo $calmayenglish ?></td>
-                        <td><?php echo $calmayfilipino ?></td>
-                        <td><?php echo $calmaynumeracy ?></td>
-                        <td><?php echo $calmaybehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalcalmay ?></td>
                     </tr>
 
                     <tr>
                         <td>Carael Elementary School<</td>
-                        <td><?php echo $caraelenglish ?></td>
-                        <td><?php echo $caraelfilipino ?></td>
-                        <td><?php echo $caraelnumeracy ?></td>
-                        <td><?php echo $caraelbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalcarael ?></td>
                     </tr>
 
                     <tr>
                         <td>Caranglaan Elementary School</td>
-                        <td><?php echo $caranglaanenglish ?></td>
-                        <td><?php echo $caranglaanfilipino ?></td>
-                        <td><?php echo $caranglaannumeracy ?></td>
-                        <td><?php echo $caranglaanbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalcaranglaan ?></td>
                     </tr>
 
                     <tr>
                         <td>East Central Integrated School</td>
-                        <td><?php echo $eastenglish ?></td>
-                        <td><?php echo $eastfilipino ?></td>
-                        <td><?php echo $eastnumeracy ?></td>
-                        <td><?php echo $eastbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaleast ?></td>
                     </tr>
 
                     <tr>
                         <td>Federico N. Ceralde School Integrated School</td>
-                        <td><?php echo $federicoenglish ?></td>
-                        <td><?php echo $federicofilipino ?></td>
-                        <td><?php echo $federiconumeracy ?></td>
-                        <td><?php echo $federicobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalfederico ?></td>
                     </tr>
 
                     <tr>
                         <td>Gen. Gregorio Del Pilar Elementary School</td>
-                        <td><?php echo $genenglish ?></td>
-                        <td><?php echo $genfilipino ?></td>
-                        <td><?php echo $gennumeracy ?></td>
-                        <td><?php echo $genbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalgen ?></td>
                     </tr>
 
                     <tr>
                         <td>Juan L. Siapno Elementary School</td>
-                        <td><?php echo $juanlenglish ?></td>
-                        <td><?php echo $juanlfilipino ?></td>
-                        <td><?php echo $juanlnumeracy ?></td>
-                        <td><?php echo $juanlbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaljuanl ?></td>
                     </tr>
 
                     <tr>
                         <td>Juan P. Guadiz Elementary School</td>
-                        <td><?php echo $juanpenglish ?></td>
-                        <td><?php echo $juanpfilipino ?></td>
-                        <td><?php echo $juanpnumeracy ?></td>
-                        <td><?php echo $juanpbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaljuanp ?></td>
                     </tr>
 
                     <tr>
                         <td>Lasip Grande Elementary School</td>
-                        <td><?php echo $lasipenglish ?></td>
-                        <td><?php echo $lasipfilipino ?></td>
-                        <td><?php echo $lasipnumeracy ?></td>
-                        <td><?php echo $lasipbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totallasip ?></td>
                     </tr>
 
                     <tr>
                         <td>Leon-Francisco Elementary School</td>
-                        <td><?php echo $leonenglish ?></td>
-                        <td><?php echo $leonfilipino ?></td>
-                        <td><?php echo $leonnumeracy ?></td>
-                        <td><?php echo $leonbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalleon?></td>
                     </tr>
                     <tr>
                         <td>Lomboy Elementary School</td>
-                        <td><?php echo $lomboyenglish ?></td>
-                        <td><?php echo $lomboyfilipino ?></td>
-                        <td><?php echo $lomboynumeracy ?></td>
-                        <td><?php echo $lomboybehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totallomboy ?></td>
                     </tr>
                     <tr>
                         <td>Lucao Elementary School</td>
-                        <td><?php echo $lucaoenglish ?></td>
-                        <td><?php echo $lucaofilipino ?></td>
-                        <td><?php echo $lucaonumeracy ?></td>
-                        <td><?php echo $lucaobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totallucao ?></td>
                     </tr>
                     <tr>
                         <td>Malued Sur Elementary School</td>
-                        <td><?php echo $maluedenglish ?></td>
-                        <td><?php echo $maluedfilipino ?></td>
-                        <td><?php echo $maluednumeracy ?></td>
-                        <td><?php echo $maluedbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalmalued ?></td>
                     </tr>
                     <tr>
                         <td>Mamalingling Elementary School</td>
-                        <td><?php echo $mamalinglingenglish ?></td>
-                        <td><?php echo $mamalinglingfilipino ?></td>
-                        <td><?php echo $mamalinglingnumeracy ?></td>
-                        <td><?php echo $mamalinglingbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalmamalingling ?></td>
                     </tr>
                     <tr>
                         <td>Mangin-Tebeng Elementary School</td>
-                        <td><?php echo $manginenglish ?></td>
-                        <td><?php echo $manginfilipino ?></td>
-                        <td><?php echo $manginnumeracy ?></td>
-                        <td><?php echo $manginbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalmangin ?></td>
                     </tr>
                     <tr>
                         <td>North Central Elementary School</td>
-                        <td><?php echo $northenglish ?></td>
-                        <td><?php echo $northfilipino ?></td>
-                        <td><?php echo $northnumeracy ?></td>
-                        <td><?php echo $northbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalnorth ?></td>
                     </tr>
                     <tr>
                         <td>Pantal Elementary School</td>
-                        <td><?php echo $pantalenglish ?></td>
-                        <td><?php echo $pantalfilipino ?></td>
-                        <td><?php echo $pantalnumeracy ?></td>
-                        <td><?php echo $pantalbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalpantal ?></td>
                     </tr>
                     <tr>
                         <td>Pascuala G. Villamil Elementary School</td>
-                        <td><?php echo $pascualaenglish ?></td>
-                        <td><?php echo $pascualafilipino ?></td>
-                        <td><?php echo $pascualanumeracy ?></td>
-                        <td><?php echo $pascualabehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalpaascuala ?></td>
                     </tr>
                     <tr>
                         <td>Pogo-Lasip Elementary School</td>
-                        <td><?php echo $pogoenglish ?></td>
-                        <td><?php echo $pogofilipino ?></td>
-                        <td><?php echo $pogonumeracy ?></td>
-                        <td><?php echo $pogobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalpogo ?></td>
                     </tr>
                     <tr>
                         <td>Pugaro Integrated School</td>
-                        <td><?php echo $pugaroenglish ?></td>
-                        <td><?php echo $pugarofilipino ?></td>
-                        <td><?php echo $pugaronumeracy ?></td>
-                        <td><?php echo $pugarobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalpugaro ?></td>
                     </tr>
                     <tr>
                         <td>Sabangan Elementary School</td>
-                        <td><?php echo $sabanganenglish ?></td>
-                        <td><?php echo $sabanganfilipino ?></td>
-                        <td><?php echo $sabangannumeracy ?></td>
-                        <td><?php echo $sabanganbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalSabangan ?></td>
                     </tr>
                     <tr>
                         <td>Salapingao Elementary School</td>
-                        <td><?php echo $salapingaoenglish ?></td>
-                        <td><?php echo $salapingaofilipino ?></td>
-                        <td><?php echo $salapingaonumeracy ?></td>
-                        <td><?php echo $salapingaobehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalsalipangao ?></td>
                     </tr>
                     <tr>
                         <td>Salisay Elementary School</td>
-                        <td><?php echo $salisayenglish ?></td>
-                        <td><?php echo $salisayfilipino ?></td>
-                        <td><?php echo $salisaynumeracy ?></td>
-                        <td><?php echo $salisaybehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalsalisay ?></td>
                     </tr>
 
                     <tr>
                         <td>Suit Elementary School</td>
-                        <td><?php echo $suitenglish ?></td>
-                        <td><?php echo $suitfilipino ?></td>
-                        <td><?php echo $suitnumeracy ?></td>
-                        <td><?php echo $suitbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalsuit ?></td>
                     </tr>
                     <tr>
                         <td>T. Ayson Rosario Elementary School</td>
-                        <td><?php echo $aysonenglish ?></td>
-                        <td><?php echo $aysonfilipino ?></td>
-                        <td><?php echo $aysonnumeracy ?></td>
-                        <td><?php echo $aysonbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalayson ?></td>
                     </tr>
                     <tr>
                         <td>Tambac Elementary School</td>
-                        <td><?php echo $tambacenglish ?></td>
-                        <td><?php echo $tambacfilipino ?></td>
-                        <td><?php echo $tambacnumeracy ?></td>
-                        <td><?php echo $tambacbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaltambac ?></td>
                     </tr>
                     <tr>
                         <td>Tebeng Elementary School</td>
-                        <td><?php echo $tebengenglish ?></td>
-                        <td><?php echo $tebengfilipino ?></td>
-                        <td><?php echo $tebengnumeracy ?></td>
-                        <td><?php echo $tebengbehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totaltebeng ?></td>
                     </tr>
 
                     <tr>
                         <td>Victoria Q. Zarate Elementary School</td>
-                        <td><?php echo $victoriaenglish ?></td>
-                        <td><?php echo $victoriafilipino ?></td>
-                        <td><?php echo $victorianumeracy ?></td>
-                        <td><?php echo $victoriabehavioral ?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalvictoria ?></td>
                     </tr>
                     <tr>
                         <td>West Central I Elementary School</td>
-                        <td><?php echo $west1centralenglish?></td>
-                        <td><?php echo $west1centralfilipino?></td>
-                        <td><?php echo $west1centralnumeracy?></td>
-                        <td><?php echo $west1centralbehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalwest1?></td>
                     </tr>
                     <tr>
                         <td>West Central II Elementary School</td>
-                        <td><?php echo $westcentralenglish?></td>
-                        <td><?php echo $westcentralfilipino?></td>
-                        <td><?php echo $westcentralnumeracy?></td>
-                        <td><?php echo $westcentralbehavioral?></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td><?php echo $totalwest?></td>
                     </tr>
         </tbody>
