@@ -811,6 +811,7 @@ if(isset($_POST['print'])) {
             display: flex;
             align-items: center;
             margin: 0 10px; 
+            margin-top: 15px;
         }
 
         .legend-item p{
@@ -1278,7 +1279,7 @@ if(isset($_POST['print'])) {
         margin-left: 5px;
     }
 
-    .checkbox-group input[type="checkbox"] {
+    .checkbox-group input[type="radio"] {
         display: none;
     }
 
@@ -1300,7 +1301,7 @@ if(isset($_POST['print'])) {
         border-radius: 4px;
     }
 
-    .checkbox-group input[type="checkbox"]:checked + label:before {
+    .checkbox-group input[type="radio"]:checked + label:before {
         content: '\2713';
         font-size: 16px;
         color: white; 
@@ -1308,6 +1309,7 @@ if(isset($_POST['print'])) {
         text-align: center;
         line-height: 20px;
     }
+
 
         @media screen and (max-width: 800px) {
             header{
@@ -1494,30 +1496,50 @@ if(isset($_POST['print'])) {
                 </div> -->
                 <div class="legend-containers">
                     <div class="legend-item">
-                        <i class="par-icon bx bx-calculator icon"></i>
-                        <p>Academic - Numeracy</p>
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-numeracy" name="academic" class="checkbox">
+                            <label for="legend-checkbox-numeracy">
+                                <i class="par-icon bx bx-calculator icon"></i>
+                                Academic - Numeracy
+                            </label>
+                        </div>
                     </div>
                     <div class="legend-item">
-                        E<i class='bx bx-book-open icon'></i>
-                        <p>Academic - Literacy in English</p>
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-english-literacy" name="academic" class="checkbox">
+                            <label for="legend-checkbox-english-literacy">
+                                <i class='bx bx-book-open icon'></i>
+                                Academic - Literacy in English
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="legend-containers">
-                    <div class="checkbox-container">
-                        <input type="checkbox" id="legend-checkbox-at-risk">
+                    <div class="checkbox-container checkbox-group">
+                        <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
+                        <label for="legend-checkbox-all">All Students</label>
+                    </div>
+                    <div class="checkbox-container non checkbox-group">
+                        <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
                         <label for="legend-checkbox-at-risk">Pupil At Risk</label>
                     </div>
-                    <div class="checkbox-container non">
-                        <input type="checkbox" id="legend-checkbox-non-risk">
-                        <label for="legend-checkbox-non-risk">Non - Risk Pupil</label>
-                    </div>
                     <div class="legend-item">
-                        <i class="par-icon bx bx-face icon"></i>
-                        <p>Behavioral</p>
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
+                            <label for="legend-checkbox-behavioral">
+                                <i class="par-icon bx bx-face icon"></i>
+                                Behavioral
+                            </label>
+                        </div>
                     </div>                   
                     <div class="legend-item">
-                        F<i class="bx bx-book-open icon"></i>
-                        <p>Academic - Literacy in Filipino</p>
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-filipino-literacy" name="academic" class="checkbox">
+                            <label for="legend-checkbox-filipino-literacy">
+                                <i class="par-icon bx bx-book-open icon"></i>
+                                Academic - Literacy in Filipino
+                            </label>
+                        </div>
                     </div>
                 </div>
 
@@ -1550,7 +1572,7 @@ if(isset($_POST['print'])) {
             </div>
         </div>
 
-        <table border="0" id="pupilTable">
+        <table border="0" id="pupilTable" style="display:none">
             <tr class='sheshable'>
                 <th style='width:14%'>sdrfgrg</th>
                 <th style='width:22%'>srdgf</th>
@@ -1572,7 +1594,29 @@ if(isset($_POST['print'])) {
                 </th>
             </tr>
         </table>
-    </div>
+
+        <table border="0" id="identification" >
+            <tr class='sheshable'>
+                <th style='width:14%'>idntification</th>
+                <th style='width:22%'>idntification</th>
+                <th style='width:13%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                    </div>
+                </th>
+                <th style='width:16%'>sgsdasd</th>
+                <th style='width:14%' class='act'>
+                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
 
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
@@ -1950,6 +1994,55 @@ var rowsPerPageDataTable = 8;
     document.getElementById('nextbutton').addEventListener('click', nextPage);
 
 </script>
+
+</div>
+
+<script>
+ // one checkbox
+ const checkboxes = document.querySelectorAll('.checkbox');
+
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            checkboxes.forEach(cb => {
+                if (cb !== this) {
+                    cb.checked = false;
+                }
+            });
+        }
+    });
+});
+
+</script>
+
+<script>
+
+const allStudentsRadio = document.getElementById('legend-checkbox-all');
+    const atRiskRadio = document.getElementById('legend-checkbox-at-risk');
+    const academicNumeracyRadio = document.getElementById('legend-checkbox-numeracy');
+    const academicFilipinoRadio = document.getElementById('legend-checkbox-filipino-literacy');
+    const identificationTable = document.getElementById('identification');
+    const pupilTable = document.getElementById('pupilTable');
+
+    allStudentsRadio.addEventListener('change', toggleTables);
+    atRiskRadio.addEventListener('change', toggleTables);
+    academicNumeracyRadio.addEventListener('change', toggleTables);
+    academicFilipinoRadio.addEventListener('change', toggleTables);
+
+    function toggleTables() {
+        if (allStudentsRadio.checked) {
+            pupilTable.style.display = 'block';
+            identificationTable.style.display = 'none';
+        } else if (atRiskRadio.checked && (academicNumeracyRadio.checked || academicFilipinoRadio.checked)) {
+            pupilTable.style.display = 'none';
+            identificationTable.style.display = 'block';
+        } else {
+            pupilTable.style.display = 'none';
+            identificationTable.style.display = 'block';
+        }
+    }
+</script>
+
     
  
 </body>
