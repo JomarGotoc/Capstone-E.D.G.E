@@ -1572,7 +1572,7 @@ if(isset($_POST['print'])) {
             </div>
         </div>
 
-        <table border="0" id="pupilTable" style="display:none">
+        <table border="0" id="pupilTable" >
             <tr class='sheshable'>
                 <th style='width:14%'>sdrfgrg</th>
                 <th style='width:22%'>srdgf</th>
@@ -1595,10 +1595,33 @@ if(isset($_POST['print'])) {
             </tr>
         </table>
 
-        <table border="0" id="identification" >
+        <table border="0" id="identification" style="display: none;">
             <tr class='sheshable'>
-                <th style='width:14%'>idntification</th>
-                <th style='width:22%'>idntification</th>
+                <th style='width:14%'>identification</th>
+                <th style='width:22%'>identification</th>
+                <th style='width:13%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                    </div>
+                </th>
+                <th style='width:16%'>sgsdasd</th>
+                <th style='width:14%' class='act'>
+                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
+
+        <table border="0" id="parlist" style="display: none;">
+            <tr class='sheshable'>
+                <th style='width:14%'>pars</th>
+                <th style='width:22%'>pars</th>
                 <th style='width:13%'class='act'>
                     <div class="icon-container">
                         E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
@@ -2018,29 +2041,40 @@ checkboxes.forEach(checkbox => {
 <script>
 
 const allStudentsRadio = document.getElementById('legend-checkbox-all');
-    const atRiskRadio = document.getElementById('legend-checkbox-at-risk');
-    const academicNumeracyRadio = document.getElementById('legend-checkbox-numeracy');
-    const academicFilipinoRadio = document.getElementById('legend-checkbox-filipino-literacy');
-    const identificationTable = document.getElementById('identification');
-    const pupilTable = document.getElementById('pupilTable');
+const atRiskRadio = document.getElementById('legend-checkbox-at-risk');
+const academicNumeracyRadio = document.getElementById('legend-checkbox-numeracy');
+const academicFilipinoRadio = document.getElementById('legend-checkbox-filipino-literacy');
+const identificationTable = document.getElementById('identification');
+const pupilTable = document.getElementById('pupilTable');
+const parTable = document.getElementById('parlist');
 
-    allStudentsRadio.addEventListener('change', toggleTables);
-    atRiskRadio.addEventListener('change', toggleTables);
-    academicNumeracyRadio.addEventListener('change', toggleTables);
-    academicFilipinoRadio.addEventListener('change', toggleTables);
+parTable.addEventListener('click', function() {
+    pupilTable.style.display = 'none';
+    identificationTable.style.display = 'none';
+    parTable.style.display = 'block';
+});
 
-    function toggleTables() {
-        if (allStudentsRadio.checked) {
-            pupilTable.style.display = 'block';
-            identificationTable.style.display = 'none';
-        } else if (atRiskRadio.checked && (academicNumeracyRadio.checked || academicFilipinoRadio.checked)) {
-            pupilTable.style.display = 'none';
-            identificationTable.style.display = 'block';
-        } else {
-            pupilTable.style.display = 'none';
-            identificationTable.style.display = 'block';
-        }
-    }
+allStudentsRadio.addEventListener('change', toggleTables);
+atRiskRadio.addEventListener('change', toggleTables);
+academicNumeracyRadio.addEventListener('change', toggleTables);
+academicFilipinoRadio.addEventListener('change', toggleTables);
+
+function toggleTables() {
+    if (allStudentsRadio.checked) {
+        pupilTable.style.display = 'block';
+        identificationTable.style.display = 'none';
+        parTable.style.display = 'none';
+    } else if (academicNumeracyRadio.checked || academicFilipinoRadio.checked) {
+        pupilTable.style.display = 'none';
+        identificationTable.style.display = 'block';
+        parTable.style.display = 'none';
+    } else  {
+        pupilTable.style.display = 'none';
+        identificationTable.style.display = 'none';
+        parTable.style.display = 'block';
+    }   
+}
+
 </script>
 
     
