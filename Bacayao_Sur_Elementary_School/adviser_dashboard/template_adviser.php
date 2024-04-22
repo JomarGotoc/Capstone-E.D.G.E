@@ -1406,7 +1406,7 @@ if(isset($_POST['print'])) {
                     <h3 style="margin-left:7px">Employee Number</h3>
                 </div>
             </div>
-            <!--?php
+            <?php
             if ($result1->num_rows > 0) {
                 // Get the data of the first row
                 $row = $result1->fetch_assoc();
@@ -1417,7 +1417,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?-->
+            ?>
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1426,10 +1426,10 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                <!--?php 
+                <?php 
                         $capitalizedSecondWord = ucfirst($secondWord);
                         echo '<h3 style="color: #190572; margin-left:7px">' . $capitalizedSecondWord . '&nbsp;-&nbsp;' . ucfirst($fourthWord) . '</h3>';
-                    ?-->    
+                    ?>    
             </div>
             </div>
 
@@ -1442,7 +1442,7 @@ if(isset($_POST['print'])) {
                     <h3 style="margin-left:7px">Adviser</h3>
                 </div>
             </div>
-            <!--?php
+            <?php
             if ($result2->num_rows > 0) {
                 $row = $result2->fetch_assoc();
                 $fullname = $row["fullname"];
@@ -1452,7 +1452,7 @@ if(isset($_POST['print'])) {
                 </div>
             </div>";
             }
-            ?-->
+            ?>
 
             <div class="column column-left">
                 <div class="containers" style="background-color: #190572;">
@@ -1461,7 +1461,7 @@ if(isset($_POST['print'])) {
             </div>
             <div class="column half-width">
                 <div class="containers" style="background-color: #F3F3F3;">
-                    <h3 style="color: #190572; margin-left:7px"><!--?php echo $count ?--></h3>
+                    <h3 style="color: #190572; margin-left:7px"><?php echo $count ?></h3>
                 </div>
             </div>
         </div>
