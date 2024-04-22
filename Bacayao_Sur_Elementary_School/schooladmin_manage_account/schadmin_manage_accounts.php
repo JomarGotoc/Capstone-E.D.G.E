@@ -1,8 +1,123 @@
 <?php
-    include('../database.php');
+include('../../database.php');
+
+if(isset($_POST['submit1'])) {
+    // Retrieve form data
+    $firstname = $_POST['firstname'];
+    $middlename = $_POST['middlename'];
+    $lastname = $_POST['lastname'];
+    $extension = $_POST['extension'];
+    $employment_number = $_POST['employment_number'];
+    $grade = $_POST['grade'];
+    $section = $_POST['section'];
+    $date = date('Y-m-d'); // Current date
+    $school = "Bacayao Sur Elementary School";
+    $activation = "activate";
+
+    // Concatenate full name
+    $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+
+    // Generate password
+    $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Set verified to "no"
+    $verified = "no";
+
+    // Insert data into the database
+    $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified, activation) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified', '$activation')";
+
+    $result = mysqli_query($conn, $query);
+
+    // Create PHP file
+    $filename = "../adviser_dashboard/grade_${grade}_section_${section}.php";
+    $template_file = "../adviser_dashboard/template_adviser.php";
+
+    // Read template content
+    $template_content = file_get_contents($template_file);
+
+    // Replace placeholders with actual values
+    $template_content = str_replace('{FULLNAME}', $fullname, $template_content);
+    $template_content = str_replace('{EMPLOYMENT_NUMBER}', $employment_number, $template_content);
+    $template_content = str_replace('{GRADE}', $grade, $template_content);
+    $template_content = str_replace('{SECTION}', $section, $template_content);
+
+    // Write content to new PHP file
+    file_put_contents($filename, $template_content);
+}
+?>
+
+<?php
+    include('../../database.php');
+    if(isset($_POST['submit2'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $school = "Bacayao Sur Elementary School";
+        $date = date('Y-m-d');
+        $activation = "activate";
+        
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../../database.php');
+    if(isset($_POST['submit3'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $school = "Bacayao Sur Elementary School";
+        $date = date('Y-m-d');
+        $activation = "activate";
+        
+
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+        // Set verified to "no"
+        $verified = "no";
+
+        // Insert data into the database
+        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
+        
+        $result = mysqli_query($conn, $query);
+    }
+?>
+<?php
+    include('../../database.php');
     if(isset($_GET['employment_number'])) {
         $employment_number = $_GET['employment_number'];
-        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
+        $sql = "SELECT fullname FROM school_admin WHERE employment_number = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $employment_number);
         $stmt->execute();
@@ -14,28 +129,116 @@
     $conn->close();
 ?>
 <?php
-    include('../database.php');
-    if(isset($_GET['employment_number'])) {
-        $employment_number = $_GET['employment_number'];
-        $sql = "SELECT fullname FROM sdo_admin WHERE employment_number = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $employment_number);
-        $stmt->execute();
-        $stmt->bind_result($sdoname);
-        if($stmt->fetch()) {
+    include('../../database.php');
+
+    // Array to store fetched data
+    $data = array();
+
+    // Array of tables
+    $tables = ['adviser', 'principal', 'counselor'];
+
+    // Loop through each table
+    foreach ($tables as $table) {
+        $sql = "SELECT fullname, employment_number, email, date FROM $table";
+        $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Fetch data and add it to $data array
+        while ($row = $result->fetch_assoc()) {
+            // Replace underscore with space in table name and capitalize each word
+            $position = ucwords(str_replace('_', ' ', $table)); 
+            $row['position'] = $position; // Adding position based on modified table name
+            $data[] = $row;
         }
-        $stmt->close();
-    } 
-    $conn->close();
+    }
+
+    }
 ?>
+<?php
+    // Assuming you have already established a MySQLi conn
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the "activate" button was clicked
+    if (isset($_POST["activate"])) {
+        // Get the employment number from the form submission
+        $employment_number = $_POST["employment_number"];
+
+        // Prepare and execute SELECT queries to check if employment_number exists in each table
+        $tables = ['adviser', 'principal', 'counselor'];
+        $found = false;
+
+        foreach ($tables as $table) {
+            $sql = "SELECT * FROM $table WHERE employment_number = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $employment_number);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                // If employment_number found in table, update activation column
+                $found = true;
+                $sql_update = "UPDATE $table SET activation = 'activate' WHERE employment_number = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("s", $employment_number);
+                $stmt_update->execute();
+            }
+        }
+    } elseif (isset($_POST["deactivate"])) { // Check if the "deactivate" button was clicked
+        // Get the employment number from the form submission
+        $employment_number = $_POST["employment_number"];
+
+        // Prepare and execute UPDATE queries to deactivate the user only in the table where employment_number is found
+        $tables = ['adviser', 'principal', 'counselor'];
+
+        foreach ($tables as $table) {
+            $sql_check = "SELECT * FROM $table WHERE employment_number = ?";
+            $stmt_check = $conn->prepare($sql_check);
+            $stmt_check->bind_param("s", $employment_number);
+            $stmt_check->execute();
+            $result_check = $stmt_check->get_result();
+
+            if ($result_check->num_rows > 0) {
+                $sql_update = "UPDATE $table SET activation = 'deactivate' WHERE employment_number = ?";
+                $stmt_update = $conn->prepare($sql_update);
+                $stmt_update->bind_param("s", $employment_number);
+                $stmt_update->execute();
+                // Since we found the employment number in one table, we can break out of the loop
+                break;
+            }
+        }
+    }
+    }
+?>
+<?php
+    include('../../database.php');
+
+    if(isset($_POST['reset'])) {
+        // Retrieve employment number from form submission
+        $employment_number = $_POST['employment_number'];
+        
+        // Generate a hashed password (you can use password_hash() function)
+        $hashed_password = password_hash($employment_number, PASSWORD_DEFAULT);
+        
+        // Check if the employment number exists in any of the tables
+        $tables = array('adviser', 'principal', 'counselor');
+        foreach ($tables as $table) {
+            $query = "SELECT * FROM $table WHERE employment_number = '$employment_number'";
+            $result = mysqli_query($conn, $query);
+            if(mysqli_num_rows($result) > 0) {
+                // If employment number found, update the password to the hashed value
+                $updateQuery = "UPDATE $table SET password = '$hashed_password' WHERE employment_number = '$employment_number'";
+                mysqli_query($conn, $updateQuery);
+                // Break the loop since the employment number is found
+                break;
+            }
+        }
+        // You can add further logic here, like displaying a message to the user after resetting the password
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-        function preventBack(){window.history.forward()};
-        setTimeout("preventBack()",0);
-        window.onunload=function(){null;}
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -746,6 +949,7 @@
             border: none;
             font-size: .9rem;
             padding: 5px;
+            margin-left: 1px;
         }
 
         .column button{
@@ -767,7 +971,7 @@
             border: 1px solid #190572;
             padding: 0;
             width: 300px;
-            margin-left: auto;
+            margin-right: 200px;
         }
 
         .search-box input[type="text"]{
@@ -793,130 +997,135 @@
         }
 
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgba(0,0,0,0.4);
+            }
 
-.modal-content {
-    border-radius: 7px;
-    background-color: #130550;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 30%;
-}
+            .modal-content {
+                border-radius: 7px;
+                background-color: #130550;
+                margin: 15% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 30%;
+            }
 
-h5{
-    text-align: center;
-    font-size: 1.2rem;
-    color: #ddd;
-}
+            h5{
+                text-align: center;
+                font-size: 1.2rem;
+                color: #ddd;
+            }
 
-#myModal input[type="date"]{
-    height: 30px;
-    width: 100%;
-    border-radius: 5px;
-}
+            #myModal input[type="date"]{
+                height: 30px;
+                width: 100%;
+                border-radius: 5px;
+            }
 
-#myModal label{
-    color: white;
-    font-size: 15px;
-}
+            #myModal label{
+                color: white;
+                font-size: 15px;
+            }
 
-#endDateCalendar,
-#startDateCalendar{
-    margin-bottom: 10px;
-}
+            #endDateCalendar,
+            #startDateCalendar{
+                margin-bottom: 10px;
+            }
 
-#myModal button{
-    width: 95%;
-    background-color: #ddd;
-    border: 1px solid #0C052F;
-    color: #190572;
-}
+            #myModal button{
+                width: 95%;
+                background-color: #ddd;
+                border: 1px solid #0C052F;
+                color: #190572;
+            }
 
-#myModal button:hover{
-    background-color: transparent;
-    border: 1px solid #ddd;
-    color: #ddd;
-}
+            #myModal button:hover{
+                background-color: transparent;
+                border: 1px solid #ddd;
+                color: #ddd;
+            }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
 
-.close:hover,
-.close:focus {
-    color: white;
-    text-decoration: none;
-    cursor: pointer;
-}
-/* Style for dropdown container */
-.dropdown-container {
-    display: flex;
-    justify-content: flex-end;
-}
+            .close:hover,
+            .close:focus {
+                color: white;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            /* Style for dropdown container */
+    .dropdown-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-left: 620px;
+    }
 
-/* Style for dropdown */
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
+    /* Style for dropdown */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
 
-/* Style for dropdown button */
-.dropbtn {
-    background-color: #3498db;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    width: 15rem;
-}
+    /* Style for dropdown button */
+    .dropbtn {
+        background-color: #130550;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+        width: 200px;
+        margin-left: 5.5rem;
+    }
 
-/* Style for dropdown content */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
+    /* Style for dropdown content */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        min-width: max-content;
+        width: 200px;
+    }
 
-/* Style for dropdown links */
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
+    /* Style for dropdown links */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        width: auto;
+    }
 
-/* Style for dropdown links on hover */
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
+    /* Style for dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
 
-/* Show dropdown content when hovering over dropdown button */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+    /* Show dropdown content when hovering over dropdown button */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
 
 
 
-        
-    </style>
+                        
+        </style>
 </head>
 <body>
 
@@ -952,7 +1161,17 @@ h5{
                         <input type="text" class="search-input" placeholder="Search ...">
                         <i class='bx bx-search search-icon'></i>
                     </div>
+            </div>
+            <div class="column dropdown-container">
+                <div class="dropdown">
+                    <button class="dropbtn">Manage Student's List</button>
+                    <div class="dropdown-content">
+                        <a href="../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">View Student's List</a>
+                        <a href="../Bacayao_Sur_Elementary_School/manage_student/template.php">Upload Student's List</a>
+                    </div>
                 </div>
+            </div>
+
                     
                 </div>
 
@@ -972,44 +1191,56 @@ h5{
         </div>
 
         <div class="inner-container">
+    <div class="bottom-inner-container2">
+        <div class="column"><h3>Name</h3></div>
+        <div class="column"><h3>Employee Number</h3></div>
+        <div class="column"><h3>Email Address</h3></div>
+        <div class="column"><h3>Date Added</h3></div>
+        <div class="column"><h3>Position<i class="bx bx-filter-alt filter-icon"></i></h3></div>
+        <div class="column"><h3></h3></div>
+    </div>
+    <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
+        <div>Principal</div>
+        <div>Adviser</div>
+        <div>Guidance Counselor</div>
+    </div>
 
-            <div class="bottom-inner-container2">
-                <div class="column"><h3>Name</h3></div>
-                <div class="column"><h3>Employee Number</h3></div>
-                <div class="column"><h3>Email Address</h3></div>
-                <div class="column"><h3>Date Added</h3></div>
-                <div class="column"><h3>Position<i class="bx bx-filter-alt filter-icon"></i></h3></div>
-                <div class="column"><h3></h3></div>
-            </div>
-            <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
-                <div>Principal</div>
-                <div>Adviser</div>
-                <div>Guidance Counselor</div>
-            </div>
+    <table class="table">
 
-            <table class="table">
-                <tr class="sheshable">
-                <td class="rows">Stephanie</td>
-                <td class="rows">0321291</td>
-                <td class="rows">steph@gmail.com</td>
-                <td class="rows">10-11-22</td>
-                <td class="rows">Principal</td>
-                <td class="rows">
-                <div class="actions-container">
-                    <div class="dropdown">
-                        <button class="action-button" onclick="toggleActionsDropdown()">Actions</button>
-                        <div class="action-option" id="actionsDropdown">
-                            <button>Edit</button>
-                            <button id="activateBtn" onclick="activate()">Activate</button>
-                            <button id="deactivateBtn" onclick="deactivate()" disabled>Deactivate</button>
-                            <button>Reset Password</button>
-                        </div>
-                    </div>
-                </div>
-            </td>
-                </tr>
-            </table>
-        </div>
+    <?php
+    // Loop through $data to display table rows
+    foreach ($data as $row) {
+        echo "<tr class='sheshable'>";
+        echo "<td class='rows'>" . $row['fullname'] . "</td>";
+        echo "<td class='rows'>" . $row['employment_number'] . "</td>";
+        echo "<td class='rows'>" . $row['email'] . "</td>";
+        echo "<td class='rows'>" . $row['date'] . "</td>";
+        echo "<td class='rows'>" . $row['position'] . "</td>";
+        echo "<td class='rows'>";
+        echo "<div class='actions-container'>";
+        echo "<div class='dropdown'>";
+        echo "<button class='action-button' onclick='toggleActionsDropdown()'>Actions</button>";
+        echo "<div class='action-option' id='actionsDropdown'>";
+        echo "<button onclick='toggleEditContainer(this)'>Edit</button>"; // Add event listener
+        echo "<form method='post' action=''>"; // Opening form tag
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
+        echo "<button type='submit' name='activate'>Activate</button>"; // Submit button
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
+        echo "<button type='submit' name='deactivate'>Deactivate</button>"; // Submit button
+        echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>";
+        echo "<button type='submit' name='reset'>Reset Password</button>"; // Submit button
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+        echo "</td>";
+        echo "</tr>";
+    }        
+    ?>
+</table>
+
+</div>
+
     </div>
 
     <div class="dropdowns">
@@ -1018,9 +1249,9 @@ h5{
         </div>
         <div class="addbutton-content show" id="createAccountDropdown" >
             <div>Create an account for:</div>
-            <div onclick="createAccount('SDO Administrator')">Principal</div>
-            <div onclick="createAccount('Executive Committee')">Adviser</div>
-            <div onclick="createAccount('School Administrator')">Guidance Counselor</div>
+            <div onclick="createAccount('Principal')">Principal</div>
+            <div onclick="createAccount('Adviser')">Adviser</div>
+            <div onclick="createAccount('Guidance Counselor')">Guidance Counselor</div>
         </div>
     </div>
 
@@ -1028,158 +1259,175 @@ h5{
 
     <!-- form -->
     <div class="login-container" style="display: none;">
-        <div class="logo"></div>
-        <h2>SDO Administrator</h2>
+    <span class="close">&times;</span>
+    <div class="logo"></div>
+    <h2>Principal</h2>
 
-        <form class="login-form" action=" " method="post">
+
+    <form class="login-form" action="" method="post">
         <div class="row">
-                <div class="columns">
+            <div class="columns">
                 <div class="form-group">
-                        <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="lastname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Employee Number</label>
-                        <input type="number"  name="employment_number" required>     
-                    </div>
+                    <label for="name">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required>
                 </div>
-
-                <div class="columns">
-                    <div class="form-group">
-                        <label for="date-added">Middle Name</label>
-                        <input type="text" id="middle-name" name="middlename" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Extension Name</label>
-                        <input type="text"  name="extension">     
-                    </div>
-                    <div class="form-group">
-                        <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="idnum">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Employee Number</label>
+                    <input type="number" name="employment_number" required>
                 </div>
             </div>
-            <div class="form-group">
-                <button type="submit" name="submit">Create Account</button>
+
+            <div class="columns">
+                <div class="form-group">
+                    <label for="date-added">Middle Name</label>
+                    <input type="text" id="middle-name" name="middlename" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Extension Name</label>
+                    <input type="text" name="extension">
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
             </div>
-        </form>
-    </div>
-
-    <div class="login-container schooladmin" style="display: none;">
-        <div class="logo"></div>
-        <h2>School Administrator</h2>
-
-        <form class="login-form" action=" " method="post">
+        </div>
         <div class="form-group">
-            <label for="schoolName">School's Name</label>
-            <div class="search-container">
-                <input type="text" id="schoolName" name="schoolName" required oninput="filterSchools()">
-                <div class="dropdown-contents" id="schoolDropdown">
-                    <a>Bacayao Sur Elementary School</a>
-                    <a>Bliss Elementary School</a>
-                    <a>Bolosan Elementary School</a>
-                    <a>Bonuan Boquig Elementary School</a>
-                    <a>Calmay Elementary School</a>
-                    <a>Carael Elementary School</a>
-                    <a>Caranglaan Elementary School</a>
-                    <a>East Central Integrated School</a>
-                    <a>Federico N. Ceralde School Integrated School</a>
-                    <a>Gen. Gregorio Del Pilar Elementary School</a>
-                    <a>Juan L. Siapno Elementary School</a>
-                    <a>Juan P. Guadiz Elementary School</a>
-                    <a>Lasip Grande Elementary School</a>
-                    <a>Leon-Francisco Elementary School</a>
-                    <a>Lomboy Elementary School</a>
-                    <a>Lucao Elementary School</a>
-                    <a>Malued Sur Elementary School</a>
-                    <a>Mamalingling Elementary School</a>
-                    <a>Mangin-Tebeng Elementary School</a>
-                    <a>North Central Elementary School</a>
-                    <a>Pantal Elementary School</a>
-                    <a>Pascuala G. Villamil Elementary School</a>
-                    <a>Pogo-Lasip Elementary School</a>
-                    <a>Pugaro Integrated School</a>
-                    <a>Sabangan Elementary School</a>
-                    <a>Salapingao Elementary School</a>
-                    <a>Salisay Elementary School</a>
-                    <a>Suit Elementary School</a>
-                    <a>T. Ayson Rosario Elementary School</a>
-                    <a>Tambac Elementary School</a>
-                    <a>Tebeng Elementary School</a>
-                    <a>Victoria Q. Zarate Elementary School</a>
-                    <a>West Cental I Elementary School</a>
-                    <a>West Central II Elementary School</a>
-                </div>
-            </div>
-            </div>
+            <button type="submit" name="submit2">Create Account</button>
+        </div>
+    </form>
+</div>
+
+<div class="login-container guidance" style="display: none;">
+    <span class="close">&times;</span>
+    <div class="logo"></div>
+    <h2>Guidance Counselor</h2>
+
+
+    <form class="login-form" action="" method="post">
         <div class="row">
-                <div class="columns">
+            <div class="columns">
                 <div class="form-group">
-                        <label for="name">First Name</label>
-                        <input type="text" id="full-name" name="firstname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="idnum">Last Name</label>
-                        <input type="text" id="idnum" name="lastname" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Employee Number</label>
-                        <input type="number"  name="employment_number" required>     
-                    </div>
+                    <label for="name">First Name</label>
+                    <input type="text" id="firstname" name="firstname" required>
                 </div>
-
-                <div class="columns">
-                    <div class="form-group">
-                        <label for="date-added">Middle Name</label>
-                        <input type="text" id="middle-name" name="middlename" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="topdown">Extension Name</label>
-                        <input type="text"  name="extension">     
-                    </div>
-                    <div class="form-group">
-                        <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
-                    </div>
+                <div class="form-group">
+                    <label for="idnum">Last Name</label>
+                    <input type="text" id="lastname" name="lastname" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Employee Number</label>
+                    <input type="number" name="employment_number" required>
                 </div>
             </div>
 
-            <div class="form-group">
-                <button type="submit" name="submit">Create Account</button>
+            <div class="columns">
+                <div class="form-group">
+                    <label for="date-added">Middle Name</label>
+                    <input type="text" id="middle-name" name="middlename" required>
+                </div>
+                <div class="form-group">
+                    <label for="topdown">Extension Name</label>
+                    <input type="text" name="extension">
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit3">Create Account</button>
+        </div>
+    </form>
+</div>
 
-    <div class="edit-container">
+
+    <div class="login-container adviser" style="display: none;">
+    <span class="close">&times;</span>
         <div class="logo"></div>
-        <h2>Principal</h2>
+        <h2>Adviser</h2>
 
         <form class="login-form" action="" method="post">
             <div class="row">
                 <div class="columns">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="full-name" name="fullname" value="" readonly>
+                        <label for="name">First Name</label>
+                        <input type="text" id="firstname" name="firstname" required>
                     </div>
                     <div class="form-group">
-                        <label for="idnum">Employee Number</label>
-                        <input type="text" id="idnum" name="employment_number" value="" readonly>
+                        <label for="idnum">Middle Name</label>
+                        <input type="text" id="middlename" name="middlename" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Last Name</label>
+                        <input type="text" id="pass" name="lastname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date-added">Extension Name </label>
+                        <input type="text"  name="extension">
                     </div>
                 </div>
 
                 <div class="columns">
-                    <div class="form-group">
-                        <label for="pass">Email</label>
-                        <input type="email" id="email" name="email" value="" required>
-                    </div>
-                    <div class="form-group">
+                <div class="form-group">
                         <label for="date-added">Date Added</label>
-                        <input type="date" id="date-added" name="date" value="" readonly>
+                        <input type="date" id="date-added" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
                     </div>
+                    <div class="form-group">
+                        <label for="topdown">Employee Number</label>
+                        <input type="number"  name="employment_number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="topdown">Grade</label>
+                        <select id="topdown" name="grade" >
+                            <option value="kinder">Kinder</option>
+                            <option value="I">1</option>
+                            <option value="II">2</option>
+                            <option value="III">3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pass">Section</label>
+                        <input type="text" id="section" name="section" >
+                    </div>
+            </div>
+            </div>
+            <button type="submit" name="submit1" id="add-btn">Create Account</button>
+        </form>
+    </div>
+
+    <div class="edit-container">
+    <span class="close">&times;</span>
+        <div class="logo"></div>
+        <h2>SDO Administrator</h2>
+
+        <form class="login-form" action="" method="post">
+            <div class="row">
+            <div class="columns">
+                <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" value="" readonly>
+                </div>
+                  <div class="form-group">
+                        <label for="idnum">Employee Number</label>
+                        <input type="text" id="idnum" name="employee-number" value="" readonly>
+                  </div>
+            </div>
+
+            <div class="columns">
+                <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" value="" required>
+                </div>
+                <div class="form-group">
+                        <label for="date-added">Date Added</label>
+                        <input type="date" id="date-added" name="date-added" value="" readonly>
+                </div>
                 </div>
             </div>
             <button type="submit" name="update" id="add-btn">Save Changes</button>

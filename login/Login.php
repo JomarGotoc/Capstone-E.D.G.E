@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                                 $grade = $row['grade'];
                                 $section = $row['section'];
                                 $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . "_q1.php?employment_number=$employment_number");
+                                header("Location: ../$school/adviser_dashboard/grade_$grade" . "_section_$section" . ".php?employment_number=$employment_number");
                                 exit();
                             } else {
                                 header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
                         case 'school_admin':
                             if ($verifiedStatus == 'yes') {
                                 $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/button_options/School_Admin_Create_Account.php?employment_number=$employment_number");
+                                header("Location: ../$school/schooladmin_manage_account/schadmin_manage_accounts.php?employment_number=$employment_number");
                                 exit();
                             } else {
                                 header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");

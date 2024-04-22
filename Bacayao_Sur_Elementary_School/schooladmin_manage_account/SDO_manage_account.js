@@ -9,23 +9,19 @@ function toggleFilterOptions() {
 }
 
 //action button
-var filterIcons = document.querySelectorAll(".filter-icon");
-filterIcons.forEach(icon => icon.addEventListener("click", toggleFilterOptions));
-
 function toggleActionsDropdown(button) {
     var dropdown = button.closest('.actions-container').querySelector('.action-option');
     dropdown.classList.toggle("show");
 }
-//acticate deactivate button
 function activate(employmentNumber) {
     document.getElementById("activateBtn_" + employmentNumber).disabled = true;
     document.getElementById("deactivateBtn_" + employmentNumber).disabled = false;
 }
-
 function deactivate(employmentNumber) {
     document.getElementById("deactivateBtn_" + employmentNumber).disabled = true;
     document.getElementById("activateBtn_" + employmentNumber).disabled = false;
 }
+
 
 
 //plus button
@@ -42,50 +38,89 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 //add form log in container 
+//sdo admin
 function showLoginContainer(accountType) {
     var loginContainer = document.querySelector('.login-container');
-    var overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
     loginContainer.style.display = 'block';
-    overlay.style.display = 'block'; 
-    overlay.addEventListener('click', hideLoginContainer);
 
     var loginContainerTitle = loginContainer.querySelector('h2');
     loginContainerTitle.textContent = accountType;
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainer();
+    });
 }
 
 function hideLoginContainer() {
     var loginContainer = document.querySelector('.login-container');
     var overlay = document.querySelector('.overlay');
-    document.body.removeChild(overlay);
     loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
 }
 
-function showSchoolAdminLoginContainer() {
-    var loginContainer = document.querySelector('.login-container.schooladmin'); 
-    var overlay = document.createElement('div');
-    overlay.classList.add('overlay');
-    document.body.appendChild(overlay);
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainer);
+
+//schooladmin
+function showAdviserLoginContainer() {
+    var loginContainer = document.querySelector('.login-container.adviser');
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
     loginContainer.style.display = 'block';
-    overlay.style.display = 'block'; 
-    overlay.addEventListener('click', hideLoginContainerSchoolAdmin);
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainerAdviser();
+    });
 }
 
-function hideLoginContainerSchoolAdmin() {
-    var loginContainer = document.querySelector('.login-container.schooladmin');
+function hideLoginContainerAdviser() {
+    var loginContainer = document.querySelector('.login-container.adviser');
     var overlay = document.querySelector('.overlay');
-    document.body.removeChild(overlay);
     loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
+}
+
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainerAdviser);
+
+//guidance
+function showGuidanceLoginContainer() {
+    var loginContainer = document.querySelector('.login-container.guidance');
+    var overlay = document.querySelector('.overlay'); 
+    overlay.style.display = 'block';
+    loginContainer.style.display = 'block';
+
+    var closeButton = loginContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideLoginContainerGuidance();
+    });
+
+}
+
+function hideLoginContainerGuidance() {
+    var loginContainer = document.querySelector('.login-container.guidance');
+    var overlay = document.querySelector('.overlay');
+    loginContainer.style.display = 'none';
+    overlay.style.display = 'none';
 }
 
 function createAccount(accountType) {
-    if (accountType === 'SDO Administrator' || accountType === 'Executive Committee') {
+    if (accountType === 'Principal') {
         showLoginContainer(accountType);
-    } else if (accountType === 'School Administrator') {
-        showSchoolAdminLoginContainer();
-    }
+    } else if (accountType === 'Adviser') {
+        showAdviserLoginContainer();
+    } else if (accountType === 'Guidance Counselor') {
+        showGuidanceLoginContainer();
 }
+}
+
+var overlay = document.querySelector('.overlay'); 
+overlay.addEventListener('click', hideLoginContainerExecutive);
+
 
 
 //select school options
@@ -122,37 +157,42 @@ function filterSchools() {
 
 
 //edit form
-function toggleEditContainer() {
+function toggleEditContainer(editButton) {
     var editContainer = document.querySelector('.edit-container');
-    var overlay = document.getElementById('overlay');
-    
+    var overlay = document.querySelector('.overlay'); 
     editContainer.style.display = 'block';
     overlay.style.display = 'block';
 
+    var row = editButton.closest('tr');
 
-    var fullName = document.querySelector('.rows:nth-child(1)').textContent;
-    var employeeNumber = document.querySelector('.rows:nth-child(2)').textContent;
-    var email = document.querySelector('.rows:nth-child(3)').textContent;
+    var fullName = row.querySelector('.rows:nth-child(1)').textContent;
+    var employeeNumber = row.querySelector('.rows:nth-child(2)').textContent;
+    var email = row.querySelector('.rows:nth-child(3)').textContent;
+    var dateAdded = row.querySelector('.rows:nth-child(4)').textContent;
+
+    console.log("Full Name:", fullName);
+    console.log("Employee Number:", employeeNumber);
+    console.log("Email:", email);
+    console.log("Date Added:", dateAdded);
 
     document.getElementById('full-name').value = fullName;
     document.getElementById('idnum').value = employeeNumber;
     document.getElementById('email').value = email;
+    document.getElementById('date-added').value = dateAdded;
 
-    var position = document.querySelector('.rows:nth-child(5)').textContent;
+    var position = row.querySelector('.rows:nth-child(5)').textContent;
     var editContainerTitle = document.querySelector('.edit-container h2');
-    if (position === "Principal") {
-        editContainerTitle.textContent = "Principal";
-    } else if (position === "Adviser") {
-        editContainerTitle.textContent = "Adviser";
-    } else if (position === "Guidance Counselor") {
-        editContainerTitle.textContent = "Guidance Counselor";
-    }
+    editContainerTitle.textContent = position;
+
+    var closeButton = editContainer.querySelector('.close');
+    closeButton.addEventListener('click', function() {
+        hideEditContainer();
+    });
 }
 
 function hideEditContainer() {
     var editContainer = document.querySelector('.edit-container');
-    var overlay = document.getElementById('overlay');
-
+    var overlay = document.querySelector('.overlay'); 
     editContainer.style.display = 'none';
     overlay.style.display = 'none';
 }
@@ -161,11 +201,15 @@ function handleEditButtonClick() {
     toggleEditContainer();
 }
 
-var editButton = document.querySelector('#actionsDropdown button:nth-child(1)');
-editButton.addEventListener('click', handleEditButtonClick);
+var editButtons = document.querySelectorAll('#actionsDropdown button:nth-child(1)');
+editButtons.forEach(function(button) {
+    button.addEventListener('click', handleEditButtonClick);
+});
 
-var overlay = document.getElementById('overlay');
+var overlay = document.querySelector('.overlay'); 
 overlay.addEventListener('click', hideEditContainer);
+
+
 
 
 //date
@@ -210,7 +254,7 @@ document.addEventListener('DOMContentLoaded', function () {
             var startYearParts = startYear.split(" - ");
             selectedStartYear = startYearParts[0];
 
-            var endYearParts = endYear.split("-");
+            var endYearParts = endYear.split(" - ");
             selectedEndYear = endYearParts[0];
 
             var schoolYear = selectedStartYear + ' - ' + selectedEndYear;
