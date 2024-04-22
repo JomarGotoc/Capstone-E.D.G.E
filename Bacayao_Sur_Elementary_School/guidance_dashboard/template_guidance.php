@@ -20,116 +20,20 @@
 ?>
 <?php
 include('../../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-$lrnCounted = array(); // Array to keep track of LRNs already counted
 
-foreach ($tables as $table) {
-    $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $lrn = $row['lrn'];
-            if (!in_array($lrn, $lrnCounted)) {
-                // If LRN not already counted, add it to the count and mark as counted
-                $count++;
-                $lrnCounted[] = $lrn;
-            }
-        }
-    }
-}
+// SQL query
+$sql = "SELECT lrn, fullname, status
+        FROM behavioral
+        WHERE quarter = 1
+        AND school = 'Bacayao Sur Elementary School'";
+
+// Execute query
+$result = $conn->query($sql);
+
+// Close connection
 $conn->close();
 ?>
-<?php
-    include('../../database.php');
 
-    // Get the current PHP filename without the extension
-    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
-
-    // Remove the ".php" extension
-    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
-
-    // Explode the filename into an array of words
-    $words = explode('_', $currentFileWithoutExtension);
-
-    // Initialize variables for grade and section
-    $grade = "";
-    $section = "";
-
-    // Check if there are at least 4 words
-    if (count($words) >= 4) {
-        // Get the 2nd and 4th words
-        $grade = $words[1];
-        $section = $words[3];
-
-        // Initialize an array to store the results
-        $results = array();
-
-        // Perform query on academic_english table
-        $results[] = fetchTable($conn, "academic_english", $grade, $section);
-
-        // Perform query on academic_filipino table
-        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
-
-        // Perform query on academic_numeracy table
-        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
-
-        // Perform query on behavioral table
-        $results[] = fetchTable($conn, "behavioral", $grade, $section);
-
-        // Close the connection
-        $conn->close();
-    } 
-
-    function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $grade, $section);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            // Return an array containing the table name and the fetched data
-            $tableData = array();
-            while ($row = $result->fetch_assoc()) {
-                $tableData[] = $row;
-            }
-
-            return array($tableName, $tableData);
-        } else {
-            return null;
-        }
-
-        // Close the statement
-        $stmt->close();
-    }
-?>
-<?php
-    $filename = basename($_SERVER['PHP_SELF']);
-?>
-<?php
-if(isset($_POST['print'])) {
-    $filename = basename($_SERVER['PHP_SELF']);
-    $words = explode('_', $filename);
-    
-    if(count($words) >= 4) {
-        $grade = $words[1];
-        $section = $words[3];
-        
-        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-        $filename1 = basename($_SERVER['PHP_SELF']);
-        
-        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
-        
-        header("Location: $redirect_url");
-        exit();
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1538,21 +1442,31 @@ if(isset($_POST['print'])) {
         </div>
 
         <table border="0" id="pupilTable">
-            <tr class='sheshable'>
-                <th style='width:14%'>sdrfgrg</th>
-                <th style='width:22%'>srdgf</th>
-                <th style='width:13%'class='act'>
-                    <div class="icon-container">
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
-                    </div>
-                </th>
-                <th style='width:16%'>sgsdasd</th>
-                <th style='width:14%' class='act'>
-                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
-                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-                </th>
-            </tr>
-        </table>
+    <?php
+    // PHP Logic to populate table rows
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+    ?>
+    <tr class='sheshable'>
+        <td><?php echo $row["lrn"]; ?></td>
+        <td><?php echo $row["fullname"]; ?></td>
+        <th style='width:13%' class='act'>
+            <div class="icon-container">
+                <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+            </div>
+        </th>
+        <th style='width:16%'><?php echo $row["status"]; ?></th>
+        <th style='width:14%' class='act'>
+            <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+            <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+        </th>
+    </tr>
+    <?php
+        }
+    }
+    ?>
+</table>
+
     </div>
 
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
