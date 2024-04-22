@@ -21,6 +21,47 @@
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
+<?php
+    include('../../database.php');
+
+    // Parse filename to get grade and section
+    $filename = basename(__FILE__, '.php');
+    $filename_parts = explode('_', $filename);
+    $grade = $filename_parts[1]; // Assuming grade is the second word
+    $section = $filename_parts[3]; // Assuming section is the fourth word
+
+    $selectedclassification = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+
+    // Initialize empty array for results
+    $results = array();
+
+    // Loop through tables and execute queries
+    foreach ($tables as $table) {
+        // SQL query
+        $sql = "SELECT lrn, fullname, status
+                FROM $table
+                WHERE grade = '$grade'
+                AND section = '$section'";
+
+        // Execute query
+        $result = $conn->query($sql);
+
+        // Check if query was successful
+        if ($result) {
+            // Fetch data and append to results array
+            while ($row = $result->fetch_assoc()) {
+                $results[] = $row;
+            }
+        } else {
+            // Handle query error
+            echo "Error: " . $conn->error;
+        }
+    }
+
+    // Close connection
+    $conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1685,24 +1726,30 @@
     <span class="close">&times;</span>
     <h4>Adding <span class="student-name"></span> as Pupil At Risk</h4>
 
-    <form class="login-form" action="" method="post">
+        <div class="row">
+            <div class="columns-group">
         <div class="row">
             <div class="columns-group">
             <div class="form-group">
                     <label>Identification</label>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
-                        <label for="checkbox1">Academic - Literacy in English</label><br>
+                    <form class="login-form" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="myForm">
+    <div class="checkbox-group">
+        <input type="checkbox" id="checkbox1" name="academic_english" value="Academic - Literacy in English">
+        <label for="checkbox1">Academic - Literacy in English</label><br>
                         
-                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
-                        <label for="checkbox2">Academic - Literacy in Filipino</label><br>
+        <input type="checkbox" id="checkbox2" name="academic_filipino" value="Academic - Literacy in Filipino">
+        <label for="checkbox2">Academic - Literacy in Filipino</label><br>
                         
-                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
-                        <label for="checkbox3">Academic - Numeracy</label><br>
+        <input type="checkbox" id="checkbox3" name="academic_numeracy" value="Academic - Numeracy">
+        <label for="checkbox3">Academic - Numeracy</label><br>
                         
-                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
-                        <label for="checkbox4">Behavioral</label><br>
-                    </div>
+        <input type="checkbox" id="checkbox4" name="academic_behavioral" value="Behavioral">
+        <label for="checkbox4">Behavioral</label><br>
+    </div>
+    <!-- Hidden input to track form submission -->
+    <input type="hidden" name="form_submitted" value="1">
+    <input type="hidden" name="checkedCheckboxes" id="checkedCheckboxes" value="1">
+</form>
                 </div>
                 <div class="form-group">
                     <label for="date-added">Date Added</label>
@@ -1713,7 +1760,15 @@
         <div class="form-group">
             <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
         </div>
-    </form>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" class="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
+        </div>
 </div>
 
 <script >
@@ -1912,22 +1967,26 @@ var rowsPerPageDataTable = 8;
 </div>
 
 <script>
- // one checkbox
- const checkboxes = document.querySelectorAll('.checkbox');
+    // Get all checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"].checkbox');
 
-checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', function() {
-        if (this.checked) {
+    // Add event listener to each checkbox
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            // Uncheck other checkboxes when one is checked
             checkboxes.forEach(cb => {
                 if (cb !== this) {
                     cb.checked = false;
                 }
             });
-        }
+            // Submit the form when a checkbox is checked
+            if (this.checked) {
+                document.getElementById('myForm').submit();
+            }
+        });
     });
-});
-
 </script>
+
 
 <script>
 
@@ -1967,8 +2026,5 @@ function toggleTables() {
 }
 
 </script>
-
-    
- 
 </body>
 </html>
