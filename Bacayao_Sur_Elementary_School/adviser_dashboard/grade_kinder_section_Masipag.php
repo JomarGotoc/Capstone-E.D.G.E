@@ -1575,7 +1575,7 @@
         <th style='width:14%'><?php echo $row["lrn"]; ?></th>
         <th style='width:22%'><?php echo $row["fullname"]; ?></th>
         <th style='width:13%' class='act'>
-            <div class="icon-container">
+            <div class="icon-container" style="font-weight: 100;">
                 E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
                 <i class="vertical-lines"></i>
                 F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
@@ -1608,7 +1608,7 @@
                         echo "<td style='width:14%'>" . $row['lrn'] . "</td>";
                         echo "<td style='width:22%'>" . $row['fullname'] . "</td>";
                         echo "<td style='width:13%' class='act'>";
-                        echo "<div class='icon-container'>";
+                        echo "<div class='icon-container' style='font-weight:100'>";
                         echo "E<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i><i class='vertical-lines'></i>";
                         echo "F<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i><i class='vertical-lines'></i>";
                         echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecord()'></i><i class='vertical-lines'></i>";
