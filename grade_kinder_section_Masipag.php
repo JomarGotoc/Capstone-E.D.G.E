@@ -1,32 +1,49 @@
 <?php
-include('database.php');
+    include('database.php');
 
-// Get the current filename
-$filename = basename($_SERVER['SCRIPT_FILENAME']);
+    // Get the grade and section from the PHP file name
+    $filename = basename($_SERVER['PHP_SELF'], ".php");
+    $parts = explode("_", $filename);
+    $grade = $parts[1]; // Assuming grade is the second word
+    $section = $parts[3]; // Assuming section is the fourth word
 
-// Remove the ".php" extension
-$filenameWithoutExtension = str_replace('.php', '', $filename);
+    // School name
+    $school = "Bacayao Sur Elementary School";
 
-// Convert filename to lowercase and remove ".php" extension to get the table name
-$studentTable = strtolower($filenameWithoutExtension);
+    // Tables array
+    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
 
-// Extract grade and section from the filename
-$filenameParts = explode('_', $filenameWithoutExtension);
-$grade = $filenameParts[1]; // Assuming the grade is the second word in the filename
-$section = $filenameParts[3]; // Assuming the section is the fourth word in the filename
+    // Initialize arrays to store LRNs and corresponding tables
+    $lrnsTables = array();
 
-// Query to select lrn and fullname from the dynamically determined table $studentTable where grade, section, and school match
-$sql = "SELECT lrn, fullname FROM $studentTable WHERE grade = '$grade' AND section = '$section' AND school = 'Bacayao Sur Elementary School'";
-
-$resultss = $conn->query($sql);
-
-if ($resultss->num_rows > 0) {
-    // Output data of each row
-    while($row = $resultss->fetch_assoc()) {
-        echo "LRN: " . $row["lrn"]. " - Fullname: " . $row["fullname"]. "<br>";
+    // Iterate through each table
+    foreach ($tables as $table) {
+        // Prepare the SQL query
+        $sql = "SELECT lrn, fullname, status FROM $table 
+                WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+        
+        // Execute the query
+        $result = $conn->query($sql);
+        
+        // Fetch the results
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $lrn = $row['lrn'];
+                // Check if LRN already exists in the lrnsTables array
+                if (!isset($lrnsTables[$lrn])) {
+                    // If LRN doesn't exist, initialize an empty array for it
+                    $lrnsTables[$lrn] = array();
+                }
+                $lrnsTables[$lrn][] = $table;
+            }
+        }
     }
-} else {
-    echo "0 results";
-}
-$conn->close();
+
+    // Close connection
+    $conn->close();
+
+    // Display LRNs and corresponding tables
+    foreach ($lrnsTables as $lrn => $tables) {
+        echo "LRN: $lrn | Tables: " . implode(", ", $tables) . "<br>";
+    }
 ?>

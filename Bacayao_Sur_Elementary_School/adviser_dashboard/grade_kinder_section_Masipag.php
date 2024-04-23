@@ -40,9 +40,9 @@
     $results = array();
 
     // Iterate through each table
-    foreach ($tables as $table) {
+    foreach ($tables as $tables) {
         // Prepare the SQL query
-        $sql = "SELECT lrn, fullname, status FROM $table 
+        $sql = "SELECT lrn, fullname, status FROM $tables 
                 WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
         
         // Execute the query
@@ -57,7 +57,7 @@
         }
         
         // Store the results in the main array
-        $results[$table] = $table_results;
+        $results[$tables] = $table_results;
     }
 
     // Close connection
@@ -1634,24 +1634,50 @@
         <table border="0" id="parlist" style="display: none;">
     <?php 
     $displayed_lrns = array(); // Array to keep track of displayed LRNs
-    foreach ($results as $table => $table_results):
+    foreach ($results as $tables => $table_results):
         foreach ($table_results as $row):
             // Check if LRN has been displayed already
             if (!in_array($row['lrn'], $displayed_lrns)):
                 array_push($displayed_lrns, $row['lrn']); // Add LRN to displayed list
+                
+                // Check if LRN is found in academic_english table
+                $is_academic_english = ($tables === 'academic_english');
+                $is_academic_filipino = ($tables === 'academic_filipino');
+                $is_academic_numeracy = ($tables === 'academic_numeracy');
+                $is_behavioral = ($tables === 'behavioral');
     ?>
             <tr class='sheshable'>
                 <th style='width:14%'><?php echo $row['lrn']; ?></th>
                 <th style='width:22%'><?php echo $row['fullname']; ?></th>
                 <th style='width:13%' class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                        <?php if ($is_academic_english): ?>
+                            <strong><p style="font-weight: bolder;">E</p></strong>
+                        <?php else: ?>
+                            <p style="font-weight: normal;">E</p>
+                        <?php endif; ?>
+                        <i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
                         <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                        <?php if ($is_academic_filipino): ?>
+                            <strong><p style="font-weight: bolder;">F</p></strong>
+                        <?php else: ?>
+                            <p style="font-weight: normal;">F</p>
+                        <?php endif; ?>
+                        <i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
                         <i class="vertical-lines"></i>
-                        N<i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <?php if ($is_academic_numeracy): ?>
+                            <strong><p style="font-weight: bolder;">N</p></strong>
+                        <?php else: ?>
+                            <p style="font-weight: normal;">N</p>
+                        <?php endif; ?>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
                         <i class="vertical-lines"></i>
-                        B<i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <?php if ($is_behavioral): ?>
+                            <strong><p style="font-weight: bolder;">B</p></strong>
+                        <?php else: ?>
+                            <p style="font-weight: normal;">B</p>
+                        <?php endif; ?>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
                     </div>
                 </th>   
                 <th style='width:16%'><?php echo $row['status']; ?></th>
@@ -1666,8 +1692,6 @@
     endforeach;
     ?>
 </table>
-
-
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
             <span class="closes" onclick="closeForm()">&times;</span>
