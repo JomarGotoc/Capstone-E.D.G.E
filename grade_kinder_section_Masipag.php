@@ -64,10 +64,10 @@ foreach ($_POST as $checkboxName => $value) {
     }
 }
 
-// If no checkboxes were selected, exit
+// If no checkboxes were selected, set a default value for $selectedTables
 if (empty($selectedTables)) {
-    echo "No checkboxes selected.";
-    exit;
+    // Set the default table name to one of the tables you know exists in your database
+    $selectedTables = ['academic_english']; // Replace 'academic_english' with an existing table name
 }
 
 // Construct the SQL query to select from the selected tables
@@ -77,12 +77,16 @@ $sql = "SELECT lrn, fullname FROM " . implode(" UNION ALL SELECT lrn, fullname F
 $result = $conn->query($sql);
 
 // Output the results
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "LRN: " . $row['lrn'] . ", Fullname: " . $row['fullname'] . "<br>";
+if ($result) {
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo "LRN: " . $row['lrn'] . ", Fullname: " . $row['fullname'] . "<br>";
+        }
+    } else {
+        echo "0 results";
     }
 } else {
-    echo "0 results";
+    echo "Query failed: " . $conn->error;
 }
 
 // Close connection
