@@ -21,42 +21,107 @@
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
 ?>
+<?php
+    include('../../database.php');
+
+    // Get the grade and section from the PHP file name
+    $filename = basename($_SERVER['PHP_SELF'], ".php");
+    $parts = explode("_", $filename);
+    $grade = $parts[1]; // Assuming grade is the second word
+    $section = $parts[3]; // Assuming section is the fourth word
+
+    // School name
+    $school = "Bacayao Sur Elementary School";
+
+    // Tables array
+    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+
+    // Initialize an empty array to store the results
+    $results = array();
+
+    // Iterate through each table
+    foreach ($tables as $table) {
+        // Prepare the SQL query
+        $sql = "SELECT lrn, fullname, status FROM $table 
+                WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+        
+        // Execute the query
+        $result = $conn->query($sql);
+        
+        // Fetch the results
+        $table_results = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $table_results[] = $row;
+            }
+        }
+        
+        // Store the results in the main array
+        $results[$table] = $table_results;
+    }
+
+    // Close connection
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+
+    // Get the current filename
+    $filename = basename($_SERVER['SCRIPT_FILENAME']);
+
+    // Remove the ".php" extension
+    $filenameWithoutExtension = str_replace('.php', '', $filename);
+
+    // Convert filename to lowercase and remove ".php" extension to get the table name
+    $studentTable = strtolower($filenameWithoutExtension);
+
+    // Extract grade and section from the filename
+    $filenameParts = explode('_', $filenameWithoutExtension);
+    $grade = $filenameParts[1]; // Assuming the grade is the second word in the filename
+    $section = $filenameParts[3]; // Assuming the section is the fourth word in the filename
+
+    // Query to select lrn and fullname from the dynamically determined table $studentTable where grade, section, and school match
+    $sql = "SELECT lrn, fullname FROM $studentTable WHERE grade = '$grade' AND section = '$section' AND school = 'Bacayao Sur Elementary School'";
+
+    $resultss = $conn->query($sql);
+    $conn->close();
+?>
 
 <?php
-include('../../database.php');
+    include('../../database.php');
 
-// Define mapping of checkbox names to table names
-$tableMapping = [
-    'academic_english' => 'academic_english',
-    'academic_filipino' => 'academic_filipino',
-    'academic_numeracy' => 'academic_numeracy',
-    'academic_behavioral' => 'behavioral'
-];
+    // Define mapping of checkbox names to table names
+    $tableMapping = [
+        'academic_english' => 'academic_english',
+        'academic_filipino' => 'academic_filipino',
+        'academic_numeracy' => 'academic_numeracy',
+        'academic_behavioral' => 'behavioral'
+    ];
 
-// Initialize an empty array to store selected tables
-$selectedTables = [];
+    // Initialize an empty array to store selected tables
+    $selectedTables = [];
 
-// Check if checkboxes are selected and add corresponding tables to the selectedTables array
-foreach ($_POST as $checkboxName => $value) {
-    if (isset($tableMapping[$checkboxName])) {
-        $selectedTables[] = $tableMapping[$checkboxName];
+    // Check if checkboxes are selected and add corresponding tables to the selectedTables array
+    foreach ($_POST as $checkboxName => $value) {
+        if (isset($tableMapping[$checkboxName])) {
+            $selectedTables[] = $tableMapping[$checkboxName];
+        }
     }
-}
 
-// If no checkboxes were selected, set a default value for $selectedTables
-if (empty($selectedTables)) {
-    // Set the default table name to one of the tables you know exists in your database
-    $selectedTables = ['academic_english']; // Replace 'academic_english' with an existing table name
-}
+    // If no checkboxes were selected, set a default value for $selectedTables
+    if (empty($selectedTables)) {
+        // Set the default table name to one of the tables you know exists in your database
+        $selectedTables = ['academic_english']; // Replace 'academic_english' with an existing table name
+    }
 
-// Construct the SQL query to select from the selected tables
-$sql = "SELECT lrn, fullname FROM " . implode(" UNION ALL SELECT lrn, fullname FROM ", $selectedTables);
+    // Construct the SQL query to select from the selected tables
+    $sql = "SELECT lrn, fullname FROM " . implode(" UNION ALL SELECT lrn, fullname FROM ", $selectedTables);
 
-// Execute the query
-$result = $conn->query($sql);
+    // Execute the query
+    $result = $conn->query($sql);
 
-// Close connection
-$conn->close();
+    // Close connection
+    $conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1441,6 +1506,16 @@ $conn->close();
                             </label>
                         </div>
                     </div>
+                </div>
+                <div class="legend-containers">
+                    <div class="checkbox-container checkbox-group">
+                        <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
+                        <label for="legend-checkbox-all">All Students</label>
+                    </div>
+                    <div class="checkbox-container non checkbox-group">
+                        <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
+                        <label for="legend-checkbox-at-risk">Pupil At Risk</label>
+                    </div>
                     <div class="legend-item">
                         <div class="checkbox-container checkbox-group">
                             <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
@@ -1459,17 +1534,6 @@ $conn->close();
                             </label>
                         </div>
                     </div>
-                </div>
-                <div class="legend-containers">
-                    <div class="checkbox-container checkbox-group">
-                        <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
-                        <label for="legend-checkbox-all">All Students</label>
-                    </div>
-                    <div class="checkbox-container non checkbox-group">
-                        <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
-                        <label for="legend-checkbox-at-risk">Pupil At Risk</label>
-                    </div>
-                   
                 </div>
 
         <div class="wide-row">
@@ -1501,31 +1565,41 @@ $conn->close();
             </div>
         </div>
 
-        <table border="0" id="pupilTable" >
-            <tr class='sheshable'>
-                <th style='width:14%'>sdrfgrg</th>
-                <th style='width:22%'>srdgf</th>
-                <th style='width:13%'class='act'>
-                    <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
-                    </div>
-                </th>
-                <th style='width:16%'>sgsdasd</th>
-                <th style='width:14%' class='act'>
-                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
-                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-                </th>
-            </tr>
-        </table>
+        <table border="0" id="pupilTable">
+    <?php 
+    if ($resultss->num_rows > 0) {
+        // Output data of each row
+        while($row = $resultss->fetch_assoc()) {
+    ?>
+    <tr class='sheshable'>
+        <th style='width:14%'><?php echo $row["lrn"]; ?></th>
+        <th style='width:22%'><?php echo $row["fullname"]; ?></th>
+        <th style='width:13%' class='act'>
+            <div class="icon-container">
+                E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                <i class="vertical-lines"></i>
+                F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                <i class="vertical-lines"></i>
+                <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                <i class="vertical-lines"></i>
+                <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+            </div>
+        </th>
+        <th style='width:16%'>sgsdasd</th>
+        <th style='width:14%' class='act'>
+            <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
+            <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+        </th>
+    </tr>
+    <?php 
+        }
+    } 
+    ?>
+</table>
+
 
         <table border="0" id="identification" style="display: none;">
-            <            <?php
+                        <?php
             // Output the results within the table rows
             if ($result) {
                 if ($result->num_rows > 0) {
@@ -1558,27 +1632,41 @@ $conn->close();
         </table>
 
         <table border="0" id="parlist" style="display: none;">
+    <?php 
+    $displayed_lrns = array(); // Array to keep track of displayed LRNs
+    foreach ($results as $table => $table_results):
+        foreach ($table_results as $row):
+            // Check if LRN has been displayed already
+            if (!in_array($row['lrn'], $displayed_lrns)):
+                array_push($displayed_lrns, $row['lrn']); // Add LRN to displayed list
+    ?>
             <tr class='sheshable'>
-                <th style='width:14%'>pars</th>
-                <th style='width:22%'>pars</th>
-                <th style='width:13%'class='act'>
+                <th style='width:14%'><?php echo $row['lrn']; ?></th>
+                <th style='width:22%'><?php echo $row['fullname']; ?></th>
+                <th style='width:13%' class='act'>
                     <div class="icon-container">
                         E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
+                        <i class="vertical-lines"></i>
                         F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <i class="vertical-lines"></i>
+                        N<i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <i class="vertical-lines"></i>
+                        B<i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
                     </div>
-                </th>
-                <th style='width:16%'>sgsdasd</th>
+                </th>   
+                <th style='width:16%'><?php echo $row['status']; ?></th>
                 <th style='width:14%' class='act'>
                     <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
                     <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
                 </th>
             </tr>
-        </table>
+    <?php 
+            endif; // End of check if LRN has been displayed
+        endforeach;
+    endforeach;
+    ?>
+</table>
+
 
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
