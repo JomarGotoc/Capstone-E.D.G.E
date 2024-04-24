@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 
                         case 'sdo_admin':
                             if ($verifiedStatus == 'yes') {
-                                header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employment_number");
+                                header("Location: ../SDO_manage_account/SDO_manage_accounts.php?employment_number=$employment_number");
                                 exit();
                             } else {
                                 header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");

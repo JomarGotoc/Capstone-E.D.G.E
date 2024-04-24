@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employmentNumber");
             exit();
         } elseif ($tableName === 'sdo_admin') {
-            header("Location: ../SDO_manage_account/SDO_manageaccount.php?employment_number=$employmentNumber");
+            header("Location: ../SDO_manage_account/SDO_manage_accounts.php?employment_number=$employmentNumber");
             exit();
         } 
     } 
