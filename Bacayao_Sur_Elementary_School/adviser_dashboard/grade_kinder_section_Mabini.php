@@ -1483,49 +1483,49 @@
                         </div>
                     </div>
                     <form id="checkbox-form" class="legend-container" method="post" action="">
-                    <div class="legend-containers">
-                        <div class="legend-item">
-                            <div class="checkbox-container checkbox-group">
-                                <input type="radio" id="legend-checkbox-numeracy" name="academic_numeracy" class="checkbox">
-                                <label for="legend-checkbox-numeracy">
-                                    <i class="par-icon bx bx-calculator icon"></i>
-                                    Academic - Numeracy
-                                </label>
-                            </div>
-                        </div>
-                        <div class="legend-item">
-                            <div class="checkbox-container checkbox-group">
-                                <input type="radio" id="legend-checkbox-english-literacy" name="academic_english" class="checkbox">
-                                <label for="legend-checkbox-english-literacy">
-                                    <i class='bx bx-book-open icon'></i>
-                                    Academic - Literacy in English
-                                </label>
-                            </div>
+                <div class="legend-containers">
+                    <div class="legend-item">
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-numeracy" name="academic_numeracy" class="checkbox">
+                            <label for="legend-checkbox-numeracy">
+                                <i class="par-icon bx bx-calculator icon"></i>
+                                Academic - Numeracy
+                            </label>
                         </div>
                     </div>
-                    <div class="legend-containers">
-                        <div class="legend-item">
-                            <div class="checkbox-container checkbox-group">
-                                <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
-                                <label for="legend-checkbox-behavioral">
-                                    <i class="par-icon bx bx-face icon"></i>
-                                    Behavioral
-                                </label>
-                            </div>
-                        </div>                   
-                        <div class="legend-item">
-                            <div class="checkbox-container checkbox-group">
-                                <input type="radio" id="legend-checkbox-filipino-literacy" name="academic_filipino" class="checkbox">
-                                <label for="legend-checkbox-filipino-literacy">
-                                    <i class="par-icon bx bx-book-open icon"></i>
-                                    Academic - Literacy in Filipino
-                                </label>
-                            </div>
+                    <div class="legend-item">
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-english-literacy" name="academic_english" class="checkbox">
+                            <label for="legend-checkbox-english-literacy">
+                                <i class='bx bx-book-open icon'></i>
+                                Academic - Literacy in English
+                            </label>
                         </div>
                     </div>
-                    <!-- Hidden input field to store the selected checkbox's name -->
-                    <input type="hidden" id="selected-checkbox" name="selected_checkbox">
-                </form>
+                </div>
+                <div class="legend-containers">
+                    <div class="legend-item">
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
+                            <label for="legend-checkbox-behavioral">
+                                <i class="par-icon bx bx-face icon"></i>
+                                Behavioral
+                            </label>
+                        </div>
+                    </div>                   
+                    <div class="legend-item">
+                        <div class="checkbox-container checkbox-group">
+                            <input type="radio" id="legend-checkbox-filipino-literacy" name="academic_filipino" class="checkbox">
+                            <label for="legend-checkbox-filipino-literacy">
+                                <i class="par-icon bx bx-book-open icon"></i>
+                                Academic - Literacy in Filipino
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hidden input field to store the selected checkbox's name -->
+                <input type="hidden" id="selected-checkbox" name="selected_checkbox">
+            </form>
                 </div>
 
 
@@ -2500,26 +2500,8 @@ var rowsPerPageDataTable = 8;
 
 
 </script>
-<!-- JavaScript to update the hidden input field when a radio button is clicked without unchecking it -->
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get all radio buttons
-        var checkboxes = document.querySelectorAll('input[type="radio"]');
-        
-        // Loop through each radio button
-        checkboxes.forEach(function(checkbox) {
-            // Add event listener to each radio button
-            checkbox.addEventListener('click', function(event) {
-                // Update the value of the hidden input field with the name of the selected checkbox
-                document.getElementById('selected-checkbox').value = this.getAttribute('name');
-                
-                // Submit the form immediately after updating the value
-                document.getElementById('checkbox-form').submit();
-            });
-        });
-    });
-</script>
 
-
+    
+ 
 </body>
 </html>
