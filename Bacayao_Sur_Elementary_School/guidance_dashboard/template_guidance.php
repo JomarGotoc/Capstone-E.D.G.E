@@ -1658,16 +1658,21 @@ $conn->close();
     var currentDate = new Date();
     var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
     
-    // Update date only for the input boxes with data entered
+        // Update date only for the input boxes with data entered
+        document.getElementById('saveButton').addEventListener('click', function() {
     var inputFields = document.querySelectorAll('input[type="text"]');
     inputFields.forEach(function(inputField) {
-        if (inputField.value.trim() !== '') {
+        if (inputField.value.trim() !== '' && !inputField.dataset.dateSaved) {
             var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
-            dateElement.textContent = formattedDate;
+            var currentTime = new Date().toLocaleTimeString(); // Get the current time
+            dateElement.textContent = currentTime; // Display the current time
             inputField.disabled = true; // Disable input field for the saved row
+            inputField.dataset.dateSaved = true; // Mark that date is saved for this input field
         }
     });
 });
+});
+
 
 //show form-container
 function showPupilRecord() {
