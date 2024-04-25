@@ -132,22 +132,6 @@ if(isset($_POST['print'])) {
     }
 }
 ?>
-
-    if(count($words) >= 4) {
-        $grade = $words[1];
-        $section = $words[3];
-        
-        
-        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-        $filename1 = basename($_SERVER['PHP_SELF']);
-        
-        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
-        
-        header("Location: $redirect_url");
-        exit();
-    }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1240,9 +1224,6 @@ if(isset($_POST['print'])) {
         color: white; 
     }
 
-    form .form-container{
-        background-color: white;
-    }
     .form-container .table_body td input {
         width: calc(100% - 10px); 
         height: 100px; 
@@ -1612,13 +1593,13 @@ if(isset($_POST['print'])) {
                 <th style='width:25.7%'>Maria Lordes Prado</th>
                 <th style='width:20%'class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
                             <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
                     </div>
                 </th>
                 <th style='width:20%'>Pending</th>
@@ -1634,14 +1615,14 @@ if(isset($_POST['print'])) {
                 <th style='width:20%'>01872615346</th>
                 <th style='width:25.7%'>Maria Lordes Prado</th>
                 <th style='width:20%'class='act'>
-                    <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
                             <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
                     </div>
                 </th>
                 <th style='width:20%'>On-Going</th>
@@ -1657,13 +1638,13 @@ if(isset($_POST['print'])) {
                 <th style='width:25.7%'>Maria Lordes Prado</th>
                 <th style='width:20%'class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
                             <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
                     </div>
                 </th>
                 <th style='width:20%'>Resolved</th>
@@ -1673,10 +1654,10 @@ if(isset($_POST['print'])) {
             </tr>
         </table>
 
-         <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+         <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormEnglish()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN ENGLISH RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1806,15 +1787,286 @@ if(isset($_POST['print'])) {
                 </table>
                 
                 <button id="saveButton" class="saveButton">Save Changes</button>
+            </div>
+        </form>
+
+
+        <form action="" method="POST" class="form-container filipino" style="display: none;" id="filipinoForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormFilipino()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss firsts">
+                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
+                        </div>
+                    </div>
+                    <div class="columns" style="background:none">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
                 
+                <button id="saveButton" class="saveButton">Save Changes</button>
+            </div>
+        </form>
+
+        <form action="" method="POST" class="form-container numeracy" style="display: none;" id="numeracyForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormNumeracy()">&times;</span>
+            <h3 class="record_header">ACADEMIC - NUMERACY RECORD</h3>
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss firsts">
+                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
+                        </div>
+                    </div>
+                    <div class="columns" style="background:none">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+                
+                               
                 
             </div>
         </form>
 
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+        <form action="" method="POST" class="form-container behavioral" style="display: none;" id="behavioralForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormBehavioral()">&times;</span>
+            <h3 class="record_header">BEHAVIORAL RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1827,7 +2079,6 @@ if(isset($_POST['print'])) {
                         </div>
                     </div>
                 </div>
-
 
                 <div class="rows">
                     <div class="columns" >
@@ -1857,7 +2108,6 @@ if(isset($_POST['print'])) {
                     </div>
                 </div>
 
-
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss" style="background-color: #190572;">
@@ -1880,7 +2130,6 @@ if(isset($_POST['print'])) {
                         </div>
                     </div>
                 </div>
-
 
                 <div class="rows">
                     <div class="columns">
@@ -1946,281 +2195,8 @@ if(isset($_POST['print'])) {
                 <button id="saveButton" class="saveButton">Save Changes</button>
                 
                 
-            </div>
-        </form>
-
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
-            <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
-                        <div class="containerss seconds" >
-                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns" >
-                        <div class="containerss" style="background-color: #190572">
-                            <h3 style="margin-left:10px">LRN</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="lrn" id="lrn"  readonly>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Status</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="select-wrapper">
-                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Pending</option>
-                                <option value="On-Going">On-Going</option>
-                                <option value="Resolved">Resolved</option>
-                                <option value="Unresolved">Unresolved</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Pupil's Name</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="fullname" id="fullname"  readonly>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Grade & Section</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="classification" id="classification" class="rights" readonly>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Guardian Name</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Contact Number</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
-                        </div>
-                    </div>
-                </div>
-
-                <table class="update-record">
-                <tr id="row1">
-                    <th>Notes</th>
-                    <th>Topic/Matter</th>
-                    <th>Intervention</th>
-                    <th>Advice</th>
-                    <th>Recommended to</th>
-                </tr>
-                <tr id="row2" class="table_body">
-                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row3" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row4" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row5" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                </table>
                 
-                <button id="saveButton" class="saveButton">Save Changes</button>
-                
-                
-            </div>
-        </form>
-
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
-            <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
-                        <div class="containerss seconds" >
-                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns" >
-                        <div class="containerss" style="background-color: #190572">
-                            <h3 style="margin-left:10px">LRN</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="lrn" id="lrn"  readonly>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Status</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="select-wrapper">
-                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Pending</option>
-                                <option value="On-Going">On-Going</option>
-                                <option value="Resolved">Resolved</option>
-                                <option value="Unresolved">Unresolved</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Pupil's Name</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="fullname" id="fullname"  readonly>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Grade & Section</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="classification" id="classification" class="rights" readonly>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Guardian Name</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Contact Number</h3>
-                        </div>
-                    </div>
-                    <div class="columns half-widths">
-                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
-                        </div>
-                    </div>
-                </div>
-
-                <table class="update-record">
-                <tr id="row1">
-                    <th>Notes</th>
-                    <th>Topic/Matter</th>
-                    <th>Intervention</th>
-                    <th>Advice</th>
-                    <th>Recommended to</th>
-                </tr>
-                <tr id="row2" class="table_body">
-                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row3" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row4" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row5" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                </table>
-                
-                <button id="saveButton" class="saveButton">Save Changes</button>
-                
+                             
                 
             </div>
         </form>
@@ -2299,16 +2275,61 @@ if(isset($_POST['print'])) {
     });
 });
 
-//show form-container
-function showPupilRecord() {
-        var pupilRecord = document.querySelector(".form-container");
+//show form-container english-form
+function showPupilRecordEnglish() {
+        var pupilRecord = document.querySelector(".form-container.english");
         var overlay = document.querySelector(".overlay");
         pupilRecord.style.display = "block";
         overlay.style.display = "block";
     }
 
-    function closeForm() {
-        var pupilRecord = document.querySelector(".form-container");
+    function closeFormEnglish() {
+        var pupilRecord = document.querySelector(".form-container.english");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container filipino-form
+function showPupilRecordFilipino() {
+        var pupilRecord = document.querySelector(".form-container.filipino");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormFilipino() {
+        var pupilRecord = document.querySelector(".form-container.filipino");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container numeracy-form
+function showPupilRecordNumeracy() {
+        var pupilRecord = document.querySelector(".form-container.numeracy");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormNumeracy() {
+        var pupilRecord = document.querySelector(".form-container.numeracy");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container behavioral-form
+function showPupilRecordBehavioral() {
+        var pupilRecord = document.querySelector(".form-container.behavioral");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormBehavioral() {
+        var pupilRecord = document.querySelector(".form-container.behavioral");
         var overlay = document.querySelector(".overlay");
         pupilRecord.style.display = "none";
         overlay.style.display = "none";
