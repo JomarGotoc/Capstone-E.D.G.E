@@ -1,10 +1,5 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
-
-    $currentFileName1 = basename(__FILE__,'_q1.php');
-    $currentFileName1 = $currentFileName1 . '.php?employment_number=' . $_GET['employment_number'];
-
-    $currentFileName2 = basename(__FILE__,'_q1.php');
     
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
@@ -19,117 +14,90 @@
     } 
 ?>
 <?php
-include('../../database.php');
-$filename = basename(__FILE__, '.php');
-$words = explode('_', $filename);
-$secondWord = $words[1];
-$fourthWord = $words[3];
-$tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
-$count = 0;
-$lrnCounted = array(); // Array to keep track of LRNs already counted
+    include('../../database.php');
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $words[1];
+    $fourthWord = $words[3];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    $lrnCounted = array(); // Array to keep track of LRNs already counted
 
-foreach ($tables as $table) {
-    $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $lrn = $row['lrn'];
-            if (!in_array($lrn, $lrnCounted)) {
-                // If LRN not already counted, add it to the count and mark as counted
-                $count++;
-                $lrnCounted[] = $lrn;
+    foreach ($tables as $table) {
+        $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $lrn = $row['lrn'];
+                if (!in_array($lrn, $lrnCounted)) {
+                    // If LRN not already counted, add it to the count and mark as counted
+                    $count++;
+                    $lrnCounted[] = $lrn;
+                }
             }
         }
     }
-}
-$conn->close();
+    $conn->close();
+?>
+<?php
+    if(isset($_POST['print'])) {
+        $filename = basename($_SERVER['PHP_SELF']);
+        $words = explode('_', $filename);
+        
+        if(count($words) >= 4) {
+            $grade = $words[1];
+            $section = $words[3];
+            
+            
+            $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+            $filename1 = basename($_SERVER['PHP_SELF']);
+            
+            $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
+            
+            header("Location: $redirect_url");
+            exit();
+        }
+    }
 ?>
 <?php
     include('../../database.php');
+    $filename = basename($_SERVER['PHP_SELF']);
 
-    // Get the current PHP filename without the extension
-    $currentFile = pathinfo(__FILE__, PATHINFO_FILENAME);
+    $tablename = strtolower(str_replace('.php', '', $filename));
 
-    // Remove the ".php" extension
-    $currentFileWithoutExtension = str_replace('.php', '', $currentFile);
+    $sql = "SELECT lrn, fullname FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
 
-    // Explode the filename into an array of words
-    $words = explode('_', $currentFileWithoutExtension);
+    $lrnresult = $conn->query($sql);
 
-    // Initialize variables for grade and section
-    $grade = "";
-    $section = "";
-
-    // Check if there are at least 4 words
-    if (count($words) >= 4) {
-        // Get the 2nd and 4th words
-        $grade = $words[1];
-        $section = $words[3];
-
-        // Initialize an array to store the results
-        $results = array();
-
-        // Perform query on academic_english table
-        $results[] = fetchTable($conn, "academic_english", $grade, $section);
-
-        // Perform query on academic_filipino table
-        $results[] = fetchTable($conn, "academic_filipino", $grade, $section);
-
-        // Perform query on academic_numeracy table
-        $results[] = fetchTable($conn, "academic_numeracy", $grade, $section);
-
-        // Perform query on behavioral table
-        $results[] = fetchTable($conn, "behavioral", $grade, $section);
-
-        // Close the connection
-        $conn->close();
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while ($row = $result->fetch_assoc()) {
+            echo "LRN: " . $row["lrn"]. " - Full Name: " . $row["fullname"]. "<br>";
+        }
     } 
 
-    function fetchTable($conn, $tableName, $grade, $section) {
-        // Prepare and execute the SQL query with the condition for quarter = 1
-        $sql = "SELECT lrn, fullname, classification, grade, section, status FROM $tableName WHERE grade = ? AND section = ? AND quarter = 1 AND school = 'Bacayao Sur Elementary School'";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $grade, $section);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows > 0) {
-            // Return an array containing the table name and the fetched data
-            $tableData = array();
-            while ($row = $result->fetch_assoc()) {
-                $tableData[] = $row;
-            }
-
-            return array($tableName, $tableData);
-        } else {
-            return null;
-        }
-
-        // Close the statement
-        $stmt->close();
-    }
+    $conn->close();
 ?>
 <?php
-    $filename = basename($_SERVER['PHP_SELF']);
-?>
-<?php
-if(isset($_POST['print'])) {
-    $filename = basename($_SERVER['PHP_SELF']);
-    $words = explode('_', $filename);
-    
-    if(count($words) >= 4) {
-        $grade = $words[1];
-        $section = $words[3];
+    include('../../database.php');
+    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
+
+    // Array to store results from each table
+    $results = array();
+
+    // Iterate through the tables
+    foreach ($tables as $table) {
+        // Query to select LRN, fullname, and status from each table
+        $query = "SELECT lrn, fullname, status FROM $table WHERE school = 'Bacayao Sur Elementary School'";
         
-        
-        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-        $filename1 = basename($_SERVER['PHP_SELF']);
-        
-        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
-        
-        header("Location: $redirect_url");
-        exit();
+        // Execute query
+        $parresult = mysqli_query($conn, $query);
+
+        // Store parresult in the array
+        $results[$table] = $parresult;
     }
-}
+
+    mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -807,12 +775,20 @@ if(isset($_POST['print'])) {
             display: block;
         }
 
-        .legend-container {
-            margin-top: -2.3%;
+        .container {
             display: flex;
-            justify-content:right;
+            justify-content: space-between;
         }
 
+        .legend-container {
+            flex: 1; 
+        }
+
+        .left-container{
+            display: flex;
+            justify-content: left;
+            left: 0;
+        }
         .legend-item {
             display: flex;
             align-items: center;
@@ -820,32 +796,8 @@ if(isset($_POST['print'])) {
             margin-top: 15px;
         }
 
-        .legend-item p{
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .legend-color {
-            width: 13px;
-            height: 20px;
-            border-radius: 10%;
-            margin-right: 5px;
-        }
-
-        .unresolved {
-            background-color: red;
-        }
-
-        .pending {
-            background-color: blue;
-        }
-
-        .on-going {
-            background-color: yellow;
-        }
-
-        .resolved {
-            background-color: green;
+        .legend-containers:first-child{
+            margin-top: -50px;
         }
 
         .legend-containers {
@@ -1075,7 +1027,7 @@ if(isset($_POST['print'])) {
             justify-content: center;
             align-items: center;
             background:white;            
-            height: 95%;
+            height: 80%;
             width: 97%;
             overflow:auto;
             border-radius: 7px;
@@ -1237,6 +1189,10 @@ if(isset($_POST['print'])) {
     .update-record th {
         background-color: #35A7FA; 
         color: white; 
+    }
+
+    form .form-container{
+        background-color: white;
     }
     .form-container .table_body td input {
         width: calc(100% - 10px); 
@@ -1511,54 +1467,68 @@ if(isset($_POST['print'])) {
                         <p>Resolved</p>
                     </div>
                 </div> -->
-                <div class="legend-containers">
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-numeracy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-numeracy">
-                                <i class="par-icon bx bx-calculator icon"></i>
-                                Academic - Numeracy
-                            </label>
+                <div class="checkbox-container">
+                    <div class="legend-container left-container">
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
+                                <label for="legend-checkbox-all">All Students</label>
+                            </div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="checkbox-container non checkbox-group">
+                                <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
+                                <label for="legend-checkbox-at-risk">Pupil At Risk</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-english-literacy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-english-literacy">
-                                <i class='bx bx-book-open icon'></i>
-                                Academic - Literacy in English
-                            </label>
+                    <form id="checkbox-form" class="legend-container" method="post" action="">
+                    <div class="legend-containers">
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-numeracy" name="academic_numeracy" class="checkbox">
+                                <label for="legend-checkbox-numeracy">
+                                    <i class="par-icon bx bx-calculator icon"></i>
+                                    Academic - Numeracy
+                                </label>
+                            </div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-english-literacy" name="academic_english" class="checkbox">
+                                <label for="legend-checkbox-english-literacy">
+                                    <i class='bx bx-book-open icon'></i>
+                                    Academic - Literacy in English
+                                </label>
+                            </div>
                         </div>
                     </div>
+                    <div class="legend-containers">
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
+                                <label for="legend-checkbox-behavioral">
+                                    <i class="par-icon bx bx-face icon"></i>
+                                    Behavioral
+                                </label>
+                            </div>
+                        </div>                   
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-filipino-literacy" name="academic_filipino" class="checkbox">
+                                <label for="legend-checkbox-filipino-literacy">
+                                    <i class="par-icon bx bx-book-open icon"></i>
+                                    Academic - Literacy in Filipino
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden input field to store the selected checkbox's name -->
+                    <input type="hidden" id="selected-checkbox" name="selected_checkbox">
+                </form>
                 </div>
-                <div class="legend-containers">
-                    <div class="checkbox-container checkbox-group">
-                        <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
-                        <label for="legend-checkbox-all">All Students</label>
-                    </div>
-                    <div class="checkbox-container non checkbox-group">
-                        <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
-                        <label for="legend-checkbox-at-risk">Pupil At Risk</label>
-                    </div>
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
-                            <label for="legend-checkbox-behavioral">
-                                <i class="par-icon bx bx-face icon"></i>
-                                Behavioral
-                            </label>
-                        </div>
-                    </div>                   
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-filipino-literacy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-filipino-literacy">
-                                <i class="par-icon bx bx-book-open icon"></i>
-                                Academic - Literacy in Filipino
-                            </label>
-                        </div>
-                    </div>
-                </div>
+
+
 
         <div class="wide-row">
             <div class="wide-column">
@@ -1589,33 +1559,43 @@ if(isset($_POST['print'])) {
             </div>
         </div>
 
-        <table border="0" id="pupilTable" >
-            <tr class='sheshable'>
-                <th style='width:20%'>01872615346</th>
-                <th style='width:25.7%'>Maria Lordes Prado</th>
-                <th style='width:20%'class='act'>
-                    <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
-                    </div>
-                </th>
-                <th style='width:20%'>Pending</th>
-                <th style='width:25%' class='act'>
-                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
-                    <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-                </th>
-            </tr>
-        </table>
+        <!---------------------------------- START ----------------------------------------->
+    <!---------------------------------- ALL STUDENTS ----------------------------------------->
+    <table border="0" id="pupilTable">
+    <?php
+    if ($lrnresult->num_rows > 0) {
+        // Output data of each row
+        while ($row = $lrnresult->fetch_assoc()) {
+            echo "<tr class='sheshable'>";
+            echo "<th style='width:20%'>" . $row["lrn"] . "</th>";
+            echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
+            echo "<th style='width:20%' class='act'>";
+            echo "<div class='icon-container'>";
+            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecord()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecord()'></i>";
+            echo "</div>";
+            echo "</th>";
+            echo "<th style='width:20%'>Pending</th>";
+            echo "<th style='width:25%' class='act'>";
+            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</th>";
+            echo "</tr>";
+        }
+    }
+    ?>
+</table>
 
-        <table border="0" id="identification" style="display: none;">
+  <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
+  <table border="0" id="identification" style="display: none;">
             <tr class='sheshable'>
                 <th style='width:20%'>01872615346</th>
-                <th style='width:25.7%'>Maria Lordes Prado</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
                 <th style='width:20%'class='act'>
                     <div class="icon-container">
                         E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
@@ -1634,27 +1614,43 @@ if(isset($_POST['print'])) {
             </tr>
         </table>
 
-        <table border="0" id="parlist" style="display: none;">
-            <tr class='sheshable'>
-                <th style='width:20%'>01872615346</th>
-                <th style='width:25.7%'>Maria Lordes Prado</th>
-                <th style='width:20%'class='act'>
-                    <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
-                    </div>
-                </th>
-                <th style='width:20%'>Resolved</th>
-                <th style='width:25%' class='act'>
-                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-                </th>
-            </tr>
-        </table>
+ <!---------------------------------- ALL PAR  ----------------------------------------->    
+<?php
+    // Start PHP code
+    foreach ($results as $table => $parresult) {
+        if ($parresult) {
+            // Open the table tag
+            echo "<table border='0' id='parlist' style='display: none;'>";
+
+            // Fetch and display results
+            while ($row = mysqli_fetch_assoc($parresult)) {
+                echo "<tr class='sheshable'>";
+                echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
+                echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
+                echo "<th style='width:20%' class='act'>";
+                echo "<div class='icon-container'>";
+                echo "E<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+                echo "<i class='vertical-lines'></i>";
+                echo "F<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+                echo "<i class='vertical-lines'></i>";
+                echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecord()'></i>";
+                echo "<i class='vertical-lines'></i>";
+                echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecord()'></i>";
+                echo "</div>";
+                echo "</th>";
+                echo "<th style='width:20%'>" . $row['status'] . "</th>";
+                echo "<th style='width:25%' class='act'>";
+                echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+                echo "</th>";
+                echo "</tr>";
+            }
+
+            // Close the table tag
+            echo "</table>";
+        }
+    }
+?>
+ <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
          <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
             <div class="main-containers">
@@ -2224,6 +2220,10 @@ if(isset($_POST['print'])) {
     <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
+        <div class="form-group">
+            <label for="lrn">Learner's Reference Number (LRN)</label>
+            <input type="text" id="lrn" name="lrn" value="">
+        </div>
         <div class="row">
             <div class="columns-group">
             <div class="form-group">
@@ -2500,8 +2500,26 @@ var rowsPerPageDataTable = 8;
 
 
 </script>
+<!-- JavaScript to update the hidden input field when a radio button is clicked without unchecking it -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all radio buttons
+        var checkboxes = document.querySelectorAll('input[type="radio"]');
+        
+        // Loop through each radio button
+        checkboxes.forEach(function(checkbox) {
+            // Add event listener to each radio button
+            checkbox.addEventListener('click', function(event) {
+                // Update the value of the hidden input field with the name of the selected checkbox
+                document.getElementById('selected-checkbox').value = this.getAttribute('name');
+                
+                // Submit the form immediately after updating the value
+                document.getElementById('checkbox-form').submit();
+            });
+        });
+    });
+</script>
 
-    
- 
+
 </body>
 </html>
