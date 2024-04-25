@@ -1571,13 +1571,13 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
             echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
             echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecord()'></i>";
+            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
             echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecord()'></i>";
+            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -1592,22 +1592,92 @@
 </table>
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
-  <table border="0" id="identification" style="display: none;">
+                        <!--------------- ACADEMIC ENGLISH ----------------------->
+  <table border="0" id="identification-english" style="display: none;">
             <tr class='sheshable'>
                 <th style='width:20%'>01872615346</th>
                 <th style='width:25.7%'>Maria Lordes PSSrado</th>
                 <th style='width:20%'class='act'>
                     <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
                             <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecord()"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
                             <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Pending</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
+
+                        <!--------------- ACADEMIC FILIPINO ----------------------->
+        <table border="0" id="identification-filipino" style="display: none;">
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Unresolved</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
+
+                        <!--------------- ACADEMIC NUMERACY ----------------------->
+        <table border="0" id="identification-numeracy" style="display: none;">
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
                     </div>
                 </th>
                 <th style='width:20%'>On-Going</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
+
+                        <!--------------- BEHAVIORAL ----------------------->
+        <table border="0" id="identification-behavioral" style="display: none;">
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Resolved</th>
                 <th style='width:25%' class='act'>
                     <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
                 </th>
@@ -1629,13 +1699,13 @@
                 echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
                 echo "<th style='width:20%' class='act'>";
                 echo "<div class='icon-container'>";
-                echo "E<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+                echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
                 echo "<i class='vertical-lines'></i>";
-                echo "F<i class='bx bx-book-open icon' onclick='showPupilRecord()'></i>";
+                echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
                 echo "<i class='vertical-lines'></i>";
-                echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecord()'></i>";
+                echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
                 echo "<i class='vertical-lines'></i>";
-                echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecord()'></i>";
+                echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
                 echo "</div>";
                 echo "</th>";
                 echo "<th style='width:20%'>" . $row['status'] . "</th>";
@@ -1652,10 +1722,10 @@
 ?>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
-         <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+         <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormEnglish()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN ENGLISH RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1790,10 +1860,10 @@
             </div>
         </form>
 
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+        <form action="" method="POST" class="form-container filipino" style="display: none;" id="filipinoForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormFilipino()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1928,10 +1998,10 @@
             </div>
         </form>
 
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+        <form action="" method="POST" class="form-container numeracy" style="display: none;" id="numeracyForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormNumeracy()">&times;</span>
+            <h3 class="record_header">ACADEMIC - NUMERACY RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -2066,10 +2136,10 @@
             </div>
         </form>
 
-        <form action="" method="POST" class="form-container" style="display: none;" id="pupilRecord">
+        <form action="" method="POST" class="form-container behavioral" style="display: none;" id="behavioralForm">
             <div class="main-containers">
-            <span class="closes" onclick="closeForm()">&times;</span>
-            <h3 class="record_header">ACADEMIC - LITERACY RECORD</h3>
+            <span class="closes" onclick="closeFormBehavioral()">&times;</span>
+            <h3 class="record_header"> BEHAVIORAL RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -2284,15 +2354,61 @@
 
 
 //show form-container
-function showPupilRecord() {
-        var pupilRecord = document.querySelector(".form-container");
+//show form-container english-form
+function showPupilRecordEnglish() {
+        var pupilRecord = document.querySelector(".form-container.english");
         var overlay = document.querySelector(".overlay");
         pupilRecord.style.display = "block";
         overlay.style.display = "block";
     }
 
-    function closeForm() {
-        var pupilRecord = document.querySelector(".form-container");
+    function closeFormEnglish() {
+        var pupilRecord = document.querySelector(".form-container.english");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container filipino-form
+function showPupilRecordFilipino() {
+        var pupilRecord = document.querySelector(".form-container.filipino");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormFilipino() {
+        var pupilRecord = document.querySelector(".form-container.filipino");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container numeracy-form
+function showPupilRecordNumeracy() {
+        var pupilRecord = document.querySelector(".form-container.numeracy");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormNumeracy() {
+        var pupilRecord = document.querySelector(".form-container.numeracy");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "none";
+        overlay.style.display = "none";
+    }
+
+    //show form-container behavioral-form
+function showPupilRecordBehavioral() {
+        var pupilRecord = document.querySelector(".form-container.behavioral");
+        var overlay = document.querySelector(".overlay");
+        pupilRecord.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function closeFormBehavioral() {
+        var pupilRecord = document.querySelector(".form-container.behavioral");
         var overlay = document.querySelector(".overlay");
         pupilRecord.style.display = "none";
         overlay.style.display = "none";
@@ -2475,34 +2591,88 @@ var rowsPerPageDataTable = 8;
     const academicEnglishRadio = document.getElementById('legend-checkbox-english-literacy');
     const academicFilipinoRadio = document.getElementById('legend-checkbox-filipino-literacy');
 
-    const identificationTable = document.getElementById('identification');
+    const identificationEnglish = document.getElementById('identification-english');
+    const identificationFilipino = document.getElementById('identification-filipino');
+    const identificationNumeracy = document.getElementById('identification-numeracy');
+    const identificationBehavioral = document.getElementById('identification-behavioral');
     const pupilTable = document.getElementById('pupilTable');
     const parTable = document.getElementById('parlist');
 
-    [allStudentsRadio, academicNumeracyRadio, BehavioralRadio, academicEnglishRadio, academicFilipinoRadio].forEach(radio => {
-        radio.addEventListener('change', function() {
-            pupilTable.style.display = 'none';
-            identificationTable.style.display = 'none';
-            parTable.style.display = 'none';
+    function hideIdentificationTables() {
+        identificationEnglish.style.display = 'none';
+        identificationFilipino.style.display = 'none';
+        identificationNumeracy.style.display = 'none';
+        identificationBehavioral.style.display = 'none';
+    }
 
-            if (radio === allStudentsRadio && radio.checked) {
-                pupilTable.style.display = 'block';
-            } else if (radio !== allStudentsRadio && radio.checked) {
-                identificationTable.style.display = 'block';
+    function uncheckOtherRadios(radioToCheck) {
+        [allStudentsRadio, atRiskRadio, academicNumeracyRadio, BehavioralRadio, academicEnglishRadio, academicFilipinoRadio].forEach(radio => {
+            if (radio !== radioToCheck) {
+                radio.checked = false;
             }
         });
+    }
+
+    allStudentsRadio.addEventListener('change', function() {
+        if (allStudentsRadio.checked) {
+            pupilTable.style.display = 'block';
+            hideIdentificationTables();
+            parTable.style.display = 'none';
+            uncheckOtherRadios(allStudentsRadio);
+        }
+    });
+
+    academicNumeracyRadio.addEventListener('change', function() {
+        if (academicNumeracyRadio.checked) {
+            pupilTable.style.display = 'none';
+            hideIdentificationTables();
+            identificationNumeracy.style.display = 'block';
+            parTable.style.display = 'none';
+            uncheckOtherRadios(academicNumeracyRadio);
+        }
+    });
+
+    BehavioralRadio.addEventListener('change', function() {
+        if (BehavioralRadio.checked) {
+            pupilTable.style.display = 'none';
+            hideIdentificationTables();
+            identificationBehavioral.style.display = 'block';
+            parTable.style.display = 'none';
+            uncheckOtherRadios(BehavioralRadio);
+        }
+    });
+
+    academicEnglishRadio.addEventListener('change', function() {
+        if (academicEnglishRadio.checked) {
+            pupilTable.style.display = 'none';
+            hideIdentificationTables();
+            identificationEnglish.style.display = 'block';
+            parTable.style.display = 'none';
+            uncheckOtherRadios(academicEnglishRadio);
+        }
+    });
+
+    academicFilipinoRadio.addEventListener('change', function() {
+        if (academicFilipinoRadio.checked) {
+            pupilTable.style.display = 'none';
+            hideIdentificationTables();
+            identificationFilipino.style.display = 'block';
+            parTable.style.display = 'none';
+            uncheckOtherRadios(academicFilipinoRadio);
+        }
     });
 
     atRiskRadio.addEventListener('change', function() {
-        pupilTable.style.display = 'none';
-        identificationTable.style.display = 'none';
-        parTable.style.display = 'block';
+        if (atRiskRadio.checked) {
+            pupilTable.style.display = 'none';
+            hideIdentificationTables();
+            parTable.style.display = 'block';
+            uncheckOtherRadios(atRiskRadio);
+        }
     });
 
     allStudentsRadio.checked = true;
     pupilTable.style.display = 'block';
-
-
 
 </script>
 
