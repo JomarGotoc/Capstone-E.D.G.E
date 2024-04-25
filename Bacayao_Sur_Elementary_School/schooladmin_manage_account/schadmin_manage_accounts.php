@@ -1088,7 +1088,7 @@ if(isset($_POST['submit1'])) {
         border: none;
         cursor: pointer;
         width: 200px;
-        margin-left: 5.5rem;
+        margin-left: -4rem;
     }
 
     /* Style for dropdown content */

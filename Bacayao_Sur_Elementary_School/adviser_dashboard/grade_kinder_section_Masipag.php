@@ -1572,9 +1572,9 @@
         while($row = $resultss->fetch_assoc()) {
     ?>
     <tr class='sheshable'>
-        <th style='width:14%'><?php echo $row["lrn"]; ?></th>
-        <th style='width:22%'><?php echo $row["fullname"]; ?></th>
-        <th style='width:13%' class='act'>
+        <th style='width:20%'><?php echo $row["lrn"]; ?></th>
+        <th style='width:25.7%'><?php echo $row["fullname"]; ?></th>
+        <th style='width:20%' class='act'>
             <div class="icon-container" style="font-weight: 100;">
                 E<i class='bx bx-book-open icon' onclick="showPupilRecord()"></i>
                 <i class="vertical-lines"></i>
@@ -1585,8 +1585,8 @@
                 <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
             </div>
         </th>
-        <th style='width:16%'>sgsdasd</th>
-        <th style='width:14%' class='act'>
+        <th style='width:20%'>sgsdasd</th>
+        <th style='width:25%' class='act'>
             <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
             <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
         </th>
@@ -1647,9 +1647,9 @@
                 $is_behavioral = ($tables === 'behavioral');
     ?>
             <tr class='sheshable'>
-                <th style='width:14%'><?php echo $row['lrn']; ?></th>
-                <th style='width:22%'><?php echo $row['fullname']; ?></th>
-                <th style='width:13%' class='act'>
+                <th style='width:20%'><?php echo $row['lrn']; ?></th>
+                <th style='width:25.7%'><?php echo $row['fullname']; ?></th>
+                <th style='width:20%' class='act'>
                     <div class="icon-container">
                         <?php if ($is_academic_english): ?>
                             <strong><p style="font-weight: bolder;">E</p></strong>
@@ -1680,8 +1680,8 @@
                         <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
                     </div>
                 </th>   
-                <th style='width:16%'><?php echo $row['status']; ?></th>
-                <th style='width:14%' class='act'>
+                <th style='width:20%'><?php echo $row['status']; ?></th>
+                <th style='width:25%' class='act'>
                     <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
                     <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
                 </th>
