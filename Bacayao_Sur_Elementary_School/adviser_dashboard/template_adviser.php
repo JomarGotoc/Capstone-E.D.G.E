@@ -116,6 +116,23 @@ if(isset($_POST['print'])) {
     $filename = basename($_SERVER['PHP_SELF']);
     $words = explode('_', $filename);
     
+    
+    if(count($words) >= 4) {
+        $grade = $words[1];
+        $section = $words[3];
+        
+        
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        $filename1 = basename($_SERVER['PHP_SELF']);
+        
+        $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
+        
+        header("Location: $redirect_url");
+        exit();
+    }
+}
+?>
+
     if(count($words) >= 4) {
         $grade = $words[1];
         $section = $words[3];
@@ -807,12 +824,20 @@ if(isset($_POST['print'])) {
             display: block;
         }
 
-        .legend-container {
-            margin-top: -2.3%;
+        .container {
             display: flex;
-            justify-content:right;
+            justify-content: space-between;
         }
 
+        .legend-container {
+            flex: 1; 
+        }
+
+        .left-container{
+            display: flex;
+            justify-content: left;
+            left: 0;
+        }
         .legend-item {
             display: flex;
             align-items: center;
@@ -820,32 +845,8 @@ if(isset($_POST['print'])) {
             margin-top: 15px;
         }
 
-        .legend-item p{
-            font-size: 15px;
-            font-weight: bold;
-        }
-
-        .legend-color {
-            width: 13px;
-            height: 20px;
-            border-radius: 10%;
-            margin-right: 5px;
-        }
-
-        .unresolved {
-            background-color: red;
-        }
-
-        .pending {
-            background-color: blue;
-        }
-
-        .on-going {
-            background-color: yellow;
-        }
-
-        .resolved {
-            background-color: green;
+        .legend-containers:first-child{
+            margin-top: -50px;
         }
 
         .legend-containers {
@@ -1075,7 +1076,7 @@ if(isset($_POST['print'])) {
             justify-content: center;
             align-items: center;
             background:white;            
-            height: 95%;
+            height: 80%;
             width: 97%;
             overflow:auto;
             border-radius: 7px;
@@ -1237,6 +1238,10 @@ if(isset($_POST['print'])) {
     .update-record th {
         background-color: #35A7FA; 
         color: white; 
+    }
+
+    form .form-container{
+        background-color: white;
     }
     .form-container .table_body td input {
         width: calc(100% - 10px); 
@@ -1511,54 +1516,66 @@ if(isset($_POST['print'])) {
                         <p>Resolved</p>
                     </div>
                 </div> -->
-                <div class="legend-containers">
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-numeracy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-numeracy">
-                                <i class="par-icon bx bx-calculator icon"></i>
-                                Academic - Numeracy
-                            </label>
+                <div class="checkbox-container">
+                    <div class="legend-container left-container">
+                        <div class="legend-item">
+                            <div class="checkbox-container checkbox-group">
+                                <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
+                                <label for="legend-checkbox-all">All Students</label>
+                            </div>
+                        </div>
+                        <div class="legend-item">
+                            <div class="checkbox-container non checkbox-group">
+                                <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
+                                <label for="legend-checkbox-at-risk">Pupil At Risk</label>
+                            </div>
                         </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-english-literacy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-english-literacy">
-                                <i class='bx bx-book-open icon'></i>
-                                Academic - Literacy in English
-                            </label>
+                    <form id="checkbox-form" class="legend-container">
+                        <div class="legend-containers">
+                            <div class="legend-item">
+                                <div class="checkbox-container checkbox-group">
+                                    <input type="radio" id="legend-checkbox-numeracy" name="academic" class="checkbox">
+                                    <label for="legend-checkbox-numeracy">
+                                        <i class="par-icon bx bx-calculator icon"></i>
+                                        Academic - Numeracy
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="legend-item">
+                                <div class="checkbox-container checkbox-group">
+                                    <input type="radio" id="legend-checkbox-english-literacy" name="academic" class="checkbox">
+                                    <label for="legend-checkbox-english-literacy">
+                                        <i class='bx bx-book-open icon'></i>
+                                        Academic - Literacy in English
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="legend-containers">
+                            <div class="legend-item">
+                                <div class="checkbox-container checkbox-group">
+                                    <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
+                                    <label for="legend-checkbox-behavioral">
+                                        <i class="par-icon bx bx-face icon"></i>
+                                        Behavioral
+                                    </label>
+                                </div>
+                            </div>                   
+                            <div class="legend-item">
+                                <div class="checkbox-container checkbox-group">
+                                    <input type="radio" id="legend-checkbox-filipino-literacy" name="academic" class="checkbox">
+                                    <label for="legend-checkbox-filipino-literacy">
+                                        <i class="par-icon bx bx-book-open icon"></i>
+                                        Academic - Literacy in Filipino
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="legend-containers">
-                    <div class="checkbox-container checkbox-group">
-                        <input type="radio" id="legend-checkbox-all" name="student" class="checkbox">
-                        <label for="legend-checkbox-all">All Students</label>
-                    </div>
-                    <div class="checkbox-container non checkbox-group">
-                        <input type="radio" id="legend-checkbox-at-risk" name="student" class="checkbox">
-                        <label for="legend-checkbox-at-risk">Pupil At Risk</label>
-                    </div>
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
-                            <label for="legend-checkbox-behavioral">
-                                <i class="par-icon bx bx-face icon"></i>
-                                Behavioral
-                            </label>
-                        </div>
-                    </div>                   
-                    <div class="legend-item">
-                        <div class="checkbox-container checkbox-group">
-                            <input type="radio" id="legend-checkbox-filipino-literacy" name="academic" class="checkbox">
-                            <label for="legend-checkbox-filipino-literacy">
-                                <i class="par-icon bx bx-book-open icon"></i>
-                                Academic - Literacy in Filipino
-                            </label>
-                        </div>
-                    </div>
-                </div>
+
+
 
         <div class="wide-row">
             <div class="wide-column">
@@ -2224,6 +2241,10 @@ if(isset($_POST['print'])) {
     <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
+        <div class="form-group">
+            <label for="lrn">Learner's Reference Number (LRN)</label>
+            <input type="text" id="lrn" name="lrn" value="">
+        </div>
         <div class="row">
             <div class="columns-group">
             <div class="form-group">
