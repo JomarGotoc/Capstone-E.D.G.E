@@ -2136,7 +2136,7 @@
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("s", $employment_number);
         $stmt->execute();
-        $stmt->bind_result($sdoname);
+        $stmt->bind_result($executivename);
         if($stmt->fetch()) {
         }
         $stmt->close();
@@ -4338,10 +4338,10 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()"><?php echo $fullname ?></div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $executivename ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../login/Login.php">Log Out</a>
-                    <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>&filename=<?php echo $filename ?>" style="border-top: 1px solid #ddd;">Change Password</a>
+                    <a href="executive_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -4435,7 +4435,7 @@
                 </div>
             </div>
             <div class="select-wrapper1">
-                <form id="quarterForm1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <form id="quarterForm1" method="post" action="">
                     <select id="quarterSelect" name="quarter" onchange="submitForm()">
                         <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                         <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>

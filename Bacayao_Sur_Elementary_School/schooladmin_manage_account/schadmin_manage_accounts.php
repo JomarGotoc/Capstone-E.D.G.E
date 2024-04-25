@@ -1138,7 +1138,7 @@ if(isset($_POST['submit1'])) {
                 <div class="dropdown">
                 <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
-                        <a href="../login/Login.php">Log Out</a>
+                        <a href="../../login/Login.php">Log Out</a>
                         <a href="" style="border-top: 1px solid #ddd;">Change Password</a>
                     </div>
                 </div>
@@ -1158,7 +1158,7 @@ if(isset($_POST['submit1'])) {
                     </div>
                     <div class="third-column">
                     <div class="search-box">
-                        <input type="text" class="search-input" placeholder="Search ...">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search ...">
                         <i class='bx bx-search search-icon'></i>
                     </div>
             </div>
@@ -1435,5 +1435,32 @@ if(isset($_POST['submit1'])) {
     </div>
 
     <script src="SDO_manage_account.js"></script>
+    <script>
+    // Function to filter table rows based on search input
+    function filterTable() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementsByClassName("table")[0]; // Assuming only one table in the document
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                if (td[j]) {
+                    txtValue = td[j].textContent || td[j].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                        break; // Break the loop if any column matches
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+    // Add event listener to the search input
+    document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
 </body>
 </html>

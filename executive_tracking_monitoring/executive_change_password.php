@@ -53,11 +53,6 @@
       }
   }
 ?>
-<?php
-if (isset($_GET['filename'])) {
-    $filename = $_GET['filename'];
-} 
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -268,7 +263,7 @@ if (isset($_GET['filename'])) {
   </header>
 
     <div class="login-container">
-    <a href="<?php echo $filename ?>?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+    <a href="executive_tracking_monitoring_reports.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>
         <p>Enter a new password to change your password</p>

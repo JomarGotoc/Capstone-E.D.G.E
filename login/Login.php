@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 
                         case 'executive_committee':
                             if ($verifiedStatus == 'yes') {
-                                header("Location: ../executive_tracking_monitoring/executive_monitoring_reports_q1.php?employment_number=$employment_number");
+                                header("Location: ../executive_tracking_monitoring/executive_tracking_monitoring_reports.php?employment_number=$employment_number");
                                 exit();
                             } else {
                                 header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
