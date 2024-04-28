@@ -88,7 +88,8 @@
     // Iterate through the tables
     foreach ($tables as $table) {
         // Query to select LRN, fullname, and status from each table
-        $query = "SELECT lrn, fullname, status FROM $table WHERE school = 'Bacayao Sur Elementary School'";
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $query = "SELECT lrn, fullname, status FROM $table WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter";
         
         // Execute query
         $parresult = mysqli_query($conn, $query);
@@ -112,7 +113,8 @@
     include('../../database.php');
 
     // SQL query to retrieve LRN, fullname, and status
-    $sql = "SELECT lrn, fullname, status FROM academic_english WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_english WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
 
     $englishresult = $conn->query($sql);
 
@@ -131,7 +133,8 @@
     include('../../database.php');
 
     // SQL query to retrieve LRN, fullname, and status
-    $sql = "SELECT lrn, fullname, status FROM academic_filipino WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_filipino WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
 
     $filipinoresult = $conn->query($sql);
 
@@ -150,7 +153,8 @@
     include('../../database.php');
 
     // SQL query to retrieve LRN, fullname, and status
-    $sql = "SELECT lrn, fullname, status FROM academic_numeracy WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_numeracy WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
 
     $numeracyresult = $conn->query($sql);
 
@@ -169,10 +173,24 @@
     include('../../database.php');
 
     // SQL query to retrieve LRN, fullname, and status
-    $sql = "SELECT lrn, fullname, status FROM behavioral WHERE grade = '$grade' AND section = '$section' AND school = '$school'";
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM behavioral WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
 
     $behavioalresult = $conn->query($sql);
 
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+
+    // SQL query to select only the year part of start and end dates from school_year table
+    $sql = "SELECT YEAR(start) AS start_year, YEAR(end) AS end_year FROM school_year";
+
+    // Execute query
+    $result = $conn->query($sql);
+
+
+    // Close connection
     $conn->close();
 ?>
 <!DOCTYPE html>
@@ -1407,12 +1425,31 @@
     </div>   
     <div class="main-container">
         <div class="row">
-            <div class="column">
-                <div class="select-wrapper">
-                    <select id="topdown1" name="school-year" class="containers first">
-                        <option value="school-year">S.Y. 2023 - 2024</option>
-                    </select>
-                </div>
+                <div class="column">
+                <?php
+                if ($result->num_rows > 0) {
+                    // Start the dropdown menu
+                    echo '<div class="select-wrapper">';
+                    echo '<select id="topdown1" name="school-year" class="containers first">';
+                    
+                    // Fetch each row
+                    while($row = $result->fetch_assoc()) {
+                        // Output start and end years as options
+                        echo '<option value="S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '"';
+                        
+                        // Set selected attribute for the first option
+                        if ($result->field_count == 0) {
+                            echo ' selected';
+                        }
+                        
+                        echo '>S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '</option>';
+                    }
+                    
+                    // End the dropdown menu
+                    echo '</select>';
+                    echo '</div>';
+                }
+                ?>
         </div>
         <div class="column">
             <form method="post">
@@ -1424,10 +1461,10 @@
             </form>
         </div>
         <div class="column third-column">
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="Search Pupil's Name">
-                <i class='bx bx-search search-icon'></i>
-            </div>
+        <div class="search-box">
+    <input type="text" class="search-input" placeholder="Search Pupil's Name">
+    <i class='bx bx-search search-icon'></i>
+</div>
         </div>
     </div>
 
@@ -1506,13 +1543,14 @@
             </div>
             <div class="column column-right">
                 <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                        <option value="" disabled selected hidden>Quarter 1</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                <form id="quarterForm1" method="post" action="">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
+                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
+                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
+                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
                     </select>
+                </form>
                 </div>
             </div>
             <div class="column column-left">
@@ -1643,9 +1681,9 @@
         // Output data of each row
         while ($row = $lrnresult->fetch_assoc()) {
             echo "<tr class='sheshable'>";
-            echo "<th style='width:20%'>" . $row["lrn"] . "</th>";
-            echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
-            echo "<th style='width:20%' class='act'>";
+            echo "<td style='width:20%'>" . $row["lrn"] . "</td>";
+            echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
+            echo "<td style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
             echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
             echo "<i class='vertical-lines'></i>";
@@ -1655,12 +1693,12 @@
             echo "<i class='vertical-lines'></i>";
             echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
             echo "</div>";
-            echo "</th>";
-            echo "<th style='width:20%'>Pending</th>";
-            echo "<th style='width:25%' class='act'>";
+            echo "</td>";
+            echo "<td style='width:20%'>Pending</td>";
+            echo "<td style='width:25%' class='act'>";
             echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
             echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-            echo "</th>";
+            echo "</td>";
             echo "</tr>";
         }
     }
@@ -2783,8 +2821,25 @@ var rowsPerPageDataTable = 8;
     pupilTable.style.display = 'block';
 
 </script>
+<script>
+    function submitForm() {
+        document.getElementById('quarterForm1').submit();
+    }
+</script>
+<script>
+    document.querySelector('.search-input').addEventListener('input', function () {
+        const searchText = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#pupilTable tr.sheshable');
 
-    
- 
+        rows.forEach(row => {
+            const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            if (name.includes(searchText)) {
+                row.style.display = 'table-row';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>
 </body>
 </html>
