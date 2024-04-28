@@ -937,6 +937,7 @@
         .third-column {
             flex: 0 0 calc(30%); 
             margin-right: 0;
+            margin-left: 15px;
             position: relative; 
         }
 
@@ -1044,6 +1045,56 @@
                 cursor: pointer;
             }
 
+            .change-pass{}
+
+            .login-container .change-pass {
+            background-color: rgba(25, 5, 114, 0.80); 
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+          }
+
+            .change-pass .login-form button[type="submit"]{
+            background-color: #0C052F;
+            width: 18.5rem;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 30px;
+            cursor: pointer;
+            margin-top: 5px; 
+        }
+
+        .change-pass .login-form button[type="submit"]:hover {
+            background-color: #DDDAE7;
+            color: #0C052F;
+        }
+        .error-message{
+          color: green;
+          font-weight: bold;
+        }
+        .errorMsg{
+          color: green;
+          font-weight: bold;
+        }
+        .errorMsg1{
+          color: red;
+          font-weight: bold;
+        }
+        .change-pass .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .change-pass .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
 
                     
     </style>
@@ -1060,7 +1111,7 @@
                 <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../login/Login.php">Log Out</a>
-                        <a href="sdo_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
+                        <a style="border-top: 1px solid #ddd;" onclick="showChangePass()">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -1078,12 +1129,11 @@
                         </select>
                     </div>
                     <div class="third-column">
-                    <div class="search-box">
-                        <input type="text" class="search-input" id="searchInput" placeholder="Search ...">
-                        <i class='bx bx-search search-icon'></i>
+                        <div class="search-box">
+                            <input type="text" class="search-input" id="searchInput" placeholder="Search ...">
+                            <i class='bx bx-search search-icon'></i>
+                        </div>
                     </div>
-                </div>
-                    
                 </div>
 
             </div>
@@ -1136,9 +1186,9 @@
         echo "<button onclick='toggleEditContainer(this)'>Edit</button>"; // Add event listener
         echo "<form method='post' action=''>"; // Opening form tag
         echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
-        echo "<button type='submit' name='activate'>Activate</button>"; // Submit button
+        echo "<button type='submit' name='activate' id='activateBtn' onclick='activate()'>Activate</button>"; // Submit button
         echo "<input type='hidden' name='employment_number' value='" . $row['employment_number'] . "'>"; // Hidden input for employment number
-        echo "<button type='submit' name='deactivate'>Deactivate</button>"; // Submit button
+        echo "<button type='submit' name='deactivate' id='deactivateBtn' onclick='deactivate()' disabled>Deactivate</button>"; // Submit button
         echo "</form>"; // Closing form tag for deactivate
         echo "<button>Reset Password</button>";
         echo "</div>";
@@ -1374,6 +1424,45 @@
             <button type="submit" name="update" id="add-btn">Save Changes</button>
         </form>
     </div>
+
+    <div class="login-container change-pass" id="ChangePass">
+    <span class="close" onclick="closeChangePass()">&times;</span>
+        <div class="logo"></div>
+        <h2>Change Your Password</h2>
+        <p>Enter a new password to change your password</p>
+          
+
+        <div class="errorMsg">
+          <?php echo $errorMsg ?>
+        </div>
+        <div class="errorMsg1">
+          <?php echo $errorMsg1 ?>
+        </div>
+
+        <form class="login-form" action="" method="post">
+            
+        <div class="password-container">
+          <input type="password" id="password" name="old_password"  placeholder="Old Password " required>
+              <div class="password-toggle" onclick="togglePasswordVisibility()">
+                  <i id="eye-icon" class='bx bx-show'></i>
+              </div>
+          </div>
+
+          <div class="password-container">
+          <input type="password" id="password1" name="new_password"  placeholder="New Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility1()">
+                <i id="eye-icon1" class='bx bx-show'></i>
+            </div>
+        </div>
+
+        <div class="password-container">
+        <input type="password" id="password2" name="repeat_password" placeholder="Confirm Password " >
+            <div class="password-toggle" onclick="togglePasswordVisibility2()">
+                <i id="eye-icon2" class='bx bx-show'></i>
+            </div>
+        </div>
+            <button type="submit" value="Login" name="submit">Change Password</button>
+        </form>
 
     <script src="SDO_manage_account.js"></script>
     <script>

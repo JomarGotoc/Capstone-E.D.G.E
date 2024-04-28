@@ -70,7 +70,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../img/bg.png);
+            background: white;
             background-size: cover;
           }
 
@@ -129,7 +129,7 @@
             font-weight: 500;
           }
 
-          .login-container {
+          .change-pass .login-container {
             background-color: rgba(25, 5, 114, 0.80); 
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -246,7 +246,7 @@
     </div>
   </header>
 
-    <div class="login-container">
+    <div class="login-container change-pass">
     <a href="SDO_manage_accounts.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         <div class="logo"></div>
         <h2>Change Your Password</h2>

@@ -1132,7 +1132,7 @@ if(isset($_POST['submit1'])) {
     <header>
         <div class="container">
             <div class="header-content">
-                <img src="../img/logo.png" class="logs">
+                <img src="../../img/logo.png" class="logs">
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
@@ -1166,8 +1166,8 @@ if(isset($_POST['submit1'])) {
                 <div class="dropdown">
                     <button class="dropbtn">Manage Student's List</button>
                     <div class="dropdown-content">
-                        <a href="../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">View Student's List</a>
-                        <a href="../Bacayao_Sur_Elementary_School/manage_student/template.php">Upload Student's List</a>
+                        <a href="../../..Bacayao_Sur_Elementary_School/manage_student/School_Admin_Studentslist.php">View Student's List</a>
+                        <a href="../../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">Upload Student's List</a>
                     </div>
                 </div>
             </div>

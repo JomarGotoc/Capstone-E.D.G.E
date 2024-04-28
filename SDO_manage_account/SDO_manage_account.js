@@ -24,6 +24,8 @@ function deactivate(employmentNumber) {
 
 
 
+
+
 //plus button
 document.addEventListener("DOMContentLoaded", function() {
     const plusButton = document.getElementById('plusButton');
@@ -208,6 +210,22 @@ editButtons.forEach(function(button) {
 
 var overlay = document.querySelector('.overlay'); 
 overlay.addEventListener('click', hideEditContainer);
+
+
+//change pass
+function showChangePass() {
+    var ChangePass = document.querySelector(".login-container.change-pass");
+    var overlay = document.querySelector(".overlay");
+    ChangePass.style.display = "block";
+    overlay.style.display = "block";
+}
+
+function closeChangePass() {
+    var ChangePass = document.querySelector(".login-container.change-pass");
+    var overlay = document.querySelector(".overlay");
+    ChangePass.style.display = "none";
+    overlay.style.display = "none";
+}
 
 
 
