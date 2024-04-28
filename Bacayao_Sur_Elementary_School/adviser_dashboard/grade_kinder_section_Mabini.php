@@ -193,6 +193,7 @@
     // Close connection
     $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1696,7 +1697,7 @@
             echo "</td>";
             echo "<td style='width:20%'>Pending</td>";
             echo "<td style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
+            echo "<button class='updateRecordButton' onclick='addPupilAtRisk(this)'>ADD PUPIL AT RISK</button>";
             echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</td>";
             echo "</tr>";
@@ -1704,6 +1705,7 @@
     }
     ?>
 </table>
+
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
                         <!--------------- ACADEMIC ENGLISH ----------------------->
@@ -1868,17 +1870,29 @@
 ?>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
-         <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
+ <!---------- INTERVENTION ENGLISH ---------->
+ <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
             <div class="main-containers">
             <span class="closes" onclick="closeFormEnglish()">&times;</span>
             <h3 class="record_header">ACADEMIC - LITERACY IN ENGLISH RECORD</h3>
                 <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
                         <div class="containerss seconds" >
                             <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
                         </div>
@@ -2005,18 +2019,29 @@
                 
             </div>
         </form>
-
+ <!---------- INTERVENTION FILIPINO  ---------->
         <form action="" method="POST" class="form-container filipino" style="display: none;" id="filipinoForm">
             <div class="main-containers">
             <span class="closes" onclick="closeFormFilipino()">&times;</span>
             <h3 class="record_header">ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
-                <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
+            <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
                         <div class="containerss seconds" >
                             <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
                         </div>
@@ -2143,23 +2168,36 @@
                 
             </div>
         </form>
-
+ <!---------- INTERVENTION NUMERACY ---------->
         <form action="" method="POST" class="form-container numeracy" style="display: none;" id="numeracyForm">
             <div class="main-containers">
             <span class="closes" onclick="closeFormNumeracy()">&times;</span>
             <h3 class="record_header">ACADEMIC - NUMERACY RECORD</h3>
                 <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
                         <div class="containerss seconds" >
                             <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
                         </div>
                     </div>
                 </div>
+
+
 
 
                 <div class="rows">
@@ -2281,24 +2319,34 @@
                 
             </div>
         </form>
-
+ <!---------- INTERVENTION BEHAVIORAL ---------->
         <form action="" method="POST" class="form-container behavioral" style="display: none;" id="behavioralForm">
             <div class="main-containers">
             <span class="closes" onclick="closeFormBehavioral()">&times;</span>
             <h3 class="record_header"> BEHAVIORAL RECORD</h3>
                 <div class="rows">
-                    <div class="columns">
-                        <div class="containerss firsts">
-                            <h3>S.Y. 2023 - 2024: Quarter 1</h3>
-                        </div>
-                    </div>
-                    <div class="columns" style="background:none">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
                         <div class="containerss seconds" >
                             <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="rows">
                     <div class="columns" >
@@ -2431,30 +2479,39 @@
     <div class="overlay" id="overlay"></div>
 
 
-    <div class="login-container" id="login-container">
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Pupil At Risk</title>
+</head>
+<body>
+
+<div class="login-container" id="login-container">
     <span class="close">&times;</span>
     <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
         <div class="form-group">
             <label for="lrn">Learner's Reference Number (LRN)</label>
-            <input type="text" id="lrn" name="lrn" value="">
+            <input type="text" id="lrn1" name="lrn" value="">
         </div>
         <div class="row">
             <div class="columns-group">
-            <div class="form-group">
+                <div class="form-group">
                     <label>Identification</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
+                        <input type="checkbox" id="checkbox1" name="english" value="Academic - Literacy in English">
                         <label for="checkbox1">Academic - Literacy in English</label><br>
                         
-                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
+                        <input type="checkbox" id="checkbox2" name="filipino" value="Academic - Literacy in Filipino">
                         <label for="checkbox2">Academic - Literacy in Filipino</label><br>
                         
-                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
+                        <input type="checkbox" id="checkbox3" name="numeracy" value="Academic - Numeracy">
                         <label for="checkbox3">Academic - Numeracy</label><br>
                         
-                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
+                        <input type="checkbox" id="checkbox4" name="behavioral1" value="Behavioral">
                         <label for="checkbox4">Behavioral</label><br>
                     </div>
                 </div>
@@ -2465,11 +2522,14 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
+            <button type="submit" name="addpupil" class="addPupilButton">ADD PUPIL AT RISK</button>
         </div>
     </form>
 </div>
-</div>
+
+</body>
+</html>
+
 
 <script >
     //FUNCTIONS FOR INTERVENTIONS
@@ -2631,22 +2691,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var overlays = document.querySelectorAll(".overlay");
     var loginContainers = document.querySelectorAll(".login-container");
     var closeButtons = document.querySelectorAll(".close");
-
-    addPupilButtons.forEach(function(button, index) {
-        button.addEventListener("click", function() {
-            var studentName = document.querySelector("#pupilTable tr.sheshable th:nth-child(2)").textContent;
-            var studentNameSpans = document.querySelectorAll(".student-name");
-            studentNameSpans.forEach(function(span) {
-                span.textContent = studentName;
-            });
-
-            overlays[index].style.display = "block";
-            loginContainers[index].style.display = "block";
-
-            updateRecordButtonsss[index].style.display = "none";
-            updateRecordButtons[index].style.display = "inline-block";
-        });
-    });
 
     overlays.forEach(function(overlay, index) {
         overlay.addEventListener("click", function() {
@@ -2840,6 +2884,13 @@ var rowsPerPageDataTable = 8;
             }
         });
     });
+</script>
+<script>
+function addPupilAtRisk(button) {
+    var row = button.closest('tr'); // Find the parent row of the button
+    var lrn1 = row.querySelector('td:first-child').textContent; // Get LRN from the first <td> in the row
+    document.getElementById('lrn1').value = lrn1; // Set LRN value to the input field
+}
 </script>
 </body>
 </html>
