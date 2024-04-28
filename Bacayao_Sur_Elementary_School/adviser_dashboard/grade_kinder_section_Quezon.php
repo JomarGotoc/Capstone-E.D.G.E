@@ -90,7 +90,6 @@
         // Query to select LRN, fullname, and status from each table
         $query = "SELECT lrn, fullname, status FROM $table WHERE school = 'Bacayao Sur Elementary School'";
         
-        
         // Execute query
         $parresult = mysqli_query($conn, $query);
 
@@ -348,21 +347,6 @@
             margin-top: 10px;
         }
 
-        .wide-columnsss {
-            flex: 0 0 calc(32% - 7px);
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-
-        .wide-columnss {
-            flex: 0 0 calc(23% - 7px);
-            margin-bottom: 20px;
-            margin-top: 10px;
-        }
-
-        .wide-columnss .containers,
-        .wide-columnsss .containers,
-
         .wide-columns .containers, 
         .wide-column .containers{
             background-color: #190572;
@@ -462,9 +446,6 @@
             margin: 0;
         }
 
-        .wide-columnss h3,
-        .wide-columnsss h3,
-
         .wide-column h3, 
         .wide-columns h3{
             color: #070000;
@@ -501,34 +482,21 @@
         }
 
         table{
-            margin-top: 20px;
             width:100%; 
             border-collapse: collapse
             
-        }
-
-        thead th{
-            color: #070000;
-            text-align: center;
-            background-color: #190572;
-            padding: .5px;
-            color: white;
-            font-size: 19px;
-            border-left: 2px solid white;
         }
 
         tr:nth-child(odd){
             text-align: center;
             justify-content: center;
             background-color: rgb(242, 242, 244);
-            font-weight: 600;
         }
 
         tr:nth-child(even){
             text-align: center;
             justify-content: center;
             background-color: #b7b7b7;
-            font-weight: 600;
         }
         .containers h3{
             color: #FFF;
@@ -547,23 +515,7 @@
         .act button:hover {
             background-color: #0C052F;
         } 
-        
-        .acts button {
-        margin-top: 5px;
-        margin-bottom: 5px;
-        background-color:#130550;
-        color: #fff;
-        width: 20rem;
-        padding: 5px 24px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        }
 
-        .acts button:hover {
-            background-color: #0C052F;
-        } 
         .sch h1 {
             color: #FFFFFF;
         }
@@ -1575,30 +1527,41 @@
             </form>
                 </div>
 
+
+
+        <div class="wide-row">
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">LRN</h3>
+                </div>
+            </div>
+            <div class="wide-columns">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Pupil's Name </h3>
+                </div>
+            </div>
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
+                </div>
+            </div>
+
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Status</h3>
+                </div>
+            </div>
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Action</h3>
+                </div>
+            </div>
+        </div>
+
         <!---------------------------------- START ----------------------------------------->
     <!---------------------------------- ALL STUDENTS ----------------------------------------->
     <table border="0" id="pupilTable">
-            <thead>
-        <tr>
-            <th style='width:24%'>LRN</th>
-            <th style='width:30.5%'>Pupil's Name</th>
-            <th style='width:24%'>Status</th>
-            <th style='width:30%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr class='sheshable'>
-                <th style='width:24%'>01872615346</th>
-                <th style='width:30.5%'>Maria Lordes PSSrado</th>
-                <th style='width:24%'>Pending</th>
-                <th style='width:30%' class='acts'>
-                    <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
-                    <button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>
-                </th>
-            </tr>
-    </tbody>
-</table>
-    <!--?php
+    <?php
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
         while ($row = $lrnresult->fetch_assoc()) {
@@ -1624,182 +1587,104 @@
             echo "</tr>";
         }
     }
-    ?-->
+    ?>
 </table>
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
                         <!--------------- ACADEMIC ENGLISH ----------------------->
   <table border="0" id="identification-english" style="display: none;">
-  <thead>
-        <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:20%'>Status</th>
-            <th style='width:25%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class='sheshable'>
-            <td style='width:20%'>01872615346</td>
-            <td style='width:25.7%'>Maria Lordes PSSrado</td>
-            <td style='width:20%' class='act'>
-                <div class="icon-container">
-                    E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                        <i class="vertical-lines"></i>
-                    F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                </div>
-            </td>
-            <td style='width:20%'>Resolved</td>
-            <td style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Pending</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
 
                         <!--------------- ACADEMIC FILIPINO ----------------------->
         <table border="0" id="identification-filipino" style="display: none;">
-        <thead>
-        <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:20%'>Status</th>
-            <th style='width:25%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class='sheshable'>
-            <td style='width:20%'>01872615346</td>
-            <td style='width:25.7%'>Maria Lordes PSSrado</td>
-            <td style='width:20%' class='act'>
-                <div class="icon-container">
-                    E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                        <i class="vertical-lines"></i>
-                    F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                </div>
-            </td>
-            <td style='width:20%'>Resolved</td>
-            <td style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Unresolved</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
 
                         <!--------------- ACADEMIC NUMERACY ----------------------->
         <table border="0" id="identification-numeracy" style="display: none;">
-        <thead>
-        <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:20%'>Status</th>
-            <th style='width:25%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class='sheshable'>
-            <td style='width:20%'>01872615346</td>
-            <td style='width:25.7%'>Maria Lordes PSSrado</td>
-            <td style='width:20%' class='act'>
-                <div class="icon-container">
-                    E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                        <i class="vertical-lines"></i>
-                    F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                </div>
-            </td>
-            <td style='width:20%'>Resolved</td>
-            <td style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>On-Going</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
 
                         <!--------------- BEHAVIORAL ----------------------->
-    <table border="0" id="identification-behavioral" style="display: none;">
-    <thead>
-        <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:20%'>Status</th>
-            <th style='width:25%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class='sheshable'>
-            <td style='width:20%'>01872615346</td>
-            <td style='width:25.7%'>Maria Lordes PSSrado</td>
-            <td style='width:20%' class='act'>
-                <div class="icon-container">
-                    E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                        <i class="vertical-lines"></i>
-                    F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                </div>
-            </td>
-            <td style='width:20%'>Resolved</td>
-            <td style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
+        <table border="0" id="identification-behavioral" style="display: none;">
+            <tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Resolved</th>
+                <th style='width:25%' class='act'>
+                    <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </th>
+            </tr>
+        </table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
-
- <table border="0" id="parlist" style="display: none;">
-    <thead>
-        <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:20%'>Status</th>
-            <th style='width:25%'>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr class='sheshable'>
-            <td style='width:20%'>01872615346</td>
-            <td style='width:25.7%'>Maria Lordes PSSrado</td>
-            <td style='width:20%' class='act'>
-                <div class="icon-container">
-                    E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                        <i class="vertical-lines"></i>
-                    F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                        <i class="vertical-lines"></i>
-                    <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                </div>
-            </td>
-            <td style='width:20%'>Resolved</td>
-            <td style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-            </td>
-        </tr>
-    </tbody>
-</table>
-<!--?php
+<?php
     // Start PHP code
     foreach ($results as $table => $parresult) {
         if ($parresult) {
@@ -1833,7 +1718,7 @@
             echo "</table>";
         }
     }
-?-->
+?>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
          <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
@@ -1863,7 +1748,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <div class="rows">
@@ -1990,8 +1874,8 @@
             <div class="main-containers">
             <span class="closes" onclick="closeFormFilipino()">&times;</span>
             <h3 class="record_header">ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
-                <div class="rows">
-                <div class="column">
+            <div class="row">
+            <div class="column">
                 <div class="containers" style="background-color: #190572;">
                     <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
                 </div>
@@ -2013,7 +1897,6 @@
                         </div>
                     </div>
                 </div>
-
 
 
                 <div class="rows">
@@ -2165,6 +2048,8 @@
                 </div>
 
 
+
+
                 <div class="rows">
                     <div class="columns" >
                         <div class="containerss" style="background-color: #190572">
@@ -2312,8 +2197,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <div class="rows">
                     <div class="columns" >
@@ -2487,13 +2370,11 @@
 </div>
 
 <script >
-    //Change Quarter Advider Dasboard
     function changeQuarter() {
         var selectedValue = document.getElementById("academicYear").value;
         // You can implement logic to handle the selected quarter here
         console.log("Selected Academic Year and Quarter:", selectedValue);
     }
-    
     //FUNCTIONS FOR INTERVENTIONS
     function closeForm() {
     document.getElementById('formContainer').style.display = 'none'; // Hide the form container
