@@ -1676,6 +1676,25 @@
         <!---------------------------------- START ----------------------------------------->
     <!---------------------------------- ALL STUDENTS ----------------------------------------->
     <table border="0" id="pupilTable">
+    <!--tr class='sheshable'>
+                <th style='width:20%'>01872615346</th>
+                <th style='width:25.7%'>Maria Lordes PSSrado</th>
+                <th style='width:20%'class='act'>
+                    <div class="icon-container">
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                            <i class="vertical-lines"></i>
+                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
+                            <i class="vertical-lines"></i>
+                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
+                    </div>
+                </th>
+                <th style='width:20%'>Pending</th>
+                <th style='width:25%' class='act'>
+                <a href="par_form.php" ><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>
+                <button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>                </th>
+        </tr-->
     <?php
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
