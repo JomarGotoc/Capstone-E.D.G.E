@@ -1770,8 +1770,7 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
-            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
@@ -1801,8 +1800,7 @@
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
-            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
@@ -1832,8 +1830,7 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
-            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
@@ -1863,8 +1860,7 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
-            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
