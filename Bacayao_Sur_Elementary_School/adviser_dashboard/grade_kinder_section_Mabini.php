@@ -65,16 +65,9 @@
 
     $tablename = strtolower(str_replace('.php', '', $filename));
 
-    $sql = "SELECT lrn, fullname FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
+    $sql = "SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
 
     $lrnresult = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while ($row = $result->fetch_assoc()) {
-            echo "LRN: " . $row["lrn"]. " - Full Name: " . $row["fullname"]. "<br>";
-        }
-    } 
 
     $conn->close();
 ?>
@@ -193,7 +186,56 @@
     // Close connection
     $conn->close();
 ?>
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+    $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+?>
+<?php
+    include('../../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM adviser WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($advisername);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
+<?php 
+    if(isset($_POST['quarter'])) {
+        $quarter = $_POST['quarter'];
+    } else {
+        $quarter = '1';
+    }
+?>
+<?php
+    include('../../database.php');
+    $tables = array(
+        'academic_english',
+        'academic_filipino',
+        'academic_numeracy',
+        'behavioral'
+    );
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove"])) {
+        $lrn = $_POST['lrn'];
+        if(isset($_POST['quarter'])) {
+            $quarter = $_POST['quarter'];
+        } else {
+            $quarter = '1';
+        }
 
+        foreach ($tables as $table) {
+            $sql = "DELETE FROM $table WHERE lrn = '$lrn' AND quarter = '$quarter'";
+            mysqli_query($conn, $sql);
+        }
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit; 
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1409,7 +1451,7 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $advisername ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
                         <a href="" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -1445,8 +1487,6 @@
                         
                         echo '>S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '</option>';
                     }
-                    
-                    // End the dropdown menu
                     echo '</select>';
                     echo '</div>';
                 }
@@ -1552,6 +1592,7 @@
                         <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
                     </select>
                 </form>
+
                 </div>
             </div>
             <div class="column column-left">
@@ -1697,7 +1738,7 @@
             echo "</td>";
             echo "<td style='width:20%'>Pending</td>";
             echo "<td style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton' onclick='addPupilAtRisk(this)'>ADD PUPIL AT RISK</button>";
+            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
             echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</td>";
             echo "</tr>";
@@ -1705,7 +1746,6 @@
     }
     ?>
 </table>
-
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
                         <!--------------- ACADEMIC ENGLISH ----------------------->
@@ -1833,41 +1873,40 @@
         </table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
+<form method="post">
 <?php
-    // Start PHP code
-    foreach ($results as $table => $parresult) {
-        if ($parresult) {
-            // Open the table tag
-            echo "<table border='0' id='parlist' style='display: none;'>";
-
-            // Fetch and display results
-            while ($row = mysqli_fetch_assoc($parresult)) {
-                echo "<tr class='sheshable'>";
-                echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
-                echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
-                echo "<th style='width:20%' class='act'>";
-                echo "<div class='icon-container'>";
-                echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
-                echo "</div>";
-                echo "</th>";
-                echo "<th style='width:20%'>" . $row['status'] . "</th>";
-                echo "<th style='width:25%' class='act'>";
-                echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-                echo "</th>";
-                echo "</tr>";
-            }
-
-            // Close the table tag
-            echo "</table>";
+foreach ($results as $table => $parresult) {
+    if ($parresult) {
+        echo "<table border='0' id='parlist' style='display: none;'>";
+        while ($row = mysqli_fetch_assoc($parresult)) {
+            echo "<tr class='sheshable'>";
+            echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
+            echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
+            echo "<th style='width:20%' class='act'>";
+            echo "<div class='icon-container'>";
+            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            echo "</div>";
+            echo "</th>";
+            echo "<th style='width:20%'>" . $row['status'] . "</th>";
+            echo "<th style='width:25%' class='act'>";
+            // Add a hidden input field to store LRN
+            echo "<input type='hidden' name='lrn' value='" . $row['lrn'] . "'>";
+            echo "<button type='submit' name='remove' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</th>";
+            echo "</tr>";
         }
+        echo "</table>";
     }
+}
 ?>
+
+</form>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
  <!---------- INTERVENTION ENGLISH ---------->
@@ -2479,39 +2518,30 @@
     <div class="overlay" id="overlay"></div>
 
 
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Pupil At Risk</title>
-</head>
-<body>
-
-<div class="login-container" id="login-container">
+    <div class="login-container" id="login-container">
     <span class="close">&times;</span>
     <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
         <div class="form-group">
             <label for="lrn">Learner's Reference Number (LRN)</label>
-            <input type="text" id="lrn1" name="lrn" value="">
+            <input type="text" id="lrn" name="lrn" value="">
         </div>
         <div class="row">
             <div class="columns-group">
-                <div class="form-group">
+            <div class="form-group">
                     <label>Identification</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkbox1" name="english" value="Academic - Literacy in English">
+                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
                         <label for="checkbox1">Academic - Literacy in English</label><br>
                         
-                        <input type="checkbox" id="checkbox2" name="filipino" value="Academic - Literacy in Filipino">
+                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
                         <label for="checkbox2">Academic - Literacy in Filipino</label><br>
                         
-                        <input type="checkbox" id="checkbox3" name="numeracy" value="Academic - Numeracy">
+                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
                         <label for="checkbox3">Academic - Numeracy</label><br>
                         
-                        <input type="checkbox" id="checkbox4" name="behavioral1" value="Behavioral">
+                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
                         <label for="checkbox4">Behavioral</label><br>
                     </div>
                 </div>
@@ -2522,14 +2552,11 @@
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="addpupil" class="addPupilButton">ADD PUPIL AT RISK</button>
+            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
         </div>
     </form>
 </div>
-
-</body>
-</html>
-
+</div>
 
 <script >
     //FUNCTIONS FOR INTERVENTIONS
@@ -2691,6 +2718,22 @@ document.addEventListener("DOMContentLoaded", function() {
     var overlays = document.querySelectorAll(".overlay");
     var loginContainers = document.querySelectorAll(".login-container");
     var closeButtons = document.querySelectorAll(".close");
+
+    addPupilButtons.forEach(function(button, index) {
+        button.addEventListener("click", function() {
+            var studentName = document.querySelector("#pupilTable tr.sheshable th:nth-child(2)").textContent;
+            var studentNameSpans = document.querySelectorAll(".student-name");
+            studentNameSpans.forEach(function(span) {
+                span.textContent = studentName;
+            });
+
+            overlays[index].style.display = "block";
+            loginContainers[index].style.display = "block";
+
+            updateRecordButtonsss[index].style.display = "none";
+            updateRecordButtons[index].style.display = "inline-block";
+        });
+    });
 
     overlays.forEach(function(overlay, index) {
         overlay.addEventListener("click", function() {
@@ -2884,13 +2927,6 @@ var rowsPerPageDataTable = 8;
             }
         });
     });
-</script>
-<script>
-function addPupilAtRisk(button) {
-    var row = button.closest('tr'); // Find the parent row of the button
-    var lrn1 = row.querySelector('td:first-child').textContent; // Get LRN from the first <td> in the row
-    document.getElementById('lrn1').value = lrn1; // Set LRN value to the input field
-}
 </script>
 </body>
 </html>

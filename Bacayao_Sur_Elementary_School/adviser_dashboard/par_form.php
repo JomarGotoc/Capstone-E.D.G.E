@@ -1,4 +1,60 @@
+<?php
+    include('../../database.php');
 
+    if(isset($_POST['submit1'])) {
+        $lrn = $_POST['lrn'];
+        $date = $_POST['date'];
+
+        $school = $_GET['school'] ?? '';
+        $grade = $_GET['grade'] ?? ''; 
+        $section = $_GET['section'] ?? ''; 
+        $fullname = $_GET['fullname'] ?? '';
+        $quarter = $_GET['quarter'] ?? '';
+        $status = "Pending";
+
+        // Get the current year
+        $current_year = date('Y');
+
+        $checkbox_classifications = array(
+            'academic_english' => 'Academic - Literacy in English',
+            'academic_filipino' => 'Academic - Literacy in Filipino',
+            'academic_numeracy' => 'Academic - Literacy in Numeracy',
+            'behavioral' => 'Behavioral'
+        );
+
+        foreach ($checkbox_classifications as $checkbox => $classification) {
+            if(isset($_POST[$checkbox])) {
+                // Modify the SQL query to include additional fields
+                $sql = "INSERT INTO $checkbox (lrn, date, school, grade, section, fullname, year, classification, quarter, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param('ssssssisss', $lrn, $date, $school, $grade, $section, $fullname, $current_year, $classification, $quarter, $status);
+                $stmt->execute();
+            }
+        }
+    }
+?>
+<?php
+    include('../../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM adviser WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($advisername);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
+<?php
+    $file = $_GET['file'];
+    $employment_number = $_GET['employment_number'];
+
+    // Assuming $file contains the file name and $employment_number is part of the path
+    $path = $file . '?employment_number=' . $employment_number;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -511,7 +567,7 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $advisername ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
                         <a href="../../change_password/change_password.php?employment_number=<!?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -523,30 +579,30 @@
 
     <div class="login-container" >
         <div class="back-button">
-            <a href="template_adviser.php" class="back-icon"><i class='bx bx-chevron-left'></i></a>
+            <a href="<?php echo $path ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
         <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
         <div class="form-group">
             <label for="lrn">Learner's Reference Number (LRN)</label>
-            <input type="text" id="lrn" name="lrn" value="">
+            <input type="text" id="lrn" name="lrn" value="<?php echo isset($_GET['lrn']) ? htmlspecialchars($_GET['lrn']) : ''; ?>">
         </div>
         <div class="row">
             <div class="columns-group">
             <div class="form-group">
                     <label>Identification</label>
                     <div class="checkbox-group">
-                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
+                        <input type="checkbox" id="checkbox1" name="academic_english" value="Academic - Literacy in English">
                         <label for="checkbox1">Academic - Literacy in English</label><br>
                         
-                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
+                        <input type="checkbox" id="checkbox2" name="academic_filipino" value="Academic - Literacy in Filipino">
                         <label for="checkbox2">Academic - Literacy in Filipino</label><br>
                         
-                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
+                        <input type="checkbox" id="checkbox3" name="academic_numeracy" value="Academic - Numeracy">
                         <label for="checkbox3">Academic - Numeracy</label><br>
                         
-                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
+                        <input type="checkbox" id="checkbox4" name="behavioral" value="Behavioral">
                         <label for="checkbox4">Behavioral</label><br>
                     </div>
                 </div>

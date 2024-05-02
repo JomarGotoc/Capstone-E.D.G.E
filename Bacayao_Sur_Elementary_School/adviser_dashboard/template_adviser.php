@@ -65,16 +65,9 @@
 
     $tablename = strtolower(str_replace('.php', '', $filename));
 
-    $sql = "SELECT lrn, fullname FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
+    $sql = "SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
 
     $lrnresult = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while ($row = $result->fetch_assoc()) {
-            echo "LRN: " . $row["lrn"]. " - Full Name: " . $row["fullname"]. "<br>";
-        }
-    } 
 
     $conn->close();
 ?>
@@ -192,6 +185,56 @@
 
     // Close connection
     $conn->close();
+?>
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+    $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+?>
+<?php
+    include('../../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM adviser WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($advisername);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
+<?php 
+    if(isset($_POST['quarter'])) {
+        $quarter = $_POST['quarter'];
+    } else {
+        $quarter = '1';
+    }
+?>
+<?php
+    include('../../database.php');
+    $tables = array(
+        'academic_english',
+        'academic_filipino',
+        'academic_numeracy',
+        'behavioral'
+    );
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove"])) {
+        $lrn = $_POST['lrn'];
+        if(isset($_POST['quarter'])) {
+            $quarter = $_POST['quarter'];
+        } else {
+            $quarter = '1';
+        }
+
+        foreach ($tables as $table) {
+            $sql = "DELETE FROM $table WHERE lrn = '$lrn' AND quarter = '$quarter'";
+            mysqli_query($conn, $sql);
+        }
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit; 
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -503,11 +546,9 @@
             color: #190572;
         }
 
-        #quarterSelect,
-
         #topdown {
             padding: 1px;
-            width: 448px;
+            width: 437px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -601,7 +642,7 @@
         .act button {
         background-color:#130550;
         color: #fff;
-        width: 17rem;
+        width: 16rem;
         padding: 5px 24px;
         border: none;
         border-radius: 5px;
@@ -1206,6 +1247,7 @@
         .seconds{
             border-radius: 3px;
             text-align: center;
+            font-family: "Darker Grotesque";
         }
 
         .seconds h3{
@@ -1409,7 +1451,7 @@
                 <h4>E.D.G.E | P.A.R. Early Detection and Guidance for Education</h4>
                 <i class="vertical-line"></i>
                 <div class="dropdown">
-                <div class='name' onclick="toggleDropdown()">Stephanie Mislang</div>
+                <div class='name' onclick="toggleDropdown()"><?php echo $advisername ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                     <a href="../../login/Login.php">Log Out</a>
                         <a href="" style="border-top: 1px solid #ddd;">Change Password</a>
@@ -1445,8 +1487,6 @@
                         
                         echo '>S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '</option>';
                     }
-                    
-                    // End the dropdown menu
                     echo '</select>';
                     echo '</div>';
                 }
@@ -1545,13 +1585,14 @@
             <div class="column column-right">
                 <div class="select-wrapper1">
                 <form id="quarterForm1" method="post" action="">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()" class="containerss seconds" style="background-color: #F3F3F3; color:#130550">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
                         <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                         <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
                         <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
                         <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
                     </select>
                 </form>
+
                 </div>
             </div>
             <div class="column column-left">
@@ -1677,25 +1718,6 @@
         <!---------------------------------- START ----------------------------------------->
     <!---------------------------------- ALL STUDENTS ----------------------------------------->
     <table border="0" id="pupilTable">
-    <!--tr class='sheshable'>
-                <th style='width:20%'>01872615346</th>
-                <th style='width:25.7%'>Maria Lordes PSSrado</th>
-                <th style='width:20%'class='act'>
-                    <div class="icon-container">
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
-                            <i class="vertical-lines"></i>
-                        F<i class="bx bx-book-open icon" onclick="showPupilRecordFilipino()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-calculator icon" onclick="showPupilRecordNumeracy()"></i>
-                            <i class="vertical-lines"></i>
-                        <i class="par-icon bx bx-face icon" onclick="showPupilRecordBehavioral()"></i>
-                    </div>
-                </th>
-                <th style='width:20%'>Pending</th>
-                <th style='width:25%' class='act'>
-                <a href="par_form.php" ><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>
-                <button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>                </th>
-        </tr-->
     <?php
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
@@ -1716,7 +1738,7 @@
             echo "</td>";
             echo "<td style='width:20%'>Pending</td>";
             echo "<td style='width:25%' class='act'>";
-            echo "<button class='updateRecordButton'>ADD PUPIL AT RISK</button>";
+            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
             echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</td>";
             echo "</tr>";
@@ -1851,41 +1873,40 @@
         </table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
+<form method="post">
 <?php
-    // Start PHP code
-    foreach ($results as $table => $parresult) {
-        if ($parresult) {
-            // Open the table tag
-            echo "<table border='0' id='parlist' style='display: none;'>";
-
-            // Fetch and display results
-            while ($row = mysqli_fetch_assoc($parresult)) {
-                echo "<tr class='sheshable'>";
-                echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
-                echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
-                echo "<th style='width:20%' class='act'>";
-                echo "<div class='icon-container'>";
-                echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-                echo "<i class='vertical-lines'></i>";
-                echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
-                echo "</div>";
-                echo "</th>";
-                echo "<th style='width:20%'>" . $row['status'] . "</th>";
-                echo "<th style='width:25%' class='act'>";
-                echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-                echo "</th>";
-                echo "</tr>";
-            }
-
-            // Close the table tag
-            echo "</table>";
+foreach ($results as $table => $parresult) {
+    if ($parresult) {
+        echo "<table border='0' id='parlist' style='display: none;'>";
+        while ($row = mysqli_fetch_assoc($parresult)) {
+            echo "<tr class='sheshable'>";
+            echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
+            echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
+            echo "<th style='width:20%' class='act'>";
+            echo "<div class='icon-container'>";
+            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
+            echo "<i class='vertical-lines'></i>";
+            echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            echo "</div>";
+            echo "</th>";
+            echo "<th style='width:20%'>" . $row['status'] . "</th>";
+            echo "<th style='width:25%' class='act'>";
+            // Add a hidden input field to store LRN
+            echo "<input type='hidden' name='lrn' value='" . $row['lrn'] . "'>";
+            echo "<button type='submit' name='remove' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</th>";
+            echo "</tr>";
         }
+        echo "</table>";
     }
+}
 ?>
+
+</form>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
  <!---------- INTERVENTION ENGLISH ---------->
@@ -2740,7 +2761,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //next and prev button
 var currentPageDataTable = 1;
-var rowsPerPageDataTable = 6;
+var rowsPerPageDataTable = 8;
 
     function showRowsDataTable() {
         var rows = document.querySelectorAll('#pupilTable tr');
