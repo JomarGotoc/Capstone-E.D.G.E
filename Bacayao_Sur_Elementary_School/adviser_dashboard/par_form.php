@@ -581,7 +581,7 @@
         <div class="back-button">
             <a href="<?php echo $path ?>" class="back-icon"><i class='bx bx-chevron-left'></i></a>
         </div>
-        <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
+        <h4>Adding Pupil At Risk</h4>
 
     <form class="login-form" action="" method="post">
         <div class="form-group">
