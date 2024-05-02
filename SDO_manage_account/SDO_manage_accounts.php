@@ -446,7 +446,7 @@
             height: 85%;
             background-color: white;
             opacity: 80%;
-            overflow: hidden;
+            overflow-y: auto;
             padding: 20px;
         }
 
@@ -938,6 +938,7 @@
             flex: 0 0 calc(30%); 
             margin-right: 0;
             position: relative; 
+            margin-left: 10px;
         }
 
         .search-box {
@@ -1044,6 +1045,31 @@
                 cursor: pointer;
             }
 
+        .pagination {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex; 
+            justify-content: space-between;
+            width: 150px;
+            gap: 5px;
+        }
+
+        .pagination button {
+            padding: 8px 8px;
+            background-color: #0C052F;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .pagination button:hover {
+            background-color: #190572;
+        }
+
 
                     
     </style>
@@ -1109,7 +1135,7 @@
         <div class="column"><h3>Employee Number</h3></div>
         <div class="column"><h3>Email Address</h3></div>
         <div class="column"><h3>Date Added</h3></div>
-        <div class="column"><h3>Position<i class="bx bx-filter-alt filter-icon"></i></h3></div>
+        <div class="column"><h3>Position</h3></div>
         <div class="column"><h3></h3></div>
     </div>
     <div class="filter-options show" id="filterOptions" onmouseleave="toggleFilterOptions()">
@@ -1151,8 +1177,8 @@
 </table>
 
 </div>
-
     </div>
+
 
     <div class="dropdowns">
         <div class="plus-button">
@@ -1165,6 +1191,11 @@
             <div onclick="createAccount('School Administrator')">School Administrator</div>
         </div>
     </div>
+
+    <!--div class="pagination" >
+            <button id="prevbutton" onclick="prevPageReportTable()">Previous</button>
+            <button id="nextbutton" onclick="nextPageReportTable()">Next</button>
+        </div-->
 
     <div class="overlay" id="overlay"></div>
 
