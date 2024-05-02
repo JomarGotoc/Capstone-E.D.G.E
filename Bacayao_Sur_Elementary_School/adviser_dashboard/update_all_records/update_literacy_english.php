@@ -1,4 +1,14 @@
+<?php
+    $grade = $_GET['grade'] ?? '';
+    $section = $_GET['section'] ?? '';
 
+   include('../../../database.php');
+
+    // SQL query to fetch LRN and full name from the academic_english table
+    $sql = "SELECT lrn, fullname FROM academic_english WHERE grade = '$grade' AND section = '$section'";
+    $result = $conn->query($sql);
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1083,30 +1093,33 @@
                         <th>Recommended to</th>
                         <th>Status</th>
                     </tr>
-                    <tr id="row2" class="table_body">
-                        <td><textarea placeholder=" "></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder=" "></textarea><span class="dates"></span></td>
-                        <td colspan="1"> 
-                            <textarea placeholder="Guardian's Name"></textarea><span class="dates"></span>
-                        </td>
-                        <td colspan="1"> 
-                            <textarea placeholder="Contact Number"></textarea><span class="dates"></span>
-                        </td>
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
-                        <td>
-                            <select class="status-dropdown">
-                                <option value="pending" disabled selected hidden>Pending</option>
-                                <option value="ongoing">Ongoing</option>
-                                <option value="resolved">Resolved</option>
-                                <option value="unresolved">Unresolved</option>
-                            </select>
-                            <span class="dates"></span>
-                        </td>
-                    </tr>
+                    <?php
+    if ($result->num_rows > 0) {
+        // Output data of each row
+        while($row = $result->fetch_assoc()) {
+            echo '<tr id="row2" class="table_body">';
+            echo '<td><textarea placeholder="">' . $row["lrn"] . '</textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="">' . $row["fullname"] . '</textarea><span class="dates"></span></td>';
+            echo '<td colspan="1"><textarea placeholder="Guardian\'s Name"></textarea><span class="dates"></span></td>';
+            echo '<td colspan="1"><textarea placeholder="Contact Number"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>';
+            echo '<td>';
+            echo '<select class="status-dropdown">';
+            echo '<option value="pending" disabled selected hidden>Pending</option>';
+            echo '<option value="ongoing">Ongoing</option>';
+            echo '<option value="resolved">Resolved</option>';
+            echo '<option value="unresolved">Unresolved</option>';
+            echo '</select>';
+            echo '<span class="dates"></span>';
+            echo '</td>';
+            echo '</tr>';
+        }
+    }
+                ?>    
                     
                 </table>
 
