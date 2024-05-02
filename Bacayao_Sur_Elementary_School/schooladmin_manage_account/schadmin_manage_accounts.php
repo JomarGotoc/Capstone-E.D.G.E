@@ -1166,7 +1166,7 @@ if(isset($_POST['submit1'])) {
                 <div class="dropdown">
                     <button class="dropbtn">Manage Student's List</button>
                     <div class="dropdown-content">
-                        <a href="../../..Bacayao_Sur_Elementary_School/manage_student/School_Admin_Studentslist.php">View Student's List</a>
+                        <a href="../../Bacayao_Sur_Elementary_School/manage_student/School_Admin_Studentlist.php">View Student's List</a>
                         <a href="../../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">Upload Student's List</a>
                     </div>
                 </div>
