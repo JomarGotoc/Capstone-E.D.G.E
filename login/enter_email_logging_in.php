@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $school = str_replace(' ', '_', $row['school']);
 
                 if ($tableName === 'counselor') {
-                    header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employmentNumber");
+                    header("Location: ../$school/guidance_dashboard/template_guidance.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'principal') {
                     header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'school_admin') {

@@ -9,6 +9,49 @@
     $result = $conn->query($sql);
     $conn->close();
 ?>
+<?php
+// Check if the request method is POST
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if the "gname" field is set in the POST data
+    if (isset($_POST["gname"]) && isset($_POST["lrn"])) {
+        // Sanitize and validate the input (you may need to adjust this based on your requirements)
+        $gname = $_POST["gname"];
+        $lrn = $_POST["lrn"];
+
+        include('../../../database.php'); 
+
+        // Prepare SQL statement for insertion
+        $sql = "UPDATE academic_numeracy SET gname = ? WHERE lrn = ?";
+
+        // Prepare and bind parameters
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $gname, $lrn);
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Check if the insertion was successful
+        if ($stmt->affected_rows > 0) {
+            echo "Record updated successfully";
+        } else {
+            echo "Error updating record";
+        }
+
+        // Close statement and connection
+        $stmt->close();
+        $conn->close();
+    } else {
+        // If "gname" or "lrn" field is not set in the POST data
+        echo "Error: 'gname' or 'lrn' field is missing in the request";
+    }
+} else {
+    // If the request method is not POST
+    echo "Error: This script expects a POST request";
+}
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1098,9 +1141,9 @@
         // Output data of each row
         while($row = $result->fetch_assoc()) {
             echo '<tr id="row2" class="table_body">';
-            echo '<td><textarea placeholder="">' . $row["lrn"] . '</textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="">' . $row["fullname"] . '</textarea><span class="dates"></span></td>';
-            echo '<td colspan="1"><textarea placeholder="Guardian\'s Name"></textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="" name="lrn">' . $row["lrn"] . '</textarea><span class="dates"></span></td>';
+            echo '<td><textarea placeholder="" name="fullname">' . $row["fullname"] . '</textarea><span class="dates"></span></td>';
+            echo '<td colspan="1"><textarea placeholder="Guardian\'s Name" name="gname"></textarea><span class="dates"></span></td>';
             echo '<td colspan="1"><textarea placeholder="Contact Number"></textarea><span class="dates"></span></td>';
             echo '<td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>';
             echo '<td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>';
@@ -1125,7 +1168,7 @@
 
                 
                 <div class="bottom-buttons">
-                    <button id="saveButton" class="saveButton">Update Records</button>
+                    <button id="saveButton" class="saveButton" name="save">Update Records</button>
                 </div>
 
                 <div class="pagination">
@@ -1145,27 +1188,10 @@
     document.getElementById('formContainer').style.display = 'none'; // Hide the form container
     }       
 
-    document.getElementById('saveButton').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent form submission
     
     var currentDate = new Date();
     var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
     
-    // Update date only for the input boxes with data entered
-    document.getElementById('saveButton').addEventListener('click', function() {
-    var inputFields = document.querySelectorAll('textarea');
-    inputFields.forEach(function(inputField) {
-        if (inputField.value.trim() !== '' && !inputField.dataset.dateSaved) {
-            var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
-            var currentTime = new Date().toLocaleTimeString(); // Get the current time
-            dateElement.textContent = currentTime; // Display the current time
-            inputField.disabled = true; // Disable input field for the saved row
-            inputField.dataset.dateSaved = true; // Mark that date is saved for this input field
-        }
-    });
-});
-});
-
 //next and prev button
 var table = document.getElementById("update-record");
 var rows = table.getElementsByClassName("table_body");

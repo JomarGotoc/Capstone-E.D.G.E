@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
                         case 'counselor':
                             if ($verifiedStatus == 'yes') {
                                 $school = str_replace(' ', '_', $row['school']);
-                                header("Location: ../$school/guidance_dashboard/guidance_dashboard_q1.php?employment_number=$employment_number");
+                                header("Location: ../$school/guidance_dashboard/template_guidance.php?employment_number=$employment_number");
                                 exit();
                             } else {
                                 header("Location: enter_email_logging_in.php?employment_number=$employment_number&table=$table");
