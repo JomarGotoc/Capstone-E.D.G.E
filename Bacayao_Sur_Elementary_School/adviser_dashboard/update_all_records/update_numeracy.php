@@ -1085,7 +1085,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </header>
 
-         <form action="" method="POST" class="form-container"  id="pupilRecord">
+        <!-- <form action="" method="POST" class="form-container"  id="pupilRecord"> -->
             <div class="main-containers">
             <h3 class="record_header"><a href="" class="back-icon"><i class='bx bxs-chevron-left'></i></a>ACADEMIC - NUMERACY RECORD</h3>
                 <div class="rows">
@@ -1136,6 +1136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Recommended to</th>
                         <th>Status</th>
                     </tr>
+                    <form method="post" class="form-container">
                     <?php
     if ($result->num_rows > 0) {
         // Output data of each row

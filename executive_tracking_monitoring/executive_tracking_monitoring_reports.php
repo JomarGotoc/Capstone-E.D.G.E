@@ -3690,7 +3690,25 @@
     $westCentralIICount = $school_counts['West Central II Elementary School'];
 
 ?>
+<?php
+    include('../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
 
+    // Array to store all school year options
+    $school_years = array();
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
+
+    // Close database conn
+    mysqli_close($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -4354,9 +4372,14 @@
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown1" name="school-year" class="containers first">
-                        <option value="school-year">S.Y. 2023 - 2024</option>
-                    </select>
+                <form id="school_year_form" method="post" action="">
+                        <select id="topdown1" name="school-year" class="containers first">
+                            <?php foreach ($school_years as $start_year => $school_year) : ?>
+                                <?php $selected = (isset($_POST['school-year']) && $_POST['school-year'] == $start_year) || date('Y') == $start_year ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $start_year; ?>" <?php echo $selected; ?>><?php echo $school_year; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
                 </div>
             </div>
             
@@ -5367,6 +5390,18 @@ function submitForm(selectedValue) {
     function submitForm() {
         document.getElementById('quarterForm1').submit();
     }
+</script>
+<script>
+    document.getElementById('topdown1').addEventListener('change', function() {
+        if (this.value !== "new-option") {
+            document.getElementById('school_year_form').submit();
+        }
+    });
+
+    // After form submission, re-select the previously selected option
+    <?php if(isset($_POST['school-year']) && $_POST['school-year'] !== "new-option"): ?>
+        document.getElementById('topdown1').value = "<?php echo $_POST['school-year']; ?>";
+    <?php endif; ?>
 </script>
 </body>
 </html>

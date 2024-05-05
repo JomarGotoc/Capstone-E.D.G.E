@@ -9,6 +9,7 @@
         $employment_number = $_POST['employment_number'];
         $activation = "activate";
         $date = date('Y-m-d'); // Current date
+        $year = date('Y');
 
         // Concatenate full name
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
@@ -23,7 +24,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation')";
+        $query = "INSERT INTO sdo_admin (fullname, employment_number, date, password, verified, activation, year) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation','$year')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -39,6 +40,7 @@
         $employment_number = $_POST['employment_number'];
         $activation = "activate";
         $date = date('Y-m-d'); // Current date
+        $year = date('Y');
 
         // Concatenate full name
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
@@ -53,7 +55,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO executive_committee (fullname, employment_number, date, password, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation')";
+        $query = "INSERT INTO executive_committee (fullname, employment_number, date, password, verified, activation, year) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password', '$verified', '$activation', '$year')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -71,6 +73,8 @@
         $activation = "activate";
         $date = date('Y-m-d');
         
+        // Get the current year
+        $year = date('Y');
 
         // Concatenate full name
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
@@ -85,7 +89,7 @@
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
+        $query = "INSERT INTO school_admin (fullname, employment_number, date, password, school, verified, activation, year) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation', '$year')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -129,25 +133,33 @@
     // Array of tables
     $tables = ['sdo_admin', 'executive_committee', 'school_admin'];
 
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+
     // Loop through each table
     foreach ($tables as $table) {
-        $sql = "SELECT fullname, employment_number, email, date FROM $table";
-        $result = $conn->query($sql);
+        // Prepare the SQL query with a placeholder for the school year
+        $sql = "SELECT fullname, employment_number, email, date FROM $table WHERE year = ?";
+        
+        // Prepare and bind the statement
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $school_year);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-    if ($result->num_rows > 0) {
-        // Fetch data and add it to $data array
-        while ($row = $result->fetch_assoc()) {
-            // Replace underscore with space in table name and capitalize each word
-            $position = ucwords(str_replace('_', ' ', $table)); 
-            // Convert "sdo" to "SDO" if found
-            $position = str_replace('Sdo', 'SDO', $position); 
-            $row['position'] = $position; // Adding position based on modified table name
-            $data[] = $row;
+        if ($result->num_rows > 0) {
+            // Fetch data and add it to $data array
+            while ($row = $result->fetch_assoc()) {
+                // Replace underscore with space in table name and capitalize each word
+                $position = ucwords(str_replace('_', ' ', $table)); 
+                // Convert "sdo" to "SDO" if found
+                $position = str_replace('Sdo', 'SDO', $position); 
+                $row['position'] = $position; // Adding position based on modified table name
+                $data[] = $row;
+            }
         }
     }
-
-    }
 ?>
+
 <?php
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -207,12 +219,35 @@
     if(isset($_POST['add'])) {
         $start = $_POST['start'];
         $end = $_POST['end'];
+        // Extracting only the first 4 characters of start and end
+        $start = substr($start, 0, 4);
+        $end = substr($end, 0, 4);
         if(!empty($start) && !empty($end)) {
             $sql = "INSERT INTO school_year (start, end) VALUES ('$start', '$end')";
             if ($conn->query($sql) === TRUE) {
+                // Insertion successful
             }
         } 
     }
+?>
+<?php
+    include('../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
+
+    // Array to store all school year options
+    $school_years = array();
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
+
+    // Close database conn
+    mysqli_close($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -1098,10 +1133,16 @@
             <div class="row">
                 <div class="column">
                     <div class="select-wrapper">
+                    <form id="school_year_form" method="post" action="">
                         <select id="topdown1" name="school-year" class="containers first">
-                            <option value="school-year">2023 - 2024</option>
+                            <?php foreach ($school_years as $start_year => $school_year) : ?>
+                                <?php $selected = (isset($_POST['school-year']) && $_POST['school-year'] == $start_year) || date('Y') == $start_year ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $start_year; ?>" <?php echo $selected; ?>><?php echo $school_year; ?></option>
+                            <?php endforeach; ?>
                             <option value="new-option">Add School Year</option>
                         </select>
+                    </form>
+
                     </div>
                     <div class="third-column">
                     <div class="search-box">
@@ -1433,6 +1474,18 @@
 
     // Add event listener to the search input
     document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
+<script>
+    document.getElementById('topdown1').addEventListener('change', function() {
+        if (this.value !== "new-option") {
+            document.getElementById('school_year_form').submit();
+        }
+    });
+
+    // After form submission, re-select the previously selected option
+    <?php if(isset($_POST['school-year']) && $_POST['school-year'] !== "new-option"): ?>
+        document.getElementById('topdown1').value = "<?php echo $_POST['school-year']; ?>";
+    <?php endif; ?>
 </script>
 </body>
 </html>
