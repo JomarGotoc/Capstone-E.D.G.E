@@ -1,54 +1,54 @@
 <?php
-include('../../database.php');
+    include('../../database.php');
 
-if(isset($_POST['submit1'])) {
-    // Retrieve form data
-    $firstname = $_POST['firstname'];
-    $middlename = $_POST['middlename'];
-    $lastname = $_POST['lastname'];
-    $extension = $_POST['extension'];
-    $employment_number = $_POST['employment_number'];
-    $grade = $_POST['grade'];
-    $section = $_POST['section'];
-    $date = date('Y-m-d'); // Current date
-    $school = "Bacayao Sur Elementary School";
-    $activation = "activate";
+    if(isset($_POST['submit1'])) {
+        // Retrieve form data
+        $firstname = $_POST['firstname'];
+        $middlename = $_POST['middlename'];
+        $lastname = $_POST['lastname'];
+        $extension = $_POST['extension'];
+        $employment_number = $_POST['employment_number'];
+        $grade = $_POST['grade'];
+        $section = $_POST['section'];
+        $date = date('Y-m-d'); // Current date
+        $school = "Bacayao Sur Elementary School";
+        $activation = "activate";
+        $year = date('Y');
 
-    // Concatenate full name
-    $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
+        // Concatenate full name
+        $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
 
-    // Generate password
-    $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
+        // Generate password
+        $password = substr($firstname, 0, 3) . substr($lastname, 0, 2) . substr($employment_number, 0, 2);
 
-    // Hash the password
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // Set verified to "no"
-    $verified = "no";
+        // Set verified to "no"
+        $verified = "no";
 
-    // Insert data into the database
-    $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified, activation) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified', '$activation')";
+        // Insert data into the database
+        $query = "INSERT INTO adviser (fullname, employment_number, password, grade, section, school, date, verified, activation, year) VALUES ('$fullname', '$employment_number', '$hashed_password', '$grade', '$section', '$school','$date', '$verified', '$activation', '$year')";
 
-    $result = mysqli_query($conn, $query);
+        $result = mysqli_query($conn, $query);
 
-    // Create PHP file
-    $filename = "../adviser_dashboard/grade_${grade}_section_${section}.php";
-    $template_file = "../adviser_dashboard/template_adviser.php";
+        // Create PHP file
+        $filename = "../adviser_dashboard/grade_${grade}_section_${section}.php";
+        $template_file = "../adviser_dashboard/template_adviser.php";
 
-    // Read template content
-    $template_content = file_get_contents($template_file);
+        // Read template content
+        $template_content = file_get_contents($template_file);
 
-    // Replace placeholders with actual values
-    $template_content = str_replace('{FULLNAME}', $fullname, $template_content);
-    $template_content = str_replace('{EMPLOYMENT_NUMBER}', $employment_number, $template_content);
-    $template_content = str_replace('{GRADE}', $grade, $template_content);
-    $template_content = str_replace('{SECTION}', $section, $template_content);
+        // Replace placeholders with actual values
+        $template_content = str_replace('{FULLNAME}', $fullname, $template_content);
+        $template_content = str_replace('{EMPLOYMENT_NUMBER}', $employment_number, $template_content);
+        $template_content = str_replace('{GRADE}', $grade, $template_content);
+        $template_content = str_replace('{SECTION}', $section, $template_content);
 
-    // Write content to new PHP file
-    file_put_contents($filename, $template_content);
-}
+        // Write content to new PHP file
+        file_put_contents($filename, $template_content);
+    }
 ?>
-
 <?php
     include('../../database.php');
     if(isset($_POST['submit2'])) {
@@ -61,9 +61,7 @@ if(isset($_POST['submit1'])) {
         $school = "Bacayao Sur Elementary School";
         $date = date('Y-m-d');
         $activation = "activate";
-        
-
-        // Concatenate full name
+        $year = date('Y');
         $fullname = $firstname . ' ' . $middlename . ' ' . $lastname . ' ' . $extension;
         
         // Generate password
@@ -76,7 +74,7 @@ if(isset($_POST['submit1'])) {
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
+        $query = "INSERT INTO principal (fullname, employment_number, date, password, school, verified, activation, year) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation', '$year')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -93,6 +91,7 @@ if(isset($_POST['submit1'])) {
         $school = "Bacayao Sur Elementary School";
         $date = date('Y-m-d');
         $activation = "activate";
+        $year = date('Y');
         
 
         // Concatenate full name
@@ -108,7 +107,7 @@ if(isset($_POST['submit1'])) {
         $verified = "no";
 
         // Insert data into the database
-        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified, activation) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation')";
+        $query = "INSERT INTO counselor (fullname, employment_number, date, password, school, verified, activation, year) VALUES ('$fullname', '$employment_number', '$date', '$hashed_password','$school', '$verified', '$activation', '$year')";
         
         $result = mysqli_query($conn, $query);
     }
@@ -136,10 +135,11 @@ if(isset($_POST['submit1'])) {
 
     // Array of tables
     $tables = ['adviser', 'principal', 'counselor'];
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Loop through each table
     foreach ($tables as $table) {
-        $sql = "SELECT fullname, employment_number, email, date FROM $table";
+        $sql = "SELECT fullname, employment_number, email, date FROM $table WHERE year = $school_year";
         $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
@@ -235,7 +235,25 @@ if(isset($_POST['submit1'])) {
         // You can add further logic here, like displaying a message to the user after resetting the password
     }
 ?>
+<?php
+    include('../../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
 
+    // Array to store all school year options
+    $school_years = array();
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
+
+    // Close database conn
+    mysqli_close($conn);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1139,7 +1157,7 @@ if(isset($_POST['submit1'])) {
                 <div class='name' onclick="toggleDropdown()"><?php echo $sdoname ?></div>
                     <div class="dropdown-content" id="dropdownContent">
                         <a href="../../login/Login.php">Log Out</a>
-                        <a href="" style="border-top: 1px solid #ddd;">Change Password</a>
+                        <a href="school_admin_change_password.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" style="border-top: 1px solid #ddd;">Change Password</a>
                     </div>
                 </div>
             </div>
@@ -1151,10 +1169,14 @@ if(isset($_POST['submit1'])) {
             <div class="row">
                 <div class="column">
                     <div class="select-wrapper">
+                    <form id="school_year_form" method="post" action="">
                         <select id="topdown1" name="school-year" class="containers first">
-                            <option value="school-year">2023 - 2024</option>
-                            <option value="new-option">Add School Year</option>
+                            <?php foreach ($school_years as $start_year => $school_year) : ?>
+                                <?php $selected = (isset($_POST['school-year']) && $_POST['school-year'] == $start_year) || date('Y') == $start_year ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $start_year; ?>" <?php echo $selected; ?>><?php echo $school_year; ?></option>
+                            <?php endforeach; ?>
                         </select>
+                    </form>
                     </div>
                     <div class="third-column">
                     <div class="search-box">
@@ -1166,8 +1188,8 @@ if(isset($_POST['submit1'])) {
                 <div class="dropdown">
                     <button class="dropbtn">Manage Student's List</button>
                     <div class="dropdown-content">
-                        <a href="../../Bacayao_Sur_Elementary_School/manage_student/School_Admin_Studentlist.php">View Student's List</a>
-                        <a href="../../Bacayao_Sur_Elementary_School/manage_student/Add_Studentlist_import.php">Upload Student's List</a>
+                        <a href="../manage_student/School_Admin_Studentlist.php">View Student's List</a>
+                        <a href="../manage_student/Add_Studentlist_import.php">Upload Student's List</a>
                     </div>
                 </div>
             </div>
@@ -1461,6 +1483,18 @@ if(isset($_POST['submit1'])) {
 
     // Add event listener to the search input
     document.getElementById("searchInput").addEventListener("input", filterTable);
+</script>
+<script>
+    document.getElementById('topdown1').addEventListener('change', function() {
+        if (this.value !== "new-option") {
+            document.getElementById('school_year_form').submit();
+        }
+    });
+
+    // After form submission, re-select the previously selected option
+    <?php if(isset($_POST['school-year']) && $_POST['school-year'] !== "new-option"): ?>
+        document.getElementById('topdown1').value = "<?php echo $_POST['school-year']; ?>";
+    <?php endif; ?>
 </script>
 </body>
 </html>

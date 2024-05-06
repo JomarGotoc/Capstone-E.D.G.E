@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } elseif ($tableName === 'principal') {
                     header("Location: ../$school/monitoring_tracking/Principal_tracking_reports_Q1.php?employment_number=$employmentNumber");
                 } elseif ($tableName === 'school_admin') {
-                    header("Location: ../$school/schooladmin_manage_account/schadmin_manage_accounts.php?employment_number=$employment_number");
+                    header("Location: ../$school/schooladmin_manage_account/schadmin_manage_accounts.php?employment_number=$employmentNumber");
                 }
                 exit();
             } else {
