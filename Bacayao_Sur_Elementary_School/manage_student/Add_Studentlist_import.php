@@ -57,7 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     gender VARCHAR(255) NOT NULL,
                                     section VARCHAR(255) NOT NULL,
                                     grade VARCHAR(255) NOT NULL,
-                                    school VARCHAR(255) NOT NULL
+                                    school VARCHAR(255) NOT NULL,
+                                    year VARCHAR(255) NOT NULL
                                 )";
 
             if ($conn->query($createTableQuery) === FALSE) {
@@ -75,8 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $grade = $grade;
                     $section = $section;
                     $school = "Bacayao Sur Elementary School";
-                    $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section, school)
-                                    VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section', '$school')";
+                    $year = date('Y');
+                    $insertQuery = "INSERT INTO $tableName (lrn, fullname, gender, grade, section, school, year)
+                                    VALUES ('$lrn', '$fullname', '$gender', '$grade', '$section', '$school', '$year')";
 
                     if ($conn->query($insertQuery) === FALSE) {
                         $errorMsg1 = "Error inserting data: " . $conn->error;

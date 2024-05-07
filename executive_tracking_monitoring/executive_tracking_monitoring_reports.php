@@ -38,7 +38,6 @@
     $westcentral1students = 0;
     $westcentral2students = 0;
 
-    // Query to get table names containing the word "grade"
     $table_query = "SELECT table_name
                 FROM information_schema.tables
                 WHERE table_schema = '$database'
@@ -50,12 +49,12 @@
         // Iterate through each table
         while ($table_row = $table_result->fetch_assoc()) {
             $table_name = $table_row["table_name"];
+             $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
             
-            // Query to count LRNs in each table for each school
             // For Sabangan Elementary School
             $lrn_sabangan_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Sabangan Elementary School'";
+                                WHERE school = 'Sabangan Elementary School' AND year = $school_year";
             $lrn_sabangan_result = $conn->query($lrn_sabangan_query);
             if ($lrn_sabangan_result->num_rows > 0) {
                 $lrn_sabangan_row = $lrn_sabangan_result->fetch_assoc();
@@ -65,7 +64,7 @@
             // For Bacayao Elementary School
             $lrn_bacayao_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Bacayao Sur Elementary School'";
+                                WHERE school = 'Bacayao Sur Elementary School' AND year = $school_year";
             $lrn_bacayao_result = $conn->query($lrn_bacayao_query);
             if ($lrn_bacayao_result->num_rows > 0) {
                 $lrn_bacayao_row = $lrn_bacayao_result->fetch_assoc();
@@ -75,7 +74,7 @@
             // For Bliss Elementary School
             $lrn_bliss_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Bliss Elementary School'";
+                                WHERE school = 'Bliss Elementary School' AND year = $school_year";
             $lrn_bliss_result = $conn->query($lrn_bliss_query);
             if ($lrn_bliss_result->num_rows > 0) {
                 $lrn_bliss_row = $lrn_bliss_result->fetch_assoc();
@@ -85,7 +84,7 @@
             // For Bolosan Elementary School
             $lrn_bolosan_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Bolosan Elementary School'";
+                                WHERE school = 'Bolosan Elementary School' AND year = $school_year";
             $lrn_bolosan_result = $conn->query($lrn_bolosan_query);
             if ($lrn_bolosan_result->num_rows > 0) {
                 $lrn_bolosan_row = $lrn_bolosan_result->fetch_assoc();
@@ -95,7 +94,7 @@
             // For Bonuan Boquig Elementary School
             $lrn_bonuan_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Bonuan Boquig Elementary School'";
+                                WHERE school = 'Bonuan Boquig Elementary School' AND year = $school_year";
             $lrn_bonuan_result = $conn->query($lrn_bonuan_query);
             if ($lrn_bonuan_result->num_rows > 0) {
                 $lrn_bonuan_row = $lrn_bonuan_result->fetch_assoc();
@@ -105,7 +104,7 @@
             // For Calmay Elementary School
             $lrn_calmay_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Calmay Elementary School'";
+                                WHERE school = 'Calmay Elementary School' AND year = $school_year";
             $lrn_calmay_result = $conn->query($lrn_calmay_query);
             if ($lrn_calmay_result->num_rows > 0) {
                 $lrn_calmay_row = $lrn_calmay_result->fetch_assoc();
@@ -115,7 +114,7 @@
             // For Carael Elementary School
             $lrn_carael_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Carael Elementary School'";
+                                WHERE school = 'Carael Elementary School' AND year = $school_year";
             $lrn_carael_result = $conn->query($lrn_carael_query);
             if ($lrn_carael_result->num_rows > 0) {
                 $lrn_carael_row = $lrn_carael_result->fetch_assoc();
@@ -125,7 +124,7 @@
             // For Caranglaan Elementary School
             $lrn_caranglaan_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'Caranglaan Elementary School'";
+                                    WHERE school = 'Caranglaan Elementary School' AND year = $school_year";
             $lrn_caranglaan_result = $conn->query($lrn_caranglaan_query);
             if ($lrn_caranglaan_result->num_rows > 0) {
                 $lrn_caranglaan_row = $lrn_caranglaan_result->fetch_assoc();
@@ -135,7 +134,7 @@
             // For East Central Integrated School
             $lrn_eastcentral_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'East Central Integrated School'";
+                                    WHERE school = 'East Central Integrated School' AND year = $school_year";
             $lrn_eastcentral_result = $conn->query($lrn_eastcentral_query);
             if ($lrn_eastcentral_result->num_rows > 0) {
                 $lrn_eastcentral_row = $lrn_eastcentral_result->fetch_assoc();
@@ -145,7 +144,7 @@
             // For Federico N. Ceralde School Integrated School
             $lrn_ceralde_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Federico N. Ceralde School Integrated School'";
+                                WHERE school = 'Federico N. Ceralde School Integrated School' AND year = $school_year";
             $lrn_ceralde_result = $conn->query($lrn_ceralde_query);
             if ($lrn_ceralde_result->num_rows > 0) {
                 $lrn_ceralde_row = $lrn_ceralde_result->fetch_assoc();
@@ -155,7 +154,7 @@
             // For Gen. Gregorio Del Pilar Elementary School
             $lrn_gregorio_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Gen. Gregorio Del Pilar Elementary School'";
+                                WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND year = $school_year";
             $lrn_gregorio_result = $conn->query($lrn_gregorio_query);
             if ($lrn_gregorio_result->num_rows > 0) {
                 $lrn_gregorio_row = $lrn_gregorio_result->fetch_assoc();
@@ -165,7 +164,7 @@
             // For Juan L. Siapno Elementary School
             $lrn_siapno_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Juan L. Siapno Elementary School'";
+                                WHERE school = 'Juan L. Siapno Elementary School' AND year = $school_year";
             $lrn_siapno_result = $conn->query($lrn_siapno_query);
             if ($lrn_siapno_result->num_rows > 0) {
                 $lrn_siapno_row = $lrn_siapno_result->fetch_assoc();
@@ -175,7 +174,7 @@
             // For Juan P. Guadiz Elementary School
             $lrn_guadiz_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Juan P. Guadiz Elementary School'";
+                                WHERE school = 'Juan P. Guadiz Elementary School' AND year = $school_year";
             $lrn_guadiz_result = $conn->query($lrn_guadiz_query);
             if ($lrn_guadiz_result->num_rows > 0) {
                 $lrn_guadiz_row = $lrn_guadiz_result->fetch_assoc();
@@ -185,7 +184,7 @@
             // For Lasip Grande Elementary School
             $lrn_lasip_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Lasip Grande Elementary School'";
+                                WHERE school = 'Lasip Grande Elementary School' AND year = $school_year";
             $lrn_lasip_result = $conn->query($lrn_lasip_query);
             if ($lrn_lasip_result->num_rows > 0) {
                 $lrn_lasip_row = $lrn_lasip_result->fetch_assoc();
@@ -195,7 +194,7 @@
             // For Leon-Francisco Elementary School
             $lrn_leon_query = "SELECT COUNT(*) AS lrn_count
                             FROM $table_name
-                            WHERE school = 'Leon-Francisco Elementary School'";
+                            WHERE school = 'Leon-Francisco Elementary School' AND year = $school_year";
             $lrn_leon_result = $conn->query($lrn_leon_query);
             if ($lrn_leon_result->num_rows > 0) {
                 $lrn_leon_row = $lrn_leon_result->fetch_assoc();
@@ -205,7 +204,7 @@
             // For Lomboy Elementary School
             $lrn_lomboy_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Lomboy Elementary School'";
+                                WHERE school = 'Lomboy Elementary School' AND year = $school_year";
             $lrn_lomboy_result = $conn->query($lrn_lomboy_query);
             if ($lrn_lomboy_result->num_rows > 0) {
                 $lrn_lomboy_row = $lrn_lomboy_result->fetch_assoc();
@@ -215,7 +214,7 @@
             // For Lucao Elementary School
             $lrn_lucao_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Lucao Elementary School'";
+                                WHERE school = 'Lucao Elementary School' AND year = $school_year";
             $lrn_lucao_result = $conn->query($lrn_lucao_query);
             if ($lrn_lucao_result->num_rows > 0) {
                 $lrn_lucao_row = $lrn_lucao_result->fetch_assoc();
@@ -225,7 +224,7 @@
             // For Malued Sur Elementary School
             $lrn_malued_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Malued Sur Elementary School'";
+                                WHERE school = 'Malued Sur Elementary School' AND year = $school_year";
             $lrn_malued_result = $conn->query($lrn_malued_query);
             if ($lrn_malued_result->num_rows > 0) {
                 $lrn_malued_row = $lrn_malued_result->fetch_assoc();
@@ -235,7 +234,7 @@
             // For Mamalingling Elementary School
             $lrn_mamalingling_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'Mamalingling Elementary School'";
+                                    WHERE school = 'Mamalingling Elementary School' AND year = $school_year";
             $lrn_mamalingling_result = $conn->query($lrn_mamalingling_query);
             if ($lrn_mamalingling_result->num_rows > 0) {
                 $lrn_mamalingling_row = $lrn_mamalingling_result->fetch_assoc();
@@ -245,7 +244,7 @@
             // For Mangin-Tebeng Elementary School
             $lrn_mangintebeng_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'Mangin-Tebeng Elementary School'";
+                                    WHERE school = 'Mangin-Tebeng Elementary School' AND year = $school_year";
             $lrn_mangintebeng_result = $conn->query($lrn_mangintebeng_query);
             if ($lrn_mangintebeng_result->num_rows > 0) {
                 $lrn_mangintebeng_row = $lrn_mangintebeng_result->fetch_assoc();
@@ -255,7 +254,7 @@
             // For North Central Elementary School
             $lrn_northcentral_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'North Central Elementary School'";
+                                    WHERE school = 'North Central Elementary School' AND year = $school_year";
             $lrn_northcentral_result = $conn->query($lrn_northcentral_query);
             if ($lrn_northcentral_result->num_rows > 0) {
                 $lrn_northcentral_row = $lrn_northcentral_result->fetch_assoc();
@@ -265,7 +264,7 @@
             // For Pantal Elementary School
             $lrn_pantal_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Pantal Elementary School'";
+                                WHERE school = 'Pantal Elementary School' AND year = $school_year";
             $lrn_pantal_result = $conn->query($lrn_pantal_query);
             if ($lrn_pantal_result->num_rows > 0) {
                 $lrn_pantal_row = $lrn_pantal_result->fetch_assoc();
@@ -275,7 +274,7 @@
             // For Pascuala G. Villamil Elementary School
             $lrn_villamil_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Pascuala G. Villamil Elementary School'";
+                                WHERE school = 'Pascuala G. Villamil Elementary School' AND year = $school_year";
             $lrn_villamil_result = $conn->query($lrn_villamil_query);
             if ($lrn_villamil_result->num_rows > 0) {
                 $lrn_villamil_row = $lrn_villamil_result->fetch_assoc();
@@ -285,7 +284,7 @@
             // For Pogo-Lasip Elementary School
             $lrn_pogolasip_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'Pogo-Lasip Elementary School'";
+                                    WHERE school = 'Pogo-Lasip Elementary School' AND year = $school_year";
             $lrn_pogolasip_result = $conn->query($lrn_pogolasip_query);
             if ($lrn_pogolasip_result->num_rows > 0) {
                 $lrn_pogolasip_row = $lrn_pogolasip_result->fetch_assoc();
@@ -295,7 +294,7 @@
             // For Pugaro Integrated School
             $lrn_pugaro_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Pugaro Integrated School'";
+                                WHERE school = 'Pugaro Integrated School' AND year = $school_year";
             $lrn_pugaro_result = $conn->query($lrn_pugaro_query);
             if ($lrn_pugaro_result->num_rows > 0) {
                 $lrn_pugaro_row = $lrn_pugaro_result->fetch_assoc();
@@ -305,7 +304,7 @@
             // For Sabangan Elementary School
             $lrn_sabangan_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Sabangan Elementary School'";
+                                WHERE school = 'Sabangan Elementary School' AND year = $school_year";
             $lrn_sabangan_result = $conn->query($lrn_sabangan_query);
             if ($lrn_sabangan_result->num_rows > 0) {
                 $lrn_sabangan_row = $lrn_sabangan_result->fetch_assoc();
@@ -315,7 +314,7 @@
             // For Salapingao Elementary School
             $lrn_salapingao_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'Salapingao Elementary School'";
+                                    WHERE school = 'Salapingao Elementary School' AND year = $school_year";
             $lrn_salapingao_result = $conn->query($lrn_salapingao_query);
             if ($lrn_salapingao_result->num_rows > 0) {
                 $lrn_salapingao_row = $lrn_salapingao_result->fetch_assoc();
@@ -325,7 +324,7 @@
             // For Salisay Elementary School
             $lrn_salisay_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Salisay Elementary School'";
+                                WHERE school = 'Salisay Elementary School' AND year = $school_year";
             $lrn_salisay_result = $conn->query($lrn_salisay_query);
             if ($lrn_salisay_result->num_rows > 0) {
                 $lrn_salisay_row = $lrn_salisay_result->fetch_assoc();
@@ -335,7 +334,7 @@
             // For Suit Elementary School
             $lrn_suit_query = "SELECT COUNT(*) AS lrn_count
                             FROM $table_name
-                            WHERE school = 'Suit Elementary School'";
+                            WHERE school = 'Suit Elementary School' AND year = $school_year";
             $lrn_suit_result = $conn->query($lrn_suit_query);
             if ($lrn_suit_result->num_rows > 0) {
                 $lrn_suit_row = $lrn_suit_result->fetch_assoc();
@@ -345,7 +344,7 @@
             // For T. Ayson Rosario Elementary School
             $lrn_rosario_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'T. Ayson Rosario Elementary School'";
+                                WHERE school = 'T. Ayson Rosario Elementary School' AND year = $school_year";
             $lrn_rosario_result = $conn->query($lrn_rosario_query);
             if ($lrn_rosario_result->num_rows > 0) {
                 $lrn_rosario_row = $lrn_rosario_result->fetch_assoc();
@@ -355,7 +354,7 @@
             // For Tambac Elementary School
             $lrn_tambac_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Tambac Elementary School'";
+                                WHERE school = 'Tambac Elementary School' AND year = $school_year";
             $lrn_tambac_result = $conn->query($lrn_tambac_query);
             if ($lrn_tambac_result->num_rows > 0) {
                 $lrn_tambac_row = $lrn_tambac_result->fetch_assoc();
@@ -365,7 +364,7 @@
             // For Tebeng Elementary School
             $lrn_tebeng_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Tebeng Elementary School'";
+                                WHERE school = 'Tebeng Elementary School' AND year = $school_year";
             $lrn_tebeng_result = $conn->query($lrn_tebeng_query);
             if ($lrn_tebeng_result->num_rows > 0) {
                 $lrn_tebeng_row = $lrn_tebeng_result->fetch_assoc();
@@ -375,7 +374,7 @@
             // For Victoria Q. Zarate Elementary School
             $lrn_zarate_query = "SELECT COUNT(*) AS lrn_count
                                 FROM $table_name
-                                WHERE school = 'Victoria Q. Zarate Elementary School'";
+                                WHERE school = 'Victoria Q. Zarate Elementary School' AND year = $school_year";
             $lrn_zarate_result = $conn->query($lrn_zarate_query);
             if ($lrn_zarate_result->num_rows > 0) {
                 $lrn_zarate_row = $lrn_zarate_result->fetch_assoc();
@@ -383,7 +382,7 @@
             }
             $lrn_westcentral1_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'West Central I Elementary School'";
+                                    WHERE school = 'West Central I Elementary School' AND year = $school_year";
             $lrn_westcentral1_result = $conn->query($lrn_westcentral1_query);
             if ($lrn_westcentral1_result->num_rows > 0) {
                 $lrn_westcentral1_row = $lrn_westcentral1_result->fetch_assoc();
@@ -391,7 +390,7 @@
             }
             $lrn_westcentral2_query = "SELECT COUNT(*) AS lrn_count
                                     FROM $table_name
-                                    WHERE school = 'West Central II Elementary School'";
+                                    WHERE school = 'West Central II Elementary School' AND year = $school_year";
             $lrn_westcentral2_result = $conn->query($lrn_westcentral2_query);
             if ($lrn_westcentral2_result->num_rows > 0) {
                 $lrn_westcentral2_row = $lrn_westcentral2_result->fetch_assoc();
@@ -406,6 +405,7 @@
 
     // Set the default quarter to 1 if it's not already set in $_POST
     $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Define each school individually
     $bacayaoSchool = "Bacayao Sur Elementary School";
@@ -444,40 +444,40 @@
     $westCentral2School = "West Central II Elementary School";
 
     // SQL queries to count LRN for each school and selected quarter
-    $sqlBacayaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter";
-    $sqlBlissEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$blissSchool' AND quarter = $selectedQuarter";
-    $sqlBolosanEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter";
-    $sqlBonuanBoquigEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter";
-    $sqlCalmayEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$calmaySchool' AND quarter = $selectedQuarter";
-    $sqlCaraelEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$caraelSchool' AND quarter = $selectedQuarter";
-    $sqlCaranglaanEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter";
-    $sqlEastCentralEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter";
-    $sqlFedericoCeraldeEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter";
-    $sqlGregorioPilarEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter";
-    $sqlJuanSiapnoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter";
-    $sqlJuanGuadizEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter";
-    $sqlLasipGrandeEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter";
-    $sqlLeonFranciscoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter";
-    $sqlLomboyEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lomboySchool' AND quarter = $selectedQuarter";
-    $sqlLucaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter";
-    $sqlMaluedSurEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter";
-    $sqlMamalinglingEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter";
-    $sqlManginTebengEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter";
-    $sqlNorthCentralEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter";
-    $sqlPantalEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pantalSchool' AND quarter = $selectedQuarter";
-    $sqlPascualaVillamilEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter";
-    $sqlPogoLasipEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter";
-    $sqlPugaroIntegratedEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter";
-    $sqlSabanganEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter";
-    $sqlSalapingaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter";
-    $sqlSalisayEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$salisaySchool' AND quarter = $selectedQuarter";
-    $sqlSuitEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$suitSchool' AND quarter = $selectedQuarter";
-    $sqlAysonRosarioEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter";
-    $sqlTambacEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$tambacSchool' AND quarter = $selectedQuarter";
-    $sqlTebengEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$tebengSchool' AND quarter = $selectedQuarter";
-    $sqlZarateEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$zarateSchool' AND quarter = $selectedQuarter";
-    $sqlWestCentral1English = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$westCentral1School' AND quarter = $selectedQuarter";
-    $sqlWestCentral2English = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$westCentral2School' AND quarter = $selectedQuarter";
+    $sqlBacayaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBlissEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$blissSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBolosanEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBonuanBoquigEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCalmayEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$calmaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaraelEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$caraelSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaranglaanEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlEastCentralEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlFedericoCeraldeEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlGregorioPilarEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanSiapnoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanGuadizEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLasipGrandeEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLeonFranciscoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLomboyEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lomboySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLucaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMaluedSurEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMamalinglingEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlManginTebengEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlNorthCentralEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPantalEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pantalSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPascualaVillamilEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPogoLasipEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPugaroIntegratedEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSabanganEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalapingaoEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalisayEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$salisaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSuitEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$suitSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlAysonRosarioEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTambacEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$tambacSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTebengEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$tebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlZarateEnglish = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$zarateSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral1English = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$westCentral1School' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral2English = "SELECT COUNT(lrn) AS lrn_count FROM academic_english WHERE school = '$westCentral2School' AND quarter = $selectedQuarter AND year = $school_year";
 
     // Execute queries
     $resultBacayaoEnglish = $conn->query($sqlBacayaoEnglish);
@@ -597,6 +597,7 @@
 
     // Set the default quarter to 1 if it's not already set in $_POST
     $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Define each school individually
     $bacayaoSchool = "Bacayao Sur Elementary School";
@@ -635,40 +636,40 @@
     $westCentral2School = "West Central II Elementary School";
 
     // SQL queries to count LRN for each school and selected quarter
-    $sqlBacayaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter";
-    $sqlBlissFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$blissSchool' AND quarter = $selectedQuarter";
-    $sqlBolosanFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter";
-    $sqlBonuanBoquigFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter";
-    $sqlCalmayFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$calmaySchool' AND quarter = $selectedQuarter";
-    $sqlCaraelFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$caraelSchool' AND quarter = $selectedQuarter";
-    $sqlCaranglaanFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter";
-    $sqlEastCentralFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter";
-    $sqlFedericoCeraldeFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter";
-    $sqlGregorioPilarFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter";
-    $sqlJuanSiapnoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter";
-    $sqlJuanGuadizFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter";
-    $sqlLasipGrandeFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter";
-    $sqlLeonFranciscoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter";
-    $sqlLomboyFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lomboySchool' AND quarter = $selectedQuarter";
-    $sqlLucaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter";
-    $sqlMaluedSurFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter";
-    $sqlMamalinglingFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter";
-    $sqlManginTebengFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter";
-    $sqlNorthCentralFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter";
-    $sqlPantalFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pantalSchool' AND quarter = $selectedQuarter";
-    $sqlPascualaVillamilFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter";
-    $sqlPogoLasipFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter";
-    $sqlPugaroIntegratedFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter";
-    $sqlSabanganFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter";
-    $sqlSalapingaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter";
-    $sqlSalisayFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$salisaySchool' AND quarter = $selectedQuarter";
-    $sqlSuitFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$suitSchool' AND quarter = $selectedQuarter";
-    $sqlAysonRosarioFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter";
-    $sqlTambacFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$tambacSchool' AND quarter = $selectedQuarter";
-    $sqlTebengFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$tebengSchool' AND quarter = $selectedQuarter";
-    $sqlZarateFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$zarateSchool' AND quarter = $selectedQuarter";
-    $sqlWestCentral1Filipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$westCentral1School' AND quarter = $selectedQuarter";
-    $sqlWestCentral2Filipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$westCentral2School' AND quarter = $selectedQuarter";
+    $sqlBacayaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBlissFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$blissSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBolosanFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBonuanBoquigFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCalmayFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$calmaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaraelFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$caraelSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaranglaanFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlEastCentralFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlFedericoCeraldeFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlGregorioPilarFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanSiapnoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanGuadizFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLasipGrandeFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLeonFranciscoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLomboyFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lomboySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLucaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMaluedSurFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMamalinglingFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlManginTebengFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlNorthCentralFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPantalFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pantalSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPascualaVillamilFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPogoLasipFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPugaroIntegratedFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSabanganFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalapingaoFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalisayFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$salisaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSuitFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$suitSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlAysonRosarioFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTambacFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$tambacSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTebengFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$tebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlZarateFilipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$zarateSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral1Filipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$westCentral1School' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral2Filipino = "SELECT COUNT(lrn) AS lrn_count FROM academic_filipino WHERE school = '$westCentral2School' AND quarter = $selectedQuarter AND year = $school_year";
 
     // Execute queries
     $resultBacayaoFilipino = $conn->query($sqlBacayaoFilipino);
@@ -787,6 +788,7 @@
 
     // Set the default quarter to 1 if it's not already set in $_POST
     $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Define each school individually
     $bacayaoSchool = "Bacayao Sur Elementary School";
@@ -825,40 +827,40 @@
     $westCentral2School = "West Central II Elementary School";
 
     // SQL queries to count LRN for each school and selected quarter
-    $sqlBacayaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter";
-    $sqlBlissNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$blissSchool' AND quarter = $selectedQuarter";
-    $sqlBolosanNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter";
-    $sqlBonuanBoquigNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter";
-    $sqlCalmayNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$calmaySchool' AND quarter = $selectedQuarter";
-    $sqlCaraelNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$caraelSchool' AND quarter = $selectedQuarter";
-    $sqlCaranglaanNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter";
-    $sqlEastCentralNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter";
-    $sqlFedericoCeraldeNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter";
-    $sqlGregorioPilarNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter";
-    $sqlJuanSiapnoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter";
-    $sqlJuanGuadizNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter";
-    $sqlLasipGrandeNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter";
-    $sqlLeonFranciscoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter";
-    $sqlLomboyNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lomboySchool' AND quarter = $selectedQuarter";
-    $sqlLucaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter";
-    $sqlMaluedSurNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter";
-    $sqlMamalinglingNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter";
-    $sqlManginTebengNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter";
-    $sqlNorthCentralNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter";
-    $sqlPantalNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pantalSchool' AND quarter = $selectedQuarter";
-    $sqlPascualaVillamilNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter";
-    $sqlPogoLasipNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter";
-    $sqlPugaroIntegratedNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter";
-    $sqlSabanganNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter";
-    $sqlSalapingaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter";
-    $sqlSalisayNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$salisaySchool' AND quarter = $selectedQuarter";
-    $sqlSuitNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$suitSchool' AND quarter = $selectedQuarter";
-    $sqlAysonRosarioNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter";
-    $sqlTambacNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$tambacSchool' AND quarter = $selectedQuarter";
-    $sqlTebengNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$tebengSchool' AND quarter = $selectedQuarter";
-    $sqlZarateNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$zarateSchool' AND quarter = $selectedQuarter";
-    $sqlWestCentral1Numeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$westCentral1School' AND quarter = $selectedQuarter";
-    $sqlWestCentral2Numeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$westCentral2School' AND quarter = $selectedQuarter";
+    $sqlBacayaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBlissNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$blissSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBolosanNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBonuanBoquigNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCalmayNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$calmaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaraelNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$caraelSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaranglaanNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlEastCentralNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlFedericoCeraldeNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlGregorioPilarNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanSiapnoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanGuadizNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLasipGrandeNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLeonFranciscoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLomboyNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lomboySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLucaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMaluedSurNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMamalinglingNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlManginTebengNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlNorthCentralNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPantalNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pantalSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPascualaVillamilNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPogoLasipNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPugaroIntegratedNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSabanganNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalapingaoNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalisayNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$salisaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSuitNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$suitSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlAysonRosarioNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTambacNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$tambacSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTebengNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$tebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlZarateNumeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$zarateSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral1Numeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$westCentral1School' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral2Numeracy = "SELECT COUNT(lrn) AS lrn_count FROM academic_numeracy WHERE school = '$westCentral2School' AND quarter = $selectedQuarter AND year = $school_year";
 
     // Execute queries
     $resultBacayaoNumeracy = $conn->query($sqlBacayaoNumeracy);
@@ -977,6 +979,7 @@
 
     // Set the default quarter to 1 if it's not already set in $_POST
     $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Define each school individually
     $bacayaoSchool = "Bacayao Sur Elementary School";
@@ -1015,40 +1018,40 @@
     $westCentral2School = "West Central II Elementary School";
 
     // SQL queries to count LRN for each school and selected quarter
-    $sqlBacayaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter";
-    $sqlBlissBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$blissSchool' AND quarter = $selectedQuarter";
-    $sqlBolosanBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter";
-    $sqlBonuanBoquigBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter";
-    $sqlCalmayBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$calmaySchool' AND quarter = $selectedQuarter";
-    $sqlCaraelBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$caraelSchool' AND quarter = $selectedQuarter";
-    $sqlCaranglaanBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter";
-    $sqlEastCentralBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter";
-    $sqlFedericoCeraldeBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter";
-    $sqlGregorioPilarBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter";
-    $sqlJuanSiapnoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter";
-    $sqlJuanGuadizBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter";
-    $sqlLasipGrandeBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter";
-    $sqlLeonFranciscoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter";
-    $sqlLomboyBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lomboySchool' AND quarter = $selectedQuarter";
-    $sqlLucaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter";
-    $sqlMaluedSurBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter";
-    $sqlMamalinglingBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter";
-    $sqlManginTebengBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter";
-    $sqlNorthCentralBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter";
-    $sqlPantalBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pantalSchool' AND quarter = $selectedQuarter";
-    $sqlPascualaVillamilBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter";
-    $sqlPogoLasipBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter";
-    $sqlPugaroIntegratedBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter";
-    $sqlSabanganBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter";
-    $sqlSalapingaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter";
-    $sqlSalisayBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$salisaySchool' AND quarter = $selectedQuarter";
-    $sqlSuitBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$suitSchool' AND quarter = $selectedQuarter";
-    $sqlAysonRosarioBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter";
-    $sqlTambacBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$tambacSchool' AND quarter = $selectedQuarter";
-    $sqlTebengBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$tebengSchool' AND quarter = $selectedQuarter";
-    $sqlZarateBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$zarateSchool' AND quarter = $selectedQuarter";
-    $sqlWestCentral1Behavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$westCentral1School' AND quarter = $selectedQuarter";
-    $sqlWestCentral2Behavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$westCentral2School' AND quarter = $selectedQuarter";
+    $sqlBacayaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bacayaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBlissBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$blissSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBolosanBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bolosanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlBonuanBoquigBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$bonuanBoquigSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCalmayBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$calmaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaraelBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$caraelSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlCaranglaanBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$caranglaanSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlEastCentralBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$eastCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlFedericoCeraldeBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$federicoCeraldeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlGregorioPilarBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$gregorioPilarSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanSiapnoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$juanSiapnoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlJuanGuadizBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$juanGuadizSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLasipGrandeBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lasipGrandeSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLeonFranciscoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$leonFranciscoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLomboyBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lomboySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlLucaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$lucaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMaluedSurBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$maluedSurSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlMamalinglingBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$mamalinglingSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlManginTebengBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$manginTebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlNorthCentralBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$northCentralSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPantalBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pantalSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPascualaVillamilBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pascualaVillamilSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPogoLasipBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pogoLasipSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlPugaroIntegratedBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$pugaroIntegratedSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSabanganBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$sabanganSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalapingaoBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$salapingaoSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSalisayBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$salisaySchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlSuitBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$suitSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlAysonRosarioBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$aysonRosarioSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTambacBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$tambacSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlTebengBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$tebengSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlZarateBehavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$zarateSchool' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral1Behavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$westCentral1School' AND quarter = $selectedQuarter AND year = $school_year";
+    $sqlWestCentral2Behavioral = "SELECT COUNT(lrn) AS lrn_count FROM behavioral WHERE school = '$westCentral2School' AND quarter = $selectedQuarter AND year = $school_year";
 
     // Execute queries
     $resultBacayaoBehavioral = $conn->query($sqlBacayaoBehavioral);
@@ -1165,6 +1168,7 @@
 <?php
     include('../database.php');
     $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // Initialize total LRN counts for each school
     $bacayaototalpar = 0;
@@ -1203,13 +1207,13 @@
     $westcentralIItotalpar = 0;
         // Query to count LRNs for Bacayao Sur Elementary School
         $sql_bacayao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_bacayao = $conn->query($sql_bacayao);
         $row_bacayao = $result_bacayao->fetch_assoc();
@@ -1217,13 +1221,13 @@
 
         // Query to count LRNs for Bliss Elementary School
         $sql_bliss = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Bliss Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_bliss = $conn->query($sql_bliss);
         $row_bliss = $result_bliss->fetch_assoc();
@@ -1231,13 +1235,13 @@
 
         // Query to count LRNs for Bolosan Elementary School
         $sql_bolosan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Bolosan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_bolosan = $conn->query($sql_bolosan);
         $row_bolosan = $result_bolosan->fetch_assoc();
@@ -1245,13 +1249,13 @@
 
         // Query to count LRNs for Bonuan Boquig Elementary School
         $sql_bonuan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Bonuan Boquig Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_bonuan = $conn->query($sql_bonuan);
         $row_bonuan = $result_bonuan->fetch_assoc();
@@ -1259,403 +1263,403 @@
 
         // Query to count LRNs for Calmay Elementary School
         $sql_calmay = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Calmay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_calmay = $conn->query($sql_calmay);
         $row_calmay = $result_calmay->fetch_assoc();
         $calmaytotalpar += $row_calmay['total_count'];
 
         $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_carael = $conn->query($sql_carael);
         $row_carael = $result_carael->fetch_assoc();
         $caraeltotalpar += $row_carael['total_count'];
 
         $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_carael = $conn->query($sql_carael);
         $row_carael = $result_carael->fetch_assoc();
         $caraeltotalpar += $row_carael['total_count'];
 
         $sql_carael = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Carael Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_carael = $conn->query($sql_carael);
         $row_carael = $result_carael->fetch_assoc();
         $caraeltotalpar += $row_carael['total_count'];
 
         $sql_eastcentral = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'East Central Integrated School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_eastcentral = $conn->query($sql_eastcentral);
         $row_eastcentral = $result_eastcentral->fetch_assoc();
         $eastcentraltotalpar += $row_eastcentral['total_count'];
 
         $sql_federicoceralde = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Federico N. Ceralde School Integrated School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_federicoceralde = $conn->query($sql_federicoceralde);
         $row_federicoceralde = $result_federicoceralde->fetch_assoc();
         $federicototalpar += $row_federicoceralde['total_count'];
 
         $sql_gregoriodelpilar = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Gen. Gregorio Del Pilar Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_gregoriodelpilar = $conn->query($sql_gregoriodelpilar);
         $row_gregoriodelpilar = $result_gregoriodelpilar->fetch_assoc();
         $gregoriodelpilartotalpar += $row_gregoriodelpilar['total_count'];
 
         $sql_juansiapno = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Juan L. Siapno Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_juansiapno = $conn->query($sql_juansiapno);
         $row_juansiapno = $result_juansiapno->fetch_assoc();
         $juanltotalpar += $row_juansiapno['total_count'];
 
         $sql_juanguadiz = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Juan P. Guadiz Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_juanguadiz = $conn->query($sql_juanguadiz);
         $row_juanguadiz = $result_juanguadiz->fetch_assoc();
         $juanptotalpar += $row_juanguadiz['total_count'];
 
         $sql_lasipgrande = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Lasip Grande Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_lasipgrande = $conn->query($sql_lasipgrande);
         $row_lasipgrande = $result_lasipgrande->fetch_assoc();
         $lasiptotalpar += $row_lasipgrande['total_count'];
 
         $sql_leon = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Leon-Francisco Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_leon = $conn->query($sql_leon);
         $row_leon = $result_leon->fetch_assoc();
         $leonfranciscototalpar += $row_leon['total_count'];
 
         $sql_lomboy = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Lomboy Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_lomboy = $conn->query($sql_lomboy);
         $row_lomboy = $result_lomboy->fetch_assoc();
         $lomboytotalpar += $row_lomboy['total_count'];
 
         $sql_lucao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Lucao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_lucao = $conn->query($sql_lucao);
         $row_lucao = $result_lucao->fetch_assoc();
         $lucaototalpar += $row_lucao['total_count'];
 
         $sql_malued = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Malued Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_malued = $conn->query($sql_malued);
         $row_malued = $result_malued->fetch_assoc();
         $maluedsurtotalpar += $row_malued['total_count'];
 
         $sql_mamalingling = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Mamalingling Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_mamalingling = $conn->query($sql_mamalingling);
         $row_mamalingling = $result_mamalingling->fetch_assoc();
         $mamalinglingtotalpar += $row_mamalingling['total_count'];
 
         $sql_mangin = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Mangin-Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_mangin = $conn->query($sql_mangin);
         $row_mangin = $result_mangin->fetch_assoc();
         $mangintebengtotalpar += $row_mangin['total_count'];
 
         $sql_northcentral = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'North Central Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_northcentral = $conn->query($sql_northcentral);
         $row_northcentral = $result_northcentral->fetch_assoc();
         $northcentraltotalpar += $row_northcentral['total_count'];
 
         $sql_pantal = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Pantal Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_pantal = $conn->query($sql_pantal);
         $row_pantal = $result_pantal->fetch_assoc();
         $pantaltotalpar += $row_pantal['total_count'];
 
         $sql_pascuala = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Pascuala G. Villamil Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_pascuala = $conn->query($sql_pascuala);
         $row_pascuala = $result_pascuala->fetch_assoc();
         $pascualatotalpar += $row_pascuala['total_count'];
 
         $sql_pogo = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Pogo-Lasip Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_pogo = $conn->query($sql_pogo);
         $row_pogo = $result_pogo->fetch_assoc();
         $pogolasiptotalpar += $row_pogo['total_count'];
 
         $sql_pugaro = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Pugaro Integrated School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_pugaro = $conn->query($sql_pugaro);
         $row_pugaro = $result_pugaro->fetch_assoc();
         $pugarototalpar += $row_pugaro['total_count'];
 
         $sql_sabangan = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Sabangan Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_sabangan = $conn->query($sql_sabangan);
         $row_sabangan = $result_sabangan->fetch_assoc();
         $sabangantotalpar += $row_sabangan['total_count'];
 
         $sql_salapingao = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Salapingao Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_salapingao = $conn->query($sql_salapingao);
         $row_salapingao = $result_salapingao->fetch_assoc();
         $salapingaototalpar += $row_salapingao['total_count'];
 
         $sql_salisay = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Salisay Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_salisay = $conn->query($sql_salisay);
         $row_salisay = $result_salisay->fetch_assoc();
         $salisaytotalpar += $row_salisay['total_count'];
 
         $sql_suit = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Suit Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_suit = $conn->query($sql_suit);
         $row_suit = $result_suit->fetch_assoc();
         $suittotalpar += $row_suit['total_count'];
 
         $sql_ayson = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'T. Ayson Rosario Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_ayson = $conn->query($sql_ayson);
         $row_ayson = $result_ayson->fetch_assoc();
         $taysonrosariototalpar += $row_ayson['total_count'];
 
         $sql_tambac = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Tambac Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_tambac = $conn->query($sql_tambac);
         $row_tambac = $result_tambac->fetch_assoc();
         $tambactotalpar += $row_tambac['total_count'];
 
         $sql_tebeng = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Tebeng Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_tebeng = $conn->query($sql_tebeng);
         $row_tebeng = $result_tebeng->fetch_assoc();
         $tebengtotalpar += $row_tebeng['total_count'];
 
         $sql_zarate = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'Victoria Q. Zarate Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_zarate = $conn->query($sql_zarate);
         $row_zarate = $result_zarate->fetch_assoc();
         $zaratetotalpar += $row_zarate['total_count'];
 
         $sql_westI = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'West Central I Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_westI = $conn->query($sql_westI);
         $row_westI = $result_westI->fetch_assoc();
         $westcentralItotalpar += $row_westI['total_count'];
 
         $sql_westII = "SELECT COUNT(DISTINCT lrn) AS total_count FROM (
-            SELECT lrn FROM academic_english WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_english WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_filipino WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_filipino WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM academic_numeracy WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM academic_numeracy WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter AND year = $school_year
             UNION
-            SELECT lrn FROM behavioral WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter
+            SELECT lrn FROM behavioral WHERE school = 'West Central II Elementary School' AND quarter = $selectedQuarter AND year = $school_year
         ) AS all_lrns";
         $result_westII = $conn->query($sql_westII);
         $row_westII = $result_westII->fetch_assoc();
@@ -1905,42 +1909,44 @@
 <?php
     include('../database.php');
 
-    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1";
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+
+    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1 AND year = $school_year";
     $resultEnglish = $conn->query($queryEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $q1english = $rowEnglish['q1english'];
 
-    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1";
+    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1 AND year = $school_year";
     $resultFilipino = $conn->query($queryFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $q1filipino = $rowFilipino['q1filipino'];
 
-    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1";
+    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1 AND year = $school_year";
     $resultNumeracy = $conn->query($queryNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $q1numeracy = $rowNumeracy['q1numeracy'];
 
-    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1";
+    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1 AND year = $school_year";
     $resultBehavioral = $conn->query($queryBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $q1behavioral = $rowBehavioral['q1behavioral'];
 
-    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND status = 'resolved'";
+    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND year = $school_year AND status = 'resolved'";
     $resultEnglishResolved = $conn->query($queryEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $q1englishresolved = $rowEnglishResolved['q1englishresolved'];
 
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND status = 'resolved'";
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND year = $school_year AND status = 'resolved'";
     $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $q1filipinoresolved = $rowFilipinoResolved['q1filipinoresolved'];
 
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND status = 'resolved'";
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND year = $school_year AND status = 'resolved'";
     $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $q1numeracyresolved = $rowNumeracyResolved['q1numeracyresolved'];
 
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND status = 'resolved'";
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND year = $school_year AND status = 'resolved'";
     $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $q1behavioralresolved = $rowBehavioralResolved['q1behavioralresolved'];
@@ -1949,42 +1955,44 @@
 <?php
     include('../database.php');
 
-    $queryEnglish = "SELECT COUNT(*) AS q2english FROM academic_english WHERE quarter = 2";
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+
+    $queryEnglish = "SELECT COUNT(*) AS q2english FROM academic_english WHERE quarter = 2 AND year = $school_year";
     $resultEnglish = $conn->query($queryEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $q2english = $rowEnglish['q2english'];
 
-    $queryFilipino = "SELECT COUNT(*) AS q2filipino FROM academic_filipino WHERE quarter = 2";
+    $queryFilipino = "SELECT COUNT(*) AS q2filipino FROM academic_filipino WHERE quarter = 2 AND year = $school_year";
     $resultFilipino = $conn->query($queryFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $q2filipino = $rowFilipino['q2filipino'];
 
-    $queryNumeracy = "SELECT COUNT(*) AS q2numeracy FROM academic_numeracy WHERE quarter = 2";
+    $queryNumeracy = "SELECT COUNT(*) AS q2numeracy FROM academic_numeracy WHERE quarter = 2 AND year = $school_year";
     $resultNumeracy = $conn->query($queryNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $q2numeracy = $rowNumeracy['q2numeracy'];
 
-    $queryBehavioral = "SELECT COUNT(*) AS q2behavioral FROM behavioral WHERE quarter = 2";
+    $queryBehavioral = "SELECT COUNT(*) AS q2behavioral FROM behavioral WHERE quarter = 2 AND year = $school_year";
     $resultBehavioral = $conn->query($queryBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $q2behavioral = $rowBehavioral['q2behavioral'];
 
-    $queryEnglishResolved = "SELECT COUNT(*) AS q2englishresolved FROM academic_english WHERE quarter = 2 AND status = 'resolved'";
+    $queryEnglishResolved = "SELECT COUNT(*) AS q2englishresolved FROM academic_english WHERE quarter = 2 AND year = $school_year AND status = 'resolved'";
     $resultEnglishResolved = $conn->query($queryEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $q2englishresolved = $rowEnglishResolved['q2englishresolved'];
 
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q2filipinoresolved FROM academic_filipino WHERE quarter = 2 AND status = 'resolved'";
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q2filipinoresolved FROM academic_filipino WHERE quarter = 2 AND year = $school_year AND status = 'resolved'";
     $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $q2filipinoresolved = $rowFilipinoResolved['q2filipinoresolved'];
 
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q2numeracyresolved FROM academic_numeracy WHERE quarter = 2 AND status = 'resolved'";
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q2numeracyresolved FROM academic_numeracy WHERE quarter = 2 AND year = $school_year AND status = 'resolved'";
     $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $q2numeracyresolved = $rowNumeracyResolved['q2numeracyresolved'];
 
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q2behavioralresolved FROM behavioral WHERE quarter = 2 AND status = 'resolved'";
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q2behavioralresolved FROM behavioral WHERE quarter = 2 AND year = $school_year AND status = 'resolved'";
     $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $q2behavioralresolved = $rowBehavioralResolved['q2behavioralresolved'];
@@ -1993,43 +2001,44 @@
 ?>
 <?php
     include('../database.php');
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
-    $queryEnglish = "SELECT COUNT(*) AS q3english FROM academic_english WHERE quarter = 3";
+    $queryEnglish = "SELECT COUNT(*) AS q3english FROM academic_english WHERE quarter = 3 AND year = $school_year";
     $resultEnglish = $conn->query($queryEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $q3english = $rowEnglish['q3english'];
 
-    $queryFilipino = "SELECT COUNT(*) AS q3filipino FROM academic_filipino WHERE quarter = 3";
+    $queryFilipino = "SELECT COUNT(*) AS q3filipino FROM academic_filipino WHERE quarter = 3 AND year = $school_year";
     $resultFilipino = $conn->query($queryFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $q3filipino = $rowFilipino['q3filipino'];
 
-    $queryNumeracy = "SELECT COUNT(*) AS q3numeracy FROM academic_numeracy WHERE quarter = 3";
+    $queryNumeracy = "SELECT COUNT(*) AS q3numeracy FROM academic_numeracy WHERE quarter = 3 AND year = $school_year";
     $resultNumeracy = $conn->query($queryNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $q3numeracy = $rowNumeracy['q3numeracy'];
 
-    $queryBehavioral = "SELECT COUNT(*) AS q3behavioral FROM behavioral WHERE quarter = 3";
+    $queryBehavioral = "SELECT COUNT(*) AS q3behavioral FROM behavioral WHERE quarter = 3 AND year = $school_year";
     $resultBehavioral = $conn->query($queryBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $q3behavioral = $rowBehavioral['q3behavioral'];
 
-    $queryEnglishResolved = "SELECT COUNT(*) AS q3englishresolved FROM academic_english WHERE quarter = 3 AND status = 'resolved'";
+    $queryEnglishResolved = "SELECT COUNT(*) AS q3englishresolved FROM academic_english WHERE quarter = 3 AND year = $school_year AND status = 'resolved'";
     $resultEnglishResolved = $conn->query($queryEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $q3englishresolved = $rowEnglishResolved['q3englishresolved'];
 
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q3filipinoresolved FROM academic_filipino WHERE quarter = 3 AND status = 'resolved'";
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q3filipinoresolved FROM academic_filipino WHERE quarter = 3 AND year = $school_year AND status = 'resolved'";
     $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $q3filipinoresolved = $rowFilipinoResolved['q3filipinoresolved'];
 
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q3numeracyresolved FROM academic_numeracy WHERE quarter = 3 AND status = 'resolved'";
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q3numeracyresolved FROM academic_numeracy WHERE quarter = 3 AND year = $school_year AND status = 'resolved'";
     $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $q3numeracyresolved = $rowNumeracyResolved['q3numeracyresolved'];
 
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q3behavioralresolved FROM behavioral WHERE quarter = 3 AND status = 'resolved'";
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q3behavioralresolved FROM behavioral WHERE quarter = 3 AND year = $school_year AND status = 'resolved'";
     $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $q3behavioralresolved = $rowBehavioralResolved['q3behavioralresolved'];
@@ -2038,43 +2047,44 @@
 ?>
 <?php
     include('../database.php');
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
-    $queryEnglish = "SELECT COUNT(*) AS q4english FROM academic_english WHERE quarter = 4";
+    $queryEnglish = "SELECT COUNT(*) AS q4english FROM academic_english WHERE quarter = 4 AND year = $school_year";
     $resultEnglish = $conn->query($queryEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $q4english = $rowEnglish['q4english'];
 
-    $queryFilipino = "SELECT COUNT(*) AS q4filipino FROM academic_filipino WHERE quarter = 4";
+    $queryFilipino = "SELECT COUNT(*) AS q4filipino FROM academic_filipino WHERE quarter = 4 AND year = $school_year";
     $resultFilipino = $conn->query($queryFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $q4filipino = $rowFilipino['q4filipino'];
 
-    $queryNumeracy = "SELECT COUNT(*) AS q4numeracy FROM academic_numeracy WHERE quarter = 4";
+    $queryNumeracy = "SELECT COUNT(*) AS q4numeracy FROM academic_numeracy WHERE quarter = 4 AND year = $school_year";
     $resultNumeracy = $conn->query($queryNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $q4numeracy = $rowNumeracy['q4numeracy'];
 
-    $queryBehavioral = "SELECT COUNT(*) AS q4behavioral FROM behavioral WHERE quarter = 4";
+    $queryBehavioral = "SELECT COUNT(*) AS q4behavioral FROM behavioral WHERE quarter = 4 AND year = $school_year";
     $resultBehavioral = $conn->query($queryBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $q4behavioral = $rowBehavioral['q4behavioral'];
 
-    $queryEnglishResolved = "SELECT COUNT(*) AS q4englishresolved FROM academic_english WHERE quarter = 4 AND status = 'resolved'";
+    $queryEnglishResolved = "SELECT COUNT(*) AS q4englishresolved FROM academic_english WHERE quarter = 4 AND year = $school_year AND status = 'resolved'";
     $resultEnglishResolved = $conn->query($queryEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $q4englishresolved = $rowEnglishResolved['q4englishresolved'];
 
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q4filipinoresolved FROM academic_filipino WHERE quarter = 4 AND status = 'resolved'";
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q4filipinoresolved FROM academic_filipino WHERE quarter = 4 AND year = $school_year AND status = 'resolved'";
     $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $q4filipinoresolved = $rowFilipinoResolved['q4filipinoresolved'];
 
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q4numeracyresolved FROM academic_numeracy WHERE quarter = 4 AND status = 'resolved'";
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q4numeracyresolved FROM academic_numeracy WHERE quarter = 4 AND year = $school_year AND status = 'resolved'";
     $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $q4numeracyresolved = $rowNumeracyResolved['q4numeracyresolved'];
 
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q4behavioralresolved FROM behavioral WHERE quarter = 4 AND status = 'resolved'";
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q4behavioralresolved FROM behavioral WHERE quarter = 4 AND year = $school_year AND status = 'resolved'";
     $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $q4behavioralresolved = $rowBehavioralResolved['q4behavioralresolved'];
@@ -2085,43 +2095,44 @@
 
     include('../database.php');
 
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
     // Count the total rows in each table
-    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english";
+    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE year = $school_year";
     $resultEnglish = $conn->query($sqlEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $totalEnglish = $rowEnglish['total'];
 
-    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino";
+    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE year = $school_year";
     $resultFilipino = $conn->query($sqlFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $totalFilipino = $rowFilipino['total'];
 
-    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy";
+    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE year = $school_year";
     $resultNumeracy = $conn->query($sqlNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $totalNumeracy = $rowNumeracy['total'];
 
-    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral";
+    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE year = $school_year";
     $resultBehavioral = $conn->query($sqlBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $totalBehavioral = $rowBehavioral['total'];
 
-    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved'";
+    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND year = $school_year";
     $resultEnglishResolved = $conn->query($sqlEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $totalEnglishResolved = $rowEnglishResolved['total'];
 
-    $sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved'";
+    $sqlFilipinoResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE status = 'resolved' AND year = $school_year";
     $resultFilipinoResolved = $conn->query($sqlFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $totalFilipinoResolved = $rowFilipinoResolved['total'];
 
-    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved'";
+    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND year = $school_year";
     $resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $totalNumeracyResolved = $rowNumeracyResolved['total'];
 
-    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved'";
+    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND year = $school_year";
     $resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $totalBehavioralResolved = $rowBehavioralResolved['total'];
@@ -2159,9 +2170,8 @@
     // Bacayao Sur Elementary School
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2173,7 +2183,8 @@
             }
         }
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School' AND gname <> ''";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bacayao Sur Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2204,9 +2215,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2218,7 +2228,8 @@
             }
         }
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School' AND gname <> ''";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bliss Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2248,9 +2259,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2261,7 +2271,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bolosan Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2291,9 +2301,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2304,7 +2313,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Bonuan Boquig Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2334,9 +2343,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2347,7 +2355,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Calmay Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2377,9 +2385,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2390,7 +2397,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Carael Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2420,9 +2427,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2433,7 +2439,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Caranglaan Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2463,9 +2469,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2476,7 +2481,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'East Central Integrated School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2506,9 +2511,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2519,7 +2523,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Federico N. Ceralde School Integrated School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2549,8 +2553,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2561,7 +2565,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Gen. Gregorio Del Pilar Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2591,8 +2595,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2603,7 +2607,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan L. Siapno Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2633,8 +2637,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2645,7 +2649,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Juan P. Guadiz Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2675,8 +2679,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2687,7 +2691,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lasip Grande Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2717,7 +2721,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2728,7 +2733,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Leon-Francisco Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2758,7 +2763,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2769,7 +2775,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lomboy Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2799,7 +2805,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2810,7 +2817,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Lucao Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2840,7 +2847,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2851,7 +2859,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Malued Sur Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2881,7 +2889,8 @@
 
     foreach ($tables as $table) {
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School'";
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2892,7 +2901,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mamalingling Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2920,8 +2929,10 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School'";
+    foreach ($tables as $table) { 
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2932,7 +2943,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Mangin-Tebeng Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -2960,8 +2971,10 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School'";
+    foreach ($tables as $table) {
+         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+         $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -2972,7 +2985,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'North Central Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3000,8 +3013,10 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School'";
+    foreach ($tables as $table) { 
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3012,7 +3027,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pantal Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3040,8 +3055,10 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School'";
+    foreach ($tables as $table) { 
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3052,7 +3069,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pascuala G. Villamil Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3080,8 +3097,10 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) { $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School'";
+    foreach ($tables as $table) { 
+        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3092,7 +3111,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pogo-Lasip Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3121,7 +3140,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3132,7 +3151,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3161,7 +3180,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3172,7 +3191,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3201,7 +3220,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3212,7 +3231,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3241,7 +3260,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3252,7 +3271,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3281,7 +3300,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3292,7 +3311,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3321,7 +3340,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3332,7 +3351,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3361,7 +3380,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3372,7 +3391,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3401,7 +3420,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3412,7 +3431,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3441,7 +3460,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3452,7 +3471,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3481,7 +3500,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3492,7 +3511,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
@@ -3521,7 +3540,7 @@
     $total_count1 = 0;
 
     foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School'";
+        $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -3532,7 +3551,7 @@
                 }
             }
         }
-        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School' AND gname <> ''";
+        $sql1 = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School' AND gname <> '' AND year = $school_year";
         $result1 = $conn->query($sql1);
 
         if ($result1->num_rows > 0) {
