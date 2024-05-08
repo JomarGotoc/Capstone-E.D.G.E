@@ -1672,6 +1672,7 @@
     include('../database.php');
 
     $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
     // School names
     $schools = array(
@@ -1719,7 +1720,7 @@
     foreach ($schools as $school) {
         $school_counts[$school] = array();
         foreach ($quarters as $quarter) {
-            $sql = "SELECT COUNT(DISTINCT lrn) AS lrn_count FROM `$classification` WHERE school = '$school' AND quarter = $quarter";
+            $sql = "SELECT COUNT(DISTINCT lrn) AS lrn_count FROM `$classification` WHERE school = '$school' AND quarter = $quarter AND year = $school_year";
             $result = mysqli_query($conn, $sql);
 
             if ($result) {
@@ -3654,10 +3655,11 @@
     $school_counts = [];
 
     $classification = isset($_POST['classification']) ? $_POST['classification'] : 'academic_english';
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
     foreach ($schools as $school) {
         $sql = "SELECT COUNT(DISTINCT lrn) AS distinct_lrns 
                 FROM $classification 
-                WHERE school = '$school'";
+                WHERE school = '$school' AND year = '$school_year'";
 
         $result = $conn->query($sql);
 
