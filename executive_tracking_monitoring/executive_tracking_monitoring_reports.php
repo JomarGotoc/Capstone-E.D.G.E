@@ -3140,7 +3140,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Pugaro Integrated School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3180,7 +3180,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Sabangan Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3220,7 +3220,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salapingao Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3260,7 +3260,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Salisay Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3300,7 +3300,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Suit Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3340,7 +3340,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'T. Ayson Rosario Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3380,7 +3380,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tambac Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3420,7 +3420,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Tebeng Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3460,7 +3460,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'Victoria Q. Zarate Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3500,7 +3500,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central II Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 
@@ -3540,7 +3540,7 @@
     $total_count = 0;
     $total_count1 = 0;
 
-    foreach ($tables as $table) {  isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    foreach ($tables as $table) { $selectedQuarter= isset($_POST['quarter']) ? $_POST['quarter'] : 1;
         $sql = "SELECT DISTINCT lrn FROM $table WHERE quarter = $selectedQuarter AND school = 'West Central I Elementary School' AND year = $school_year";
         $result = $conn->query($sql);
 

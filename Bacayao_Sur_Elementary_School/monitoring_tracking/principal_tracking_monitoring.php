@@ -1,132 +1,44 @@
-<?php
-    include('../../database.php');
-    $currentFileName2 = basename(__FILE__,'_Q1.php');
-    // Initialize an array to store results
-    $resultsArray = array();
 
-    // Query to retrieve data from the adviser table
-    $sql_adviser = "SELECT grade, section, fullname FROM adviser WHERE school = 'Bacayao Sur Elementary School'";
-    $result_adviser = mysqli_query($conn, $sql_adviser);
-
-    if (mysqli_num_rows($result_adviser) > 0) {
-        // Fetch each adviser row
-        while ($row_adviser = mysqli_fetch_assoc($result_adviser)) {
-            $uniqueLRNs = array();
-
-        // Tables to count LRNs from
-        $tables = array('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral');
-
-        // Iterate through each table to fetch unique LRNs
-        foreach ($tables as $table) {
-            $sql = "SELECT DISTINCT lrn FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
-            $result = mysqli_query($conn, $sql);
-
-            // Check if the query was successful
-            if ($result) {
-                // Fetch each row and add LRN to the uniqueLRNs array
-                while ($row = mysqli_fetch_assoc($result)) {
-                    $uniqueLRNs[$row['lrn']] = true; // Using LRN as key to ensure uniqueness
-                }
-                // Free result set
-                mysqli_free_result($result);
-            } else {
-                echo "Error executing query: " . mysqli_error($conn);
-            }
-        }
-
-        // Count the number of unique LRNs
-        $totalstudentpar = count($uniqueLRNs);
-
-        // Count LRNs in each table for the current grade and section
-        $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
-        $result_english_non_distinct = mysqli_query($conn, $sql_english_non_distinct);
-        $row_english_non_distinct = mysqli_fetch_assoc($result_english_non_distinct);
-        $english_count_non_distinct = $row_english_non_distinct['english_count_non_distinct'];
-
-        // Store $newvalue based on grade and section
-        $grade = strtolower($row_adviser['grade']);
-        $section = strtolower($row_adviser['section']);
-        $newvalue = "grade_$grade" . "_section_$section";
-
-        // Count all LRNs in $newvalue table and store as $totalstud
-        $sql_totalstud = "SELECT COUNT(lrn) AS totalstud FROM $newvalue";
-        $result_totalstud = mysqli_query($conn, $sql_totalstud);
-        $row_totalstud = mysqli_fetch_assoc($result_totalstud);
-        $totalstud = $row_totalstud['totalstud'];
-
-        $sql_filipino_non_distinct = "SELECT COUNT(lrn) AS filipino_count_non_distinct FROM academic_filipino WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
-        $result_filipino_non_distinct = mysqli_query($conn, $sql_filipino_non_distinct);
-        $row_filipino_non_distinct = mysqli_fetch_assoc($result_filipino_non_distinct);
-        $filipino_count_non_distinct = $row_filipino_non_distinct['filipino_count_non_distinct'];
-
-        $sql_numeracy_non_distinct = "SELECT COUNT(lrn) AS numeracy_count_non_distinct FROM academic_numeracy WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
-        $result_numeracy_non_distinct = mysqli_query($conn, $sql_numeracy_non_distinct);
-        $row_numeracy_non_distinct = mysqli_fetch_assoc($result_numeracy_non_distinct);
-        $numeracy_count_non_distinct = $row_numeracy_non_distinct['numeracy_count_non_distinct'];
-
-        $sql_behavioral_non_distinct = "SELECT COUNT(lrn) AS behavioral_count_non_distinct FROM behavioral WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
-        $result_behavioral_non_distinct = mysqli_query($conn, $sql_behavioral_non_distinct);
-        $row_behavioral_non_distinct = mysqli_fetch_assoc($result_behavioral_non_distinct);
-        $behavioral_count_non_distinct = $row_behavioral_non_distinct['behavioral_count_non_distinct'];
-
-        // Add results to the results array
-        $resultsArray[] = array(
-            'grade' => $grade,
-            'section' => $section,
-            'fullname' => $row_adviser['fullname'],
-            'totalstudentpar' => $totalstudentpar,
-            'english_count_non_distinct' => $english_count_non_distinct,
-            'totalstud' => $totalstud,
-            'filipino_count_non_distinct' => $filipino_count_non_distinct,
-            'numeracy_count_non_distinct' => $numeracy_count_non_distinct,
-            'behavioral_count_non_distinct' => $behavioral_count_non_distinct
-        );
-    }
-    }
-
-    // Close the connection
-    mysqli_close($conn);
-
-?>
 <?php
     include('../../database.php');
 
-    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+    $queryEnglish = "SELECT COUNT(*) AS q1english FROM academic_english WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultEnglish = $conn->query($queryEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $q1english = $rowEnglish['q1english'];
 
-    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $queryFilipino = "SELECT COUNT(*) AS q1filipino FROM academic_filipino WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultFilipino = $conn->query($queryFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $q1filipino = $rowFilipino['q1filipino'];
 
-    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $queryNumeracy = "SELECT COUNT(*) AS q1numeracy FROM academic_numeracy WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultNumeracy = $conn->query($queryNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $q1numeracy = $rowNumeracy['q1numeracy'];
 
-    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School'";
+    $queryBehavioral = "SELECT COUNT(*) AS q1behavioral FROM behavioral WHERE quarter = 1 AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultBehavioral = $conn->query($queryBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $q1behavioral = $rowBehavioral['q1behavioral'];
 
-    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $queryEnglishResolved = "SELECT COUNT(*) AS q1englishresolved FROM academic_english WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultEnglishResolved = $conn->query($queryEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $q1englishresolved = $rowEnglishResolved['q1englishresolved'];
 
-    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $queryFilipinoResolved = "SELECT COUNT(*) AS q1filipinoresolved FROM academic_filipino WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultFilipinoResolved = $conn->query($queryFilipinoResolved);
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $q1filipinoresolved = $rowFilipinoResolved['q1filipinoresolved'];
 
-    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $queryNumeracyResolved = "SELECT COUNT(*) AS q1numeracyresolved FROM academic_numeracy WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultNumeracyResolved = $conn->query($queryNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $q1numeracyresolved = $rowNumeracyResolved['q1numeracyresolved'];
 
-    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $queryBehavioralResolved = "SELECT COUNT(*) AS q1behavioralresolved FROM behavioral WHERE quarter = 1 AND status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year = $school_year";
     $resultBehavioralResolved = $conn->query($queryBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $q1behavioralresolved = $rowBehavioralResolved['q1behavioralresolved'];
@@ -268,33 +180,32 @@
     $conn->close();
 ?>
 <?php
-
-    $currentFileName1 = basename(__FILE__,'_q1.php');
     include('../../database.php');
 
     // Count the total rows in each table
-    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE school = 'Bacayao Sur Elementary School'";
+    $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
+    $sqlEnglish = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultEnglish = $conn->query($sqlEnglish);
     $rowEnglish = $resultEnglish->fetch_assoc();
     $totalEnglish = $rowEnglish['total'];
 
 
-    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE  school = 'Bacayao Sur Elementary School'";
+    $sqlFilipino = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_filipino WHERE  school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultFilipino = $conn->query($sqlFilipino);
     $rowFilipino = $resultFilipino->fetch_assoc();
     $totalFilipino = $rowFilipino['total'];
 
-    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE  school = 'Bacayao Sur Elementary School'";
+    $sqlNumeracy = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE  school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultNumeracy = $conn->query($sqlNumeracy);
     $rowNumeracy = $resultNumeracy->fetch_assoc();
     $totalNumeracy = $rowNumeracy['total'];
 
-    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE  school = 'Bacayao Sur Elementary School'";
+    $sqlBehavioral = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE  school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultBehavioral = $conn->query($sqlBehavioral);
     $rowBehavioral = $resultBehavioral->fetch_assoc();
     $totalBehavioral = $rowBehavioral['total'];
 
-    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $sqlEnglishResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_english WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultEnglishResolved = $conn->query($sqlEnglishResolved);
     $rowEnglishResolved = $resultEnglishResolved->fetch_assoc();
     $totalEnglishResolved = $rowEnglishResolved['total'];
@@ -304,12 +215,12 @@
     $rowFilipinoResolved = $resultFilipinoResolved->fetch_assoc();
     $totalFilipinoResolved = $rowFilipinoResolved['total'];
 
-    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $sqlNumeracyResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM academic_numeracy WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultNumeracyResolved = $conn->query($sqlNumeracyResolved);
     $rowNumeracyResolved = $resultNumeracyResolved->fetch_assoc();
     $totalNumeracyResolved = $rowNumeracyResolved['total'];
 
-    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School'";
+    $sqlBehavioralResolved = "SELECT COUNT(DISTINCT lrn) AS total FROM behavioral WHERE status = 'resolved' AND school = 'Bacayao Sur Elementary School' AND year= $school_year";
     $resultBehavioralResolved = $conn->query($sqlBehavioralResolved);
     $rowBehavioralResolved = $resultBehavioralResolved->fetch_assoc();
     $totalBehavioralResolved = $rowBehavioralResolved['total'];
@@ -353,11 +264,9 @@
 ?>
 <?php
     include('../../database.php');
-    $currentFileName2 = basename(__FILE__,'_Q1.php');
     // Initialize an array to store results
     $resultsArray = array();
 
-    // Query to retrieve data from the adviser table
     $sql_adviser = "SELECT grade, section, fullname FROM adviser WHERE school = 'Bacayao Sur Elementary School'";
     $result_adviser = mysqli_query($conn, $sql_adviser);
 
@@ -369,9 +278,10 @@
         // Tables to count LRNs from
         $tables = array('academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral');
 
-        // Iterate through each table to fetch unique LRNs
+        
         foreach ($tables as $table) {
-            $sql = "SELECT DISTINCT lrn FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
+            $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+            $sql = "SELECT DISTINCT lrn FROM $table WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter";
             $result = mysqli_query($conn, $sql);
 
             // Check if the query was successful
@@ -414,8 +324,9 @@
         }
 
         $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+        $school_year = isset($_POST['school-year']) ? $_POST['school-year'] : 2024;
 
-        $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter";
+        $sql_english_non_distinct = "SELECT COUNT(lrn) AS english_count_non_distinct FROM academic_english WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year";
         $result_english_non_distinct = mysqli_query($conn, $sql_english_non_distinct);
         $row_english_non_distinct = mysqli_fetch_assoc($result_english_non_distinct);
         $english_count_non_distinct = $row_english_non_distinct['english_count_non_distinct'];
@@ -431,17 +342,17 @@
         $row_totalstud = mysqli_fetch_assoc($result_totalstud);
         $totalstud = $row_totalstud['totalstud'];
 
-        $sql_filipino_non_distinct = "SELECT COUNT(lrn) AS filipino_count_non_distinct FROM academic_filipino WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
+        $sql_filipino_non_distinct = "SELECT COUNT(lrn) AS filipino_count_non_distinct FROM academic_filipino WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year";
         $result_filipino_non_distinct = mysqli_query($conn, $sql_filipino_non_distinct);
         $row_filipino_non_distinct = mysqli_fetch_assoc($result_filipino_non_distinct);
         $filipino_count_non_distinct = $row_filipino_non_distinct['filipino_count_non_distinct'];
 
-        $sql_numeracy_non_distinct = "SELECT COUNT(lrn) AS numeracy_count_non_distinct FROM academic_numeracy WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
+        $sql_numeracy_non_distinct = "SELECT COUNT(lrn) AS numeracy_count_non_distinct FROM academic_numeracy WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year";
         $result_numeracy_non_distinct = mysqli_query($conn, $sql_numeracy_non_distinct);
         $row_numeracy_non_distinct = mysqli_fetch_assoc($result_numeracy_non_distinct);
         $numeracy_count_non_distinct = $row_numeracy_non_distinct['numeracy_count_non_distinct'];
 
-        $sql_behavioral_non_distinct = "SELECT COUNT(lrn) AS behavioral_count_non_distinct FROM behavioral WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = 1";
+        $sql_behavioral_non_distinct = "SELECT COUNT(lrn) AS behavioral_count_non_distinct FROM behavioral WHERE grade = '{$row_adviser['grade']}' AND section = '{$row_adviser['section']}' AND school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter AND year = $school_year";
         $result_behavioral_non_distinct = mysqli_query($conn, $sql_behavioral_non_distinct);
         $row_behavioral_non_distinct = mysqli_fetch_assoc($result_behavioral_non_distinct);
         $behavioral_count_non_distinct = $row_behavioral_non_distinct['behavioral_count_non_distinct'];
@@ -894,6 +805,25 @@
         $stmt->close();
     } 
     $conn->close();
+?>
+<?php
+    include('../../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
+
+    // Array to store all school year options
+    $school_years = array();
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
+
+    // Close database conn
+    mysqli_close($conn);
 ?>
 <DOCTYPE html>
 <html lang="en">
@@ -1557,9 +1487,14 @@
         <div class="row">
             <div class="column">
                 <div class="select-wrapper">
-                    <select id="topdown1" name="school-year" class="containers first">
-                        <option value="school-year">S.Y. 2023 - 2024</option>
-                    </select>
+                <form id="school_year_form" method="post" action="">
+                        <select id="topdown1" name="school-year" class="containers first">
+                            <?php foreach ($school_years as $start_year => $school_year) : ?>
+                                <?php $selected = (isset($_POST['school-year']) && $_POST['school-year'] == $start_year) || date('Y') == $start_year ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $start_year; ?>" <?php echo $selected; ?>><?php echo $school_year; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
                 </div>
             </div>
             
@@ -1638,14 +1573,14 @@
             </div>
             <div class="column column-right">
             <div class="select-wrapper1">
-            <form id="quarterForm1" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <select id="quarterSelect" name="quarter" onchange="submitForm()">
-                            <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
-                            <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
-                            <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
-                            <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
-                        </select>
-                    </form>
+            <form id="quarterForm1" method="post" action="">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
+                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
+                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
+                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
+                    </select>
+                </form>
                 </div>
 </div>
             <div class="column column-left">
@@ -1914,11 +1849,6 @@
 
 </script>
 <script>
-    function submitForm() {
-        document.getElementById('quarterForm1').submit();
-    }
-</script>
-<script>
 document.getElementById("classificationselect").addEventListener("change", function() {
     var selectedValue = this.value;
     console.log("Selected value:", selectedValue);
@@ -1962,6 +1892,23 @@ function submitForm(selectedValue) {
             }
         });
     }
+</script>
+<script>
+    function submitForm() {
+        document.getElementById('quarterForm1').submit();
+    }
+</script>
+<script>
+    document.getElementById('topdown1').addEventListener('change', function() {
+        if (this.value !== "new-option") {
+            document.getElementById('school_year_form').submit();
+        }
+    });
+
+    // After form submission, re-select the previously selected option
+    <?php if(isset($_POST['school-year']) && $_POST['school-year'] !== "new-option"): ?>
+        document.getElementById('topdown1').value = "<?php echo $_POST['school-year']; ?>";
+    <?php endif; ?>
 </script>
 </body>
 </html>
