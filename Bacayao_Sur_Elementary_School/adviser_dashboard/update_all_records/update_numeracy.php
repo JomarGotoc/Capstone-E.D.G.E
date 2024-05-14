@@ -5,52 +5,42 @@
    include('../../../database.php');
 
     // SQL query to fetch LRN and full name from the academic_english table
-    $sql = "SELECT lrn, fullname FROM academic_numeracy WHERE grade = '$grade' AND section = '$section'";
+    $sql = "SELECT lrn, fullname, gname, number, notes, topic, intervention, advice FROM academic_numeracy WHERE grade = '$grade' AND section = '$section'";
     $result = $conn->query($sql);
     $conn->close();
 ?>
 <?php
-// Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the "gname" field is set in the POST data
-    if (isset($_POST["gname"]) && isset($_POST["lrn"])) {
-        // Sanitize and validate the input (you may need to adjust this based on your requirements)
-        $gname = $_POST["gname"];
-        $lrn = $_POST["lrn"];
+    if (isset($_POST['update'])) {
+        // Include your database connection
+        include('../../../database.php');
 
-        include('../../../database.php'); 
+        // Get the current date
+        $date = date('Y-m-d');
 
-        // Prepare SQL statement for insertion
-        $sql = "UPDATE academic_numeracy SET gname = ? WHERE lrn = ?";
+        // Loop through the submitted data
+        for ($i = 0; $i < count($_POST['lrn']); $i++) {
+            $lrn = htmlspecialchars($_POST['lrn'][$i]);
+            $gname = htmlspecialchars($_POST['gname'][$i]);
+            $contact = htmlspecialchars($_POST['number'][$i]);
+            $notes = htmlspecialchars($_POST['notes'][$i]);
+            $topic = htmlspecialchars($_POST['topic'][$i]);
+            $intervention = htmlspecialchars($_POST['intervention'][$i]);
+            $advice = htmlspecialchars($_POST['advice'][$i]);
+            $status = htmlspecialchars($_POST['status'][$i]);
 
-        // Prepare and bind parameters
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $gname, $lrn);
+            // Prepare the SQL statement
+            $stmt = $conn->prepare("UPDATE academic_numeracy SET gname = ?, number = ?, notes = ?, topic = ?, intervention = ?, advice = ?, status = ?, date = ? WHERE lrn = ?");
+            $stmt->bind_param("sssssssss", $gname, $contact, $notes, $topic, $intervention, $advice, $status, $date, $lrn);
 
-        // Execute the statement
-        $stmt->execute();
-
-        // Check if the insertion was successful
-        if ($stmt->affected_rows > 0) {
-            echo "Record updated successfully";
-        } else {
-            echo "Error updating record";
+            // Execute the statement
+            $stmt->execute();
         }
 
-        // Close statement and connection
+        // Close the statement and connection
         $stmt->close();
         $conn->close();
-    } else {
-        // If "gname" or "lrn" field is not set in the POST data
-        echo "Error: 'gname' or 'lrn' field is missing in the request";
     }
-} else {
-    // If the request method is not POST
-    echo "Error: This script expects a POST request";
-}
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1085,9 +1075,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </header>
 
-        <!-- <form action="" method="POST" class="form-container"  id="pupilRecord"> -->
+         <form action="" method="POST" class="form-container"  id="pupilRecord">
             <div class="main-containers">
-            <h3 class="record_header"><a href="" class="back-icon"><i class='bx bxs-chevron-left'></i></a>ACADEMIC - NUMERACY RECORD</h3>
+            <h3 class="record_header"><a href="" class="back-icon"><i class='bx bxs-chevron-left'></i></a>BEHAVIORAL RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1136,40 +1126,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <th>Recommended to</th>
                         <th>Status</th>
                     </tr>
-                    <form method="post" class="form-container">
                     <?php
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo '<tr id="row2" class="table_body">';
-            echo '<td><textarea placeholder="" name="lrn">' . $row["lrn"] . '</textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="" name="fullname">' . $row["fullname"] . '</textarea><span class="dates"></span></td>';
-            echo '<td colspan="1"><textarea placeholder="Guardian\'s Name" name="gname"></textarea><span class="dates"></span></td>';
-            echo '<td colspan="1"><textarea placeholder="Contact Number"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>';
-            echo '<td>';
-            echo '<select class="status-dropdown">';
-            echo '<option value="pending" disabled selected hidden>Pending</option>';
-            echo '<option value="ongoing">Ongoing</option>';
-            echo '<option value="resolved">Resolved</option>';
-            echo '<option value="unresolved">Unresolved</option>';
-            echo '</select>';
-            echo '<span class="dates"></span>';
-            echo '</td>';
-            echo '</tr>';
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while($row = $result->fetch_assoc()) {
+                // Escaping output to prevent XSS attacks
+                $lrn = htmlspecialchars($row["lrn"]);
+                $fullname = htmlspecialchars($row["fullname"]);
+                $gname = htmlspecialchars($row["gname"]);
+                $number = htmlspecialchars($row["number"]);
+                $notes = htmlspecialchars($row["notes"]);
+                $topic = htmlspecialchars($row["topic"]);
+                $intervention = htmlspecialchars($row["intervention"]);
+                $advice = htmlspecialchars($row["advice"]);
+
+                echo '<tr id="row2" class="table_body">';
+                echo '<td><textarea name="lrn[]" placeholder="">' . $lrn . '</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="fullname[]" placeholder="">' . $fullname . '</textarea><span class="dates"></span></td>';
+                echo '<td colspan="1"><textarea name="gname[]" placeholder="Guardian\'s Name">' . $gname .'</textarea><span class="dates"></span></td>';
+                echo '<td colspan="1"><textarea name="number[]" placeholder="Contact Number">' . $number .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="notes[]" placeholder="Enter Notes">' . $notes .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="topic[]" placeholder="Enter Topic/Matter">' . $topic .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="intervention[]" placeholder="Enter Intervention">' . $intervention .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="advice[]" placeholder="Enter Advice">' . $advice .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="recommended[]" placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>';
+                echo '<td>';
+                echo '<select name="status[]" class="status-dropdown">';
+                echo '<option value="pending" disabled selected hidden>Pending</option>';
+                echo '<option value="ongoing">Ongoing</option>';
+                echo '<option value="resolved">Resolved</option>';
+                echo '<option value="unresolved">Unresolved</option>';
+                echo '</select>';
+                echo '<span class="dates"></span>';
+                echo '</td>';
+                echo '</tr>';
+            }
         }
-    }
-                ?>    
-                    
+        ?>
                 </table>
 
                 
                 <div class="bottom-buttons">
-                    <button id="saveButton" class="saveButton" name="save">Update Records</button>
+                    <button id="saveButton" name="update" class="saveButton">Update Records</button>
                 </div>
 
                 <div class="pagination">
@@ -1184,15 +1182,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 
 <script >
-    //FUNCTIONS FOR INTERVENTIONS
-    function closeForm() {
-    document.getElementById('formContainer').style.display = 'none'; // Hide the form container
-    }       
 
-    
-    var currentDate = new Date();
-    var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
-    
 //next and prev button
 var table = document.getElementById("update-record");
 var rows = table.getElementsByClassName("table_body");

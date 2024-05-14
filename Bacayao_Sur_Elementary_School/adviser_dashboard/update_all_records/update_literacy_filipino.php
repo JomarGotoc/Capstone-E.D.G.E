@@ -5,10 +5,43 @@
    include('../../../database.php');
 
     // SQL query to fetch LRN and full name from the academic_english table
-    $sql = "SELECT lrn, fullname FROM academic_filipino WHERE grade = '$grade' AND section = '$section'";
+    $sql = "SELECT lrn, fullname, gname, number, notes, topic, intervention, advice FROM academic_filipino WHERE grade = '$grade' AND section = '$section'";
     $result = $conn->query($sql);
     $conn->close();
 ?>
+<?php
+    if (isset($_POST['update'])) {
+        // Include your database connection
+        include('../../../database.php');
+
+        // Get the current date
+        $date = date('Y-m-d');
+
+        // Loop through the submitted data
+        for ($i = 0; $i < count($_POST['lrn']); $i++) {
+            $lrn = htmlspecialchars($_POST['lrn'][$i]);
+            $gname = htmlspecialchars($_POST['gname'][$i]);
+            $contact = htmlspecialchars($_POST['number'][$i]);
+            $notes = htmlspecialchars($_POST['notes'][$i]);
+            $topic = htmlspecialchars($_POST['topic'][$i]);
+            $intervention = htmlspecialchars($_POST['intervention'][$i]);
+            $advice = htmlspecialchars($_POST['advice'][$i]);
+            $status = htmlspecialchars($_POST['status'][$i]);
+
+            // Prepare the SQL statement
+            $stmt = $conn->prepare("UPDATE academic_filipino SET gname = ?, number = ?, notes = ?, topic = ?, intervention = ?, advice = ?, status = ?, date = ? WHERE lrn = ?");
+            $stmt->bind_param("sssssssss", $gname, $contact, $notes, $topic, $intervention, $advice, $status, $date, $lrn);
+
+            // Execute the statement
+            $stmt->execute();
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $conn->close();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1044,7 +1077,7 @@
 
          <form action="" method="POST" class="form-container"  id="pupilRecord">
             <div class="main-containers">
-            <h3 class="record_header"><a href="" class="back-icon"><i class='bx bxs-chevron-left'></i></a>ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
+            <h3 class="record_header"><a href="" class="back-icon"><i class='bx bxs-chevron-left'></i></a>BEHAVIORAL RECORD</h3>
                 <div class="rows">
                     <div class="columns">
                         <div class="containerss firsts">
@@ -1094,38 +1127,47 @@
                         <th>Status</th>
                     </tr>
                     <?php
-    if ($result->num_rows > 0) {
-        // Output data of each row
-        while($row = $result->fetch_assoc()) {
-            echo '<tr id="row2" class="table_body">';
-            echo '<td><textarea placeholder="">' . $row["lrn"] . '</textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="">' . $row["fullname"] . '</textarea><span class="dates"></span></td>';
-            echo '<td colspan="1"><textarea placeholder="Guardian\'s Name"></textarea><span class="dates"></span></td>';
-            echo '<td colspan="1"><textarea placeholder="Contact Number"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>';
-            echo '<td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>';
-            echo '<td>';
-            echo '<select class="status-dropdown">';
-            echo '<option value="pending" disabled selected hidden>Pending</option>';
-            echo '<option value="ongoing">Ongoing</option>';
-            echo '<option value="resolved">Resolved</option>';
-            echo '<option value="unresolved">Unresolved</option>';
-            echo '</select>';
-            echo '<span class="dates"></span>';
-            echo '</td>';
-            echo '</tr>';
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while($row = $result->fetch_assoc()) {
+                // Escaping output to prevent XSS attacks
+                $lrn = htmlspecialchars($row["lrn"]);
+                $fullname = htmlspecialchars($row["fullname"]);
+                $gname = htmlspecialchars($row["gname"]);
+                $number = htmlspecialchars($row["number"]);
+                $notes = htmlspecialchars($row["notes"]);
+                $topic = htmlspecialchars($row["topic"]);
+                $intervention = htmlspecialchars($row["intervention"]);
+                $advice = htmlspecialchars($row["advice"]);
+
+                echo '<tr id="row2" class="table_body">';
+                echo '<td><textarea name="lrn[]" placeholder="">' . $lrn . '</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="fullname[]" placeholder="">' . $fullname . '</textarea><span class="dates"></span></td>';
+                echo '<td colspan="1"><textarea name="gname[]" placeholder="Guardian\'s Name">' . $gname .'</textarea><span class="dates"></span></td>';
+                echo '<td colspan="1"><textarea name="number[]" placeholder="Contact Number">' . $number .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="notes[]" placeholder="Enter Notes">' . $notes .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="topic[]" placeholder="Enter Topic/Matter">' . $topic .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="intervention[]" placeholder="Enter Intervention">' . $intervention .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="advice[]" placeholder="Enter Advice">' . $advice .'</textarea><span class="dates"></span></td>';
+                echo '<td><textarea name="recommended[]" placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>';
+                echo '<td>';
+                echo '<select name="status[]" class="status-dropdown">';
+                echo '<option value="pending" disabled selected hidden>Pending</option>';
+                echo '<option value="ongoing">Ongoing</option>';
+                echo '<option value="resolved">Resolved</option>';
+                echo '<option value="unresolved">Unresolved</option>';
+                echo '</select>';
+                echo '<span class="dates"></span>';
+                echo '</td>';
+                echo '</tr>';
+            }
         }
-    }
-                ?>    
-                    
+        ?>
                 </table>
 
                 
                 <div class="bottom-buttons">
-                    <button id="saveButton" class="saveButton">Update Records</button>
+                    <button id="saveButton" name="update" class="saveButton">Update Records</button>
                 </div>
 
                 <div class="pagination">
@@ -1140,31 +1182,6 @@
    
 
 <script >
-    //FUNCTIONS FOR INTERVENTIONS
-    function closeForm() {
-    document.getElementById('formContainer').style.display = 'none'; // Hide the form container
-    }       
-
-    document.getElementById('saveButton').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent form submission
-    
-    var currentDate = new Date();
-    var formattedDate = currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
-    
-    // Update date only for the input boxes with data entered
-    document.getElementById('saveButton').addEventListener('click', function() {
-    var inputFields = document.querySelectorAll('textarea');
-    inputFields.forEach(function(inputField) {
-        if (inputField.value.trim() !== '' && !inputField.dataset.dateSaved) {
-            var dateElement = inputField.nextElementSibling; // Get the date span next to the input field
-            var currentTime = new Date().toLocaleTimeString(); // Get the current time
-            dateElement.textContent = currentTime; // Display the current time
-            inputField.disabled = true; // Disable input field for the saved row
-            inputField.dataset.dateSaved = true; // Mark that date is saved for this input field
-        }
-    });
-});
-});
 
 //next and prev button
 var table = document.getElementById("update-record");
