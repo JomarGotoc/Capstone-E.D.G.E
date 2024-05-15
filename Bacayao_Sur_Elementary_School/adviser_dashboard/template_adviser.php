@@ -1751,7 +1751,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
+            echo "<a href='../classifications/English.php'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
             echo "<i class='vertical-lines'></i>";
             echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
             echo "<i class='vertical-lines'></i>";
@@ -1768,6 +1768,14 @@
         }
     }
     ?>
+             <tr>
+                <td colspan="5">
+                    <div class="save">
+                        <a href="update_all_records/update_literacy_english.php"><button id="save">Update All Records</button></a>
+                    </div>
+                </td>
+            </tr>
+
         </table>
 
                         <!--------------- ACADEMIC FILIPINO ----------------------->
@@ -1781,13 +1789,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            echo "<a href='../classifications/Filipino.php'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -1798,6 +1800,14 @@
         }
     }
     ?>
+            <tr>
+                <td colspan="5">
+                    <div class="save">
+                        <a href="update_all_records/update_literacy_filipino.php"><button id="save">Update All Records</button></a>
+                    </div>
+                </td>
+            </tr>
+
         </table>
 
                         <!--------------- ACADEMIC NUMERACY ----------------------->
@@ -1811,13 +1821,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            echo "<a href='../classifications/Numeracy.php'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1828,6 +1832,14 @@
         }
     }
     ?>
+            <tr>
+                <td colspan="5">
+                    <div class="save">
+                        <a href="update_all_records/update_numeracy.php"><button id="save">Update All Records</button></a>
+                    </div>
+                </td>
+            </tr>
+
         </table>
 
                         <!--------------- BEHAVIORAL ----------------------->
@@ -1841,13 +1853,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            echo "<a href='../classifications/Behavioral.php'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1858,6 +1864,14 @@
         }
     }
     ?>
+            <tr>
+                <td colspan="5">
+                    <div class="save">
+                        <a href="update_all_records/update_behavioral.php"><button id="save">Update All Records</button></a>
+                    </div>
+                </td>
+            </tr>
+
         </table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
