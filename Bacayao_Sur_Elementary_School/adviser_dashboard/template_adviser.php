@@ -1,7 +1,6 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
     
-    
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -176,15 +175,22 @@
 ?>
 <?php
     include('../../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
 
-    // SQL query to select only the year part of start and end dates from school_year table
-    $sql = "SELECT YEAR(start) AS start_year, YEAR(end) AS end_year FROM school_year";
+    // Array to store all school year options
+    $school_years = array();
 
-    // Execute query
-    $result = $conn->query($sql);
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
 
-    // Close connection
-    $conn->close();
+    // Close database conn
+    mysqli_close($conn);
 ?>
 <?php
     $filename = basename($_SERVER['PHP_SELF']);
@@ -546,8 +552,6 @@
             color: #190572;
         }
 
-        #quarterSelect,
-
         #topdown {
             padding: 1px;
             width: 437px;
@@ -644,7 +648,7 @@
         .act button {
         background-color:#130550;
         color: #fff;
-        width: 17rem;
+        width: 16rem;
         padding: 5px 24px;
         border: none;
         border-radius: 5px;
@@ -1249,6 +1253,7 @@
         .seconds{
             border-radius: 3px;
             text-align: center;
+            font-family: "Darker Grotesque";
         }
 
         .seconds h3{
@@ -1470,28 +1475,14 @@
     <div class="main-container">
         <div class="row">
                 <div class="column">
-                <?php
-                if ($result->num_rows > 0) {
-                    // Start the dropdown menu
-                    echo '<div class="select-wrapper">';
-                    echo '<select id="topdown1" name="school-year" class="containers first">';
-                    
-                    // Fetch each row
-                    while($row = $result->fetch_assoc()) {
-                        // Output start and end years as options
-                        echo '<option value="S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '"';
-                        
-                        // Set selected attribute for the first option
-                        if ($result->field_count == 0) {
-                            echo ' selected';
-                        }
-                        
-                        echo '>S.Y ' . $row["start_year"] . '-' . $row["end_year"] . '</option>';
-                    }
-                    echo '</select>';
-                    echo '</div>';
-                }
-                ?>
+                <form id="school_year_form" method="post" action="">
+                        <select id="topdown1" name="school-year" class="containers first">
+                            <?php foreach ($school_years as $start_year => $school_year) : ?>
+                                <?php $selected = (isset($_POST['school-year']) && $_POST['school-year'] == $start_year) || date('Y') == $start_year ? 'selected="selected"' : ''; ?>
+                                <option value="<?php echo $start_year; ?>" <?php echo $selected; ?>><?php echo $school_year; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </form>
         </div>
         <div class="column">
             <form method="post">
@@ -1586,7 +1577,7 @@
             <div class="column column-right">
                 <div class="select-wrapper1">
                 <form id="quarterForm1" method="post" action="">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()"  class="containerss seconds" style="background-color: #F3F3F3; color:#130550">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
                         <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                         <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
                         <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
@@ -1746,7 +1737,6 @@
         }
     }
     ?>
-
 </table>
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
@@ -1772,19 +1762,12 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
     }
-    ?>        
-            <tr>
-                <td colspan="5">
-                    <div class="save">
-                        <a href="update_all_records/update_literacy_english.php"><button id="save">Update All Records</button></a>
-                    </div>
-                </td>
-            </tr>
+    ?>
         </table>
 
                         <!--------------- ACADEMIC FILIPINO ----------------------->
@@ -1815,13 +1798,6 @@
         }
     }
     ?>
-                <tr>
-                <td colspan="5">
-                    <div class="save">
-                        <a href="update_all_records/update_literacy_filipino.php"><button id="save">Update All Records</button></a>
-                    </div>
-                </td>
-            </tr>
         </table>
 
                         <!--------------- ACADEMIC NUMERACY ----------------------->
@@ -1852,13 +1828,6 @@
         }
     }
     ?>
-                <tr>
-                <td colspan="5">
-                    <div class="save">
-                        <a href="update_all_records/update_numeracy.php"><button id="save">Update All Records</button></a>
-                    </div>
-                </td>
-            </tr>
         </table>
 
                         <!--------------- BEHAVIORAL ----------------------->
@@ -1883,19 +1852,12 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</th>";
             echo "</tr>";
         }
     }
     ?>
-                <tr>
-                <td colspan="5">
-                    <div class="save">
-                        <a href="update_all_records/update_behavioral.php"><button id="save">Update All Records</button></a>
-                    </div>
-                </td>
-            </tr>
         </table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
@@ -1935,12 +1897,653 @@ foreach ($results as $table => $parresult) {
 </form>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->
 
+ <!---------- INTERVENTION ENGLISH ---------->
+ <form action="" method="POST" class="form-container english" style="display: none;" id="englishForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormEnglish()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN ENGLISH RECORD</h3>
+                <div class="rows">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
 
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
+ <!---------- INTERVENTION FILIPINO  ---------->
+        <form action="" method="POST" class="form-container filipino" style="display: none;" id="filipinoForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormFilipino()">&times;</span>
+            <h3 class="record_header">ACADEMIC - LITERACY IN FILIPINO RECORD</h3>
+            <div class="row">
+            <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
+ <!---------- INTERVENTION NUMERACY ---------->
+        <form action="" method="POST" class="form-container numeracy" style="display: none;" id="numeracyForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormNumeracy()">&times;</span>
+            <h3 class="record_header">ACADEMIC - NUMERACY RECORD</h3>
+                <div class="rows">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
+ <!---------- INTERVENTION BEHAVIORAL ---------->
+        <form action="" method="POST" class="form-container behavioral" style="display: none;" id="behavioralForm">
+            <div class="main-containers">
+            <span class="closes" onclick="closeFormBehavioral()">&times;</span>
+            <h3 class="record_header"> BEHAVIORAL RECORD</h3>
+                <div class="rows">
+                <div class="column">
+                <div class="containers" style="background-color: #190572;">
+                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                </div>
+            </div>
+            <div class="column column-right">
+                <div class="select-wrapper1">
+                    <select id="topdown" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                        <option value="" disabled selected hidden>Quarter 1</option>
+                        <option value="q1">Quarter 1</option>
+                        <option value="q2">Quarter 2</option>
+                        <option value="q3">Quarter 3</option>
+                        <option value="q4">Quarter 4</option>
+                    </select>
+                </div>
+            </div>
+                    <div class="columns" style="background:none; margin-left: 538px">
+                        <div class="containerss seconds" >
+                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper">
+                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Pupil's Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="fullname" id="fullname"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Grade & Section</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Guardian Name</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Contact Number</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="containerss editable-containers" style="background-color: #F3F3F3;">
+                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                        </div>
+                    </div>
+                </div>
+
+                <table class="update-record">
+                <tr id="row1">
+                    <th>Notes</th>
+                    <th>Topic/Matter</th>
+                    <th>Intervention</th>
+                    <th>Advice</th>
+                    <th>Recommended to</th>
+                </tr>
+                <tr id="row2" class="table_body">
+                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row3" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row4" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                <tr id="row5" class="table_body">
+                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
+                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
+                </tr>
+                </table>
+                
+                <button id="saveButton" class="saveButton">Save Changes</button>
+                
+                
+            </div>
+        </form>
+
+        <div class="save">
+            <button id="save">Update All Records</button>
+        </div>
         <div class="pagination">
             <button id="prevbutton" onclick="prevPageReportTable()">Previous</button>
             <button id="nextbutton" onclick="nextPageReportTable()">Next</button>
         </div>
 
+    <div class="overlay" id="overlay"></div>
+
+
+    <div class="login-container" id="login-container">
+    <span class="close">&times;</span>
+    <h4>Adding <span class="student-name"></span> <br>as Pupil At Risk</h4>
+
+    <form class="login-form" action="" method="post">
+        <div class="form-group">
+            <label for="lrn">Learner's Reference Number (LRN)</label>
+            <input type="text" id="lrn" name="lrn" value="">
+        </div>
+        <div class="row">
+            <div class="columns-group">
+            <div class="form-group">
+                    <label>Identification</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="checkbox1" name="identification[]" value="Academic - Literacy in English">
+                        <label for="checkbox1">Academic - Literacy in English</label><br>
+                        
+                        <input type="checkbox" id="checkbox2" name="identification[]" value="Academic - Literacy in Filipino">
+                        <label for="checkbox2">Academic - Literacy in Filipino</label><br>
+                        
+                        <input type="checkbox" id="checkbox3" name="identification[]" value="Academic - Numeracy">
+                        <label for="checkbox3">Academic - Numeracy</label><br>
+                        
+                        <input type="checkbox" id="checkbox4" name="identification[]" value="Behavioral">
+                        <label for="checkbox4">Behavioral</label><br>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="date-added">Date Added</label>
+                    <input type="text" class="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
+        </div>
+    </form>
+</div>
 </div>
 
 <script >
@@ -2146,7 +2749,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //next and prev button
 var currentPageDataTable = 1;
-var rowsPerPageDataTable = 6;
+var rowsPerPageDataTable = 8;
 
     function showRowsDataTable() {
         var rows = document.querySelectorAll('#pupilTable tr');
