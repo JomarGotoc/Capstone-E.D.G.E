@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 02, 2024 at 06:33 AM
+-- Generation Time: May 15, 2024 at 03:55 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -43,7 +43,8 @@ CREATE TABLE `academic_english` (
   `intervention` varchar(255) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `advice` varchar(255) NOT NULL,
-  `school` varchar(255) NOT NULL
+  `school` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -68,7 +69,8 @@ CREATE TABLE `academic_filipino` (
   `intervention` varchar(255) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `advice` varchar(255) NOT NULL,
-  `school` varchar(255) NOT NULL
+  `school` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -93,7 +95,8 @@ CREATE TABLE `academic_numeracy` (
   `intervention` varchar(255) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `advice` varchar(255) NOT NULL,
-  `school` varchar(255) NOT NULL
+  `school` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -113,7 +116,9 @@ CREATE TABLE `adviser` (
   `school` varchar(255) NOT NULL,
   `date` varchar(255) NOT NULL,
   `otp` int(11) NOT NULL,
-  `verified` varchar(255) NOT NULL
+  `verified` varchar(255) NOT NULL,
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -138,7 +143,8 @@ CREATE TABLE `behavioral` (
   `intervention` varchar(255) NOT NULL,
   `topic` varchar(255) NOT NULL,
   `advice` varchar(255) NOT NULL,
-  `school` varchar(255) NOT NULL
+  `school` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -156,7 +162,9 @@ CREATE TABLE `counselor` (
   `school` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `otp` int(11) DEFAULT NULL,
-  `verified` varchar(255) NOT NULL
+  `verified` varchar(255) NOT NULL,
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -174,7 +182,9 @@ CREATE TABLE `executive_committee` (
   `school` varchar(255) NOT NULL,
   `date` varchar(255) NOT NULL,
   `otp` varchar(255) NOT NULL,
-  `verified` varchar(255) NOT NULL
+  `verified` varchar(255) NOT NULL,
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -192,7 +202,9 @@ CREATE TABLE `principal` (
   `school` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `otp` int(11) DEFAULT NULL,
-  `verified` varchar(255) NOT NULL DEFAULT '0'
+  `verified` varchar(255) NOT NULL DEFAULT '0',
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -210,8 +222,30 @@ CREATE TABLE `school_admin` (
   `school` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `otp` int(11) DEFAULT NULL,
-  `verified` varchar(255) NOT NULL
+  `verified` varchar(255) NOT NULL,
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `school_year`
+--
+
+CREATE TABLE `school_year` (
+  `id` int(11) NOT NULL,
+  `start` varchar(255) NOT NULL,
+  `end` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `school_year`
+--
+
+INSERT INTO `school_year` (`id`, `start`, `end`) VALUES
+(1, '2024', '2025'),
+(3, '2025', '2026');
 
 -- --------------------------------------------------------
 
@@ -227,8 +261,17 @@ CREATE TABLE `sdo_admin` (
   `password` varchar(255) NOT NULL,
   `date` date NOT NULL,
   `otp` int(11) DEFAULT NULL,
-  `verified` varchar(255) NOT NULL
+  `verified` varchar(255) NOT NULL,
+  `activation` varchar(255) NOT NULL,
+  `year` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sdo_admin`
+--
+
+INSERT INTO `sdo_admin` (`id`, `fullname`, `employment_number`, `email`, `password`, `date`, `otp`, `verified`, `activation`, `year`) VALUES
+(1, 'Vivien  Grace Mendez ', '1234567', 'viviennemendez@gmail.com', '$2y$10$glfN1zzinp3pe3SZL3QTZuZrniG/R4hFBnNbbU3pc84dLfHK9mU.u', '2024-05-15', NULL, 'yes', 'activate', '2024');
 
 --
 -- Indexes for dumped tables
@@ -290,6 +333,12 @@ ALTER TABLE `principal`
 ALTER TABLE `school_admin`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `employment_number` (`employment_number`);
+
+--
+-- Indexes for table `school_year`
+--
+ALTER TABLE `school_year`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `sdo_admin`
@@ -357,10 +406,16 @@ ALTER TABLE `school_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `school_year`
+--
+ALTER TABLE `school_year`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `sdo_admin`
 --
 ALTER TABLE `sdo_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
