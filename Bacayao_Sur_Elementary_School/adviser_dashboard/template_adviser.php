@@ -1752,12 +1752,6 @@
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
             echo "<a href='../classifications/English.php'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
