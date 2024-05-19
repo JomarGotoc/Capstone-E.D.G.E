@@ -73,25 +73,39 @@
 ?>
 <?php
     include('../../database.php');
-    $tables = array("academic_english", "academic_filipino", "academic_numeracy", "behavioral");
 
-    // Array to store results from each table
-    $results = array();
+    $sql_combined = "
+        SELECT lrn, fullname, status, 
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_english) THEN 'E'
+                ELSE '' 
+            END AS english,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_filipino) THEN 'F'
+                ELSE '' 
+            END AS filipino,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_numeracy) THEN 'N'
+                ELSE '' 
+            END AS numeracy,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM behavioral) THEN 'B'
+                ELSE '' 
+            END AS behavioral
+        FROM (
+            SELECT lrn, fullname, status FROM academic_english
+            UNION
+            SELECT lrn, fullname, status FROM academic_filipino
+            UNION
+            SELECT lrn, fullname, status FROM academic_numeracy
+            UNION
+            SELECT lrn, fullname, status FROM behavioral
+        ) AS combined_data
+    ";
 
-    // Iterate through the tables
-    foreach ($tables as $table) {
-        // Query to select LRN, fullname, and status from each table
-        $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
-        $query = "SELECT lrn, fullname, status FROM $table WHERE school = 'Bacayao Sur Elementary School' AND quarter = $selectedQuarter";
-        
-        // Execute query
-        $parresult = mysqli_query($conn, $query);
+    $result_combined = $conn->query($sql_combined);
 
-        // Store parresult in the array
-        $results[$table] = $parresult;
-    }
-
-    mysqli_close($conn);
+    $conn->close();
 ?>
 <?php
 
@@ -1751,7 +1765,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../classifications/English.php'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
+            echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1773,8 +1787,8 @@
         </table>
 
                         <!--------------- ACADEMIC FILIPINO ----------------------->
-        <table border="0" id="identification-filipino" style="display: none;">
-        <?php
+    <table border="0" id="identification-filipino" style="display: none;">
+    <?php
     if ($filipinoresult->num_rows > 0) {
         // Output data of each row
         while ($row = $filipinoresult->fetch_assoc()) {
@@ -1783,7 +1797,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../classifications/Filipino.php'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../../classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -1805,7 +1819,7 @@
         </table>
 
                         <!--------------- ACADEMIC NUMERACY ----------------------->
-        <table border="0" id="identification-numeracy" style="display: none;">
+                        <table border="0" id="identification-numeracy" style="display: none;">
         <?php
     if ($numeracyresult->num_rows > 0) {
         // Output data of each row
@@ -1815,7 +1829,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../classifications/Numeracy.php'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../../classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1837,7 +1851,7 @@
         </table>
 
                         <!--------------- BEHAVIORAL ----------------------->
-        <table border="0" id="identification-behavioral" style="display: none;">
+                        <table border="0" id="identification-behavioral" style="display: none;">
         <?php
     if ($behavioalresult->num_rows > 0) {
         // Output data of each row
@@ -1847,7 +1861,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../classifications/Behavioral.php'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1870,37 +1884,41 @@
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
 <form method="post">
+<table border="0" id="parlist" style="display: none;">
+<?php 
+if ($result_combined->num_rows > 0) {
+    while($row = $result_combined->fetch_assoc()) {
+?>
+        <tr class='sheshable'>
+            <th style='width:20%'><?php echo $row["lrn"]; ?></th>
+            <th style='width:25.7%'><?php echo $row["fullname"]; ?></th>
+            <th style='width:20%' class='act'>
+                <div class="icon-container">
+                    <?php if ($row["english"] === 'E'): ?>
+                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                    <?php endif; ?>
+                    <?php if ($row["filipino"] === 'F'): ?>
+                        F<i class='bx bx-book-open icon' onclick="showPupilRecordFilipino()"></i>
+                    <?php endif; ?>
+                    <?php if ($row["numeracy"] === 'N'): ?>
+                        N<i class='par-icon bx bx-calculator icon' onclick="showPupilRecordNumeracy()"></i>
+                    <?php endif; ?>
+                    <?php if ($row["behavioral"] === 'B'): ?>
+                        B<i class='par-icon bx bx-face icon' onclick="showPupilRecordBehavioral()"></i>
+                    <?php endif; ?>
+                </div>
+            </th>
+            <th style='width:20%'><?php echo $row["status"]; ?></th>
+            <th style='width:25%' class='act'>
+                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+            </th>
+        </tr>
 <?php
-foreach ($results as $table => $parresult) {
-    if ($parresult) {
-        echo "<table border='0' id='parlist' style='display: none;'>";
-        while ($row = mysqli_fetch_assoc($parresult)) {
-            echo "<tr class='sheshable'>";
-            echo "<th style='width:20%'>" . $row['lrn'] . "</th>";
-            echo "<th style='width:25.7%'>" . $row['fullname'] . "</th>";
-            echo "<th style='width:20%' class='act'>";
-            echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "N<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "B<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
-            echo "</div>";
-            echo "</th>";
-            echo "<th style='width:20%'>" . $row['status'] . "</th>";
-            echo "<th style='width:25%' class='act'>";
-            // Add a hidden input field to store LRN
-            echo "<input type='hidden' name='lrn' value='" . $row['lrn'] . "'>";
-            echo "<button type='submit' name='remove' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-            echo "</th>";
-            echo "</tr>";
-        }
-        echo "</table>";
     }
 }
 ?>
+</table>
+
 
 </form>
  <!-------------------------------------------------- END --------------------------------------------------------------------------------------------------->

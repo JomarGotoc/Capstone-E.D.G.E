@@ -1,71 +1,90 @@
 <?php
+    // Get the parameters from the URL
+    $employment_number = $_GET['employment_number'];
+    $grade = $_GET['grade'];
+    $section = $_GET['section'];
+
     include('../../database.php');
-    // Check if the grade and section parameters are present in the URL
-    if (isset($_GET['grade']) && isset($_GET['section'])) {
-        // Retrieve the grade and section values from the URL
-        $grade = ucfirst($_GET['grade']);
-        $section = $_GET['section'];
-        $quarter = $_GET['quarter'];
 
-        // Prepare SQL statements for each table to fetch data
-        $sql_english = "SELECT lrn, fullname, classification, grade, section, status FROM academic_english WHERE grade = ? AND section = ? AND quarter = ?";
-        $sql_filipino = "SELECT lrn, fullname, classification, grade, section, status FROM academic_filipino WHERE grade = ? AND section = ? AND quarter = ?";
-        $sql_numeracy = "SELECT lrn, fullname, classification, grade, section, status FROM academic_numeracy WHERE grade = ? AND section = ? AND quarter = ?";
-        $sql_behavioral = "SELECT lrn, fullname, classification, grade, section, status FROM behavioral WHERE grade = ? AND section = ? AND quarter = ?";
-        $sql_adviser = "SELECT fullname, employment_number FROM adviser WHERE grade = ? AND section = ?";
+    // Prepare the SQL statement
+    $sql = "SELECT fullname FROM adviser WHERE employment_number = ?";
 
-        // Prepare and bind parameters
-        $stmt_english = $conn->prepare($sql_english);
-        $stmt_english->bind_param("sss", $grade, $section, $quarter);
-        $stmt_filipino = $conn->prepare($sql_filipino);
-        $stmt_filipino->bind_param("sss", $grade, $section, $quarter);
-        $stmt_numeracy = $conn->prepare($sql_numeracy);
-        $stmt_numeracy->bind_param("sss", $grade, $section, $quarter);
-        $stmt_behavioral = $conn->prepare($sql_behavioral);
-        $stmt_behavioral->bind_param("sss", $grade, $section, $quarter);
-        $stmt_adviser = $conn->prepare($sql_adviser);
-        $stmt_adviser->bind_param("ss", $grade, $section);
+    // Prepare and bind
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $employment_number);
 
-        // Execute queries and fetch results
-        $stmt_english->execute();
-        $result_english = $stmt_english->get_result()->fetch_all(MYSQLI_ASSOC);
+    // Execute the statement
+    $stmt->execute();
 
-        $stmt_filipino->execute();
-        $result_filipino = $stmt_filipino->get_result()->fetch_all(MYSQLI_ASSOC);
+    // Bind the result
+    $stmt->bind_result($fullname);
 
-        $stmt_numeracy->execute();
-        $result_numeracy = $stmt_numeracy->get_result()->fetch_all(MYSQLI_ASSOC);
-
-        $stmt_behavioral->execute();
-        $result_behavioral = $stmt_behavioral->get_result()->fetch_all(MYSQLI_ASSOC);
-
-        // Fetch adviser details
-        $stmt_adviser->execute();
-        $result_adviser = $stmt_adviser->get_result()->fetch_assoc();
-        $fullname = $result_adviser['fullname'];
-        $employment_number = $result_adviser['employment_number'];
-
-        // Combine results from all tables into one array
-        $combined_results = array_merge($result_english, $result_filipino, $result_numeracy, $result_behavioral);
-
-        // Add $combined_results to $totalstudents
-        $totalstudents = array_merge($totalstudents ?? [], $combined_results);
-        $total_students_count = count($totalstudents);
-        // Close statements and connection
-        $stmt_english->close();
-        $stmt_filipino->close();
-        $stmt_numeracy->close();
-        $stmt_behavioral->close();
-        $stmt_adviser->close();
-        $conn->close();
-    } 
+    // Fetch the result
+    if ($stmt->fetch()) {
+    }   
+    $stmt->close();
+    $conn->close();
 ?>
 <?php
-if(isset($_GET['filename'])) {
-    $filename = $_GET['filename'];
-}
-?>
+    include('../../database.php');
+    $grade = $_GET['grade'];
+    $section = $_GET['section'];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    $lrnCounted = array(); // Array to keep track of LRNs already counted
 
+    foreach ($tables as $table) {
+        $sql = "SELECT lrn FROM $table WHERE grade = '$grade' AND section = '$section' AND school = 'Bacayao Sur Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $lrn = $row['lrn'];
+                if (!in_array($lrn, $lrnCounted)) {
+                    // If LRN not already counted, add it to the count and mark as counted
+                    $count++;
+                    $lrnCounted[] = $lrn;
+                }
+            }
+        }
+    }
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+
+    $sql_combined = "
+        SELECT lrn, fullname, status, 
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_english) THEN 'E'
+                ELSE '' 
+            END AS english,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_filipino) THEN 'F'
+                ELSE '' 
+            END AS filipino,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_numeracy) THEN 'N'
+                ELSE '' 
+            END AS numeracy,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM behavioral) THEN 'B'
+                ELSE '' 
+            END AS behavioral
+        FROM (
+            SELECT lrn, fullname, status FROM academic_english
+            UNION
+            SELECT lrn, fullname, status FROM academic_filipino
+            UNION
+            SELECT lrn, fullname, status FROM academic_numeracy
+            UNION
+            SELECT lrn, fullname, status FROM behavioral
+        ) AS combined_data
+    ";
+
+    $result_combined = $conn->query($sql_combined);
+
+    $conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -221,7 +240,7 @@ if(isset($_GET['filename'])) {
         <input class="response" type="text" value="<?php echo $grade .' - '. $section ?>" readonly>
         
         <p class="label">Total P.A.Rs</p>
-        <input class="response" type="text" value="<?php echo $total_students_count ?>" readonly>
+        <input class="response" type="text" value="<?php echo $count ?>" readonly>
     </div>
     </div>
     <table>
@@ -234,16 +253,35 @@ if(isset($_GET['filename'])) {
             </tr>
         </thead>
         <tbody>
-        <?php
-    foreach ($combined_results as $row) {
-        echo "<tr>";
-        echo "<td >" . htmlspecialchars($row['lrn']) . "</td>";
-        echo "<td >" . htmlspecialchars($row['fullname']) . "</td>";
-        echo "<td >" . htmlspecialchars($row['classification']) . "</td>";
-        echo "<td >" . htmlspecialchars($row['status']) . "</td>";
-        echo "</tr>";
+        <?php 
+if ($result_combined->num_rows > 0) {
+    while($row = $result_combined->fetch_assoc()) {
+?>
+        <tr class='sheshable'>
+            <th style='width:20%'><?php echo $row["lrn"]; ?></th>
+            <th style='width:25.7%'><?php echo $row["fullname"]; ?></th>
+            <th style='width:20%' class='act'>
+                <div class="icon-container">
+                    <?php if ($row["english"] === 'E'): ?>
+                        E
+                    <?php endif; ?>
+                    <?php if ($row["filipino"] === 'F'): ?>
+                        F
+                    <?php endif; ?>
+                    <?php if ($row["numeracy"] === 'N'): ?>
+                        N
+                    <?php endif; ?>
+                    <?php if ($row["behavioral"] === 'B'): ?>
+                        B
+                    <?php endif; ?>
+                </div>
+            </th>
+            <th style='width:20%'><?php echo $row["status"]; ?></th>
+        </tr>
+<?php
     }
-    ?>
+}
+?>
         </tbody>
     </table>
 </body>

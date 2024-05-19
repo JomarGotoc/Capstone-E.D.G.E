@@ -41,16 +41,17 @@
 ?>
 <?php
     if(isset($_POST['print'])) {
-        $filename = basename($_SERVER['PHP_SELF']);
+        // Get the filename without the extension
+        $filename_with_extension = basename($_SERVER['PHP_SELF']);
+        $filename = pathinfo($filename_with_extension, PATHINFO_FILENAME);
         $words = explode('_', $filename);
         
         if(count($words) >= 4) {
             $grade = $words[1];
             $section = $words[3];
             
-            
             $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
-            $filename1 = basename($_SERVER['PHP_SELF']);
+            $filename1 = $filename; // Use the filename without extension
             
             $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
             
@@ -59,6 +60,7 @@
         }
     }
 ?>
+
 <?php
     include('../../database.php');
     $filename = basename($_SERVER['PHP_SELF']);
@@ -1765,7 +1767,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/English.php'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
+            echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1797,7 +1799,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Filipino.php'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../../classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -1829,7 +1831,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Numeracy.php'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../../classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1861,7 +1863,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Behavioral.php'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
