@@ -505,6 +505,20 @@
             margin-top: 10px;
         }
 
+        .wide-columnsss {
+            flex: 0 0 calc(32% - 7px);
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .wide-columnss {
+            flex: 0 0 calc(23% - 7px);
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+
+        .wide-columnss .containers,
+        .wide-columnsss .containers,
         .wide-columns .containers, 
         .wide-column .containers{
             background-color: #190572;
@@ -604,6 +618,8 @@
             margin: 0;
         }
 
+        .wide-columnss h3,
+        .wide-columnsss h3,        
         .wide-column h3, 
         .wide-columns h3{
             color: #070000;
@@ -640,21 +656,34 @@
         }
 
         table{
+            margin-top: 20px;
             width:100%; 
             border-collapse: collapse
             
+        }
+
+        thead th{
+            color: #070000;
+            text-align: center;
+            background-color: #190572;
+            padding: .5px;
+            color: white;
+            font-size: 19px;
+            border-left: 2px solid white;
         }
 
         tr:nth-child(odd){
             text-align: center;
             justify-content: center;
             background-color: rgb(242, 242, 244);
+            font-weight: 600;
         }
 
         tr:nth-child(even){
             text-align: center;
             justify-content: center;
             background-color: #b7b7b7;
+            font-weight: 600;
         }
         .containers h3{
             color: #FFF;
@@ -671,6 +700,23 @@
         }
 
         .act button:hover {
+            background-color: #0C052F;
+        } 
+
+        .acts button {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color:#130550;
+        color: #fff;
+        width: 20rem;
+        padding: 5px 24px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .acts button:hover {
             background-color: #0C052F;
         } 
 
@@ -968,6 +1014,7 @@
             color: #130550;
             font-weight: bold;
             margin-left: 5px;
+            font-style: normal;
         }
         .legend-containers .legend-item{
             color: #130550;
@@ -1459,6 +1506,14 @@
             }
         }
 
+        .color-indicator {
+        width: 20px;
+        height: 10px;
+        display: inline-block;
+        margin-right: 10px;
+        border-radius: 5%;
+    }
+
         
     </style>
 </head>
@@ -1650,7 +1705,7 @@
                         <div class="checkbox-container checkbox-group">
                             <input type="radio" id="legend-checkbox-numeracy" name="academic_numeracy" class="checkbox">
                             <label for="legend-checkbox-numeracy">
-                                <i class="par-icon bx bx-calculator icon"></i>
+                                <i class="icon">N</i>
                                 Academic - Numeracy
                             </label>
                         </div>
@@ -1659,7 +1714,7 @@
                         <div class="checkbox-container checkbox-group">
                             <input type="radio" id="legend-checkbox-english-literacy" name="academic_english" class="checkbox">
                             <label for="legend-checkbox-english-literacy">
-                                <i class='bx bx-book-open icon'></i>
+                                <i class='icon'>E</i>
                                 Academic - Literacy in English
                             </label>
                         </div>
@@ -1670,7 +1725,7 @@
                         <div class="checkbox-container checkbox-group">
                             <input type="radio" id="legend-checkbox-behavioral" name="behavioral" class="checkbox">
                             <label for="legend-checkbox-behavioral">
-                                <i class="par-icon bx bx-face icon"></i>
+                                <i class="icon">B</i>
                                 Behavioral
                             </label>
                         </div>
@@ -1679,7 +1734,7 @@
                         <div class="checkbox-container checkbox-group">
                             <input type="radio" id="legend-checkbox-filipino-literacy" name="academic_filipino" class="checkbox">
                             <label for="legend-checkbox-filipino-literacy">
-                                <i class="par-icon bx bx-book-open icon"></i>
+                                <i class="icon">F</i>
                                 Academic - Literacy in Filipino
                             </label>
                         </div>
@@ -1688,6 +1743,12 @@
                 <!-- Hidden input field to store the selected checkbox's name -->
                 <input type="hidden" id="selected-checkbox" name="selected_checkbox">
             </form>
+            <div class="legend-container left-container color">
+                <div class="legend-item">
+                    <div class="checkbox-container checkbox-groups">
+                        <div class="color-indicator" style="background-color: green;"></div>
+                        <label for="legend-checkbox-pending">Pending</label>
+                </div>
                 </div>
 
 
@@ -1696,66 +1757,119 @@
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 2px;">LRN</h3>
+                    </div>
+
+
+
+        <div class="wide-row">
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">LRN</h3>
                 </div>
+                <div class="legend-item">
+                    <div class="checkbox-container checkbox-groups">
+                        <div class="color-indicator" style="background-color: yellow;"></div>
+                        <label for="legend-checkbox-ongoing">On-going</label>
+            </div>
             </div>
             <div class="wide-columns">
                 <div class="containers">
                     <h3 style="padding: 2px;">Pupil's Name </h3>
+                    </div>
+            <div class="wide-columns">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Pupil's Name </h3>
                 </div>
+                <div class="legend-item">
+                    <div class="checkbox-container checkbox-groups">
+                        <div class="color-indicator" style="background-color: red;"></div>
+                        <label for="legend-checkbox-resolved">Resolved</label>
+            </div>
             </div>
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 2px;">P.A.R. Identification</h3>
+                    </div>
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
                 </div>
+                <div class="legend-item">
+                    <div class="checkbox-container checkbox-groups" >
+                        <div class="color-indicator" style="background-color: #333333;"></div>
+                        <label for="legend-checkbox-unresolved">Unresolved</label>
             </div>
+            </div>
+
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Status</h3>
+                    </div>
 
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 2px;">Status</h3>
                 </div>
             </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Action</h3>
-                </div>
-            </div>
-        </div>
+
+
+
 
         <!---------------------------------- START ----------------------------------------->
     <!---------------------------------- ALL STUDENTS ----------------------------------------->
-    <table border="0" id="pupilTable">
+<table border="0" id="pupilTable">
+<thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
     <?php
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
         while ($row = $lrnresult->fetch_assoc()) {
             echo "<tr class='sheshable'>";
-            echo "<td style='width:20%'>" . $row["lrn"] . "</td>";
-            echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
-            echo "<td style='width:20%' class='act'>";
-            echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
-            echo "</div>";
-            echo "</td>";
-            echo "<td style='width:20%'>Pending</td>";
-            echo "<td style='width:25%' class='act'>";
-            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
-            echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-            echo "</td>";
-            echo "</tr>";
+                echo "<td style='width:20%'>" . $row["lrn"] . "</td>";
+                echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
+                echo "<td style='width:20%' class='act'>";
+                    echo "<div class='icon-container'>";
+                        echo "E<i onclick='showPupilRecordEnglish()'></i>";
+                        echo "<i class='vertical-lines'></i>";
+                        echo "F<i onclick='showPupilRecordFilipino()'></i>";
+                        echo "<i class='vertical-lines'></i>";
+                        echo "N<i onclick='showPupilRecordNumeracy()'></i>";
+                        echo "<i class='vertical-lines'></i>";
+                        echo "B<i onclick='showPupilRecordBehavioral()'></i>";
+                    echo "</div>";
+                echo "</td>";
+                echo "<td style='width:25%' class='act'>";
+                    echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
+                    echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
         }
-    }
-    ?>
+        ?>
+    </tbody>
 </table>
+
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
                         <!--------------- ACADEMIC ENGLISH ----------------------->
   <table border="0" id="identification-english" style="display: none;">
+  <thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:20%'>Status</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
   <?php
     if ($englishresult->num_rows > 0) {
         // Output data of each row
@@ -1765,7 +1879,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i></a>";
+            echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1783,11 +1897,21 @@
                     </div>
                 </td>
             </tr>
-
-        </table>
+        </tbody>
+</table>
 
                         <!--------------- ACADEMIC FILIPINO ----------------------->
     <table border="0" id="identification-filipino" style="display: none;">
+    <thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:20%'>Status</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
     <?php
     if ($filipinoresult->num_rows > 0) {
         // Output data of each row
@@ -1797,7 +1921,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../../classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>F<i onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -1815,11 +1939,21 @@
                     </div>
                 </td>
             </tr>
-
-        </table>
+            </tbody>
+</table>
 
                         <!--------------- ACADEMIC NUMERACY ----------------------->
-                        <table border="0" id="identification-numeracy" style="display: none;">
+    <table border="0" id="identification-numeracy" style="display: none;">
+    <thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:20%'>Status</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
         <?php
     if ($numeracyresult->num_rows > 0) {
         // Output data of each row
@@ -1829,7 +1963,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> <i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../../classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1847,11 +1981,21 @@
                     </div>
                 </td>
             </tr>
-
-        </table>
+            </tbody>
+</table>
 
                         <!--------------- BEHAVIORAL ----------------------->
-                        <table border="0" id="identification-behavioral" style="display: none;">
+        <table border="0" id="identification-behavioral" style="display: none;">
+        <thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:20%'>Status</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
         <?php
     if ($behavioalresult->num_rows > 0) {
         // Output data of each row
@@ -1861,7 +2005,7 @@
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -1879,12 +2023,21 @@
                     </div>
                 </td>
             </tr>
-
-        </table>
+            </tbody>
+</table>
 
  <!---------------------------------- ALL PAR  ----------------------------------------->    
 <form method="post">
 <table border="0" id="parlist" style="display: none;">
+<thead>
+        <tr>
+            <th style='width:20%'>LRN</th>
+            <th style='width:25.7%'>Pupil's Name</th>
+            <th style='width:20%'>P.A.R. Identification</th>
+            <th style='width:25%'>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
 <?php 
 if ($result_combined->num_rows > 0) {
     while($row = $result_combined->fetch_assoc()) {
@@ -1895,28 +2048,28 @@ if ($result_combined->num_rows > 0) {
             <th style='width:20%' class='act'>
                 <div class="icon-container">
                     <?php if ($row["english"] === 'E'): ?>
-                        E<i class='bx bx-book-open icon' onclick="showPupilRecordEnglish()"></i>
+                        E<i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
-                        F<i class='bx bx-book-open icon' onclick="showPupilRecordFilipino()"></i>
+                        F<i  onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
-                        N<i class='par-icon bx bx-calculator icon' onclick="showPupilRecordNumeracy()"></i>
+                        N<i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
-                        B<i class='par-icon bx bx-face icon' onclick="showPupilRecordBehavioral()"></i>
+                        B<i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
-            <th style='width:20%'><?php echo $row["status"]; ?></th>
             <th style='width:25%' class='act'>
                 <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
             </th>
         </tr>
-<?php
-    }
-}
-?>
+        <?php
+            }
+        }
+        ?>
+    </tbody>
 </table>
 
 
