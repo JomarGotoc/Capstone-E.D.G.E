@@ -1,6 +1,263 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
     
+    
+    include("../../database.php");
+    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
+    $words = explode('_', $filenameWithoutExtension);
+
+    if (count($words) >= 4) {
+        $secondWord = $words[1];
+        $fourthWord = $words[3];
+        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
+        $result1 = $conn->query($sql);
+        $result2 = $conn->query($sql);
+    } 
+?>
+<?php
+    include('../../database.php');
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $words[1];
+    $fourthWord = $words[3];
+    $tables = ['academic_english', 'academic_filipino', 'academic_numeracy', 'behavioral'];
+    $count = 0;
+    $lrnCounted = array(); // Array to keep track of LRNs already counted
+
+    foreach ($tables as $table) {
+        $sql = "SELECT lrn FROM $table WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $lrn = $row['lrn'];
+                if (!in_array($lrn, $lrnCounted)) {
+                    // If LRN not already counted, add it to the count and mark as counted
+                    $count++;
+                    $lrnCounted[] = $lrn;
+                }
+            }
+        }
+    }
+    $conn->close();
+?>
+<?php
+    if(isset($_POST['print'])) {
+        $filename = basename($_SERVER['PHP_SELF']);
+        $words = explode('_', $filename);
+        
+        if(count($words) >= 4) {
+            $grade = $words[1];
+            $section = $words[3];
+            
+            
+            $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+            $filename1 = basename($_SERVER['PHP_SELF']);
+            
+            $redirect_url = "adviser_dashboard_print.php?grade=$grade&section=$section&employment_number=$employment_number&filename=$filename1&quarter=1";
+            
+            header("Location: $redirect_url");
+            exit();
+        }
+    }
+?>
+<?php
+    include('../../database.php');
+    $filename = basename($_SERVER['PHP_SELF']);
+
+    $tablename = strtolower(str_replace('.php', '', $filename));
+
+    $sql = "SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
+
+    $lrnresult = $conn->query($sql);
+
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+
+    $sql_combined = "
+        SELECT lrn, fullname, status, 
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_english) THEN 'E'
+                ELSE '' 
+            END AS english,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_filipino) THEN 'F'
+                ELSE '' 
+            END AS filipino,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM academic_numeracy) THEN 'N'
+                ELSE '' 
+            END AS numeracy,
+            CASE 
+                WHEN lrn IN (SELECT lrn FROM behavioral) THEN 'B'
+                ELSE '' 
+            END AS behavioral
+        FROM (
+            SELECT lrn, fullname, status FROM academic_english
+            UNION
+            SELECT lrn, fullname, status FROM academic_filipino
+            UNION
+            SELECT lrn, fullname, status FROM academic_numeracy
+            UNION
+            SELECT lrn, fullname, status FROM behavioral
+        ) AS combined_data
+    ";
+
+    $result_combined = $conn->query($sql_combined);
+
+    $conn->close();
+?>
+<?php
+
+    $filename = basename(__FILE__, '.php');
+    $parts = explode('_', $filename);
+    $grade = $parts[1]; // Second word
+    $section = $parts[3]; // Fourth word
+
+    // School
+    $school = "Bacayao Sur Elementary School";
+
+    include('../../database.php');
+
+    // SQL query to retrieve LRN, fullname, and status
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_english WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
+
+    $englishresult = $conn->query($sql);
+
+    $conn->close();
+?>
+<?php
+
+    $filename = basename(__FILE__, '.php');
+    $parts = explode('_', $filename);
+    $grade = $parts[1]; // Second word
+    $section = $parts[3]; // Fourth word
+
+    // School
+    $school = "Bacayao Sur Elementary School";
+
+    include('../../database.php');
+
+    // SQL query to retrieve LRN, fullname, and status
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_filipino WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
+
+    $filipinoresult = $conn->query($sql);
+
+    $conn->close();
+?>
+<?php
+
+    $filename = basename(__FILE__, '.php');
+    $parts = explode('_', $filename);
+    $grade = $parts[1]; // Second word
+    $section = $parts[3]; // Fourth word
+
+    // School
+    $school = "Bacayao Sur Elementary School";
+
+    include('../../database.php');
+
+    // SQL query to retrieve LRN, fullname, and status
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM academic_numeracy WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
+
+    $numeracyresult = $conn->query($sql);
+
+    $conn->close();
+?>
+<?php
+
+    $filename = basename(__FILE__, '.php');
+    $parts = explode('_', $filename);
+    $grade = $parts[1]; // Second word
+    $section = $parts[3]; // Fourth word
+
+    // School
+    $school = "Bacayao Sur Elementary School";
+
+    include('../../database.php');
+
+    // SQL query to retrieve LRN, fullname, and status
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM behavioral WHERE grade = '$grade' AND section = '$section' AND school = '$school' AND quarter = $selectedQuarter";
+
+    $behavioalresult = $conn->query($sql);
+
+    $conn->close();
+?>
+<?php
+    include('../../database.php');
+    $query = "SELECT start, end FROM school_year ORDER BY start DESC";
+    $result = mysqli_query($conn, $query);
+
+    // Array to store all school year options
+    $school_years = array();
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $start_year = $row['start'];
+            $end_year = $row['end'];
+            $school_years[$start_year] = $start_year . ' - ' . $end_year;
+        }
+    }
+
+    // Close database conn
+    mysqli_close($conn);
+?>
+<?php
+    $filename = basename($_SERVER['PHP_SELF']);
+    $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+?>
+<?php
+    include('../../database.php');
+    if(isset($_GET['employment_number'])) {
+        $employment_number = $_GET['employment_number'];
+        $sql = "SELECT fullname FROM adviser WHERE employment_number = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $employment_number);
+        $stmt->execute();
+        $stmt->bind_result($advisername);
+        if($stmt->fetch()) {
+        }
+        $stmt->close();
+    } 
+    $conn->close();
+?>
+<?php 
+    if(isset($_POST['quarter'])) {
+        $quarter = $_POST['quarter'];
+    } else {
+        $quarter = '1';
+    }
+?>
+<?php
+    include('../../database.php');
+    $tables = array(
+        'academic_english',
+        'academic_filipino',
+        'academic_numeracy',
+        'behavioral'
+    );
+    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["remove"])) {
+        $lrn = $_POST['lrn'];
+        if(isset($_POST['quarter'])) {
+            $quarter = $_POST['quarter'];
+        } else {
+            $quarter = '1';
+        }
+
+        foreach ($tables as $table) {
+            $sql = "DELETE FROM $table WHERE lrn = '$lrn' AND quarter = '$quarter'";
+            mysqli_query($conn, $sql);
+        }
+        header("Location: " . $_SERVER['PHP_SELF']);
+        exit; 
+    }
+?>
+
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -580,6 +837,7 @@
             color: #190572;
         }
 
+        #quarterSelect,
         #topdown {
             padding: 1px;
             width: 437px;
@@ -1314,7 +1572,6 @@
         .seconds{
             border-radius: 3px;
             text-align: center;
-            font-family: "Darker Grotesque";
         }
 
         .seconds h3{
@@ -1646,7 +1903,7 @@
             <div class="column column-right">
                 <div class="select-wrapper1">
                 <form id="quarterForm1" method="post" action="">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()" class="containerss seconds" style="background-color: #F3F3F3; color:#130550">
                         <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
                         <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
                         <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
@@ -1740,7 +1997,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Hidden input field to store the selected checkbox's name -->
+
+
                 <input type="hidden" id="selected-checkbox" name="selected_checkbox">
             </form>
             <div class="legend-container left-container color">
@@ -1748,29 +2006,24 @@
                     <div class="checkbox-container checkbox-groups">
                         <div class="color-indicator" style="background-color: green;"></div>
                         <label for="legend-checkbox-pending">Pending</label>
-                </div>
-                </div>
-
-
-
-        <div class="wide-row">
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">LRN</h3>
                     </div>
-
-
-
-        <div class="wide-row">
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">LRN</h3>
                 </div>
+
                 <div class="legend-item">
                     <div class="checkbox-container checkbox-groups">
                         <div class="color-indicator" style="background-color: yellow;"></div>
                         <label for="legend-checkbox-ongoing">On-going</label>
             </div>
+            </div>
+            </div>
+            <div class="wide-columns">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Pupil's Name </h3>
+                    </div>
+            <div class="wide-columns">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Pupil's Name </h3>
+                    </div>
             </div>
             <div class="wide-columns">
                 <div class="containers">
@@ -1786,6 +2039,16 @@
                         <label for="legend-checkbox-resolved">Resolved</label>
             </div>
             </div>
+            </div>
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
+                    </div>
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
+                    </div>
+            </div>
             <div class="wide-column">
                 <div class="containers">
                     <h3 style="padding: 2px;">P.A.R. Identification</h3>
@@ -1800,6 +2063,18 @@
                         <label for="legend-checkbox-unresolved">Unresolved</label>
             </div>
             </div>
+            </div>
+
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Status</h3>
+                    </div>
+
+            <div class="wide-column">
+                <div class="containers">
+                    <h3 style="padding: 2px;">Status</h3>
+                    </div>
+            </div>
 
             <div class="wide-column">
                 <div class="containers">
@@ -1810,7 +2085,7 @@
                 <div class="containers">
                     <h3 style="padding: 2px;">Status</h3>
                 </div>
-            </div>
+                </div>
 
 
 
