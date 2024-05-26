@@ -1,37 +1,17 @@
 <?php
-    $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
 
-    $currentFileName1 = basename(__FILE__,'_q1.php');
-    $currentFileName1 = $currentFileName1 . '.php?employment_number=' . $_GET['employment_number'];
+    // School
+    $school = "Bacayao Sur Elementary School";
 
-    $currentFileName2 = basename(__FILE__,'_q1.php');
-    
-    include("../../database.php");
-    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
-    $words = explode('_', $filenameWithoutExtension);
+    include('../../database.php');
 
-    if (count($words) >= 4) {
-        $secondWord = $words[1];
-        $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
-        $result1 = $conn->query($sql);
-        $result2 = $conn->query($sql);
-    } 
-?>
-<?php
-include('../../database.php');
+    // SQL query to retrieve LRN, fullname, and status
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $sql = "SELECT lrn, fullname, status FROM behavioral WHERE school = '$school' AND quarter = $selectedQuarter";
 
-// SQL query
-$sql = "SELECT lrn, fullname, status
-        FROM behavioral
-        WHERE quarter = 1
-        AND school = 'Bacayao Sur Elementary School'";
+    $behavioalresult = $conn->query($sql);
 
-// Execute query
-$result = $conn->query($sql);
-
-// Close connection
-$conn->close();
+    $conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -1377,13 +1357,14 @@ $conn->close();
             </div>
             <div class="column column-right">
                 <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                        <option value="" disabled selected hidden>Quarter 1</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
+                <form id="quarterForm1" method="post" action="">
+                    <select id="quarterSelect" name="quarter" onchange="submitForm()">
+                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
+                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
+                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
+                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
                     </select>
+                </form>
                 </div>
             </div>
         </div>
@@ -1441,31 +1422,36 @@ $conn->close();
             </div>
         </div>
 
-        <table border="0" id="pupilTable">
+        <table border="0" id="identification-behavioral">
     <?php
-    // PHP Logic to populate table rows
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-    ?>
-    <tr class='sheshable'>
-        <td><?php echo $row["lrn"]; ?></td>
-        <td><?php echo $row["fullname"]; ?></td>
-        <th style='width:13%' class='act'>
-            <div class="icon-container">
-                <i class="par-icon bx bx-face icon" onclick="showPupilRecord()"></i>
-            </div>
-        </th>
-        <th style='width:16%'><?php echo $row["status"]; ?></th>
-        <th style='width:14%' class='act'>
-            <button class='updateRecordButton'>ADD PUPIL AT RISK</button>
-            <button type="submit" name="submit1" style="display:none; background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
-        </th>
-    </tr>
-    <?php
+    if ($behavioalresult->num_rows > 0) {
+        // Output data of each row
+        while ($row = $behavioalresult->fetch_assoc()) {
+            echo "<tr class='sheshable'>";
+            echo "<th style='width:20%'>" . $row["lrn"] . "</th>";
+            echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
+            echo "<th style='width:20%' class='act'>";
+            echo "<div class='icon-container'>";
+            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "&quarter=" . (isset($_POST['quarter']) ? $_POST['quarter'] : '1') . "'><i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "</div>";
+            echo "</th>";
+            echo "<th style='width:20%'>" . $row["status"] . "</th>";
+            echo "<th style='width:25%' class='act'>";
+            echo "<button type='submit' name='submit1' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</th>";
+            echo "</tr>";
         }
     }
     ?>
+    <tr>
+        <td colspan="5">
+            <div class="save">
+                <a href="update_all_records/update_behavioral.php"><button id="save">Update All Records</button></a>
+            </div>
+        </td>
+    </tr>
 </table>
+
 
     </div>
 
@@ -1843,7 +1829,10 @@ var rowsPerPageDataTable = 8;
     document.getElementById('nextbutton').addEventListener('click', nextPage);
 
 </script>
-    
- 
+<script>
+    function submitForm() {
+        document.getElementById('quarterForm1').submit();
+    }
+</script>
 </body>
 </html>
