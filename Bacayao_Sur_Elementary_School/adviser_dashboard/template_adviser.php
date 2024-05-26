@@ -1,7 +1,6 @@
 <?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
     
-    
     include("../../database.php");
     $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
     $words = explode('_', $filenameWithoutExtension);
@@ -256,19 +255,6 @@
         header("Location: " . $_SERVER['PHP_SELF']);
         exit; 
     }
-?>
-
-    include("../../database.php");
-    $filenameWithoutExtension = pathinfo($currentFileName, PATHINFO_FILENAME);
-    $words = explode('_', $filenameWithoutExtension);
-
-    if (count($words) >= 4) {
-        $secondWord = $words[1];
-        $fourthWord = $words[3];
-        $sql = "SELECT employment_number, fullname FROM adviser WHERE grade = '$secondWord' AND section = '$fourthWord' AND school = 'Bacayao Sur Elementary School'";
-        $result1 = $conn->query($sql);
-        $result2 = $conn->query($sql);
-    } 
 ?>
 <?php
     include('../../database.php');
