@@ -1135,12 +1135,51 @@
         padding-top: 4px;
         padding-bottom: 4px;
     }
+    .checkbox-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .checkbox-item:last-child {
+            margin-right: 0;
+        }
+        .checkbox-item input {
+            margin-right: 5px;
+            width: 20px; /* Increase size of checkbox */
+            height: 20px; /* Increase size of checkbox */
+        }
+        .checkbox-item label {
+            font-size: 1.2em; /* Increase size of label text */
+        }
+    
     </style>
 </head>
 <body>
     <form action="" method="" class="form-container english" id="englishForm">
-            <div class="main-containers">
-            <h3 class="record_header">BEHAVIORAL RECORD</h3>
+    <div class="main-containers">
+            <div class="checkbox-container">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="checkbox1" name="checkbox1">
+                    <label for="checkbox1">English</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="checkbox2" name="checkbox2">
+                    <label for="checkbox2">Filipino</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="checkbox3" name="checkbox3">
+                    <label for="checkbox3">Numeracy</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="checkbox4" name="checkbox4">
+                    <label for="checkbox4">Behavioral</label>
+                </div>
+            </div>
                 <div class="rows">
                 <div class="column">
                 <div class="containers" style="background-color: #190572;">
@@ -1185,7 +1224,7 @@
                     <div class="columns half-widths">
                         <div class="select-wrapper">
                             <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="" disabled selected hidden>Status</option>
                                 <option value="On-Going">On-Going</option>
                                 <option value="Resolved">Resolved</option>
                                 <option value="Unresolved">Unresolved</option>
@@ -1286,6 +1325,19 @@
             </div>
 
 <script >
+    function redirectToQuarter() {
+            var status = document.getElementById('topdown2').value;
+            if (status) {
+                window.location.href = status + '.html';
+            }
+        }
+
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('checkbox');
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false;
+            });
+        }
 
     document.getElementById('saveButton').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission
