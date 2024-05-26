@@ -1730,23 +1730,43 @@
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
         while ($row = $lrnresult->fetch_assoc()) {
+            // Check if LRN exists in the different tables
+            $lrn = $row['lrn'];
+            $showE = $showF = $showN = $showB = '';
+
+            // Assuming $conn is your database connection
+            $queryE = "SELECT 1 FROM academic_english WHERE lrn = '$lrn' LIMIT 1";
+            $queryF = "SELECT 1 FROM academic_filipino WHERE lrn = '$lrn' LIMIT 1";
+            $queryN = "SELECT 1 FROM academic_numeracy WHERE lrn = '$lrn' LIMIT 1";
+            $queryB = "SELECT 1 FROM behavioral WHERE lrn = '$lrn' LIMIT 1";
+
+            if ($conn->query($queryE)->num_rows > 0) {
+                $showE = 'E';
+            }
+            if ($conn->query($queryF)->num_rows > 0) {
+                $showF = 'F';
+            }
+            if ($conn->query($queryN)->num_rows > 0) {
+                $showN = 'N';
+            }
+            if ($conn->query($queryB)->num_rows > 0) {
+                $showB = 'B';
+            }
+
             echo "<tr class='sheshable'>";
-            echo "<td style='width:20%'>" . $row["lrn"] . "</td>";
+            echo "<td style='width:20%'>" . $lrn . "</td>";
             echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
             echo "<td style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "E<i class='bx bx-book-open icon' onclick='showPupilRecordEnglish()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "F<i class='bx bx-book-open icon' onclick='showPupilRecordFilipino()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-calculator icon' onclick='showPupilRecordNumeracy()'></i>";
-            echo "<i class='vertical-lines'></i>";
-            echo "<i class='par-icon bx bx-face icon' onclick='showPupilRecordBehavioral()'></i>";
+            if ($showE) echo $showE . "<i class='vertical-lines'></i>";
+            if ($showF) echo $showF . "<i class='vertical-lines'></i>";
+            if ($showN) echo $showN . "<i class='vertical-lines'></i>";
+            if ($showB) echo $showB;
             echo "</div>";
             echo "</td>";
             echo "<td style='width:20%'>Pending</td>";
             echo "<td style='width:25%' class='act'>";
-            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
+            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$lrn}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
             echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
             echo "</td>";
             echo "</tr>";
@@ -1754,6 +1774,7 @@
     }
     ?>
 </table>
+
 
   <!---------------------------------- FOUR CLASSIFICATIONS ----------------------------------------->
                         <!--------------- ACADEMIC ENGLISH ----------------------->
