@@ -1571,7 +1571,7 @@
             color:#130550;
             font-weight: 500;
             font-size: 15px;
-            width: 400px;
+            width: 427px;
             margin-left: 10px;
             border: none;
             background: none;
@@ -1999,81 +1999,23 @@
                     <div class="checkbox-container checkbox-groups">
                         <div class="color-indicator" style="background-color: yellow;"></div>
                         <label for="legend-checkbox-ongoing">On-going</label>
-            </div>
-            </div>
-            </div>
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Pupil's Name </h3>
                     </div>
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Pupil's Name </h3>
-                    </div>
-            </div>
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Pupil's Name </h3>
-                    </div>
-            <div class="wide-columns">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Pupil's Name </h3>
                 </div>
+
                 <div class="legend-item">
                     <div class="checkbox-container checkbox-groups">
                         <div class="color-indicator" style="background-color: red;"></div>
                         <label for="legend-checkbox-resolved">Resolved</label>
-            </div>
-            </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
                     </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
-                    </div>
-            </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
-                    </div>
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">P.A.R. Identification</h3>
                 </div>
+
                 <div class="legend-item">
                     <div class="checkbox-container checkbox-groups" >
                         <div class="color-indicator" style="background-color: #333333;"></div>
                         <label for="legend-checkbox-unresolved">Unresolved</label>
-            </div>
-            </div>
-            </div>
-
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Status</h3>
                     </div>
-
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Status</h3>
-                    </div>
-            </div>
-
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Status</h3>
-                    </div>
-
-            <div class="wide-column">
-                <div class="containers">
-                    <h3 style="padding: 2px;">Status</h3>
                 </div>
-                </div>
-
-
+            </div>
 
 
         <!---------------------------------- START ----------------------------------------->
