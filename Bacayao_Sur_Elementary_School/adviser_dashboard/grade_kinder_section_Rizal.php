@@ -76,32 +76,33 @@
 <?php
     include('../../database.php');
 
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
     $sql_combined = "
         SELECT lrn, fullname, status, 
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_english) THEN 'E'
+                WHEN lrn IN (SELECT lrn FROM academic_english WHERE quarter = $selectedQuarter) THEN 'E'
                 ELSE '' 
             END AS english,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_filipino) THEN 'F'
+                WHEN lrn IN (SELECT lrn FROM academic_filipino WHERE quarter = $selectedQuarter) THEN 'F'
                 ELSE '' 
             END AS filipino,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_numeracy) THEN 'N'
+                WHEN lrn IN (SELECT lrn FROM academic_numeracy WHERE quarter = $selectedQuarter) THEN 'N'
                 ELSE '' 
             END AS numeracy,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM behavioral) THEN 'B'
+                WHEN lrn IN (SELECT lrn FROM behavioral WHERE quarter = $selectedQuarter) THEN 'B'
                 ELSE '' 
             END AS behavioral
         FROM (
-            SELECT lrn, fullname, status FROM academic_english
+            SELECT lrn, fullname, status FROM academic_english WHERE quarter = $selectedQuarter
             UNION
-            SELECT lrn, fullname, status FROM academic_filipino
+            SELECT lrn, fullname, status FROM academic_filipino WHERE quarter = $selectedQuarter
             UNION
-            SELECT lrn, fullname, status FROM academic_numeracy
+            SELECT lrn, fullname, status FROM academic_numeracy WHERE quarter = $selectedQuarter
             UNION
-            SELECT lrn, fullname, status FROM behavioral
+            SELECT lrn, fullname, status FROM behavioral WHERE quarter = $selectedQuarter
         ) AS combined_data
     ";
 
@@ -109,6 +110,7 @@
 
     $conn->close();
 ?>
+
 <?php
 
     $filename = basename(__FILE__, '.php');
