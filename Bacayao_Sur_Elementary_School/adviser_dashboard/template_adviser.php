@@ -63,12 +63,26 @@
     include('../../database.php');
     $filename = basename($_SERVER['PHP_SELF']);
 
+    // Split the filename by underscores
+    $filename_parts = explode('_', $filename);
+
+    // Get the 2nd and 4th word (assuming zero-based index)
+    $second_word = isset($filename_parts[1]) ? $filename_parts[1] : '';
+    $fourth_word = isset($filename_parts[3]) ? $filename_parts[3] : '';
+
+    // Get the tablename from the filename
     $tablename = strtolower(str_replace('.php', '', $filename));
 
-    $sql = "SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
+    // Prepare and bind the parameters for the SQL query
+    $stmt = $conn->prepare("SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School' AND grade = ? AND section = ?");
+    $stmt->bind_param("ss", $second_word, $fourth_word);
 
-    $lrnresult = $conn->query($sql);
+    // Execute the statement
+    $stmt->execute();
+    $lrnresult = $stmt->get_result();
 
+    // Close the statement
+    $stmt->close();
     $conn->close();
 ?>
 <?php
@@ -304,45 +318,81 @@
 ?>
 <?php
     include('../../database.php');
-    $filename = basename($_SERVER['PHP_SELF']);
 
-    $tablename = strtolower(str_replace('.php', '', $filename));
+    // Get the filename and tablename
+    $filename = basename($_SERVER['PHP_SELF'], '.php');
+    $tablename = strtolower($filename);
 
-    $sql = "SELECT lrn, fullname, school, grade, section FROM $tablename WHERE school = 'Bacayao Sur Elementary School'";
+    // Split the filename into words
+    $words = explode('_', $filename);
 
-    $lrnresult = $conn->query($sql);
+    // Ensure we have enough words to avoid undefined index errors
+    if (count($words) >= 4) {
+        // Sanitize the inputs
+        $secondWord = $conn->real_escape_string($words[1]);
+        $fourthWord = $conn->real_escape_string($words[3]);
 
-    $conn->close();
+        // Prepare the SQL query
+        $sql = "SELECT lrn, fullname, school, grade, section 
+                FROM $tablename 
+                WHERE school = 'Bacayao Sur Elementary School' 
+                AND grade = '$secondWord' 
+                AND section = '$fourthWord'";
+
+        // Execute the query
+        $lrnresult = $conn->query($sql);
+
+        // Check for errors
+        if ($conn->error) {
+            echo "Error: " . $conn->error;
+        } else {
+        }
+
+        // Close the connection
+        $conn->close();
+    } else {
+        echo "Filename does not contain enough parts to extract grade and section.";
+    }
 ?>
 <?php
     include('../../database.php');
 
+    $selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+    $filename = basename(__FILE__, '.php');
+    $words = explode('_', $filename);
+    $secondWord = $conn->real_escape_string($words[1]);
+    $fourthWord = $conn->real_escape_string($words[3]);
+
     $sql_combined = "
-        SELECT lrn, fullname, status, 
+        SELECT lrn, fullname, 
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_english) THEN 'E'
+                WHEN lrn IN (SELECT lrn FROM academic_english WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord') THEN 'E'
                 ELSE '' 
             END AS english,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_filipino) THEN 'F'
+                WHEN lrn IN (SELECT lrn FROM academic_filipino WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord') THEN 'F'
                 ELSE '' 
             END AS filipino,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM academic_numeracy) THEN 'N'
+                WHEN lrn IN (SELECT lrn FROM academic_numeracy WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord') THEN 'N'
                 ELSE '' 
             END AS numeracy,
             CASE 
-                WHEN lrn IN (SELECT lrn FROM behavioral) THEN 'B'
+                WHEN lrn IN (SELECT lrn FROM behavioral WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord') THEN 'B'
                 ELSE '' 
-            END AS behavioral
+            END AS behavioral,
+            (SELECT status FROM academic_english WHERE lrn = combined_data.lrn AND quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord' LIMIT 1) AS english_status,
+            (SELECT status FROM academic_filipino WHERE lrn = combined_data.lrn AND quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord' LIMIT 1) AS filipino_status,
+            (SELECT status FROM academic_numeracy WHERE lrn = combined_data.lrn AND quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord' LIMIT 1) AS numeracy_status,
+            (SELECT status FROM behavioral WHERE lrn = combined_data.lrn AND quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord' LIMIT 1) AS behavioral_status
         FROM (
-            SELECT lrn, fullname, status FROM academic_english
+            SELECT lrn, fullname FROM academic_english WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord'
             UNION
-            SELECT lrn, fullname, status FROM academic_filipino
+            SELECT lrn, fullname FROM academic_filipino WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord'
             UNION
-            SELECT lrn, fullname, status FROM academic_numeracy
+            SELECT lrn, fullname FROM academic_numeracy WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord'
             UNION
-            SELECT lrn, fullname, status FROM behavioral
+            SELECT lrn, fullname FROM behavioral WHERE quarter = $selectedQuarter AND grade = '$secondWord' AND section = '$fourthWord'
         ) AS combined_data
     ";
 
@@ -497,6 +547,132 @@
         }
         header("Location: " . $_SERVER['PHP_SELF']);
         exit; 
+    }
+?>
+<?php
+    // Check if the delete button was clicked
+    if (isset($_POST['delete1'])) {
+        $lrn = $_POST['lrn'];
+        $english = $_POST['english'];
+        $filipino = $_POST['filipino'];
+        $numeracy = $_POST['numeracy'];
+        $behavioral = $_POST['behavioral'];
+
+        include('../../database.php');
+
+        // Delete records from the relevant tables based on the conditions
+        if ($english === 'E') {
+            $sql_english = "DELETE FROM academic_english WHERE lrn = '$lrn'";
+            $conn->query($sql_english);
+        }
+        if ($filipino === 'F') {
+            $sql_filipino = "DELETE FROM academic_filipino WHERE lrn = '$lrn'";
+            $conn->query($sql_filipino);
+        }
+        if ($numeracy === 'N') {
+            $sql_numeracy = "DELETE FROM academic_numeracy WHERE lrn = '$lrn'";
+            $conn->query($sql_numeracy);
+        }
+        if ($behavioral === 'B') {
+            $sql_behavioral = "DELETE FROM behavioral WHERE lrn = '$lrn'";
+            $conn->query($sql_behavioral);
+        }
+
+        // Close the connection
+        $conn->close();
+
+        // Redirect to avoid resubmission on page refresh
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: " . $_SERVER['PHP_SELF'] . "?employment_number=" . $employment_number);
+        exit();
+    }
+?>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete2'])) {
+        // Get the LRN from the form submission
+        $lrn = $_POST['lrn'];
+
+        include('../../database.php');
+        // Prepare the DELETE statement
+        $stmt = $conn->prepare("DELETE FROM academic_english WHERE lrn = ?");
+        $stmt->bind_param("s", $lrn);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+        } else {
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: " . $_SERVER['PHP_SELF'] . "?employment_number=" . $employment_number);
+        exit();
+    }
+?>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete3'])) {
+        // Get the LRN from the form submission
+        $lrn = $_POST['lrn'];
+
+        include('../../database.php');
+        // Prepare the DELETE statement
+        $stmt = $conn->prepare("DELETE FROM academic_filipino WHERE lrn = ?");
+        $stmt->bind_param("s", $lrn);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+        } else {
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: " . $_SERVER['PHP_SELF'] . "?employment_number=" . $employment_number);
+        exit();
+    }
+?>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete4'])) {
+        // Get the LRN from the form submission
+        $lrn = $_POST['lrn'];
+
+        include('../../database.php');
+        // Prepare the DELETE statement
+        $stmt = $conn->prepare("DELETE FROM academic_numeracy WHERE lrn = ?");
+        $stmt->bind_param("s", $lrn);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+        } else {
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: " . $_SERVER['PHP_SELF'] . "?employment_number=" . $employment_number);
+        exit();
+    }
+?>
+<?php
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete5'])) {
+        // Get the LRN from the form submission
+        $lrn = $_POST['lrn'];
+
+        include('../../database.php');
+        // Prepare the DELETE statement
+        $stmt = $conn->prepare("DELETE FROM behavioral WHERE lrn = ?");
+        $stmt->bind_param("s", $lrn);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+        } else {
+        }
+
+        // Close the statement and connection
+        $stmt->close();
+        $employment_number = isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value';
+        header("Location: " . $_SERVER['PHP_SELF'] . "?employment_number=" . $employment_number);
+        exit();
     }
 ?>
 <!DOCTYPE html>
@@ -2034,28 +2210,47 @@
     if ($lrnresult->num_rows > 0) {
         // Output data of each row
         while ($row = $lrnresult->fetch_assoc()) {
-            echo "<tr class='sheshable'>";
-                echo "<td style='width:20%'>" . $row["lrn"] . "</td>";
-                echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
-                echo "<td style='width:20%' class='act'>";
-                    echo "<div class='icon-container'>";
-                        echo "E<i onclick='showPupilRecordEnglish()'></i>";
-                        echo "<i class='vertical-lines'></i>";
-                        echo "F<i onclick='showPupilRecordFilipino()'></i>";
-                        echo "<i class='vertical-lines'></i>";
-                        echo "N<i onclick='showPupilRecordNumeracy()'></i>";
-                        echo "<i class='vertical-lines'></i>";
-                        echo "B<i onclick='showPupilRecordBehavioral()'></i>";
-                    echo "</div>";
-                echo "</td>";
-                echo "<td style='width:25%' class='act'>";
-                    echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$row['lrn']}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
-                    echo "<button type='submit' name='submit1' style='display:none; background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-                echo "</td>";
-                echo "</tr>";
+            // Check if LRN exists in the different tables
+            $lrn = $row['lrn'];
+            $showE = $showF = $showN = $showB = '';
+
+            // Assuming $conn is your database connection
+            $queryE = "SELECT 1 FROM academic_english WHERE lrn = '$lrn' LIMIT 1";
+            $queryF = "SELECT 1 FROM academic_filipino WHERE lrn = '$lrn' LIMIT 1";
+            $queryN = "SELECT 1 FROM academic_numeracy WHERE lrn = '$lrn' LIMIT 1";
+            $queryB = "SELECT 1 FROM behavioral WHERE lrn = '$lrn' LIMIT 1";
+
+            if ($conn->query($queryE)->num_rows > 0) {
+                $showE = 'E';
             }
+            if ($conn->query($queryF)->num_rows > 0) {
+                $showF = 'F';
+            }
+            if ($conn->query($queryN)->num_rows > 0) {
+                $showN = 'N';
+            }
+            if ($conn->query($queryB)->num_rows > 0) {
+                $showB = 'B';
+            }
+
+            echo "<tr class='sheshable'>";
+            echo "<td style='width:20%'>" . $lrn . "</td>";
+            echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
+            echo "<td style='width:20%' class='act'>";
+            echo "<div class='icon-container'>";
+            if ($showE) echo $showE . "<i class='vertical-lines'></i>";
+            if ($showF) echo $showF . "<i class='vertical-lines'></i>";
+            if ($showN) echo $showN . "<i class='vertical-lines'></i>";
+            if ($showB) echo $showB;
+            echo "</div>";
+            echo "</td>";
+            echo "<td style='width:25%' class='act'>";
+            echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$lrn}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
+            echo "</td>";
+            echo "</tr>";
         }
-        ?>
+    }
+    ?>
     </tbody>
 </table>
 
@@ -2073,26 +2268,31 @@
         </tr>
     </thead>
     <tbody>
-  <?php
-    if ($englishresult->num_rows > 0) {
-        // Output data of each row
-        while ($row = $englishresult->fetch_assoc()) {
-            echo "<tr class='sheshable'>";
-            echo "<th style='width:20%'>" . $row["lrn"] . "</th>";
-            echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
-            echo "<th style='width:20%' class='act'>";
-            echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
-            echo "</div>";
-            echo "</th>";
-            echo "<th style='width:20%'>" . $row["status"] . "</th>";
-            echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
-            echo "</th>";
-            echo "</tr>";
-        }
+    <?php
+if ($englishresult->num_rows > 0) {
+    // Output data of each row
+    while ($row = $englishresult->fetch_assoc()) {
+        echo "<tr class='sheshable'>";
+        echo "<th style='width:20%'>" . $row["lrn"] . "</th>";
+        echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
+        echo "<th style='width:20%' class='act'>";
+        echo "<div class='icon-container'>";
+        echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "</div>";
+        echo "</th>";
+        echo "<th style='width:20%'>" . $row["status"] . "</th>";
+        echo "<th style='width:25%' class='act'>";
+        // Add a form around the button
+        echo "<form method='post'>";
+        echo "<input type='hidden' name='lrn' value='" . htmlspecialchars($row["lrn"]) . "'>";
+        echo "<button type='submit' name='delete2' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+        echo "</form>";
+        echo "</th>";
+        echo "</tr>";
     }
-    ?>
+}
+?>
+
              <tr>
                 <td colspan="5">
                     <div class="save">
@@ -2129,7 +2329,10 @@
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<form method='post'>";
+            echo "<input type='hidden' name='lrn' value='" . htmlspecialchars($row["lrn"]) . "'>";
+            echo "<button type='submit' name='delete3' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</form>";
             echo "</th>";
             echo "</tr>";
         }
@@ -2171,7 +2374,10 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<form method='post'>";
+            echo "<input type='hidden' name='lrn' value='" . htmlspecialchars($row["lrn"]) . "'>";
+            echo "<button type='submit' name='delete4' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</form>";
             echo "</th>";
             echo "</tr>";
         }
@@ -2213,7 +2419,10 @@
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
             echo "<th style='width:25%' class='act'>";
-            echo "<button type='submit' name='submit1' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "<form method='post'>";
+            echo "<input type='hidden' name='lrn' value='" . htmlspecialchars($row["lrn"]) . "'>";
+            echo "<button type='submit' name='delete5' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+            echo "</form>";
             echo "</th>";
             echo "</tr>";
         }
@@ -2251,28 +2460,113 @@ if ($result_combined->num_rows > 0) {
             <th style='width:20%' class='act'>
                 <div class="icon-container">
                     <?php if ($row["english"] === 'E'): ?>
-                        E<i onclick="showPupilRecordEnglish()"></i>
+                        <?php 
+                            $english_color = '';
+                            switch($row["english_status"]) {
+                                case 'Pending':
+                                    $english_color = 'black';
+                                    break;
+                                case 'On-Going':
+                                    $english_color = 'yellow';
+                                    break;
+                                case 'Resolved':
+                                    $english_color = 'green';
+                                    break;
+                                case 'Unresolved':
+                                    $english_color = 'red';
+                                    break;
+                                default:
+                                    $english_color = 'black'; // Default to black if status is not recognized
+                            }
+                        ?>
+                        <span style="color: <?php echo $english_color; ?>; font-weight: bolder;">E</span><i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
-                        F<i  onclick="showPupilRecordFilipino()"></i>
+                        <?php 
+                            $filipino_color = '';
+                            switch($row["filipino_status"]) {
+                                case 'Pending':
+                                    $filipino_color = 'black';
+                                    break;
+                                case 'On-Going':
+                                    $filipino_color = 'yellow';
+                                    break;
+                                case 'Resolved':
+                                    $filipino_color = 'green';
+                                    break;
+                                case 'Unresolved':
+                                    $filipino_color = 'red';
+                                    break;
+                                default:
+                                    $filipino_color = 'black'; // Default to black if status is not recognized
+                            }
+                        ?>
+                        <span style="color: <?php echo $filipino_color; ?>; font-weight: bolder;">F</span><i onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
-                        N<i onclick="showPupilRecordNumeracy()"></i>
+                        <?php 
+                            $numeracy_color = '';
+                            switch($row["numeracy_status"]) {
+                                case 'Pending':
+                                    $numeracy_color = 'black';
+                                    break;
+                                case 'On-Going':
+                                    $numeracy_color = 'yellow';
+                                    break;
+                                case 'Resolved':
+                                    $numeracy_color = 'green';
+                                    break;
+                                case 'Unresolved':
+                                    $numeracy_color = 'red';
+                                    break;
+                                default:
+                                    $numeracy_color = 'black'; // Default to black if status is not recognized
+                            }
+                        ?>
+                        <span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder;">N</span><i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
-                        B<i onclick="showPupilRecordBehavioral()"></i>
+                        <?php 
+                            $behavioral_color = '';
+                            switch($row["behavioral_status"]) {
+                                case 'Pending':
+                                    $behavioral_color = 'black';
+                                    break;
+                                case 'On-Going':
+                                    $behavioral_color = 'yellow';
+                                    break;
+                                case 'Resolved':
+                                    $behavioral_color = 'green';
+                                    break;
+                                case 'Unresolved':
+                                    $behavioral_color = 'red';
+                                    break;
+                                default:
+                                    $behavioral_color = 'black'; // Default to black if status is not recognized
+                            }
+                        ?>
+                        <span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder;">B</span><i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
             <th style='width:25%' class='act'>
-                <button type="submit" name="submit1" style=" background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                <form method="post" action="">
+                    <input type="hidden" name="lrn" value="<?php echo $row['lrn']; ?>">
+                    <input type="hidden" name="english" value="<?php echo $row['english']; ?>">
+                    <input type="hidden" name="filipino" value="<?php echo $row['filipino']; ?>">
+                    <input type="hidden" name="numeracy" value="<?php echo $row['numeracy']; ?>">
+                    <input type="hidden" name="behavioral" value="<?php echo $row['behavioral']; ?>">
+                    <button type="submit" name="delete1" style="background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
+                </form>
             </th>
         </tr>
-        <?php
-            }
-        }
-        ?>
-    </tbody>
+<?php
+    }
+}
+?>
+</tbody>
+
+
 </table>
 
 
@@ -2922,7 +3216,7 @@ if ($result_combined->num_rows > 0) {
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="submit1" class="addPupilButton">ADD PUPIL AT RISK</button>
+            <button type="submit" name="" class="addPupilButton">ADD PUPIL AT RISK</button>
         </div>
     </form>
 </div>
