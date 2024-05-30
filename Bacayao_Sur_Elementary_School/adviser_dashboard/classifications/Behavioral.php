@@ -1164,19 +1164,19 @@
     <div class="main-containers">
             <div class="checkbox-container">
                 <div class="checkbox-item">
-                    <input type="checkbox" id="checkbox1" name="checkbox1">
+                    <input type="radio" id="checkbox1" name="checkbox1">
                     <label for="checkbox1">English</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" id="checkbox2" name="checkbox2">
+                    <input type="radio" id="checkbox2" name="checkbox2">
                     <label for="checkbox2">Filipino</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" id="checkbox3" name="checkbox3">
+                    <input type="radio" id="checkbox3" name="checkbox3">
                     <label for="checkbox3">Numeracy</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="checkbox" id="checkbox4" name="checkbox4">
+                    <input type="radio" id="checkbox4" name="checkbox4">
                     <label for="checkbox4">Behavioral</label>
                 </div>
             </div>
@@ -1204,8 +1204,7 @@
                     </div>
                 </div>
 
-
-                <div class="rows">
+                <div class="rows" style="display: none;">
                     <div class="columns" >
                         <div class="containerss" style="background-color: #190572">
                             <h3 style="margin-left:10px">LRN</h3>
@@ -1224,7 +1223,36 @@
                     <div class="columns half-widths">
                         <div class="select-wrapper">
                             <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Status</option>
+                                <option value="" disabled selected hidden>Pending</option>
+                                <option value="On-Going">On-Going</option>
+                                <option value="Resolved">Resolved</option>
+                                <option value="Unresolved">Unresolved</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="rows">
+                    <div class="columns" >
+                        <div class="containerss" style="background-color: #190572">
+                            <h3 style="margin-left:10px">LRN</h3>
+                        </div>
+                    </div>
+                    <div class="columns column-rights">
+                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <input type="text" name="lrn" id="lrn"  readonly>
+                        </div>
+                    </div>
+                    <div class="columns column-lefts">
+                        <div class="containerss" style="background-color: #190572;">
+                            <h3 style="margin-left:10px">Status</h3>
+                        </div>
+                    </div>
+                    <div class="columns half-widths">
+                        <div class="select-wrapper rights">
+                            <select id="topdown2" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                                <option value="" disabled selected hidden>Pending</option>
                                 <option value="On-Going">On-Going</option>
                                 <option value="Resolved">Resolved</option>
                                 <option value="Unresolved">Unresolved</option>
