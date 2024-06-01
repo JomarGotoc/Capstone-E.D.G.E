@@ -1111,7 +1111,7 @@
         .act button {
         background-color:#130550;
         color: #fff;
-        width: 16rem;
+        width: 20rem;
         padding: 5px 24px;
         border: none;
         border-radius: 5px;
@@ -2199,10 +2199,10 @@
 <table border="0" id="pupilTable">
 <thead>
         <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:25%'>Actions</th>
+            <th style='width:25%'>LRN</th>
+            <th style='width:35%'>Pupil's Name</th>
+            <th style='width:28%'>P.A.R. Identification</th>
+            <th style='width:35%'>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -2234,9 +2234,9 @@
             }
 
             echo "<tr class='sheshable'>";
-            echo "<td style='width:20%'>" . $lrn . "</td>";
-            echo "<td style='width:25.7%'>" . $row["fullname"] . "</td>";
-            echo "<td style='width:20%' class='act'>";
+            echo "<td style='width:25%'>" . $lrn . "</td>";
+            echo "<td style='width:35%'>" . $row["fullname"] . "</td>";
+            echo "<td style='width:28%' class='act'>";
             echo "<div class='icon-container'>";
             if ($showE) echo $showE . "<i class='vertical-lines'></i>";
             if ($showF) echo $showF . "<i class='vertical-lines'></i>";
@@ -2244,7 +2244,7 @@
             if ($showB) echo $showB;
             echo "</div>";
             echo "</td>";
-            echo "<td style='width:25%' class='act'>";
+            echo "<td style='width:35%' class='act'>";
             echo "<a href='par_form.php?file=$filename&employment_number=$employment_number&lrn={$lrn}&school={$row['school']}&grade={$row['grade']}&section={$row['section']}&fullname={$row['fullname']}&quarter=$quarter'><button class='updateRecordButton'>ADD PUPIL AT RISK</button></a>";
             echo "</td>";
             echo "</tr>";
@@ -2277,7 +2277,7 @@ if ($englishresult->num_rows > 0) {
         echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
         echo "<th style='width:20%' class='act'>";
         echo "<div class='icon-container'>";
-        echo "<a href='../../classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "<a href='../adviser_dashboard/classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
         echo "</div>";
         echo "</th>";
         echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2285,13 +2285,14 @@ if ($englishresult->num_rows > 0) {
         // Add a form around the button
         echo "<form method='post'>";
         echo "<input type='hidden' name='lrn' value='" . htmlspecialchars($row["lrn"]) . "'>";
-        echo "<button type='submit' name='delete2' style=' background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
+        echo "<button type='submit' name='delete2' style='background-color:#070000' class='updateRecordButtons'>REMOVE PUPIL AT RISK</button>";
         echo "</form>";
         echo "</th>";
         echo "</tr>";
     }
 }
 ?>
+
 
              <tr>
                 <td colspan="5">
@@ -2324,7 +2325,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>F<i onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -2336,7 +2337,7 @@ if ($englishresult->num_rows > 0) {
             echo "</th>";
             echo "</tr>";
         }
-    }
+    }    
     ?>
             <tr>
                 <td colspan="5">
@@ -2369,7 +2370,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../adviser_dashboard/classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2414,7 +2415,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../../classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . "'>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2443,10 +2444,10 @@ if ($englishresult->num_rows > 0) {
 <table border="0" id="parlist" style="display: none;">
 <thead>
         <tr>
-            <th style='width:20%'>LRN</th>
-            <th style='width:25.7%'>Pupil's Name</th>
-            <th style='width:20%'>P.A.R. Identification</th>
-            <th style='width:25%'>Actions</th>
+            <th style='width:25%'>LRN</th>
+            <th style='width:35%'>Pupil's Name</th>
+            <th style='width:28%'>P.A.R. Identification</th>
+            <th style='width:35%'>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -2455,9 +2456,9 @@ if ($result_combined->num_rows > 0) {
     while($row = $result_combined->fetch_assoc()) {
 ?>
         <tr class='sheshable'>
-            <th style='width:20%'><?php echo $row["lrn"]; ?></th>
-            <th style='width:25.7%'><?php echo $row["fullname"]; ?></th>
-            <th style='width:20%' class='act'>
+            <th style='width:25%'><?php echo $row["lrn"]; ?></th>
+            <th style='width:35%'><?php echo $row["fullname"]; ?></th>
+            <th style='width:28%' class='act'>
                 <div class="icon-container">
                     <?php if ($row["english"] === 'E'): ?>
                         <?php 
@@ -2479,7 +2480,7 @@ if ($result_combined->num_rows > 0) {
                                     $english_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $english_color; ?>; font-weight: bolder;">E</span><i onclick="showPupilRecordEnglish()"></i>
+                        <span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span><i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
                         <?php 
@@ -2501,7 +2502,7 @@ if ($result_combined->num_rows > 0) {
                                     $filipino_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $filipino_color; ?>; font-weight: bolder;">F</span><i onclick="showPupilRecordFilipino()"></i>
+                        <span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span><i onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
                         <?php 
@@ -2523,7 +2524,7 @@ if ($result_combined->num_rows > 0) {
                                     $numeracy_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder;">N</span><i onclick="showPupilRecordNumeracy()"></i>
+                        <span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span><i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
                         <?php 
@@ -2545,11 +2546,11 @@ if ($result_combined->num_rows > 0) {
                                     $behavioral_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder;">B</span><i onclick="showPupilRecordBehavioral()"></i>
+                        <span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span><i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
-            <th style='width:25%' class='act'>
+            <th style='width:35%' class='act'>
                 <form method="post" action="">
                     <input type="hidden" name="lrn" value="<?php echo $row['lrn']; ?>">
                     <input type="hidden" name="english" value="<?php echo $row['english']; ?>">

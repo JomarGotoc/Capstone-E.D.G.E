@@ -254,6 +254,29 @@
     // Close database conn
     mysqli_close($conn);
 ?>
+<?php
+    $errormsg="";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if (isset($_POST['view'])) {
+            $folderPath = '../manage_student/grade_sections/';
+            $files = scandir($folderPath);
+
+            // Filter out the '.' and '..' directories
+            $files = array_diff($files, array('.', '..'));
+
+            if (!empty($files)) {
+                // Get the first file in the directory
+                $firstFile = reset($files);
+
+                // Redirect or perform action with the first file
+                header("Location: " . $folderPath . $firstFile);
+                exit();
+            } else {
+                $errormsg = "No List of Students to view";
+            }
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1183,13 +1206,19 @@
                         <input type="text" class="search-input" id="searchInput" placeholder="Search ...">
                         <i class='bx bx-search search-icon'></i>
                     </div>
+                    
             </div>
+            <div class="errormsg">
+                        <?php echo $errormsg ?>
+                    </div>
             <div class="column dropdown-container">
                 <div class="dropdown">
                     <button class="dropbtn">Manage Student's List</button>
                     <div class="dropdown-content">
-                        <a href="..manage_student/grade_sections/grade_kinder_section_ngi.php?employment_number=">View Student's List</a>
-                        <a href="../manage_student/Add_Studentlist_import.php">Upload Student's List</a>
+                        <form method="post">
+                        <button name="view">View Student's List</button>
+                        <button name="upload">Upload Student's Lis</button>
+                        </form>
                     </div>
                 </div>
             </div>
