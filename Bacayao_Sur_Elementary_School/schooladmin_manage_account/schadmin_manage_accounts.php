@@ -1188,7 +1188,7 @@
                 <div class="dropdown">
                     <button class="dropbtn">Manage Student's List</button>
                     <div class="dropdown-content">
-                        <a href="../manage_student/School_Admin_Studentlist.php">View Student's List</a>
+                        <a href="..manage_student/grade_sections/grade_kinder_section_ngi.php?employment_number=">View Student's List</a>
                         <a href="../manage_student/Add_Studentlist_import.php">Upload Student's List</a>
                     </div>
                 </div>

@@ -438,7 +438,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
  
     <div class="login-container">
-        <a href="../manage_student/School_Admin_Studentlist.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
+        <a href="../schooladmin_manage_account/schadmin_manage_accounts.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>" class="back-icon"><i class='bx bxs-chevron-left'></i></a>
         <div class="logo"></div>
         <h3>Import Data File</h3>
 
