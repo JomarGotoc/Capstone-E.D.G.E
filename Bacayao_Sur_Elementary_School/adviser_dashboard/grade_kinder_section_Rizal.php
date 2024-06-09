@@ -2277,7 +2277,7 @@ if ($englishresult->num_rows > 0) {
         echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
         echo "<th style='width:20%' class='act'>";
         echo "<div class='icon-container'>";
-        echo "<a href='../adviser_dashboard/classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
         echo "</div>";
         echo "</th>";
         echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2325,7 +2325,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -2370,7 +2370,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2415,7 +2415,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
