@@ -1258,16 +1258,6 @@
                             <h3 style="margin-left:10px">Status</h3>
                         </div>
                     </div>
-                    <div class="columns half-widths">
-                        <div class="select-wrapper">
-                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Pending</option>
-                                <option value="On-Going">On-Going</option>
-                                <option value="Resolved">Resolved</option>
-                                <option value="Unresolved">Unresolved</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
 
 

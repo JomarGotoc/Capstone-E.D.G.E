@@ -2277,7 +2277,7 @@ if ($englishresult->num_rows > 0) {
         echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
         echo "<th style='width:20%' class='act'>";
         echo "<div class='icon-container'>";
-        echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "<a href='../adviser_dashboard/classifications/update_record_english.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
         echo "</div>";
         echo "</th>";
         echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2325,7 +2325,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -2370,7 +2370,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2415,7 +2415,7 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2480,7 +2480,7 @@ if ($result_combined->num_rows > 0) {
                                     $english_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span><i onclick="showPupilRecordEnglish()"></i>
+                        <a href="classifications/update_record_english.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span></a><i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
                         <?php 
@@ -2502,7 +2502,7 @@ if ($result_combined->num_rows > 0) {
                                     $filipino_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span><i onclick="showPupilRecordFilipino()"></i>
+                        <a href="classifications/update_record_filipino.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span></a><i onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
                         <?php 
@@ -2524,7 +2524,7 @@ if ($result_combined->num_rows > 0) {
                                     $numeracy_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span><i onclick="showPupilRecordNumeracy()"></i>
+                        <a href="classifications/update_record_numeracy.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span></a><i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
                         <?php 
@@ -2546,7 +2546,7 @@ if ($result_combined->num_rows > 0) {
                                     $behavioral_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span><i onclick="showPupilRecordBehavioral()"></i>
+                        <a href="classifications/update_record_behavioral.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span></a><i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
@@ -2566,6 +2566,8 @@ if ($result_combined->num_rows > 0) {
 }
 ?>
 </tbody>
+
+
 
 
 </table>
