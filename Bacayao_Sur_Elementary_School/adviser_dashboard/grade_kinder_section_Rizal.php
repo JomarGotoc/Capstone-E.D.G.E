@@ -2480,7 +2480,7 @@ if ($result_combined->num_rows > 0) {
                                     $english_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <a href="classifications/update_record_english.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span></a><i onclick="showPupilRecordEnglish()"></i>
+                        <a href="classifications/update_record_english.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>"><span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span></a><i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
                         <?php 
@@ -2502,7 +2502,7 @@ if ($result_combined->num_rows > 0) {
                                     $filipino_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <a href="classifications/update_record_filipino.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span></a><i onclick="showPupilRecordFilipino()"></i>
+                        <a href="classifications/update_record_filipino.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>"><span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span></a><i onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
                         <?php 
@@ -2524,7 +2524,7 @@ if ($result_combined->num_rows > 0) {
                                     $numeracy_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <a href="classifications/update_record_numeracy.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span></a><i onclick="showPupilRecordNumeracy()"></i>
+                        <a href="classifications/update_record_numeracy.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>"><span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span></a><i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
                         <?php 
@@ -2546,7 +2546,7 @@ if ($result_combined->num_rows > 0) {
                                     $behavioral_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <a href="classifications/update_record_behavioral.php?lrn=<?php echo $row['lrn']; ?>"><span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span></a><i onclick="showPupilRecordBehavioral()"></i>
+                        <a href="classifications/update_record_behavioral.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>"><span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span></a><i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
@@ -2557,6 +2557,8 @@ if ($result_combined->num_rows > 0) {
                     <input type="hidden" name="filipino" value="<?php echo $row['filipino']; ?>">
                     <input type="hidden" name="numeracy" value="<?php echo $row['numeracy']; ?>">
                     <input type="hidden" name="behavioral" value="<?php echo $row['behavioral']; ?>">
+                    <input type="hidden" name="start_year" value="<?php echo $start_year; ?>">
+                    <input type="hidden" name="school_year" value="<?php echo $school_years[$start_year]; ?>">
                     <button type="submit" name="delete1" style="background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
                 </form>
             </th>
