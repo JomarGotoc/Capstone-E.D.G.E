@@ -1242,24 +1242,6 @@
                     </div>
                 </div>
 
-                <div class="rows" style="display: none;">
-                    <div class="columns" >
-                        <div class="containerss" style="background-color: #190572">
-                            <h3 style="margin-left:10px">LRN</h3>
-                        </div>
-                    </div>
-                    <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="lrn" id="lrn"  readonly>
-                        </div>
-                    </div>
-                    <div class="columns column-lefts">
-                        <div class="containerss" style="background-color: #190572;">
-                            <h3 style="margin-left:10px">Status</h3>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="rows">
                     <div class="columns" >
@@ -1268,7 +1250,7 @@
                         </div>
                     </div>
                     <div class="columns column-rights">
-                        <div class="containerss" style="background-color: #F3F3F3;">
+                        <div class="containerss" style="background-color: #F3F3F3; width:560px">
                         <input type="text" name="lrn" id="lrn"  readonly>
                         </div>
                     </div>
