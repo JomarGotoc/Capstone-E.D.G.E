@@ -1,3 +1,51 @@
+<?php
+include('../../../database.php');
+
+// Check if the 'save' button is clicked
+if (isset($_POST['save'])) {
+    // Retrieve form data
+    $lrn = $_POST['lrn'];
+    $gname = $_POST['gname'];
+    $number = $_POST['number'];
+    $status = $_POST['status'];
+    $notes = $_POST['notes'];
+    $topic = $_POST['topic'];
+    $intervention = $_POST['intervention'];
+    $advice = $_POST['advice'];
+
+    // Update query
+    $sql = "UPDATE behavioral SET 
+                gname = ?, 
+                number = ?, 
+                status = ?, 
+                notes = ?, 
+                topic = ?, 
+                intervention = ?, 
+                advice = ? 
+            WHERE lrn = ?";
+
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        die("Error preparing statement: " . $conn->error);
+    }
+
+    // Bind parameters
+    $stmt->bind_param("ssssssss", $gname, $number, $status, $notes, $topic, $intervention, $advice, $lrn);
+
+    // Execute the statement
+    if ($stmt->execute() === false) {
+        die("Error executing statement: " . $stmt->error);
+    } 
+
+    // Close statement
+    $stmt->close();
+}
+
+// Close connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1197,7 +1245,7 @@
     </style>
 </head>
 <body>
-    <form action="" method="" class="form-container english" id="englishForm">
+    <form method="post" class="form-container english" id="englishForm">
     <div class="main-containers">
             <div class="checkbox-container">
                 <div class="checkbox-item">
@@ -1221,7 +1269,7 @@
                 <div class="rows">
                 <div class="column">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                    <h3 style="margin-left: 7px">S.Y: <?php echo isset($_GET['school_year']) ? htmlspecialchars($_GET['school_year']) : ''; ?></h3>
                 </div>
             </div>
             <div class="column column-right">
@@ -1251,7 +1299,7 @@
                     </div>
                     <div class="columns column-rights">
                         <div class="containerss" style="background-color: #F3F3F3; width:560px">
-                        <input type="text" name="lrn" id="lrn"  readonly>
+                        <input type="text" name="lrn" id="lrn" value="<?php echo isset($_GET['lrn']) ? htmlspecialchars($_GET['lrn']) : ''; ?>" readonly>
                         </div>
                     </div>
                     <div class="columns column-lefts">
@@ -1261,7 +1309,7 @@
                     </div>
                     <div class="columns half-widths">
                         <div class="select-wrapper rights">
-                            <select id="topdown2" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                            <select id="topdown2" name="status" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
                                 <option value="" disabled selected hidden>Pending</option>
                                 <option value="On-Going">On-Going</option>
                                 <option value="Resolved">Resolved</option>
@@ -1328,15 +1376,15 @@
                         <th>Recommended to</th>
                     </tr>
                 <tr id="row2" class="table_body">
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
+                        <td><textarea name="notes" placeholder="Enter Notes"></textarea><span class="dates"></span></td>
+                        <td><textarea name="topic" placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
+                        <td><textarea name="intervention" placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
+                        <td><textarea name="advice" placeholder="Enter Advice"></textarea><span class="dates"></span></td>
+                        <td><textarea name="recomended" placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
                     </tr>
                 </table>
            
-                <button id="saveButton" class="saveButton">Save Changes</button>
+                <button type="submit" name="save" class="saveButton">Save Changes</button>
             </form>
                 
             </div>
