@@ -471,6 +471,7 @@
             margin-bottom: 5px;
         }
 
+        .column input[type="text"],
         .columns input[type="text"],
         .columns-group,
         input[type="date"] {
@@ -1225,15 +1226,9 @@
                 </div>
             </div>
             <div class="column column-right">
-                <div class="select-wrapper1">
-                    <select id="topdown" name="quarter" class="containerss second" style="background-color: #F3F3F3;">
-                        <option value="" disabled selected hidden>Quarter 1</option>
-                        <option value="q1">Quarter 1</option>
-                        <option value="q2">Quarter 2</option>
-                        <option value="q3">Quarter 3</option>
-                        <option value="q4">Quarter 4</option>
-                    </select>
-                </div>
+            <div class="containerss " style="background-color: #F3F3F3; width:560px">
+                        <input type="text" name="quarter" id="quarter"  readonly>
+                    </div>
             </div>
                     <div class="columnss" style="background:none; ">
                         <div class="containerss seconds" >
