@@ -1201,19 +1201,19 @@
     <div class="main-containers">
             <div class="checkbox-container">
                 <div class="checkbox-item">
-                    <input type="radio" id="checkbox1" name="identification" checked>
+                    <input type="radio" id="checkbox1" name="identification"  onclick="navigateToPage(this)">
                     <label for="checkbox1">Literacy in English</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="radio" id="checkbox2" name="identification">
+                    <input type="radio" id="checkbox2" name="identification" onclick="navigateToPage(this)">
                     <label for="checkbox2">Literacy in Filipino</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="radio" id="checkbox3" name="identification">
+                    <input type="radio" id="checkbox3" name="identification" onclick="navigateToPage(this)">
                     <label for="checkbox3">Numeracy</label>
                 </div>
                 <div class="checkbox-item">
-                    <input type="radio" id="checkbox4" name="identification">
+                    <input type="radio" id="checkbox4" name="identification" checked onclick="navigateToPage(this)">
                     <label for="checkbox4">Behavioral</label>
                 </div>
             </div>
@@ -1347,7 +1347,7 @@
                     </div>
                 </div>
 
-                <table class="update-record" id="english">
+                <table class="update-record" >
                 <tr id="row1">
                         <th>Notes</th>
                         <th>Topic/Matter</th>
@@ -1363,59 +1363,7 @@
                         <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
                     </tr>
                 </table>
-
-                <table class="update-record" id="filipino" style="display:none">
-                <tr id="row1">
-                        <th>Notes</th>
-                        <th>Topic/Matter</th>
-                        <th>Intervention</th>
-                        <th>Advice</th>
-                        <th>Recommended to</th>
-                    </tr>
-                <tr id="row2" class="table_body">
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
-                    </tr>
-                </table>
-
-                <table class="update-record" id="numeracy"  style="display:none">
-                <tr id="row1">
-                        <th>Notes</th>
-                        <th>Topic/Matter</th>
-                        <th>Intervention</th>
-                        <th>Advice</th>
-                        <th>Recommended to</th>
-                    </tr>
-                <tr id="row2" class="table_body">
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
-                    </tr>
-                </table>
-
-                <table class="update-record" id="behavioral"  style="display:none">
-                <tr id="row1">
-                        <th>Notes</th>
-                        <th>Topic/Matter</th>
-                        <th>Intervention</th>
-                        <th>Advice</th>
-                        <th>Recommended to</th>
-                    </tr>
-                <tr id="row2" class="table_body">
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
-                    </tr>
-                </table>
-
-                
+           
                 <button id="saveButton" class="saveButton">Save Changes</button>
             </form>
                 
@@ -1461,38 +1409,28 @@
     function submitForm() {
         document.getElementById('quarterForm1').submit();
     }
-    
 </script>
 
-    <script>
-         function showTable() {
-            var englishTable = document.getElementById('english');
-            var filipinoTable = document.getElementById('filipino');
-            var numeracyTable = document.getElementById('numeracy');
-            var behavioralTable = document.getElementById('behavioral');
-
-            englishTable.style.display = 'none';
-            filipinoTable.style.display = 'none';
-            numeracyTable.style.display = 'none';
-            behavioralTable.style.display = 'none';
-
-            if (document.getElementById('checkbox1').checked) {
-                englishTable.style.display = 'table';
-            } else if (document.getElementById('checkbox2').checked) {
-                filipinoTable.style.display = 'table';
-            } else if (document.getElementById('checkbox3').checked) {
-                numeracyTable.style.display = 'table';
-            } else if (document.getElementById('checkbox4').checked) {
-                behavioralTable.style.display = 'table';
+<script>
+        function navigateToPage(radio) {
+            var targetPage = '';
+            switch (radio.id) {
+                case 'checkbox1':
+                    targetPage = 'update_record_english.php';
+                    break;
+                case 'checkbox2':
+                    targetPage = 'update_record_filipino.php';
+                    break;
+                case 'checkbox3':
+                    targetPage = 'update_record_numeracy.php';
+                    break;
+                case 'checkbox4':
+                    targetPage = 'update_record_behavioral.php';
+                    break;
             }
+            window.location.href = targetPage;
         }
-
-        document.getElementById('checkbox1').addEventListener('change', showTable);
-        document.getElementById('checkbox2').addEventListener('change', showTable);
-        document.getElementById('checkbox3').addEventListener('change', showTable);
-        document.getElementById('checkbox4').addEventListener('change', showTable);
-
-        showTable();
     </script>
+
 </body>
 </html>

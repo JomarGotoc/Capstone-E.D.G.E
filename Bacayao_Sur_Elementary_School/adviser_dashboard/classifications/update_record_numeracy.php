@@ -310,7 +310,7 @@
 
         #topdown {
             padding: 1px;
-            width: 437px;
+            width: 550px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -321,7 +321,7 @@
 
         #topdown2 {
             padding: 1px;
-            width: 369px;
+            width: 300px;
             background: #FBFBFB;
             color: #190572;
             text-align: start;
@@ -726,40 +726,6 @@
             margin-right: auto;
         }
 
-        .checkbox-container input[type="checkbox"] {
-            margin-right: 5px;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            width: 15px;
-            height: 10px;
-            background-color: #fff;
-            border: 2px solid #190572;
-            position: relative;
-        }
-
-        .checkbox-container input[type="checkbox"]::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 15px;
-            height: 10px;
-            background-color: #190572;
-            opacity: 0;
-        }
-
-        .checkbox-container input[type="checkbox"]:checked::before {
-            opacity: 1;
-        }
-
-        .checkbox-container label {
-            font-size: 15px;
-            font-weight: bold;
-            color: #0C052F;
-        }
-
         .icon-container {
             display: flex;
             justify-content: space-between;
@@ -928,7 +894,7 @@
             background:white;            
             height: 100%;
             width: 97%;
-            overflow:auto;
+            overflow:hidden;
             border-radius: 7px;
             position: fixed;
             top: 50%; 
@@ -1008,8 +974,7 @@
 
         .seconds{
             border-radius: 3px;
-            text-align: center;
-            font-family: "Darker Grotesque";
+            text-align: center;;
 
         }
 
@@ -1073,6 +1038,10 @@
         .columns{
             width: 23rem;
         }
+
+        .columnss{
+            width: 30rem;
+        }
     .update-record {
         border-collapse: collapse;
         width: 100%;
@@ -1096,18 +1065,47 @@
     }
     .form-container .table_body td input {
         width: calc(100% - 10px); 
-        height: 100px; 
+        height: 370px; 
         box-sizing: border-box;
         margin: 5px; 
         resize: none; 
         border: none;
     }
+    .form-container .table_body td textarea {
+        width: calc(100% - 10px); 
+        height: 370px; 
+        box-sizing: border-box;
+        margin: 5px; 
+        resize: none; 
+        border: none;
+    }
+
     .dates {
         position: absolute;
         bottom: 5px;
         right: 5px;
         font-size: 12px;
         color: gray;
+    }
+
+    .status-dropdown {
+    color: black; 
+    }
+
+
+    .status-dropdown option[value="ongoing"] {
+        background-color: green; 
+        color: white; 
+    }
+
+    .status-dropdown option[value="resolved"] {
+        background-color: #130550; 
+        color: white; 
+    }
+
+    .status-dropdown option[value="unresolved"] {
+        background-color: red; 
+        color: white;
     }
     #row1 th{
         background-color: #190572;
@@ -1135,12 +1133,91 @@
         padding-top: 4px;
         padding-bottom: 4px;
     }
+    .checkbox-container {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 20px;
+            margin-bottom: 25px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+        }
+        .checkbox-item:last-child {
+            margin-right: 0;
+        }
+        .checkbox-item input {
+            margin-right: 5px;
+            width: 20px; /* Increase size of checkbox */
+            height: 20px; /* Increase size of checkbox */
+        }
+        .checkbox-item label {
+            font-size: 1.2em; /* Increase size of label text */
+        }
+
+        .checkbox-container{
+        text-align: left;
+        margin-left: 5px;
+    }
+
+    .checkbox-container input[type="radio"] {
+        display: none;
+    }
+
+    .checkbox-container label {
+        position: relative;
+        padding-left: 30px;
+        cursor: pointer;
+        color: #130550; 
+
+    }
+
+    .checkbox-container label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 20px;
+        height: 15px;
+        border: 2px solid #130550; 
+        background-color: white; 
+        border-radius: 4px;
+    }
+
+    .checkbox-container input[type="radio"]:checked + label:before {
+        content: '\2713';
+        font-size: 16px;
+        color: white; 
+        background-color: #130550; 
+        text-align: center;
+        line-height: 20px;
+    }
+    
     </style>
 </head>
 <body>
     <form action="" method="" class="form-container english" id="englishForm">
-            <div class="main-containers">
-            <h3 class="record_header">ACADEMIC - NUMERACY RECORD</h3>
+    <div class="main-containers">
+            <div class="checkbox-container">
+                <div class="checkbox-item">
+                    <input type="radio" id="checkbox1" name="identification"  onclick="navigateToPage(this)">
+                    <label for="checkbox1">Literacy in English</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" id="checkbox2" name="identification" onclick="navigateToPage(this)">
+                    <label for="checkbox2">Literacy in Filipino</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" id="checkbox3" name="identification" checked onclick="navigateToPage(this)">
+                    <label for="checkbox3">Numeracy</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="radio" id="checkbox4" name="identification" onclick="navigateToPage(this)">
+                    <label for="checkbox4">Behavioral</label>
+                </div>
+            </div>
+
                 <div class="rows">
                 <div class="column">
                 <div class="containers" style="background-color: #190572;">
@@ -1158,13 +1235,12 @@
                     </select>
                 </div>
             </div>
-                    <div class="columns" style="background:none; margin-left: 538px">
+                    <div class="columnss" style="background:none; ">
                         <div class="containerss seconds" >
-                            <button style="background:transparent; border: none"><h3><i class='bx bx-printer' ></i>Print Records</h3></button>
+                            <button style="background:transparent; border: none;"><h3>Print Records</h3></button>
                         </div>
                     </div>
                 </div>
-
 
                 <div class="rows" style="display: none;">
                     <div class="columns" >
@@ -1194,6 +1270,7 @@
                     </div>
                 </div>
 
+
                 <div class="rows">
                     <div class="columns" >
                         <div class="containerss" style="background-color: #190572">
@@ -1212,7 +1289,7 @@
                     </div>
                     <div class="columns half-widths">
                         <div class="select-wrapper rights">
-                            <select id="topdown2" name="quarter" class="containers second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
+                            <select id="topdown2" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
                                 <option value="" disabled selected hidden>Pending</option>
                                 <option value="On-Going">On-Going</option>
                                 <option value="Resolved">Resolved</option>
@@ -1270,50 +1347,42 @@
                     </div>
                 </div>
 
-                <table class="update-record">
+                <table class="update-record" >
                 <tr id="row1">
-                    <th>Notes</th>
-                    <th>Topic/Matter</th>
-                    <th>Intervention</th>
-                    <th>Advice</th>
-                    <th>Recommended to</th>
-                </tr>
+                        <th>Notes</th>
+                        <th>Topic/Matter</th>
+                        <th>Intervention</th>
+                        <th>Advice</th>
+                        <th>Recommended to</th>
+                    </tr>
                 <tr id="row2" class="table_body">
-                    <td><input class="put" type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row3" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row4" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
-                <tr id="row5" class="table_body">
-                    <td><input type="text" placeholder="Enter Notes"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Topic/Matter"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Intervention"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Advice"><span class="dates"></span></td>
-                    <td><input type="text" placeholder="Enter Recommended to"><span class="dates"></span></td>
-                </tr>
+                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
+                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
+                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
+                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
+                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
+                    </tr>
                 </table>
-                
+           
                 <button id="saveButton" class="saveButton">Save Changes</button>
             </form>
                 
             </div>
 
 <script >
+    function redirectToQuarter() {
+            var status = document.getElementById('topdown2').value;
+            if (status) {
+                window.location.href = status + '.html';
+            }
+        }
+
+        function onlyOne(checkbox) {
+            var checkboxes = document.getElementsByName('checkbox');
+            checkboxes.forEach((item) => {
+                if (item !== checkbox) item.checked = false;
+            });
+        }
 
     document.getElementById('saveButton').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission
@@ -1341,5 +1410,27 @@
         document.getElementById('quarterForm1').submit();
     }
 </script>
+
+<script>
+        function navigateToPage(radio) {
+            var targetPage = '';
+            switch (radio.id) {
+                case 'checkbox1':
+                    targetPage = 'update_record_english.php';
+                    break;
+                case 'checkbox2':
+                    targetPage = 'update_record_filipino.php';
+                    break;
+                case 'checkbox3':
+                    targetPage = 'update_record_numeracy.php';
+                    break;
+                case 'checkbox4':
+                    targetPage = 'update_record_behavioral.php';
+                    break;
+            }
+            window.location.href = targetPage;
+        }
+    </script>
+
 </body>
 </html>
