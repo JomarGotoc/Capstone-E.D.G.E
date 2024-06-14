@@ -1,3 +1,82 @@
+<?php
+    include('../../../database.php');
+    $quarter = $_GET['quarter'];
+    if (isset($_POST['save'])) {
+        // Retrieve form data
+        $lrn = $_POST['lrn'];
+        $gname = $_POST['gname'];
+        $number = $_POST['number'];
+        $status = $_POST['status'];
+        $notes = $_POST['notes'];
+        $topic = $_POST['topic'];
+        $intervention = $_POST['intervention'];
+        $advice = $_POST['advice'];
+        $recomended = $_POST['recomended'];
+
+        // Update query
+        $sql = "UPDATE academic_filipino SET 
+                    gname = ?, 
+                    number = ?, 
+                    status = ?, 
+                    notes = ?, 
+                    topic = ?, 
+                    intervention = ?, 
+                    advice = ?,
+                    recomended = ?  
+                WHERE lrn =?  AND quarter = $quarter";
+
+        // Prepare statement
+        $stmt = $conn->prepare($sql);
+        if ($stmt === false) {
+            die("Error preparing statement: " . $conn->error);
+        }
+
+        // Bind parameters
+        $stmt->bind_param("sssssssss", $gname, $number, $status, $notes, $topic, $intervention, $advice,$recomended, $lrn);
+
+        // Execute the statement
+        if ($stmt->execute() === false) {
+            die("Error executing statement: " . $stmt->error);
+        } 
+
+        // Close statement
+        $stmt->close();
+    }
+
+    // Close connection
+    $conn->close();
+?>
+<?php
+include('../../../database.php');
+
+// Retrieve LRN from the URL
+$lrn = isset($_GET['lrn']) ? $_GET['lrn'] : '';
+$school_year = isset($_GET['lrn']) ? $_GET['school_year'] : '';
+$quarter = isset($_GET['quarter']) ? $_GET['quarter'] : '';
+
+if ($lrn) {
+    // Fetch data from the 'behavioral' table
+    $sql = "SELECT * FROM academic_filipino WHERE lrn = '$lrn' AND quarter = '$quarter'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Extract specific fields from the fetched data
+        $row = $result->fetch_assoc();
+        $fullname = $row['fullname'];
+        $grade = $row['grade'];
+        $section = $row['section'];
+        $status = $row['status'];
+        $gname = $row['gname'];
+        $number = $row['number'];
+        $topic = $row['topic'];
+        $advice = $row['advice'];
+        $intervention = $row['intervention'];
+        $notes = $row['notes'];
+        $recomended = $row['recomended'];
+    }
+} 
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1198,7 +1277,7 @@
     </style>
 </head>
 <body>
-    <form action="" method="" class="form-container english" id="englishForm">
+    <form action="" method="post" class="form-container english" id="englishForm">
     <div class="main-containers">
             <div class="checkbox-container">
                 <div class="checkbox-item">
@@ -1219,15 +1298,15 @@
                 </div>
             </div>
 
-                <div class="rows">
+            <div class="rows">
                 <div class="column">
                 <div class="containers" style="background-color: #190572;">
-                    <h3 style="margin-left: 7px">S.Y:2023-2024</h3>
+                    <h3 style="margin-left: 7px">S.Y: <?php echo isset($_GET['school_year']) ? htmlspecialchars($_GET['school_year']) : ''; ?></h3>
                 </div>
             </div>
             <div class="column column-right">
             <div class="containerss " style="background-color: #F3F3F3; width:560px">
-                        <input type="text" name="quarter" id="quarter"  readonly>
+                        <input type="text" name="quarter" id="quarter" value="<?php echo $quarter ?>" readonly>
                     </div>
             </div>
                     <div class="columnss" style="background:none; ">
@@ -1246,7 +1325,7 @@
                     </div>
                     <div class="columns column-rights">
                         <div class="containerss" style="background-color: #F3F3F3; width:560px">
-                        <input type="text" name="lrn" id="lrn"  readonly>
+                        <input type="text" name="lrn" id="lrn" value="<?php echo isset($_GET['lrn']) ? htmlspecialchars($_GET['lrn']) : ''; ?>" readonly>
                         </div>
                     </div>
                     <div class="columns column-lefts">
@@ -1256,8 +1335,8 @@
                     </div>
                     <div class="columns half-widths">
                         <div class="select-wrapper rights">
-                            <select id="topdown2" name="quarter" class="containerss second" onchange="redirectToQuarter()" style="background-color: #F3F3F3;">
-                                <option value="" disabled selected hidden>Pending</option>
+                            <select id="topdown2" name="status" class="containerss second" style="background-color: #F3F3F3;">
+                                <option value="<?php echo $status ?>" disabled selected hidden><?php echo $status ?></option>
                                 <option value="On-Going">On-Going</option>
                                 <option value="Resolved">Resolved</option>
                                 <option value="Unresolved">Unresolved</option>
@@ -1275,7 +1354,7 @@
                     </div>
                     <div class="columns column-rights">
                         <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="fullname" id="fullname"  readonly>
+                        <input type="text" name="fullname" id="fullname" value="<?php echo $fullname ?>"  readonly>
                         </div>
                     </div>
                     <div class="columns column-lefts">
@@ -1285,7 +1364,7 @@
                     </div>
                     <div class="columns half-widths">
                         <div class="containerss" style="background-color: #F3F3F3;">
-                        <input type="text" name="classification" id="classification" class="rights" readonly>
+                        <input type="text" name="classification" id="classification" value="<?php echo $grade ?> - <?php echo $section ?>" class="rights" readonly>
                         </div>
                     </div>
                 </div>
@@ -1299,7 +1378,7 @@
                     </div>
                     <div class="columns column-rights">
                         <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="gname" id="gname" value="" placeholder=" " required>
+                            <input type="text" name="gname" id="gname" value="<?php echo $gname ?>" placeholder=" " required>
                         </div>
                     </div>
                     <div class="columns column-lefts">
@@ -1309,12 +1388,12 @@
                     </div>
                     <div class="columns half-widths">
                         <div class="containerss editable-containers" style="background-color: #F3F3F3;">
-                            <input type="text" name="number" id="cnumber" value="" placeholder=" " required class="rights">
+                            <input type="text" name="number" id="cnumber" value="<?php echo $number ?>" placeholder=" " required class="rights">
                         </div>
                     </div>
                 </div>
 
-                <table class="update-record">
+                <table class="update-record" >
                 <tr id="row1">
                         <th>Notes</th>
                         <th>Topic/Matter</th>
@@ -1323,15 +1402,15 @@
                         <th>Recommended to</th>
                     </tr>
                 <tr id="row2" class="table_body">
-                        <td><textarea placeholder="Enter Notes"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Topic/Matter"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Intervention"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Advice"></textarea><span class="dates"></span></td>
-                        <td><textarea placeholder="Enter Recommended to"></textarea><span class="dates"></span></td>
+                        <td><textarea name="notes" placeholder="Enter Notes"><?php echo $notes ?></textarea><span class="dates"></span></td>
+                        <td><textarea name="topic" placeholder="Enter Topic/Matter"><?php echo $topic ?></textarea><span class="dates"></span></td>
+                        <td><textarea name="intervention" placeholder="Enter Intervention"><?php echo $intervention ?></textarea><span class="dates"></span></td>
+                        <td><textarea name="advice" placeholder="Enter Advice"><?php echo $advice ?></textarea><span class="dates"></span></td>
+                        <td><textarea name="recomended" placeholder="Enter Recommended to"><?php echo $recomended ?></textarea><span class="dates"></span></td>
                     </tr>
                 </table>
            
-                <button id="saveButton" class="saveButton">Save Changes</button>
+                <button type="submit" name="save" class="saveButton">Save Changes</button>
             </form>
                 
             </div>
@@ -1379,25 +1458,28 @@
 </script>
 
 <script>
-        function navigateToPage(radio) {
-            var targetPage = '';
-            switch (radio.id) {
-                case 'checkbox1':
-                    targetPage = 'update_record_english.php';
-                    break;
-                case 'checkbox2':
-                    targetPage = 'update_record_filipino.php';
-                    break;
-                case 'checkbox3':
-                    targetPage = 'update_record_numeracy.php';
-                    break;
-                case 'checkbox4':
-                    targetPage = 'update_record_behavioral.php';
-                    break;
-            }
-            window.location.href = targetPage;
+    function navigateToPage(radio) {
+        var targetPage = '';
+        var lrnParameter = '?lrn=<?php echo $lrn ?>'; // Assuming $lrn is defined in your PHP code
+        var schoolYearParameter = '&school_year=<?php echo $school_year ?>'; // Assuming $school_year is defined in your PHP code
+        var quarterYearParameter = '&quarter=<?php echo $quarter ?>';
+        switch (radio.id) {
+            case 'checkbox1':
+                targetPage = 'update_record_english.php';
+                break;
+            case 'checkbox2':
+                targetPage = 'update_record_filipino.php';
+                break;
+            case 'checkbox3':
+                targetPage = 'update_record_numeracy.php';
+                break;
+            case 'checkbox4':
+                targetPage = 'update_record_behavioral.php';
+                break;
         }
-    </script>
+        window.location.href = targetPage + lrnParameter + schoolYearParameter + quarterYearParameter;
+    }
+</script>
 
 </body>
 </html>
