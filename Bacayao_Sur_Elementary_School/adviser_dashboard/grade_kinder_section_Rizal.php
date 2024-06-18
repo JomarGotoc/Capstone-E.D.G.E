@@ -1,4 +1,10 @@
 <?php
+// Get the selected quarter and school year from the POST request, default values if not set
+$selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+$selectedSchoolYear = isset($_POST['school-year']) ? $_POST['school-year'] : date('Y');
+?>
+
+<?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
     
     include("../../database.php");
@@ -2065,12 +2071,7 @@
             <div class="column column-right">
                 <div class="select-wrapper1">
                 <form id="quarterForm1" method="post" action="">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()" class="containerss seconds" style="background-color: #F3F3F3; color:#130550">
-                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
-                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
-                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
-                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
-                    </select>
+                     
                 </form>
 
                 </div>
@@ -2277,7 +2278,9 @@ if ($englishresult->num_rows > 0) {
         echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
         echo "<th style='width:20%' class='act'>";
         echo "<div class='icon-container'>";
-        echo "<a href='../adviser_dashboard/classifications/update_record_english.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "<a href='../adviser_dashboard/classifications/update_record_english.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    E<i onclick='showPupilRecordFilipino()'></i>
+</a>";
         echo "</div>";
         echo "</th>";
         echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2325,7 +2328,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record_filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_filipino.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    F<i onclick='showPupilRecordFilipino()'></i>
+</a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -2370,7 +2375,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record_numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_numeracy.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+            N<i onclick='showPupilRecordFilipino()'></i>
+        </a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2415,7 +2422,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/update_record_behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_behavioral.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    B<i onclick='showPupilRecordFilipino()'></i>
+</a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";

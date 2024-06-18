@@ -1,4 +1,10 @@
 <?php
+// Get the selected quarter and school year from the POST request, default values if not set
+$selectedQuarter = isset($_POST['quarter']) ? $_POST['quarter'] : 1;
+$selectedSchoolYear = isset($_POST['school-year']) ? $_POST['school-year'] : date('Y');
+?>
+
+<?php
     $currentFileName = basename($_SERVER["SCRIPT_FILENAME"], '.php');
     
     include("../../database.php");
@@ -2065,12 +2071,7 @@
             <div class="column column-right">
                 <div class="select-wrapper1">
                 <form id="quarterForm1" method="post" action="">
-                    <select id="quarterSelect" name="quarter" onchange="submitForm()" class="containerss seconds" style="background-color: #F3F3F3; color:#130550">
-                        <option value="1" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '1') echo 'selected'; ?>>Quarter 1</option>
-                        <option value="2" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '2') echo 'selected'; ?>>Quarter 2</option>
-                        <option value="3" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '3') echo 'selected'; ?>>Quarter 3</option>
-                        <option value="4" <?php if(isset($_POST['quarter']) && $_POST['quarter'] == '4') echo 'selected'; ?>>Quarter 4</option>
-                    </select>
+                     
                 </form>
 
                 </div>
@@ -2277,7 +2278,9 @@ if ($englishresult->num_rows > 0) {
         echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
         echo "<th style='width:20%' class='act'>";
         echo "<div class='icon-container'>";
-        echo "<a href='../adviser_dashboard/classifications/English.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'> E<i  onclick='showPupilRecordEnglish()'></i></a>";
+        echo "<a href='../adviser_dashboard/classifications/update_record_english.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    E<i onclick='showPupilRecordFilipino()'></i>
+</a>";
         echo "</div>";
         echo "</th>";
         echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2325,7 +2328,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Filipino.php?lrn=" . htmlspecialchars($row["lrn"]) . "' style='color: black;'>F<i onclick='showPupilRecordFilipino()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_filipino.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    F<i onclick='showPupilRecordFilipino()'></i>
+</a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>Pending</th>";
@@ -2370,7 +2375,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Numeracy.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;'  '>N<i onclick='showPupilRecordNumeracy()'></i><a/>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_numeracy.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+            N<i onclick='showPupilRecordFilipino()'></i>
+        </a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2415,7 +2422,9 @@ if ($englishresult->num_rows > 0) {
             echo "<th style='width:25.7%'>" . $row["fullname"] . "</th>";
             echo "<th style='width:20%' class='act'>";
             echo "<div class='icon-container'>";
-            echo "<a href='../adviser_dashboard/classifications/Behavioral.php?lrn=" . htmlspecialchars($row["lrn"]) . " ' style='color: black;''>B<i  onclick='showPupilRecordBehavioral()'></i></a>";
+            echo "<a href='../adviser_dashboard/classifications/update_record_behavioral.php?lrn=" . htmlspecialchars($row['lrn']) . "&quarter=" . $selectedQuarter . "&school_year=" . $selectedSchoolYear . "' style='color: black;'>
+    B<i onclick='showPupilRecordFilipino()'></i>
+</a>";
             echo "</div>";
             echo "</th>";
             echo "<th style='width:20%'>" . $row["status"] . "</th>";
@@ -2451,9 +2460,15 @@ if ($englishresult->num_rows > 0) {
         </tr>
     </thead>
     <tbody>
-<?php 
+<?php
+if (isset($_POST['quarter'])) {
+    $selected_quarter = $_POST['quarter'];
+} else {
+    $selected_quarter = 1; // Default to Quarter 1 if not set
+}
+
 if ($result_combined->num_rows > 0) {
-    while($row = $result_combined->fetch_assoc()) {
+    while ($row = $result_combined->fetch_assoc()) {
 ?>
         <tr class='sheshable'>
             <th style='width:25%'><?php echo $row["lrn"]; ?></th>
@@ -2461,9 +2476,9 @@ if ($result_combined->num_rows > 0) {
             <th style='width:28%' class='act'>
                 <div class="icon-container">
                     <?php if ($row["english"] === 'E'): ?>
-                        <?php 
+                        <?php
                             $english_color = '';
-                            switch($row["english_status"]) {
+                            switch ($row["english_status"]) {
                                 case 'Pending':
                                     $english_color = 'black';
                                     break;
@@ -2480,12 +2495,12 @@ if ($result_combined->num_rows > 0) {
                                     $english_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span><i onclick="showPupilRecordEnglish()"></i>
+                        <a href="classifications/update_record_english.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>&quarter=<?php echo $selected_quarter; ?>"><span style="color: <?php echo $english_color; ?>; font-weight: bolder; font-style: normal">E</span></a><i onclick="showPupilRecordEnglish()"></i>
                     <?php endif; ?>
                     <?php if ($row["filipino"] === 'F'): ?>
-                        <?php 
+                        <?php
                             $filipino_color = '';
-                            switch($row["filipino_status"]) {
+                            switch ($row["filipino_status"]) {
                                 case 'Pending':
                                     $filipino_color = 'black';
                                     break;
@@ -2502,12 +2517,12 @@ if ($result_combined->num_rows > 0) {
                                     $filipino_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span><i onclick="showPupilRecordFilipino()"></i>
+                        <a href="classifications/update_record_filipino.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>&quarter=<?php echo $selected_quarter; ?>"><span style="color: <?php echo $filipino_color; ?>; font-weight: bolder; font-style: normal">F</span></a><i onclick="showPupilRecordFilipino()"></i>
                     <?php endif; ?>
                     <?php if ($row["numeracy"] === 'N'): ?>
-                        <?php 
+                        <?php
                             $numeracy_color = '';
-                            switch($row["numeracy_status"]) {
+                            switch ($row["numeracy_status"]) {
                                 case 'Pending':
                                     $numeracy_color = 'black';
                                     break;
@@ -2524,12 +2539,12 @@ if ($result_combined->num_rows > 0) {
                                     $numeracy_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span><i onclick="showPupilRecordNumeracy()"></i>
+                        <a href="classifications/update_record_numeracy.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>&quarter=<?php echo $selected_quarter; ?>"><span style="color: <?php echo $numeracy_color; ?>; font-weight: bolder; font-style: normal">N</span></a><i onclick="showPupilRecordNumeracy()"></i>
                     <?php endif; ?>
                     <?php if ($row["behavioral"] === 'B'): ?>
-                        <?php 
+                        <?php
                             $behavioral_color = '';
-                            switch($row["behavioral_status"]) {
+                            switch ($row["behavioral_status"]) {
                                 case 'Pending':
                                     $behavioral_color = 'black';
                                     break;
@@ -2546,7 +2561,7 @@ if ($result_combined->num_rows > 0) {
                                     $behavioral_color = 'black'; // Default to black if status is not recognized
                             }
                         ?>
-                        <span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span><i onclick="showPupilRecordBehavioral()"></i>
+                        <a href="classifications/update_record_behavioral.php?lrn=<?php echo $row['lrn']; ?>&start_year=<?php echo $start_year; ?>&school_year=<?php echo urlencode($school_years[$start_year]); ?>&quarter=<?php echo $selected_quarter; ?>"><span style="color: <?php echo $behavioral_color; ?>; font-weight: bolder; font-style: normal">B</span></a><i onclick="showPupilRecordBehavioral()"></i>
                     <?php endif; ?>
                 </div>
             </th>
@@ -2557,6 +2572,8 @@ if ($result_combined->num_rows > 0) {
                     <input type="hidden" name="filipino" value="<?php echo $row['filipino']; ?>">
                     <input type="hidden" name="numeracy" value="<?php echo $row['numeracy']; ?>">
                     <input type="hidden" name="behavioral" value="<?php echo $row['behavioral']; ?>">
+                    <input type="hidden" name="start_year" value="<?php echo $start_year; ?>">
+                    <input type="hidden" name="school_year" value="<?php echo $school_years[$start_year]; ?>">
                     <button type="submit" name="delete1" style="background-color:#070000" class="updateRecordButtons">REMOVE PUPIL AT RISK</button>
                 </form>
             </th>
@@ -2566,6 +2583,8 @@ if ($result_combined->num_rows > 0) {
 }
 ?>
 </tbody>
+
+
 
 
 </table>
