@@ -119,14 +119,13 @@ if ($result1->num_rows > 0) {
     <style>
             body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            background-color: white;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url(../../../img/bg.png);
             background-size: cover;
         }
         
@@ -316,7 +315,7 @@ if ($result1->num_rows > 0) {
         .main-container {
             width: 100%;
             display: flex;
-            margin-top: 115px;
+            margin-top: 10px;
             background-color: #fff;
         }
 
@@ -599,6 +598,16 @@ if ($result1->num_rows > 0) {
         .grades {
             margin-left: auto;
         }
+        .back-icon{
+            color: #190572;
+            top: 10px;
+            font-size: 30px;
+            left: 10px;
+            text-decoration: none;
+        }
+        .back-icon i {
+            margin-right: 5px;
+        }
 
         @media screen and (max-width: 800px) {
             header{
@@ -653,12 +662,6 @@ if ($result1->num_rows > 0) {
         </div>
     </header>
 
-    <div class="navbar">
-        <nav>
-            <a href="../../.././Bacayao_Sur_Elementary_School/school_admin_manage_account/Adviser_Account.php?employment_number=<?php echo isset($_GET['employment_number']) ? $_GET['employment_number'] : 'default_value'; ?>">Manage Accounts</a>
-            <a href="School_Admin_Studentlist.php" style="background:#F3F3F3; color:#130550">Manage Students List</a>
-        </nav>
-    </div>
 
     <div class="main-container" >
         <div class="main-content">
@@ -667,6 +670,7 @@ if ($result1->num_rows > 0) {
 
             <div id="gradeSectionSelection">
             <div class="dropdown-container">
+            <a href="" class="back-icon"><i class="bx bxs-chevron-left"></i></a>
                 <label for="gradeDropdown">Grade:</label>
                 <select id="gradeDropdown" class="dropdowns" onchange="filterStudents()">
                     <option value="" disabled selected hidden>Grade</option>

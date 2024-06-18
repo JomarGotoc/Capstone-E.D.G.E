@@ -1217,7 +1217,7 @@
                     <div class="dropdown-content">
                         <form method="post">
                         <button name="view">View Student's List</button>
-                        <button name="upload">Upload Student's Lis</button>
+                        <button name="upload">Upload Student's List</button>
                         </form>
                     </div>
                 </div>
